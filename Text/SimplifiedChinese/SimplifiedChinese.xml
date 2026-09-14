@@ -19,9 +19,9 @@
   <!-- ===== 专精名称 =====
        mcj_path_healing 是我们自己的治疗线（名字暂定，等三条线定完再统一改）
        另两条仍是医生镜像的占位，待重做 -->
-  <talenttree.mcj_path_healing>治疗</talenttree.mcj_path_healing>
+  <talenttree.mcj_path_healing>占星魔法</talenttree.mcj_path_healing>
   <talenttree.mcj_path_arcanum>奥秘卡</talenttree.mcj_path_arcanum>
-  <talenttree.mcj_path_astrolabe>天球仪</talenttree.mcj_path_astrolabe>
+  <talenttree.mcj_path_astrolabe>会奶人的DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== 治疗线天赋名称 ===== -->
   <talentname.mcj_celestialopposition>天星交错</talentname.mcj_celestialopposition>

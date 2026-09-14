@@ -3,9 +3,9 @@
   占星术士 · 天赋树
   
   【当前状态】三条专精线：
-    mcj_path_healing   —— 治疗线（第一栏，已实装）
+    mcj_path_healing   —— 占星魔法（第一栏，已实装）
     mcj_path_arcanum   —— 奥秘卡（第二栏，已实装）
-    mcj_path_astrolabe —— 天球仪（第三栏，第 1 档已实装，后续档位待设计）
+    mcj_path_astrolabe —— 会奶人的DPS（第三栏，第 1 档已实装，后续档位待设计）
 
   初级树 mcj_astrologian_primary 目前仍是医生初级树的镜像，待重做。
 
@@ -87,13 +87,11 @@
 
     </SubTree>
 
-    <!-- ================= 专精 B：治疗线（我们自己的第一支）=================
-         这是目前唯一已经完成设计的一条线。
+    <!-- ================= 专精 B：占星魔法（第一栏 · 治疗）=================
+         「占星魔法」—— 占星术士最本职的一面，也是整个模组的第一支柱。
          4 层结构，第 2 层二选一，其余无选择 —— 与原版医生的「医生」子树同构。
          天赋实现见 Talents/AstrologianTalents.xml
-         状态实现见 Afflictions/AstrologianAfflictions.xml
-
-         名字是占位的，等三条线定完再统一取。 -->
+         状态实现见 Afflictions/AstrologianAfflictions.xml -->
     <SubTree identifier="mcj_path_healing" type="specialization"
              requires="mcj_astrologian_primary">
       <TalentOptions>
@@ -111,11 +109,14 @@
       </TalentOptions>
     </SubTree>
 
-    <!-- ================= 专精 C：天球仪（第三栏 · 作战辅助）=================
-         占星术士的武备线。
-         第 1 档直接发放「天球仪」—— 一件 smallitem 的手持远程武器，
-         发射不消耗弹药的星光射线（见 Items/AstrologianItems.xml）。
-         仅用于辅助作战，不向队友发放任何团队 buff。
+    <!-- ================= 专精 C：会奶人的DPS（第三栏 · 作战输出）=================
+         「会奶人的DPS」—— FF14 玩家对治疗职业的经典印象：
+         本职工作是把人奶住，但一有空就得开输出。
+
+         这条线就是一整条输出线：第 1 档直接发放「天球仪」——
+         一件 smallitem 的手持远程武器，发射不消耗弹药的星光射线
+         （见 Items/AstrologianItems.xml）。
+         不给队友发任何团队 buff，完全靠自己打。
          后续档位待设计。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">

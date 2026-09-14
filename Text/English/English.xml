@@ -8,9 +8,9 @@
   <jobname.mcj_astrologian>Astrologian</jobname.mcj_astrologian>
 
   <!-- ===== Specialization names ===== -->
-  <talenttree.mcj_path_healing>Healing</talenttree.mcj_path_healing>
+  <talenttree.mcj_path_healing>Astrology</talenttree.mcj_path_healing>
   <talenttree.mcj_path_arcanum>Arcanum</talenttree.mcj_path_arcanum>
-  <talenttree.mcj_path_astrolabe>Astrolabe</talenttree.mcj_path_astrolabe>
+  <talenttree.mcj_path_astrolabe>Green DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== Healing line: talent names ===== -->
   <talentname.mcj_celestialopposition>Celestial Opposition</talentname.mcj_celestialopposition>
