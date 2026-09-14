@@ -431,4 +431,36 @@
     </AbilityGroupInterval>
   </Talent>
 
+  <!-- ============================================================
+       第三栏 · 地星（mcj_path_astrolabe）第 2 档
+
+       地星是一件「预先布置」的一次性装置：
+       放下 → 10 秒蓄力 → 舱室进水 → 修补船体 → 自己消失。
+       详细机制与全部查证依据写在 Items/AstrologianItems.xml 里。
+
+       【补给】地星是一次性的，所以这一档同时解锁它的配方
+       （AddedRecipe + 物品里的 requiresrecipe="true"）。
+       写法照原版机械师天赋 hullfixer，它就是这样解锁固化泡沫手榴弹的。
+
+       【发放】结构与第 1 档天球仪完全一致：interval + permanent stat 去重。
+       permanent stat 默认 removeondeath，所以死亡重生后会重新发放。
+       ============================================================ -->
+  <Talent identifier="mcj_earthlystar">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_earthlystar" />
+
+    <AbilityGroupInterval interval="2.0">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_earthlystar_given" min="1" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_earthlystar" amount="1" />
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_earthlystar_given" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 解锁配方：写法照原版机械师天赋 hullfixer -->
+    <AddedRecipe itemidentifier="mcj_earthlystar" />
+  </Talent>
+
 </Talents>

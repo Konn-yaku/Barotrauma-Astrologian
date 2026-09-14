@@ -90,4 +90,16 @@
   <entitydescription.mcj_astrolabe>An astrologer's star-reading instrument, small enough to fit in a pocket.\nRaise it and starlight bends into a beam. Its power never runs out — no ammunition of any kind is needed.\nAstrologians are versed in Combust, so whatever it strikes keeps burning.</entitydescription.mcj_astrolabe>
   <entityname.mcj_starshot>Starshot</entityname.mcj_starshot>
 
+  <!-- ===== Earthly Star ===== -->
+  <talentname.mcj_earthlystar>Earthly Star</talentname.mcj_earthlystar>
+  <talentdescription.mcj_earthlystar>Gain an Earthly Star, and unlock its fabrication recipe.
+Place it on the ground and it spends ‖color:gui.green‖10‖end‖ seconds gathering starlight.
+After that, the moment the room it sits in starts ‖color:gui.orange‖flooding‖end‖, it blooms:
+a single burst that repairs the hull within ‖color:gui.green‖250‖end‖ units, then it fades away.
+Each Earthly Star works only once — you must fabricate a new one.</talentdescription.mcj_earthlystar>
+  <entityname.mcj_earthlystar>Earthly Star</entityname.mcj_earthlystar>
+  <entitydescription.mcj_earthlystar>A star not yet lit. Leave it on the ground and starlight slowly gathers.
+Once charged, it needs only to be submerged: it blooms, mends the hull around it, and fades.
+It cannot foresee harm — it can only be placed in advance. The timing is everything.</entitydescription.mcj_earthlystar>
+
 </infotexts>

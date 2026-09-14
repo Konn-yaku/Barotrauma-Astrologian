@@ -19,7 +19,7 @@
 | 职业本体（技能 / 初始装备 / AI 行为 / 指令） | ✅ 完成 |
 | 专精线一 · 占星魔法（5 个原创天赋） | ✅ 完成，已在游戏中验证 |
 | 专精线二 · 奥秘卡（6 张卡 + 星力） | ✅ 完成，待游戏验证 |
-| 专精线三 · 会奶人的DPS（专属武器） | 🚧 第 1 档完成，待游戏验证 |
+| 专精线三 · 会奶人的DPS（专属武器 + 地星） | 🚧 第 1、2 档完成，待游戏验证 |
 | 初级天赋 | 🚧 暂为占位内容 |
 | 专属装备与职业图标 | 🚧 天球仪已做，贴图为占位；职业图标待做 |
 
@@ -127,17 +127,73 @@
   <StatusEffect type="OnUse" target="This">
     <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
   </StatusEffect>
+  <!-- 不写 msg！弹丸是开火瞬间生成的，检查与生成之间有时间差，
+       写了就会每枪都弹一次“弹药耗尽”。 -->
   <RequiredItems items="mcj_starshot" type="Contained" />
 </RangedWeapon>
-<ItemContainer capacity="0" maxstacksize="0" hideitems="true">
-  <Containable items="none" />
+<!-- 容器必须真的接受星辉弹，否则 RequiredItems 永远不通过 -->
+<ItemContainer capacity="1" maxstacksize="1" hideitems="true">
+  <Containable items="mcj_starshot" />
+  <StatusEffect type="OnSpawn" target="this">   <!-- 出生先预装一发 -->
+    <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+  </StatusEffect>
 </ItemContainer>
 ```
 
-容器容量为 0、什么都不装，但**每次开火现场生成一发星辉弹**，打完由弹丸自身清理。
-净消耗为零 —— 这就是「魔法不需要弹药」的原版写法。
+每次开火先现场生成一发星辉弹，打完由弹丸自身清理。净消耗为零 —— 这就是「魔法不需要弹药」的原版写法。
 
 > 贴图暂时复用原版材料 `fulgurium` 的发光晶体图。想换外观只改 `<Sprite>` 那一行即可。
+
+---
+
+## 地星（第三栏 · 第 2 档）
+
+对标 FF14 占星术士的「地星」：**放下去，等一阵，然后它自己兑现**。
+这是本模组第一件**需要提前布局**的东西 —— 它不能预知伤害，只能被提前布下。
+
+| 阶段 | 发生什么 |
+|---|---|
+| 1 | 把地星放在地上 |
+| 2 | 它花 **10 秒**积蓄星光（此期间拿走就重新计时） |
+| 3 | 只要它所在的舱室开始**进水**，立刻绽放 |
+| 4 | 释放一次范围 **250** 的船体修复，随后**消失** |
+
+一颗地星只能生效一次。要再用，得在制造台花 30 秒 + 1 精炼钍 + 2 塑胶重造。
+
+### 强度对照
+
+| 对象 | 修复量 | 范围 | 次数 |
+|---|---|---|---|
+| 焊枪（玩家手持） | `structurefixamount="2.0"` | 150 | 持续 |
+| 固化泡沫手榴弹（原版机械师大招） | `structuredamage="-200"` | 1000 | 1 |
+| **地星** | `structuredamage="-40"` | **250** | **1** |
+
+范围只有原版大招的 1/4，数值只有它的 1/5，而且用一次就没了。
+
+### 技术路线（两个反直觉的地方）
+
+**一、修船靠的是「负数的爆炸」**
+
+游戏里给舰体挂 `StatusEffect` 是修不了船的 —— `target="Hull"` 只认 `oxygen` 一个属性
+（原版三处用法全是氧气，没有任何耐久类属性）。
+真正能用的是**负数 `structuredamage` 的爆炸**，这是原版自己发明的写法：
+
+```xml
+<!-- 原版固化泡沫手榴弹 mechanic_talent_items.xml:303 -->
+<Explosion range="1000" structuredamage="-200" ... />
+```
+
+**二、「船壳受损」是用「进水」代理的**
+
+XML 层**没有**可捕捉的「船体受损」事件（触发器全集里没有 `OnRepaired`，
+`Conditional` 的90 个属性里也没有任何结构耐久条件）。
+但「进水」是可靠的代理 —— 船体破了才会进水，而 `InWater` 用在物品上是确实有效的：
+原版接线盒 / 反应堆 / 电池都靠它判定泡水（`poweritems.xml: <StatusEffect type="InWater" target="This" condition="-0.25" />`）。
+
+### 补给
+
+地星是一次性的，所以这一档同时用 `<AddedRecipe>` 解锁它的配方
+（物品那边写 `requiresrecipe="true"`），写法照原版机械师天赋 `hullfixer` 解锁固化泡沫手榴弹。
 
 ## 设计说明
 
@@ -168,7 +224,7 @@ Astrologian/
 ├─ TalentTrees/AstrologianTalentTrees.xml 天赋树结构
 ├─ Talents/AstrologianTalents.xml        天赋实现
 ├─ Afflictions/AstrologianAfflictions.xml 天赋用的隐藏增益
-├─ Items/AstrologianItems.xml            专属装备（天球仪与星辉弹）
+├─ Items/AstrologianItems.xml            专属装备（天球仪 / 星辉弹 / 地星）
 └─ Text/
    ├─ SimplifiedChinese/SimplifiedChinese.xml
    └─ English/English.xml

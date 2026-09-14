@@ -103,4 +103,16 @@
 举起它，就能引导星光化为射线；魔力取之不竭，无需任何弹药。
 占星术士具备焚灼之能，被命中的目标会持续燃烧。</entitydescription.mcj_astrolabe>
   <entityname.mcj_starshot>星辉弹</entityname.mcj_starshot>
+
+  <!-- ===== 第三栏 · 地星 ===== -->
+  <talentname.mcj_earthlystar>地星</talentname.mcj_earthlystar>
+  <talentdescription.mcj_earthlystar>获得一颗「地星」，并解锁它的制造配方。
+把它放到地上，它会花 ‖color:gui.green‖10‖end‖ 秒积蓄星光。
+在此之后，只要它所在的舱室开始 ‖color:gui.orange‖进水‖end‖，便会立刻绽放：
+释放一次范围 ‖color:gui.green‖250‖end‖ 的船体修复，随后消散。
+一颗地星只能生效一次，用完需要在制造台重新制作。</talentdescription.mcj_earthlystar>
+  <entityname.mcj_earthlystar>地星</entityname.mcj_earthlystar>
+  <entitydescription.mcj_earthlystar>一颗尚未点亮的星。把它留在地上，星光会慢慢汇聚。
+蓄力完成后，只要它被水淹没，就会在绽放中修补周围的船体，随即消散。
+它无法预知伤害，只能提前布下 —— 所以放下的时机就是它的全部。</entitydescription.mcj_earthlystar>
 </infotexts>

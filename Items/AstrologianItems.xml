@@ -37,6 +37,9 @@
   ── 贴图说明 ──
   占位贴图复用原版材料"fulgurium"的发光晶体图，看起来最接近一颗魔法球。
   以后想换外观，只改 <Sprite> / <InventoryIcon> 的 texture + sourcerect 两行即可。
+
+  ── 地星 mcj_earthlystar ──
+  第三栏第 2 档发放的「预先布置」装置。完整的机制说明写在它自己的注释里。
 -->
 <Items>
 
@@ -171,6 +174,92 @@
       </StatusEffect>
 
     </Projectile>
+  </Item>
+
+  <!-- ============================================================
+       地星 mcj_earthlystar
+       一次性、可预先放置的船体修复装置。由第三栏第 2 档天赋发放。
+
+       【流程】放下 → 10 秒蓄力 → 舱室进水 → 修补船体 → 自己消失
+
+       ── 为什么用负数 structuredamage 的爆炸来「修船」──
+       这是原版自己的做法。机械师大招道具「固化泡沫手榴弹」：
+           <Explosion range="1000" structuredamage="-200" ... />
+       正值是炸毁船体，负值就是修回船体。这是原版唯一的「自动修补」原语。
+       （注：给舰体挂 StatusEffect 修不了船——target="Hull" 只认 oxygen 一个属性，
+         原版三处用法全是氧气，没有耐久类属性。）
+
+       ── 为什么用 InWater 当作「船壳受损」的判定 ──
+       游戏里没有可供外部物品捕捉的「船体受损」事件。
+       但「进水」是可靠的代理：船体破了才会进水。
+       而 InWater 用在物品上确实有效——原版接线盒 / 反应堆 / 电池都靠它判定泡水：
+           poweritems.xml: <StatusEffect type="InWater" target="This" condition="-0.25" />
+
+       ── 为什么用 Throwable ──
+       照原版液态氧石。它就是「掉在地上持续影响所在舱室」的唯一原版先例：
+           alienitems.xml: <StatusEffect type="OnNotContained" target="Hull" oxygen="5000.0" />
+
+       【数值对照】
+         焊枪（玩家手持，持续）      structurefixamount="2.0"   range 150
+         固化泡沫手榴弹（原版大招）  一次性 structuredamage="-200" range 1000
+         地星（本模组）              一次性 structuredamage="-40"  range 250
+       范围与数值都远小于原版大招；一次只能封一个舱室的破口。
+
+       【强度控制】地星是一次性的，用一次就没了，所以不存在反复刷的问题。
+       要再造一颗得在制造台花 30 秒 + 1 精炼钍 + 2 塑胶。
+       ============================================================ -->
+  <Item name="" identifier="mcj_earthlystar" category="Equipment"
+        tags="smallitem,earthlystar"
+        cargocontaineridentifier="metalcrate" allowasextracargo="true" scale="0.5"
+        impactsoundtag="impact_metal_light">
+
+    <Price baseprice="200" sold="false" />
+
+    <Deconstruct time="15">
+      <Item identifier="fulgurium" />
+      <Item identifier="plastic" />
+    </Deconstruct>
+
+    <!-- requiresrecipe="true" = 必须点出「地星」天赋才会出现在制造台里。
+         对照原版：固化泡沫手榴弹也是 requiresrecipe + 天赋里 AddedRecipe。 -->
+    <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="fulgurium" />
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+
+    <InventoryIcon texture="Content/Items/Alien/AlienMaterials.png" sourcerect="18,436,58,69" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="18,436,58,69" depth="0.55" origin="0.5,0.5" />
+    <Body radius="18" density="15" />
+
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" handle1="0,-5"
+               throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+
+      <!-- 【核心】放下 10 秒后开始待机，之后每秒检查一次是否被淹。
+           delay + interval 可以共存（对照原版 explosives.xml:351 的闪光弹）。 -->
+      <StatusEffect type="OnNotContained" target="This" delay="10.0" interval="1.0">
+        <Conditional InWater="true" />
+
+        <!-- 绽放特效（粒子名沿用天球仪里已验证可用的那几个） -->
+        <Sound file="Content/Items/Alien/AlienTurret1.ogg" range="1500" />
+        <ParticleEmitter particle="FlareBubbles" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="120" particleamount="30"
+                         scalemin="2.0" scalemax="3.0" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="0" particleamount="24"
+                         scalemin="5.0" scalemax="5.0" colormultiplier="160,210,255,255" />
+
+        <!-- 【修复】各项 false / force=0 / 不带 Affliction = 只修船，不伤人、不炸物。
+             写法照原版固化泡沫手榴弹的修复爆炸（mechanic_talent_items.xml:303）。 -->
+        <Explosion range="250" structuredamage="-40" itemdamage="0" force="0.0"
+                   smoke="false" flames="false" flash="false" sparks="false"
+                   shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
+
+        <!-- 一次性：用完自己消失（写法照原版 guardianrepairtool） -->
+        <Remove />
+      </StatusEffect>
+
+    </Throwable>
   </Item>
 
 </Items>

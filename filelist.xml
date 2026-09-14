@@ -7,7 +7,7 @@
   这个文件是模组入口清单。新增任何文件后必须在这里登记，否则游戏不会加载。
   %ModDir% 表示"本模组根目录"，游戏自动替换。
 -->
-<contentpackage name="Astrologian" modversion="0.5.4" corepackage="False" gameversion="1.13.4.0">
+<contentpackage name="Astrologian" modversion="0.6.0" corepackage="False" gameversion="1.13.4.0">
 
   <!-- 职业定义：技能、初始装备、自主行为 -->
   <Jobs file="%ModDir%/Jobs/AstrologianJob.xml" />
@@ -21,7 +21,7 @@
   <!-- 自定义增益状态（天赋的实现载体） -->
   <Afflictions file="%ModDir%/Afflictions/AstrologianAfflictions.xml" />
 
-  <!-- 自定义装备（天球仪与星辉弹） -->
+  <!-- 自定义装备（天球仪 / 星辉弹 / 地星） -->
   <Item file="%ModDir%/Items/AstrologianItems.xml" />
 
   <!-- 中文文本（游戏语言 = 简体中文时生效） -->

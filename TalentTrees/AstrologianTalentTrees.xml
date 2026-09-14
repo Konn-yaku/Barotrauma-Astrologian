@@ -117,11 +117,20 @@
          一件 smallitem 的手持远程武器，发射不消耗弹药的星光射线
          （见 Items/AstrologianItems.xml）。
          不给队友发任何团队 buff，完全靠自己打。
+
+         第 2 档「地星」—— 不做输出，做「预先布置」：
+         放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
          后续档位待设计。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
+      <!-- 第 1 档 -->
       <TalentOptions>
         <TalentOption identifier="mcj_astrolabe" />
+      </TalentOptions>
+
+      <!-- 第 2 档 -->
+      <TalentOptions>
+        <TalentOption identifier="mcj_earthlystar" />
       </TalentOptions>
     </SubTree>
 
