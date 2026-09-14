@@ -7,22 +7,32 @@
 
     · smallitem  —— 能像仪式剑那样收进物品栏。
                     正因为能收起来，"取出才生效"才有意义。
-    · 手持       —— RightHand+LeftHand，拿在手上才能开火。
+    · 手持       —— Holdable slots="Any,RightHand,LeftHand"，既能握在手上开火，
+                    也能收进物品栏（只写 RightHand+LeftHand 就会被锁死在手上）。
     · 远程攻击   —— hitscan 星光射线（即时光束，没有飞行中的弹丸）。
 
   ── 【不消耗弹药】的实现 ──
-  照抄原版小丑的香蕉皮发射器（Content/Items/Jobgear/Clown/clown.xml）：
+  思路取自原版小丑的香蕉皮发射器：开火时现场"变"出一发弹药，打完自清。
 
       <StatusEffect type="OnUse" target="This">
         <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
-      <ItemContainer capacity="0" maxstacksize="0" hideitems="true">
-        <Containable items="none" />
+      <RequiredItems items="mcj_starshot" type="Contained" />
+      ...
+      <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
+        <Containable items="mcj_starshot" />           ( 必须真的接受它 )
+        <StatusEffect type="OnSpawn" target="this">    ( 出生先预装一发 )
+          <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+        </StatusEffect>
       </ItemContainer>
 
-  容器 capacity=0、什么都不接受，但每次开火都现场"变"出一发星辉弹，
-  打出去之后由星辉弹自身的 OnNotContained → Remove 清理掉。
-  净消耗为零 —— 这就是"魔法不需要弹药"的原版写法。
+  ⚠️ 踩过的坑（务必别再犯）：
+    1. 容器不能写成 capacity="0" + Containable items="none"
+       —— 弹丸永远塞不进去，RequiredItems 必然失败，游戏只会一直提示"弹药耗尽"。
+    2. Holdable 的 slots 必须包含 Any（用 "Any,RightHand,LeftHand"）。
+       只写 "RightHand+LeftHand" 的话物品会被锁死在手上，塞不进物品栏。
+       对照原版：左轮 = Any,RightHand,LeftHand（可收纳）
+                 步枪 = RightHand+LeftHand（只能手持）
 
   ── 贴图说明 ──
   占位贴图复用原版材料"fulgurium"的发光晶体图，看起来最接近一颗魔法球。
@@ -56,7 +66,10 @@
     <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="186,351,59,67" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" density="15" />
 
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="0,-15" aimpos="30,0"
+    <!-- slots 必须包含 Any，否则物品只能待在手上、塞不进物品栏。
+         对照原版：左轮 = "Any,RightHand,LeftHand"（可收纳）
+                   步枪 = "RightHand+LeftHand"（只能手持） -->
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-15" aimpos="30,0"
               handle1="0,0" handle2="0,-8" holdangle="0" msg="ItemMsgPickUpSelect" />
 
     <!-- reload 0.4 = 比快速裂变加速器（0.5）稍快；无蓄力时间，扣扳机即射 -->
@@ -74,7 +87,8 @@
                        anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                        colormultiplier="180,200,255,255" />
 
-      <!-- 开火时现场生成一发星辉弹 -->
+      <!-- 每次都现场生成一发星辉弹。
+           （第一次不用等这行 —— 下面的 ItemContainer 会在物品创建时预装一发） -->
       <StatusEffect type="OnUse" target="This">
         <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
@@ -82,9 +96,14 @@
       <RequiredItems items="mcj_starshot" type="Contained" msg="ItemMsgAmmoRequired" />
     </RangedWeapon>
 
-    <!-- 空容器：capacity=0、不接受任何物品 -->
-    <ItemContainer capacity="0" maxstacksize="0" hideitems="true">
-      <Containable items="none" />
+    <!-- 【关键】容器必须真的接受星辉弹，否则 RequiredItems 永远不通过，只会报"弹药耗尽"。
+         OnSpawn 预装一发：保证第一枪就能打，不用等 OnUse 补货。
+         写法照抄原版 toolbelt 的 OnSpawn + ThisInventory。 -->
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
+      <Containable items="mcj_starshot" />
+      <StatusEffect type="OnSpawn" target="this">
+        <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+      </StatusEffect>
     </ItemContainer>
 
   </Item>

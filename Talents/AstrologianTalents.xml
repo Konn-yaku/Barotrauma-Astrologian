@@ -415,11 +415,20 @@
   <Talent identifier="mcj_astrolabe">
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,0" sheetelementsize="128,128" />
     <Description tag="talentdescription.mcj_astrolabe" />
-    <AbilityGroupEffect abilityeffecttype="None">
+
+    <!-- 不能只用 abilityeffecttype="None"：那个时机可能在选天赋的界面里、
+         角色还没出生，PutItem 无处可放就静默丢掉了。
+         改成每秒重试的 interval + permanent stat 去重（结构与星天开门一致）。
+         permanent stat 默认 removeondeath，所以死亡重生后会重新发放。 -->
+    <AbilityGroupInterval interval="2.0">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_astrolabe_given" min="1" invert="true" />
+      </Conditions>
       <Abilities>
         <CharacterAbilityPutItem itemidentifier="mcj_astrolabe" amount="1" />
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_astrolabe_given" value="1" setvalue="true" />
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupInterval>
   </Talent>
 
 </Talents>
