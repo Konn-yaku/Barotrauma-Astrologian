@@ -140,9 +140,25 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <!-- ===== Placeholder description (used by mcj_celestialopposition / mcj_wheeloffortune) ===== -->
   <talentdescription.mcj_placeholder>(Placeholder - effect pending redesign)</talentdescription.mcj_placeholder>
 
-  <!-- ===== Test card (temporary, for verification only) ===== -->
-  <entityname.mcj_card_test>Test Card</entityname.mcj_card_test>
-  <entitydescription.mcj_card_test>A test card for the Astrologian: hold it and press use to apply buffs to yourself and nearby crew.</entitydescription.mcj_card_test>
+  <!-- ===== Arcanum: draw items ===== -->
+  <entityname.mcj_draw_star>Astral Draw</entityname.mcj_draw_star>
+  <entitydescription.mcj_draw_star>The deck of the astral. Hold it and press use to draw: The Balance, The Arrow and The Spire fall into it. Sixty seconds after the draw, the deck and any cards left in it fade away, and the umbral deck takes its place.</entitydescription.mcj_draw_star>
+  <entityname.mcj_draw_umbral>Umbral Draw</entityname.mcj_draw_umbral>
+  <entitydescription.mcj_draw_umbral>The deck of the umbral. Hold it and press use to draw: The Spear, The Bole and The Ewer fall into it. Sixty seconds after the draw, the deck and any cards left in it fade away, and the astral deck takes its place.</entitydescription.mcj_draw_umbral>
+
+  <!-- ===== Arcanum: the six cards ===== -->
+  <entityname.mcj_card_balance>The Balance</entityname.mcj_card_balance>
+  <entitydescription.mcj_card_balance>A scale with life on one end and death on the other. Hold it and press use to raise the whole crew's damage dealt.</entitydescription.mcj_card_balance>
+  <entityname.mcj_card_arrow>The Arrow</entityname.mcj_card_arrow>
+  <entitydescription.mcj_card_arrow>An arrow that never lands. Hold it and press use to raise the whole crew's walking and swimming speed.</entitydescription.mcj_card_arrow>
+  <entityname.mcj_card_spire>The Spire</entityname.mcj_card_spire>
+  <entitydescription.mcj_card_spire>A tower that reaches upward. Hold it and press use to raise the whole crew's repair speed and hull repair rate.</entitydescription.mcj_card_spire>
+  <entityname.mcj_card_spear>The Spear</entityname.mcj_card_spear>
+  <entitydescription.mcj_card_spear>A spear thrown never to be retrieved. Hold it and press use to raise the whole crew's attack speed.</entitydescription.mcj_card_spear>
+  <entityname.mcj_card_bole>The Bole</entityname.mcj_card_bole>
+  <entitydescription.mcj_card_bole>The trunk that holds the world up. Hold it and press use to reduce the damage the whole crew takes.</entitydescription.mcj_card_bole>
+  <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
+  <entitydescription.mcj_card_ewer>A pitcher of endless water. Hold it and press use to reduce the whole crew's oxygen consumption.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
   <talentdescription.mcj_malefic>You deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>

@@ -379,50 +379,267 @@
     </ItemComponent>
   </Item>
   <!-- ============================================================
-       测试用卡片：mcj_card_test（临时，名字：「测试卡片」）
+       奥秘卡系统（第二栏 mcj_path_arcanum）
+       —— 2 个抽卡道具 + 6 张卡 ——
 
-       用途：验证「物品 + 按住右键使用 → 效果生效」这条路，以及两种目标：
-         ① target="Character"         → 只作用于使用者（转发给全队的前提）
-         ② target="NearbyCharacters"  → 作用于 400 范围内所有人（不筛选敌我）
+       【流程】
+         ① 天赋交替发放「星极抽卡」/「灵极抽卡」（每 60 秒一个）
+         ② 按住右键用它 → 该极的 3 张卡进入它【自己的容器】（随身只占 1 格）
+         ③ 把想用的卡拖出来，按住右键打出
+         ④ 抽卡道具在“第一次被使用”之后 60 秒自毁，
+            容器里没用掉的卡随它一起销毁
+            = 上一轮抽出来的卡，在下一轮抽卡时已经被清掉
 
-       写法照原版技能书 skillbookeuropanmedicine
-       （Content/Items/Jobgear/Medic/medic_talent_items.xml），
-       只把“给技能点”换成“给 buff”。
+       ── 为什么做成容器 ──
+       角色随身有 9 个通用格（Content/Characters/Human/Human.xml:65），
+       3 张卡直接进背包就要吃掉 3 格。装进容器后只占 1 格；
+       而“容器自毁”顺手就实现了“清掉上一轮没用的卡”。
 
-       验证方式：F3 → spawnitem mcj_card_test → 拿在手里按住右键
-         自己身上出现「太阳神之衡」  = ① 成立
-         旁边队友出现「战争神之枪」  = ② 成立
+       ── 装卡怎么写 ──
+       <SpawnItem identifier="..." spawnposition="ThisInventory" />
+       配合 target="This" = 生成到该物品【自己的容器】里。
+       与天球仪预装凶星同一个手法（写法来自原版 toolbelt）。
 
-       ⚠️ 设计定稿后本物品会被 6 张卡取代，可直接删除
+       ── SpawnIfNotInInventory ──
+       = “背包里已经有这张卡就不再生成”。
+       卡装在容器里、容器在你背包里，所以这一条同时挡住了“反复右键刷同一张卡”。
+       （原版实例 creatureloot.xml:337）
+
+       ── 60 秒自毁怎么写 ──
+       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+       原版实例 alienitems.xml:2037（守卫修理绳，注释写着 "Remove 1 second after snapping"）；
+       同文件 EMP 那条注释写着 "EMP explosion every 15 seconds"
+       → 说明 Always + delay 的语义是【每 N 秒触发一次】，第一次触发恰好就是"N 秒后"。
+
+       ── 抽卡道具的计时启动 ──
+       完全照抄命运之轮的“拔销”结构：
+         Holdable 里 OnSecondaryUse + <Use /> 把 ItemComponent 置为 IsActive，
+         ItemComponent 里 OnActive + delay 开始计时。
+       用 <Conditional IsActive="false" /> 保证只启动一次，不会因为反复右键而重置。
+
+       ⚠️ 过渡状态：卡打出去目前只给自己上既有的常驻 affliction（mcj_balance 等），
+          目的是让“卡生效了”肉眼可见。
+          下一轮会改成：卡只留一个 10 秒的信号 → 由天赋广播给全队（含自己、无视距离）。
        ============================================================ -->
-  <Item name="" identifier="mcj_card_test" category="Misc" tags="smallitem,cardtest" maxstacksize="8" scale="0.5" impactsoundtag="impact_soft">
+
+  <!-- ===== 抽卡道具 ①：星极抽卡 ===== -->
+  <Item name="" identifier="mcj_draw_star" category="Misc"
+        tags="smallitem,mcjdrawitem" maxstacksize="1" scale="0.5"
+        cargocontaineridentifier="metalcrate" impactsoundtag="impact_soft">
+
     <InventoryIcon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
 
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
+              msg="ItemMsgPickUpSelect">
 
-      <!-- ① 只给使用者 -->
+      <!-- ① 抽卡：把星极的 3 张卡装进自己的容器 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true">
+        <SpawnItem identifier="mcj_card_balance" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <SpawnItem identifier="mcj_card_arrow"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <SpawnItem identifier="mcj_card_spire"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+      </StatusEffect>
+
+      <!-- ② 表现 -->
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
+                         particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="255,230,160,255" />
+      </StatusEffect>
+
+      <!-- ③ 启动 60 秒寿命（只启动一次） -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+
+    </Holdable>
+
+    <!-- 容器：只接受星极的 3 张卡，容量 4（3 张卡 + 1 格余量） -->
+    <ItemContainer capacity="4" maxstacksize="1">
+      <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire" />
+    </ItemContainer>
+
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!-- 第一次使用 → 开始计时 -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+      </StatusEffect>
+      <!-- 激活 60 秒后：自己消失，容器里残留的卡一并销毁 -->
+      <StatusEffect type="OnActive" target="This" delay="60">
+        <Remove />
+      </StatusEffect>
+    </ItemComponent>
+
+  </Item>
+
+  <!-- ===== 抽卡道具 ②：灵极抽卡 ===== -->
+  <Item name="" identifier="mcj_draw_umbral" category="Misc"
+        tags="smallitem,mcjdrawitem" maxstacksize="1" scale="0.5"
+        cargocontaineridentifier="metalcrate" impactsoundtag="impact_soft">
+
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
+              msg="ItemMsgPickUpSelect">
+
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true">
+        <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <SpawnItem identifier="mcj_card_bole"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <SpawnItem identifier="mcj_card_ewer"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+      </StatusEffect>
+
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
+                         particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="190,160,255,255" />
+      </StatusEffect>
+
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+
+    </Holdable>
+
+    <ItemContainer capacity="4" maxstacksize="1">
+      <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer" />
+    </ItemContainer>
+
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <StatusEffect type="OnUse" targettype="This" IsActive="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" target="This" delay="60">
+        <Remove />
+      </StatusEffect>
+    </ItemComponent>
+
+  </Item>
+
+  <!-- ============================================================
+       6 张奥秘卡
+       贴图直接复用 Textures/Talents/ 下已有的 FF14 卡面（128x128）。
+
+       【怎么打出去】
+       按住右键 = OnSecondaryUse（原版技能书 skillbookeuropanmedicine
+       就是这条：Content/Items/Jobgear/Medic/medic_talent_items.xml）。
+       卡拖到手上才能用；打出后自己消失。
+
+       【卡有时限】
+       Always + delay=60 → 出生 60 秒后自己消失。
+       正好对齐“60 秒一轮”的抽卡节奏：
+       上一轮的卡在你下一次抽卡时已经自动没了。
+       ============================================================ -->
+
+  <Item name="" identifier="mcj_card_balance" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_balance" strength="1" />
       </StatusEffect>
-
-      <!-- ② 400 范围内所有人（不筛选敌我） -->
-      <StatusEffect type="OnSecondaryUse" target="NearbyCharacters" range="400" disabledeltatime="true">
-        <Affliction identifier="mcj_spear" strength="1" />
-      </StatusEffect>
-
-      <!-- ③ 表现：音效 + 光效 -->
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
-        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="255,230,160,255" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
 
-      <!-- ④ 用掉即消失 -->
+  <Item name="" identifier="mcj_card_arrow" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_arrow" strength="1" />
+      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
-        <Remove />
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
 
+  <Item name="" identifier="mcj_card_spire" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_spire" strength="1" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
+
+  <Item name="" identifier="mcj_card_spear" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_spear" strength="1" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
+
+  <Item name="" identifier="mcj_card_bole" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_bole" strength="1" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
+
+  <Item name="" identifier="mcj_card_ewer" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_ewer" strength="1" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 

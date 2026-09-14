@@ -154,9 +154,25 @@
   <!-- ===== 通用：占位符描述（mcj_celestialopposition / mcj_wheeloffortune 在用） ===== -->
   <talentdescription.mcj_placeholder>（占位符：效果待重新设计）</talentdescription.mcj_placeholder>
 
-  <!-- ===== 测试卡片（临时，验证用，定稿后删除） ===== -->
-  <entityname.mcj_card_test>测试卡片</entityname.mcj_card_test>
-  <entitydescription.mcj_card_test>占星术士的测试用卡片：拿在手里按住右键使用，会给使用者与附近船员施加增益。</entitydescription.mcj_card_test>
+  <!-- ===== 奥秘卡：抽卡道具 ===== -->
+  <entityname.mcj_draw_star>星极抽卡</entityname.mcj_draw_star>
+  <entitydescription.mcj_draw_star>星极的牌组。按住右键抽牌，太阳神之衡、放浪神之箭、建筑神之塔会落入其中。抽牌后 60 秒，这副牌连同没用掉的卡一并消散，换灵极的牌组到来。</entitydescription.mcj_draw_star>
+  <entityname.mcj_draw_umbral>灵极抽卡</entityname.mcj_draw_umbral>
+  <entitydescription.mcj_draw_umbral>灵极的牌组。按住右键抽牌，战争神之枪、世界树之干、河流神之瓶会落入其中。抽牌后 60 秒，这副牌连同没用掉的卡一并消散，换星极的牌组到来。</entitydescription.mcj_draw_umbral>
+
+  <!-- ===== 奥秘卡：6 张卡 ===== -->
+  <entityname.mcj_card_balance>太阳神之衡</entityname.mcj_card_balance>
+  <entitydescription.mcj_card_balance>天秤两端，一端是生，一端是死。按住右键打出，使全队造成的伤害提升。</entitydescription.mcj_card_balance>
+  <entityname.mcj_card_arrow>放浪神之箭</entityname.mcj_card_arrow>
+  <entitydescription.mcj_card_arrow>一支永远在飞的箭。按住右键打出，使全队的移动与游泳速度提升。</entitydescription.mcj_card_arrow>
+  <entityname.mcj_card_spire>建筑神之塔</entityname.mcj_card_spire>
+  <entitydescription.mcj_card_spire>通向高处的塔。按住右键打出，使全队的修理速度与修船壳速度提升。</entitydescription.mcj_card_spire>
+  <entityname.mcj_card_spear>战争神之枪</entityname.mcj_card_spear>
+  <entitydescription.mcj_card_spear>掷出便不再收回的枪。按住右键打出，使全队的攻击速度提升。</entitydescription.mcj_card_spear>
+  <entityname.mcj_card_bole>世界树之干</entityname.mcj_card_bole>
+  <entitydescription.mcj_card_bole>支撑起整个世界的那根树干。按住右键打出，使全队受到的伤害降低。</entitydescription.mcj_card_bole>
+  <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>
+  <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。按住右键打出，使全队的氧气消耗降低。</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
   <talentdescription.mcj_malefic>你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
