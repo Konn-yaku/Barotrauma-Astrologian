@@ -148,6 +148,12 @@
 
        【数值】全部落在 {0.15, 0.20, 0.30}，_boost 只有 {0.05, 0.10}。
        每一项都低于原版对应的天赋/基因数值（见 README）。
+
+       【显示】6 张卡的 affliction 是【可见】的 —— 用图标本身告诉玩家
+       "哪几张卡正在生效"。6 个 _boost 只是纯粹的数值增量、没有独立信息，
+       因此全部隐藏，buff 栏最多只有 6 个图标（而不是 12 个）。
+       隐藏三件套：showiconthreshold / showicontoothersthreshold /
+       showinhealthscannerthreshold = "1000"（原版 melodicrespite_charging 的写法）。
        ============================================================ -->
 
   <!-- ===== 太阳神之衡：全队增伤 ===== -->
@@ -171,6 +177,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
@@ -204,6 +213,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
@@ -239,6 +251,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
@@ -274,6 +289,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
@@ -311,6 +329,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
@@ -346,6 +367,9 @@
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
               resetbetweenrounds="true"
