@@ -102,4 +102,18 @@ Each Earthly Star works only once — you must fabricate a new one.</talentdescr
 Once charged, it needs only to be submerged: it blooms, mends the hull around it, and fades.
 It cannot foresee harm — it can only be placed in advance. The timing is everything.</entitydescription.mcj_earthlystar>
 
+  <!-- ===== Wheel of Fortune ===== -->
+  <talentname.mcj_wheeloffortune>Wheel of Fortune</talentname.mcj_wheeloffortune>
+  <talentdescription.mcj_wheeloffortune>Gain a Wheel of Fortune, and unlock its fabrication recipe.
+Throw it at your crew. It shatters on impact, granting every crew member within ‖color:gui.green‖400‖end‖ units
+‖color:gui.green‖50‖end‖% damage resistance for ‖color:gui.green‖8‖end‖ seconds,
+and continuously reducing their ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖ while it lasts.
+It is consumed on use — you must fabricate a new one.</talentdescription.mcj_wheeloffortune>
+  <entityname.mcj_wheeloffortune>Wheel of Fortune</entityname.mcj_wheeloffortune>
+  <entitydescription.mcj_wheeloffortune>A wheel cast from the tracks of stars. Thrown, it shatters on the ground and leaves a brief stretch of good fortune behind.
+For 8 seconds, those it covers take half damage while their wounds and bleeding ebb away.
+It does not tell friend from foe — fortune never picks.</entitydescription.mcj_wheeloffortune>
+  <afflictionname.mcj_wheeloffortune>Wheel of Fortune</afflictionname.mcj_wheeloffortune>
+  <afflictiondescription.mcj_wheeloffortune>You gain ‖color:gui.green‖50‖end‖% damage resistance, and your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_wheeloffortune>
+
 </infotexts>

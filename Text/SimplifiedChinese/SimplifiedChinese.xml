@@ -115,4 +115,18 @@
   <entitydescription.mcj_earthlystar>一颗尚未点亮的星。把它留在地上，星光会慢慢汇聚。
 蓄力完成后，只要它被水淹没，就会在绽放中修补周围的船体，随即消散。
 它无法预知伤害，只能提前布下 —— 所以放下的时机就是它的全部。</entitydescription.mcj_earthlystar>
+
+  <!-- ===== 第三栏 · 命运之轮 ===== -->
+  <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
+  <talentdescription.mcj_wheeloffortune>获得一副「命运之轮」，并解锁它的制造配方。
+把它掷向你的队友。它落地即碎，为周围 ‖color:gui.green‖400‖end‖ 范围内的全体船员带来
+‖color:gui.green‖8‖end‖ 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，
+并在持续期间不断减轻他们的 ‖color:gui.orange‖伤势‖end‖ 与 ‖color:gui.orange‖出血‖end‖。
+掷完就没了，需要重新制作。</talentdescription.mcj_wheeloffortune>
+  <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
+  <entitydescription.mcj_wheeloffortune>以星轨铸成的一副轮盘。掷出后在地上碎开，把一小段好运留给周围的人。
+8 秒之内，被它笼罩的人所受的伤害减半，伤势与出血也会自行消退。
+它不分辨敌我 —— 命运从不挑人。</entitydescription.mcj_wheeloffortune>
+  <afflictionname.mcj_wheeloffortune>命运之轮</afflictionname.mcj_wheeloffortune>
+  <afflictiondescription.mcj_wheeloffortune>你获得 ‖color:gui.green‖50‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
 </infotexts>

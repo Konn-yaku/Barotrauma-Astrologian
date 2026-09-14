@@ -120,6 +120,9 @@
 
          第 2 档「地星」—— 不做输出，做「预先布置」：
          放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
+
+         第 3 档「命运之轮」—— 辅助向投掷物：
+         掷出即碎，给周围船员 8 秒的高额减伤 + 持续治疗。
          后续档位待设计。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
@@ -131,6 +134,11 @@
       <!-- 第 2 档 -->
       <TalentOptions>
         <TalentOption identifier="mcj_earthlystar" />
+      </TalentOptions>
+
+      <!-- 第 3 档 -->
+      <TalentOptions>
+        <TalentOption identifier="mcj_wheeloffortune" />
       </TalentOptions>
     </SubTree>
 

@@ -463,4 +463,30 @@
     <AddedRecipe itemidentifier="mcj_earthlystar" />
   </Talent>
 
+  <!-- ============================================================
+       第三栏 · 命运之轮（mcj_path_astrolabe）第 3 档
+
+       可投掷的范围减伤 + 治疗装置：掷出 → 落地碎裂 →
+       周围 400 内的人类船员获得 8 秒 50% 全伤害抗性 + 持续治疗。
+       机制与全部查证依据写在 Items/AstrologianItems.xml 里。
+
+       和地星一样：发放一颗 + 解锁配方（AddedRecipe + requiresrecipe）。
+       ============================================================ -->
+  <Talent identifier="mcj_wheeloffortune">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_wheeloffortune" />
+
+    <AbilityGroupInterval interval="2.0">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_wheeloffortune_given" min="1" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_wheeloffortune" amount="1" />
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_wheeloffortune_given" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AddedRecipe itemidentifier="mcj_wheeloffortune" />
+  </Talent>
+
 </Talents>

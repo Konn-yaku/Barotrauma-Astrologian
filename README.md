@@ -19,7 +19,7 @@
 | 职业本体（技能 / 初始装备 / AI 行为 / 指令） | ✅ 完成 |
 | 专精线一 · 占星魔法（5 个原创天赋） | ✅ 完成，已在游戏中验证 |
 | 专精线二 · 奥秘卡（6 张卡 + 星力） | ✅ 完成，待游戏验证 |
-| 专精线三 · 会奶人的DPS（专属武器 + 地星） | 🚧 第 1、2 档完成，待游戏验证 |
+| 专精线三 · 会奶人的DPS（专属武器 + 地星 + 命运之轮） | 🚧 第 1~3 档完成，待游戏验证 |
 | 初级天赋 | 🚧 暂为占位内容 |
 | 专属装备与职业图标 | 🚧 天球仪已做，贴图为占位；职业图标待做 |
 
@@ -195,6 +195,74 @@ XML 层**没有**可捕捉的「船体受损」事件（触发器全集里没有
 地星是一次性的，所以这一档同时用 `<AddedRecipe>` 解锁它的配方
 （物品那边写 `requiresrecipe="true"`），写法照原版机械师天赋 `hullfixer` 解锁固化泡沫手榴弹。
 
+---
+
+## 命运之轮（第三栏 · 第 3 档）
+
+一件**投掷物**：掷向队友，落地即碎，给周围的人一段短暂的好运。
+
+| 项 | 值 |
+|---|---|
+| 触发方式 | 投掷 → 落地碎裂（`OnImpact` 把自己打碎 → `OnBroken` 生效） |
+| 范围 | 400（只对 `targets="human"` 生效，不会把海怪一并治好） |
+| 减伤 | **50% 全伤害抗性** |
+| 治疗 | 持续 8 秒，共削减约 30 点伤害 + 10 点出血 |
+| 持续 | 8 秒 |
+| 消耗 | 一次性，用完需重新制作 |
+
+### 强度对照
+
+| 来源 | 减伤 | 持续 | 获取 |
+|---|---|---|---|
+| 本模组「天星交错」 | 15% | 整个任务 | 点天赋即得 |
+| 本模组「世界树之干」 | 20% | 整个任务 | 点天赋即得 |
+| 原版 `damage` 抗性上限 | 50% | 永久 | 「Afflictions.xml:2612」 |
+| 原版基因材料 | 20~60% | 永久 | 随机基因 |
+| **命运之轮** | **50%** | **8 秒** | **消耗品** |
+
+数值摸到了原版上限，但代价是「8 秒 + 一次性消耗品」。
+
+### 技术路线（三个要说清楚的地方）
+
+**一、怎么把 buff 给到范围内的人**
+
+原版有现成写法（工程师的辐射发射器 `engineer_talent_items.xml:754`）：
+
+```xml
+<StatusEffect type="Always" target="NearbyCharacters" range="125" interval="1">
+  <Affliction identifier="radiationsickness" strength="1" />
+</StatusEffect>
+```
+
+把它换成 `OnBroken` 就是「落地后给周围上 buff」。
+
+**二、为什么必须写 `targets="human"`**
+
+`NearbyCharacters` **没有任何队伍过滤属性** —— 字段全集里只有
+`target` / `targets` / `targetidentifiers` / `targettags` 等，没有 `team`。
+原版的做法就是按物种过滤（`Watcher.xml` 用 `targets="human"`）。
+不限定的话，范围内的海怪也会被减伤 + 治疗，那就成了负面效果。
+
+> ⚠️ 残留问题：**敌方人类**（海盗 / 分离主义者）仍会吃到 buff。
+> 原版也没有解决这个的写法，影响很小，先接受。
+
+**三、减伤 + 治疗写在同一个状态里**
+
+`Affliction` 可以带多个 `<Effect>`，两个各管一半：
+
+```xml
+<Effect resistancefor="damage" minresistance="0.5" maxresistance="0.5" />
+<Effect>
+  <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+    <ReduceAffliction type="damage" amount="0.375" />
+    <ReduceAffliction type="bleeding" amount="0.125" />
+  </StatusEffect>
+</Effect>
+```
+
+回血速率是 3.75/秒，是「阳星合相」（0.75/秒）的 5 倍，但只跑 8 秒 ——
+总量依然是「救急」，不是「回满」。
+
 ## 设计说明
 
 潜渊症**没有"回血"这个概念**。角色身上挂着各种状态（affliction），
@@ -224,7 +292,7 @@ Astrologian/
 ├─ TalentTrees/AstrologianTalentTrees.xml 天赋树结构
 ├─ Talents/AstrologianTalents.xml        天赋实现
 ├─ Afflictions/AstrologianAfflictions.xml 天赋用的隐藏增益
-├─ Items/AstrologianItems.xml            专属装备（天球仪 / 星辉弹 / 地星）
+├─ Items/AstrologianItems.xml            专属装备（天球仪 / 星辉弹 / 地星 / 命运之轮）
 └─ Text/
    ├─ SimplifiedChinese/SimplifiedChinese.xml
    └─ English/English.xml

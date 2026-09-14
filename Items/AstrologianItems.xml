@@ -262,4 +262,87 @@
     </Throwable>
   </Item>
 
+  <!-- ============================================================
+       命运之轮 mcj_wheeloffortune
+       可投掷的范围减伤 + 治疗装置。由第三栏第 3 档天赋发放。
+
+       【流程】掷出 → 落地碎裂 → 周围 400 内的船员获得 8 秒
+              50% 全伤害抗性 + 持续治疗（详见 Afflictions）
+
+       ── 落地碎裂怎么写 ──
+       照原版手雷的通用写法：OnImpact 把自己打碎，OnBroken 再做事：
+           <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
+       （写法来自原版液态氧石 alienitems.xml:335）
+
+       ── 怎么把 buff 给到附近的人 ──
+       原版实测写法（工程师的辐射发射器 engineer_talent_items.xml:754）：
+           <StatusEffect type="Always" target="NearbyCharacters" range="125" interval="1">
+             <Affliction identifier="radiationsickness" strength="1" />
+           </StatusEffect>
+       所以我们用 OnBroken + NearbyCharacters + <Affliction> 即可。
+
+       ── 为什么限定 targets="human" ──
+       NearbyCharacters 没有任何“队伍”过滤属性（字段全集里只有 target / targets /
+       targetidentifiers / targettags 等，没有 team）。原版的做法就是用 targets 按
+       物种过滤（Watcher.xml: "targets=\"human\""）。
+           → 不限定的话，范围内的海怪也会被减伤 + 治疗，那就成了负面效果。
+       ⚠️ 残留问题：敌方人类（海盗 / 分离主义者）仍会吃到 buff。
+          原版也没有解决这个的写法，影响很小，先接受。
+
+       【数值对照】
+         原版 resistancefor="damage" 上限 0.5（Afflictions.xml:2612），基因材料 0.6
+         本模组「天星交错」 0.15 / 「世界树之干」 0.2（都是永久生效）
+         命运之轮 0.5，但只 8 秒、且靠消耗品触发 ============================================================ -->
+  <Item name="" identifier="mcj_wheeloffortune" category="Equipment"
+        tags="smallitem,wheeloffortune"
+        cargocontaineridentifier="metalcrate" allowasextracargo="true" scale="0.5"
+        impactsoundtag="impact_metal_light">
+
+    <Price baseprice="200" sold="false" />
+
+    <Deconstruct time="15">
+      <Item identifier="fulgurium" />
+      <Item identifier="plastic" />
+    </Deconstruct>
+
+    <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="fulgurium" />
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+
+    <InventoryIcon texture="Content/Items/Alien/AlienMaterials.png" sourcerect="97,349,58,71" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="97,349,58,71" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="40" density="30" friction="1.0" angulardamping="20.0" />
+
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5"
+               aimpos="35,-10" msg="ItemMsgPickUpSelect">
+
+      <!-- 落地即碎 -->
+      <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
+
+      <!-- 给周围船员上 buff（只限人类，不把怪物一并治好） -->
+      <StatusEffect type="OnBroken" target="NearbyCharacters" range="400" targets="human" disabledeltatime="true">
+        <Affliction identifier="mcj_wheeloffortune" strength="1" />
+      </StatusEffect>
+
+      <!-- 碎裂特效 -->
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="FlareBubbles" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="150" particleamount="30"
+                         scalemin="2.0" scalemax="3.0" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="0" particleamount="28"
+                         scalemin="6.0" scalemax="6.0" colormultiplier="255,230,160,255" />
+      </StatusEffect>
+
+      <!-- 碎后不留残骸 -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+
+    </Throwable>
+  </Item>
+
 </Items>
