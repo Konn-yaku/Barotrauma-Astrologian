@@ -133,4 +133,230 @@
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
+  <!-- ============================================================
+       第二栏 · 奥秘卡（全队常驻增益）
+       来源天赋：mcj_path_arcanum
+
+       【结构】6 张卡 = 6 个基础 affliction + 6 个 _boost affliction。
+       「星力」天赋会在你拥有某张卡天赋时，额外给全队施加对应的 _boost。
+       两个 affliction 的 StatValue 会自然相加 —— 这就是"星力放大卡牌效果"的实现。
+
+       【为什么不用"抬高同一个 affliction 的强度"】
+       GiveAffliction 的数值是往 maxstrength 上限累加的，
+       基础值和强化值最终都会饱和到同一个上限，区分不出来。
+       两个不同的 affliction 相加则没有这个问题。
+
+       【数值】全部落在 {0.15, 0.20, 0.30}，_boost 只有 {0.05, 0.10}。
+       每一项都低于原版对应的天赋/基因数值（见 README）。
+       ============================================================ -->
+
+  <!-- ===== 太阳神之衡：全队增伤 ===== -->
+  <Affliction identifier="mcj_balance"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 原版参照：安全官 implacable / tandemfire 为 0.25 / 0.20（限时·仅自己） -->
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="AttackMultiplier" value="0.15" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_balance_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="AttackMultiplier" value="0.05" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 战争神之枪：全队攻击速度 ===== -->
+  <Affliction identifier="mcj_spear"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 原版参照：舰长天赋 0.30 / 0.20 -->
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="MeleeAttackSpeed" value="0.20" />
+      <StatValue stattype="RangedAttackSpeed" value="0.15" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_spear_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="MeleeAttackSpeed" value="0.10" />
+      <StatValue stattype="RangedAttackSpeed" value="0.05" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 放浪神之箭：全队移动速度与游泳速度 ===== -->
+  <Affliction identifier="mcj_arrow"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
+         原版参照：增加行走速度基因 0.10~0.25 / 增加游泳速度基因 0.10~0.50 -->
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="WalkingSpeed" value="0.15" />
+      <StatValue stattype="SwimmingSpeed" value="0.20" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_arrow_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="WalkingSpeed" value="0.05" />
+      <StatValue stattype="SwimmingSpeed" value="0.10" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 世界树之干：全队伤害抗性 ===== -->
+  <Affliction identifier="mcj_bole"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 原版参照：伤害抗性基因 0.10~0.25 -->
+    <Effect minstrength="0" maxstrength="1"
+            strengthchange="0"
+            resistancefor="damage"
+            minresistance="0.15"
+            maxresistance="0.15" />
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_bole_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1"
+            strengthchange="0"
+            resistancefor="damage"
+            minresistance="0.05"
+            maxresistance="0.05" />
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 建筑神之塔：全队修理速度与修船壳速度 ===== -->
+  <Affliction identifier="mcj_spire"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- RepairSpeed = 通用修理速度（机械 + 电器一起覆盖）
+         RepairToolStructureRepairMultiplier = 修船壳速度
+         原版参照：工程师天赋 stationengineer 为 0.50 / 0.50 -->
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="RepairSpeed" value="0.20" />
+      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.20" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_spire_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="RepairSpeed" value="0.10" />
+      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.10" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 河流神之瓶：全队氧气消耗 ===== -->
+  <Affliction identifier="mcj_ewer"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 原版参照：减氧消耗基因 0.20~1.00 -->
+    <Effect minstrength="0" maxstrength="1"
+            strengthchange="0"
+            resistancefor="oxygenlow"
+            minresistance="0.20"
+            maxresistance="0.20" />
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_ewer_boost"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1"
+            strengthchange="0"
+            resistancefor="oxygenlow"
+            minresistance="0.10"
+            maxresistance="0.10" />
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
 </Afflictions>

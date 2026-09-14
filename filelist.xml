@@ -7,7 +7,7 @@
   这个文件是模组入口清单。新增任何文件后必须在这里登记，否则游戏不会加载。
   %ModDir% 表示"本模组根目录"，游戏自动替换。
 -->
-<contentpackage name="Astrologian" modversion="0.3.0" corepackage="False" gameversion="1.13.4.0">
+<contentpackage name="Astrologian" modversion="0.4.0" corepackage="False" gameversion="1.13.4.0">
 
   <!-- 职业定义：技能、初始装备、自主行为 -->
   <Jobs file="%ModDir%/Jobs/AstrologianJob.xml" />
@@ -15,7 +15,7 @@
   <!-- 天赋树 -->
   <TalentTrees file="%ModDir%/TalentTrees/AstrologianTalentTrees.xml" />
 
-  <!-- 自定义天赋（治疗线已实装） -->
+  <!-- 自定义天赋（治疗线 + 奥秘卡）-->
   <Talents file="%ModDir%/Talents/AstrologianTalents.xml" />
 
   <!-- 自定义增益状态（天赋的实现载体） -->

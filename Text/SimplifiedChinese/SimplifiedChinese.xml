@@ -20,7 +20,7 @@
        mcj_path_healing 是我们自己的治疗线（名字暂定，等三条线定完再统一改）
        另两条仍是医生镜像的占位，待重做 -->
   <talenttree.mcj_path_healing>治疗</talenttree.mcj_path_healing>
-  <talenttree.mcj_path_xenologist>异星学家</talenttree.mcj_path_xenologist>
+  <talenttree.mcj_path_arcanum>奥秘卡</talenttree.mcj_path_arcanum>
   <talenttree.mcj_path_scientist>化学家</talenttree.mcj_path_scientist>
 
   <!-- ===== 治疗线天赋名称 ===== -->
@@ -44,5 +44,52 @@
   <afflictiondescription.mcj_helios>你的伤势正在缓慢愈合。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>你在因伤痛倒地时不会死去，并会自动完全恢复伤势；触发后此庇护消失。</afflictiondescription.mcj_stargate>
+  <!-- ===== 第二栏 · 奥秘卡：天赋名称 ===== -->
+  <talentname.mcj_balance>太阳神之衢</talentname.mcj_balance>
+  <talentname.mcj_spear>战争神之枪</talentname.mcj_spear>
+  <talentname.mcj_arrow>放浪神之箭</talentname.mcj_arrow>
+  <talentname.mcj_bole>世界树之干</talentname.mcj_bole>
+  <talentname.mcj_spire>建筑神之塔</talentname.mcj_spire>
+  <talentname.mcj_ewer>河流神之瓶</talentname.mcj_ewer>
+  <talentname.mcj_astrodyne>星力</talentname.mcj_astrodyne>
 
+  <!-- ===== 第二栏 · 奥秘卡：天赋描述 ===== -->
+  <talentdescription.mcj_balance>全部船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_balance>
+  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖% / ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_spear>
+  <talentdescription.mcj_arrow>全部船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖15‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖% / ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_arrow>
+  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_bole>
+  <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_spire>
+  <talentdescription.mcj_ewer>全部船员的 ‖color:gui.orange‖氧气消耗‖end‖ 降低 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_ewer>
+  <talentdescription.mcj_astrodyne>强化你已点出的每一张奥秘卡，使其效果提升 ‖color:gui.green‖50‖end‖%。\n只影响你已经点出的卡——点的越多，收益越高。</talentdescription.mcj_astrodyne>
+
+  <!-- ===== 第二栏 · 奥秘卡：隐藏增益 ===== -->
+  <afflictionname.mcj_balance>太阳神之衢</afflictionname.mcj_balance>
+  <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_balance>
+  <afflictionname.mcj_balance_boost>太阳神之衢·星力</afflictionname.mcj_balance_boost>
+  <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_balance_boost>
+
+  <afflictionname.mcj_spear>战争神之枪</afflictionname.mcj_spear>
+  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖20‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_spear>
+  <afflictionname.mcj_spear_boost>战争神之枪·星力</afflictionname.mcj_spear_boost>
+  <afflictiondescription.mcj_spear_boost>星力强化：近战攻击速度再提升 ‖color:gui.green‖10‖end‖%，远程再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_spear_boost>
+
+  <afflictionname.mcj_arrow>放浪神之箭</afflictionname.mcj_arrow>
+  <afflictiondescription.mcj_arrow>你的移动速度提升 ‖color:gui.green‖15‖end‖%，游泳速度提升 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_arrow>
+  <afflictionname.mcj_arrow_boost>放浪神之箭·星力</afflictionname.mcj_arrow_boost>
+  <afflictiondescription.mcj_arrow_boost>星力强化：移动速度再提升 ‖color:gui.green‖5‖end‖%，游泳速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_arrow_boost>
+
+  <afflictionname.mcj_bole>世界树之干</afflictionname.mcj_bole>
+  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。</afflictiondescription.mcj_bole>
+  <afflictionname.mcj_bole_boost>世界树之干·星力</afflictionname.mcj_bole_boost>
+  <afflictiondescription.mcj_bole_boost>星力强化：全伤害抗性再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_bole_boost>
+
+  <afflictionname.mcj_spire>建筑神之塔</afflictionname.mcj_spire>
+  <afflictiondescription.mcj_spire>你的维修速度（机械与电器）与焊接船体速度提升 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_spire>
+  <afflictionname.mcj_spire_boost>建筑神之塔·星力</afflictionname.mcj_spire_boost>
+  <afflictiondescription.mcj_spire_boost>星力强化：维修与焊接船体速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_spire_boost>
+
+  <afflictionname.mcj_ewer>河流神之瓶</afflictionname.mcj_ewer>
+  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_ewer>
+  <afflictionname.mcj_ewer_boost>河流神之瓶·星力</afflictionname.mcj_ewer_boost>
+  <afflictiondescription.mcj_ewer_boost>星力强化：氧气消耗再降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_ewer_boost>
 </infotexts>

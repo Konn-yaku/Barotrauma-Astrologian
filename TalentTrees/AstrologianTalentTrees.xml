@@ -2,12 +2,12 @@
 <!--
   占星术士 · 天赋树
   
-  【当前状态：骨架】这一版是原版医生天赋树的 1:1 镜像，天赋全部是原版的，
-  只是把子树的 id 加了 mcj_ 前缀。目的是让你可以在游戏里直接看到
-  "医生原本长什么样"，再决定我们自己的三条线怎么分。
+  【当前状态】三条专精线：
+    mcj_path_healing  —— 治疗线（第一栏，已实装）
+    mcj_path_arcanum  —— 奥秘卡（第二栏，已实装）
+    mcj_path_scientist—— 作战辅助（第三栏，仍是医生「化学家」镜像的占位）
 
-  之后我们要做的事：把这里的原版天赋逐个换成 mcj_ 自己的天赋
-  （需要同时新增 Talents/ 和 Afflictions/ 两个文件）。
+  初级树 mcj_astrologian_primary 目前仍是医生初级树的镜像，待重做。
 
   ── 参数语义（来自官方 API 文档 BuildDocClient.xml）──
     TalentTree jobidentifier
@@ -51,25 +51,40 @@
 
     </SubTree>
 
-    <!-- ================= 专精 A：对应医生的「异星学家」=================
-         原版主题是基因工程/生物材料。
-         占星术士主题下这条线打算改造成「天象」——但先不动，等讨论。 -->
-    <SubTree identifier="mcj_path_xenologist" type="specialization"
+    <!-- ================= 专精 A：奥秘卡（第二栏 · 团队辅助）=================
+         6 张奥秘卡（FF14 占星术士的标志性机制）+ 第 4 档大招「星力」。
+         被动、全队常驻，不做抽卡、不做随机目标。
+         每档 = 1 张星极 + 1 张灵极，对应原作的两个抽卡按钮。
+
+         数值全部取自原版对应天赋/基因的下方区间，星力后仍低于原版。
+         天赋实现见 Talents/AstrologianTalents.xml
+         状态实现见 Afflictions/AstrologianAfflictions.xml -->
+    <SubTree identifier="mcj_path_arcanum" type="specialization"
              requires="mcj_astrologian_primary">
-      <TalentOptions>
-        <TalentOption identifier="geneharvester" />
-      </TalentOptions>
+
+      <!-- 第 1 档 -->
       <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="bloodybusiness" />
-        <TalentOption identifier="genesplicer" />
+        <TalentOption identifier="mcj_balance" />
+        <TalentOption identifier="mcj_spear" />
       </TalentOptions>
+
+      <!-- 第 2 档 -->
       <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="blackmarketgenes" />
-        <TalentOption identifier="genetampering" />
+        <TalentOption identifier="mcj_arrow" />
+        <TalentOption identifier="mcj_bole" />
       </TalentOptions>
+
+      <!-- 第 3 档 -->
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="mcj_spire" />
+        <TalentOption identifier="mcj_ewer" />
+      </TalentOptions>
+
+      <!-- 第 4 档 -->
       <TalentOptions>
-        <TalentOption identifier="geneticgenious" />
+        <TalentOption identifier="mcj_astrodyne" />
       </TalentOptions>
+
     </SubTree>
 
     <!-- ================= 专精 B：治疗线（我们自己的第一支）=================

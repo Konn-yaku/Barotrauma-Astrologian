@@ -174,4 +174,235 @@
     </AbilityGroupEffect>
   </Talent>
 
+  <!-- ============================================================
+       第二栏 · 奥秘卡（mcj_path_arcanum）
+       ============================================================
+
+       【6 张卡的统一结构】
+         AbilityGroupInterval 每 5 秒重跑一次，
+         把自己的卡施给全图的友方（maxdistance 写到 200000 = 无距离限制，
+         和本文件里「星天开门」用的是同一个写法）。
+         buff 本身没有 duration，配合 resetbetweenrounds="true"
+         → 整局常驻、任务结束自动清除。
+
+       【为什么是"卡给全队"而不是"给随机一个人"】
+         这是第二栏的设计前提：卡是常驻的团队增益，
+         不做抽卡、不做随机目标，避免"需要战斗时抽到潜水卡"。
+
+       【数值定稿】见 Afflictions/AstrologianAfflictions.xml 的注释。
+       ============================================================ -->
+
+  <!-- 太阳神之衡：全队增伤 -->
+  <Talent identifier="mcj_balance">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_balance" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_balance" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- 战争神之枪：全队攻击速度 -->
+  <Talent identifier="mcj_spear">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_spear" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spear" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- 放浪神之箭：全队移动速度与游泳速度 -->
+  <Talent identifier="mcj_arrow">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_arrow" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_arrow" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- 世界树之干：全队伤害抗性 -->
+  <Talent identifier="mcj_bole">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_bole" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_bole" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- 建筑神之塔：全队修理速度与修船壳速度 -->
+  <Talent identifier="mcj_spire">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_spire" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spire" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- 河流神之瓶：全队氧气消耗 -->
+  <Talent identifier="mcj_ewer">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_ewer" />
+    <AbilityGroupInterval interval="5.0">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_ewer" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- ============================================================
+       星力 —— 第二栏第 4 档（大招）
+       把上面 6 张卡的效果整体放大。
+
+       【实现方式】给每张卡各配一个 "_boost" affliction，
+       当且仅当你点出了那张卡的天赋时才施加。
+       两个 affliction 的 StatValue 自然相加 = 基础值 + 增量。
+
+       【为什么每张卡要单独一块 AbilityGroupInterval】
+       条件写在 AbilityGroup 层级，无法只作用于组里的某一条 ability，
+       所以"逐卡判断是否已解锁"就必须拆成 6 块。
+
+       【为什么不抬高同一个 affliction 的强度】
+       GiveAffliction 是往 maxstrength 累加饱和的，
+       基础值与强化值最终都会顶到上限，效果一样，区分不出来。
+       ============================================================ -->
+  <Talent identifier="mcj_astrodyne">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_astrodyne" />
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_balance" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_balance_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_spear" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spear_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_arrow" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_arrow_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_bole" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_bole_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_spire" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spire_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="5.0">
+      <Conditions>
+        <AbilityConditionHasTalent identifier="mcj_ewer" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_ewer_boost" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
 </Talents>
