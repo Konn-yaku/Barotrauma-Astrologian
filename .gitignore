@@ -10,3 +10,7 @@ desktop.ini
 # 备份目录
 _backup/
 .old/
+
+# 职业图标：本地素材，不随仓库分发
+Textures/JobIcon.png
+Textures/JobIconSmall.png
