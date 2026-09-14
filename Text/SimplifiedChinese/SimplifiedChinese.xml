@@ -153,6 +153,10 @@
 
   <!-- ===== 通用：占位符描述（mcj_celestialopposition / mcj_wheeloffortune 在用） ===== -->
   <talentdescription.mcj_placeholder>（占位符：效果待重新设计）</talentdescription.mcj_placeholder>
+
+  <!-- ===== 测试卡片（临时，验证用，定稿后删除） ===== -->
+  <entityname.mcj_card_test>测试卡片</entityname.mcj_card_test>
+  <entitydescription.mcj_card_test>占星术士的测试用卡片：拿在手里按住右键使用，会给使用者与附近船员施加增益。</entitydescription.mcj_card_test>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
   <talentdescription.mcj_malefic>你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>

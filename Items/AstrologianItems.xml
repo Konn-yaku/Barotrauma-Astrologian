@@ -325,8 +325,13 @@
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5"
                aimpos="35,-10" msg="ItemMsgPickUpSelect">
 
-      <!-- 落地即碎 -->
+      <!-- ① 落地即碎（保险）
+           ⚠️ 2026-09-15 实测：左键投出后不碎，OnImpact 在本物品上不触发
+           → 不能依赖它，真正的引爆看下面的②③ -->
       <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
+
+      <!-- ② 直接按“使用”就碎（原版液氧晶体就是这么写的） -->
+      <StatusEffect type="OnUse" target="This" Condition="0" setvalue="true" />
 
       <!-- 给范围内所有人上 buff（不筛选敌我 / 物种） -->
       <StatusEffect type="OnBroken" target="NearbyCharacters" range="400" disabledeltatime="true">
@@ -349,7 +354,76 @@
         <Remove />
       </StatusEffect>
 
+      <!-- ③ 拔销：瞄准时自动激活。
+           照抄原版破片手榴弹（fraggrenade），原注释：
+             forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+
     </Throwable>
+
+    <!-- 激活即引爆：【延时 0 秒】——它只是个触发器，不留任何延迟
+         IsActive 由上面那次 <Use /> 置为 true，
+         OnActive 每个 tick 扣 1000 点耐久 → 一个 tick 内归零 → 触发上面的 OnBroken。
+         想改回“拔销后几秒再炸”，把 -1000 换成 -24（原版手榴弹就是 -24）。 -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" condition="-1">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Sound file="Content/Items/Weapons/pinpull.ogg" range="720" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-1000">
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="4" scalemin="3.0" scalemax="3.0" colormultiplier="255,230,160,255" />
+      </StatusEffect>
+    </ItemComponent>
+  </Item>
+  <!-- ============================================================
+       测试用卡片：mcj_card_test（临时，名字：「测试卡片」）
+
+       用途：验证「物品 + 按住右键使用 → 效果生效」这条路，以及两种目标：
+         ① target="Character"         → 只作用于使用者（转发给全队的前提）
+         ② target="NearbyCharacters"  → 作用于 400 范围内所有人（不筛选敌我）
+
+       写法照原版技能书 skillbookeuropanmedicine
+       （Content/Items/Jobgear/Medic/medic_talent_items.xml），
+       只把“给技能点”换成“给 buff”。
+
+       验证方式：F3 → spawnitem mcj_card_test → 拿在手里按住右键
+         自己身上出现「太阳神之衡」  = ① 成立
+         旁边队友出现「战争神之枪」  = ② 成立
+
+       ⚠️ 设计定稿后本物品会被 6 张卡取代，可直接删除
+       ============================================================ -->
+  <Item name="" identifier="mcj_card_test" category="Misc" tags="smallitem,cardtest" maxstacksize="8" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+
+      <!-- ① 只给使用者 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_balance" strength="1" />
+      </StatusEffect>
+
+      <!-- ② 400 范围内所有人（不筛选敌我） -->
+      <StatusEffect type="OnSecondaryUse" target="NearbyCharacters" range="400" disabledeltatime="true">
+        <Affliction identifier="mcj_spear" strength="1" />
+      </StatusEffect>
+
+      <!-- ③ 表现：音效 + 光效 -->
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="255,230,160,255" />
+      </StatusEffect>
+
+      <!-- ④ 用掉即消失 -->
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Remove />
+      </StatusEffect>
+
+    </Holdable>
   </Item>
 
 </Items>

@@ -139,6 +139,10 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
 
   <!-- ===== Placeholder description (used by mcj_celestialopposition / mcj_wheeloffortune) ===== -->
   <talentdescription.mcj_placeholder>(Placeholder - effect pending redesign)</talentdescription.mcj_placeholder>
+
+  <!-- ===== Test card (temporary, for verification only) ===== -->
+  <entityname.mcj_card_test>Test Card</entityname.mcj_card_test>
+  <entitydescription.mcj_card_test>A test card for the Astrologian: hold it and press use to apply buffs to yourself and nearby crew.</entitydescription.mcj_card_test>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
   <talentdescription.mcj_malefic>You deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
