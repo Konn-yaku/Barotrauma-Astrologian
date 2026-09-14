@@ -405,4 +405,21 @@
     </AbilityGroupInterval>
   </Talent>
 
+  <!-- ============================================================
+       第三栏 · 天球仪（mcj_path_astrolabe）第 1 档
+
+       直接发放一件天球仪，不给任何团队 buff。
+       占用双手，所以是"常驻武器"同时也是它的限制：
+       拿着它就干不了别的，想用就得从物品栏里取出来。
+       ============================================================ -->
+  <Talent identifier="mcj_astrolabe">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_astrolabe" />
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_astrolabe" amount="1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
 </Talents>

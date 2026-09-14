@@ -10,7 +10,7 @@
   <!-- ===== Specialization names ===== -->
   <talenttree.mcj_path_healing>Healing</talenttree.mcj_path_healing>
   <talenttree.mcj_path_arcanum>Arcanum</talenttree.mcj_path_arcanum>
-  <talenttree.mcj_path_scientist>Scientist</talenttree.mcj_path_scientist>
+  <talenttree.mcj_path_astrolabe>Astrolabe</talenttree.mcj_path_astrolabe>
 
   <!-- ===== Healing line: talent names ===== -->
   <talentname.mcj_celestialopposition>Celestial Opposition</talentname.mcj_celestialopposition>
@@ -82,5 +82,12 @@
   <afflictiondescription.mcj_ewer>You consume ‖color:gui.green‖20‖end‖% less oxygen.\nAstrodyne raises this to ‖color:gui.green‖30‖end‖%.</afflictiondescription.mcj_ewer>
   <afflictionname.mcj_ewer_boost>The Ewer (Astrodyne)</afflictionname.mcj_ewer_boost>
   <afflictiondescription.mcj_ewer_boost>Astrodyne: you consume a further ‖color:gui.green‖10‖end‖% less oxygen.</afflictiondescription.mcj_ewer_boost>
+
+  <!-- ===== Astrolabe line ===== -->
+  <talentname.mcj_astrolabe>Astrolabe</talentname.mcj_astrolabe>
+  <talentdescription.mcj_astrolabe>Gain an Astrolabe — a small hand-held ranged weapon.\nIt fires a ‖color:gui.orange‖beam of starlight‖end‖ that hits instantly and applies ‖color:gui.orange‖Combust‖end‖.\nRequires no ammunition. It occupies both hands, so you must take it out of your inventory to use it.</talentdescription.mcj_astrolabe>
+  <entityname.mcj_astrolabe>Astrolabe</entityname.mcj_astrolabe>
+  <entitydescription.mcj_astrolabe>An astrologer's star-reading instrument, small enough to fit in a pocket.\nRaise it and starlight bends into a beam. Its power never runs out — no ammunition of any kind is needed.\nAstrologians are versed in Combust, so whatever it strikes keeps burning.</entitydescription.mcj_astrolabe>
+  <entityname.mcj_starshot>Starshot</entityname.mcj_starshot>
 
 </infotexts>

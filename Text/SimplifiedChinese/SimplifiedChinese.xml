@@ -21,7 +21,7 @@
        另两条仍是医生镜像的占位，待重做 -->
   <talenttree.mcj_path_healing>治疗</talenttree.mcj_path_healing>
   <talenttree.mcj_path_arcanum>奥秘卡</talenttree.mcj_path_arcanum>
-  <talenttree.mcj_path_scientist>化学家</talenttree.mcj_path_scientist>
+  <talenttree.mcj_path_astrolabe>天球仪</talenttree.mcj_path_astrolabe>
 
   <!-- ===== 治疗线天赋名称 ===== -->
   <talentname.mcj_celestialopposition>天星交错</talentname.mcj_celestialopposition>
@@ -45,7 +45,7 @@
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>你在因伤痛倒地时不会死去，并会自动完全恢复伤势；触发后此庇护消失。</afflictiondescription.mcj_stargate>
   <!-- ===== 第二栏 · 奥秘卡：天赋名称 ===== -->
-  <talentname.mcj_balance>太阳神之衢</talentname.mcj_balance>
+  <talentname.mcj_balance>太阳神之衡</talentname.mcj_balance>
   <talentname.mcj_spear>战争神之枪</talentname.mcj_spear>
   <talentname.mcj_arrow>放浪神之箭</talentname.mcj_arrow>
   <talentname.mcj_bole>世界树之干</talentname.mcj_bole>
@@ -63,9 +63,9 @@
   <talentdescription.mcj_astrodyne>强化你已点出的每一张奥秘卡，使其效果提升 ‖color:gui.green‖50‖end‖%。\n只影响你已经点出的卡——点的越多，收益越高。</talentdescription.mcj_astrodyne>
 
   <!-- ===== 第二栏 · 奥秘卡：隐藏增益 ===== -->
-  <afflictionname.mcj_balance>太阳神之衢</afflictionname.mcj_balance>
+  <afflictionname.mcj_balance>太阳神之衡</afflictionname.mcj_balance>
   <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_balance>
-  <afflictionname.mcj_balance_boost>太阳神之衢·星力</afflictionname.mcj_balance_boost>
+  <afflictionname.mcj_balance_boost>太阳神之衡·星力</afflictionname.mcj_balance_boost>
   <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_balance_boost>
 
   <afflictionname.mcj_spear>战争神之枪</afflictionname.mcj_spear>
@@ -92,4 +92,15 @@
   <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_ewer>
   <afflictionname.mcj_ewer_boost>河流神之瓶·星力</afflictionname.mcj_ewer_boost>
   <afflictiondescription.mcj_ewer_boost>星力强化：氧气消耗再降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_ewer_boost>
+
+  <!-- ===== 第三栏 · 天球仪 ===== -->
+  <talentname.mcj_astrolabe>天球仪</talentname.mcj_astrolabe>
+  <talentdescription.mcj_astrolabe>获得一件「天球仪」——一把小型手持远程武器。
+它发射 ‖color:gui.orange‖星光射线‖end‖，命中即结算，并附加 ‖color:gui.orange‖焚灼‖end‖。
+不需要弹药。占用双手，所以要用时得先从物品栏里取出来。</talentdescription.mcj_astrolabe>
+  <entityname.mcj_astrolabe>天球仪</entityname.mcj_astrolabe>
+  <entitydescription.mcj_astrolabe>占星术士的观星仪器。小到能收进随身物品栏。
+举起它，就能引导星光化为射线；魔力取之不竭，无需任何弹药。
+占星术士具备焚灼之能，被命中的目标会持续燃烧。</entitydescription.mcj_astrolabe>
+  <entityname.mcj_starshot>星辉弹</entityname.mcj_starshot>
 </infotexts>

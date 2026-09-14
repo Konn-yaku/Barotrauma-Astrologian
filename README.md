@@ -19,9 +19,9 @@
 | 职业本体（技能 / 初始装备 / AI 行为 / 指令） | ✅ 完成 |
 | 专精线一 · 治疗（5 个原创天赋） | ✅ 完成，已在游戏中验证 |
 | 专精线二 · 奥秘卡（6 张卡 + 星力） | ✅ 完成，待游戏验证 |
-| 专精线三 · 作战辅助 | 🚧 待定 |
+| 专精线三 · 天球仪（专属武器） | 🚧 第 1 档完成，待游戏验证 |
 | 初级天赋 | 🚧 暂为占位内容 |
-| 专属装备与职业图标 | 🚧 计划中 |
+| 专属装备与职业图标 | 🚧 天球仪已做，贴图为占位；职业图标待做 |
 
 ## 治疗线内容
 
@@ -92,6 +92,50 @@
 > 需要说明的是，原版的增伤/攻速类天赋几乎都是**限时 + 仅自己**，
 > 而本模组的卡是**整局永久 + 全队**，所以实际收益会明显高于单个原版天赋。
 > 数值之所以敢取到上面这个水平，是因为每一项都卡在原版对应机制的下方。
+
+## 天球仪（第三栏）
+
+占星术士的**专属武器**，由 `mcj_path_astrolabe` 第 1 档天赋发放。
+
+| 属性 | 值 |
+|---|---|
+| 类别 | `smallitem` —— 能像仪式剑那样收进随身物品栏 |
+| 持握 | 双手（`RightHand+LeftHand`） |
+| 攻击 | `hitscan` 星光射线，即时命中，无飞行弹丸 |
+| 射速 | `reload 0.4`（比快速裂变加速器的 0.5 稍快） |
+| 弹药 | **不需要** |
+
+### 数值（= 快速裂变加速器的一半）
+
+| 项 | 天球仪 | 快速裂变加速器 |
+|---|---|---|
+| 结构伤害 | 17 | 35 |
+| 物品伤害 | 17 | 35 |
+| 主要伤害 | 25 | 50 |
+| 断肢概率 | 25% | 50% |
+| 附加效果 | **焚灼（烧伤）** | 辐射病 25 |
+
+### 「不消耗弹药」是怎么做到的
+
+照抄原版小丑的香蕉皮发射器（`clown.xml`）：
+
+```xml
+<RangedWeapon suitableprojectiles="mcj_starshot">
+  <StatusEffect type="OnUse" target="This">
+    <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+  </StatusEffect>
+  <RequiredItems items="mcj_starshot" type="Contained" />
+</RangedWeapon>
+<ItemContainer capacity="0" maxstacksize="0" hideitems="true">
+  <Containable items="none" />
+</ItemContainer>
+```
+
+容器容量为 0、什么都不装，但**每次开火现场生成一发星辉弹**，打完由弹丸自身清理。
+净消耗为零 —— 这就是「魔法不需要弹药」的原版写法。
+
+> 贴图暂时复用原版材料 `fulgurium` 的发光晶体图。想换外观只改 `<Sprite>` 那一行即可。
+
 ## 设计说明
 
 潜渊症**没有"回血"这个概念**。角色身上挂着各种状态（affliction），
@@ -121,6 +165,7 @@ Astrologian/
 ├─ TalentTrees/AstrologianTalentTrees.xml 天赋树结构
 ├─ Talents/AstrologianTalents.xml        天赋实现
 ├─ Afflictions/AstrologianAfflictions.xml 天赋用的隐藏增益
+├─ Items/AstrologianItems.xml            专属装备（天球仪与星辉弹）
 └─ Text/
    ├─ SimplifiedChinese/SimplifiedChinese.xml
    └─ English/English.xml

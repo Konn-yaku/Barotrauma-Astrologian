@@ -3,9 +3,9 @@
   占星术士 · 天赋树
   
   【当前状态】三条专精线：
-    mcj_path_healing  —— 治疗线（第一栏，已实装）
-    mcj_path_arcanum  —— 奥秘卡（第二栏，已实装）
-    mcj_path_scientist—— 作战辅助（第三栏，仍是医生「化学家」镜像的占位）
+    mcj_path_healing   —— 治疗线（第一栏，已实装）
+    mcj_path_arcanum   —— 奥秘卡（第二栏，已实装）
+    mcj_path_astrolabe —— 天球仪（第三栏，第 1 档已实装，后续档位待设计）
 
   初级树 mcj_astrologian_primary 目前仍是医生初级树的镜像，待重做。
 
@@ -111,23 +111,16 @@
       </TalentOptions>
     </SubTree>
 
-    <!-- ================= 专精 C：对应医生的「化学家」=================
-         原版主题是药物/毒素/配方。 -->
-    <SubTree identifier="mcj_path_scientist" type="specialization"
+    <!-- ================= 专精 C：天球仪（第三栏 · 作战辅助）=================
+         占星术士的武备线。
+         第 1 档直接发放「天球仪」—— 一件 smallitem 的手持远程武器，
+         发射不消耗弹药的星光射线（见 Items/AstrologianItems.xml）。
+         仅用于辅助作战，不向队友发放任何团队 buff。
+         后续档位待设计。 -->
+    <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
       <TalentOptions>
-        <TalentOption identifier="plaguedoctor" />
-      </TalentOptions>
-      <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="deliverysystem" />
-        <TalentOption identifier="labcontacts" />
-      </TalentOptions>
-      <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="supersoldiers" />
-        <TalentOption identifier="whatastench" />
-      </TalentOptions>
-      <TalentOptions>
-        <TalentOption identifier="macrodosing" />
+        <TalentOption identifier="mcj_astrolabe" />
       </TalentOptions>
     </SubTree>
 
