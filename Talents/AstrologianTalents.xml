@@ -590,4 +590,118 @@
     </AbilityGroupInterval>
   </Talent>
 
+  <!-- ============================================================
+       初级树（mcj_astrologian_primary）
+
+       初级树是「通用医疗兵基本功」。其中 6 个沿用原版医生的天赋
+       （exampleofhealth / laresistance / selfcare / stayinalive /
+         firemanscarry / dontdieonme）—— 这些本来就是通用能力，不改。
+
+       下面 5 个是自写的，专门替换原版医生那五个「字面写着医生」的天赋：
+           healthinsurance  医疗保险       -> 星图
+           nobodyimportantdies 专门强化助手 -> 命理交织
+           medicalcompanion 医疗伴侣       -> 守护星
+           nopressure       无压           -> 星轨测深
+           blooddonor       献血者         -> 凶星
+
+       ⚠️ 必须用新 ID。直接改写原版 ID 会连带改掉原版医生，
+          而且会和「天赋增强」(TE) 打架 —— TE 正在覆盖同一批原版天赋。
+
+       名字说明：「星图」「守护星」「星轨测深」是占星术语，不是 FF14 技能名。
+          只给效果与原作一致的两个用了官方名：凶星 = Malefic（伤害）、
+          命理交织 = Synastry（治疗目标时自己也回一点）。
+       ============================================================ -->
+
+  <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID） -->
+  <Talent identifier="mcj_primary_starchart">
+    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="4,2" sheetelementsize="128,128" />
+    <Description tag="talentdescription.healthinsurance">
+      <Replace tag="[amount]" value="30" color="gui.orange" />
+      <Replace tag="[money]" value="100" color="gui.green" />
+    </Description>
+    <Description tag="talentdescription.medicalitemscostless">
+      <Replace tag="[amount]" value="10" color="gui.green" />
+    </Description>
+
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_starchart" stattype="StoreBuyMultiplier" value="0.1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <AbilityGroupInterval interval="1">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_starchart" min="1" invert="true" />
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.3" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_starchart" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupEffect abilityeffecttype="OnAnyMissionCompleted">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_starchart" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGiveMoney amount="100" />
+        <CharacterAbilityResetPermanentStat statidentifier="mcj_starchart" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 命理交织 ← 原版 nobodyimportantdies（新效果）
+       原作 Synastry 的效果就是「治疗目标时自己也回一点」，直接对应。 -->
+  <Talent identifier="mcj_primary_synastry">
+    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="2,7" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_synastry" />
+
+    <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
+      <Conditions>
+        <AbilityConditionCharacter targettype="Ally,NotSelf" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" disabledeltatime="true">
+              <Affliction identifier="mcj_synastry" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 守护星 ← 原版 medicalcompanion -->
+  <Talent identifier="mcj_primary_guardianstar">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="entityname.autoinjectorheadset" color="gui.orange" />
+    </Description>
+    <AddedRecipe itemidentifier="autoinjectorheadset" />
+  </Talent>
+
+  <!-- 星轨测深 ← 原版 nopressure -->
+  <Talent identifier="mcj_primary_starsounding">
+    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="7,1" sheetelementsize="128,128" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="entityname.pressurestabilizer" color="gui.orange" />
+    </Description>
+    <AddedRecipe itemidentifier="pressurestabilizer" />
+  </Talent>
+
+  <!-- 凶星 ← 原版 blooddonor（新效果）
+       Malefic 是占星术士的核心伤害法术，效果也就对应增伤。
+       基础树里的小幅增伤，对标 TE「暴力军阀 warlord」的起点 0.1。 -->
+  <Talent identifier="mcj_primary_malefic">
+    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="5,2" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_malefic" />
+
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
 </Talents>

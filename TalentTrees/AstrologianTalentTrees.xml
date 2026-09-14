@@ -29,12 +29,16 @@
 
   <TalentTree jobidentifier="mcj_astrologian">
 
-    <!-- ================= 初级：与医生初级树完全一致 ================= -->
+    <!-- ================= 初级：通用医疗兵基本功 + 5 个占星专属 =================
+         其中 6 个沿用原版医生的天赋（它们本来就是通用能力）；
+         另外 5 个是我们自己写的 mcj_primary_*，替换掉原版医生那 5 个
+         「字面写着医生」的天赋（医疗保险 / 专门强化助手 / 献血者 等）。
+         详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
       <TalentOptions requiredtalents="1" maxchosentalents="6">
-        <TalentOption identifier="healthinsurance" />
-        <TalentOption identifier="nobodyimportantdies" />
+        <TalentOption identifier="mcj_primary_starchart" />
+        <TalentOption identifier="mcj_primary_synastry" />
         <TalentOption identifier="exampleofhealth" />
         <TalentOption identifier="laresistance" />
         <TalentOption identifier="selfcare" />
@@ -43,10 +47,10 @@
 
       <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="firemanscarry" />
-        <TalentOption identifier="medicalcompanion" />
+        <TalentOption identifier="mcj_primary_guardianstar" />
+        <TalentOption identifier="mcj_primary_starsounding" />
         <TalentOption identifier="dontdieonme" />
-        <TalentOption identifier="nopressure" />
-        <TalentOption identifier="blooddonor" />
+        <TalentOption identifier="mcj_primary_malefic" />
       </TalentOptions>
 
     </SubTree>

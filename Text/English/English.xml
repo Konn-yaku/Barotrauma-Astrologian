@@ -124,4 +124,15 @@ Medical 40 / 60 / 80 / 100 each raise it another step, from ‖color:gui.green�
 Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖color:gui.green‖+10‖end‖% damage).</talentdescription.mcj_divination>
   <afflictionname.mcj_divination>Divination</afflictionname.mcj_divination>
   <afflictiondescription.mcj_divination>The astrologian has read the heavens' weak points for you: you deal ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_divination>
+
+  <!-- ===== Primary tree ===== -->
+  <talentname.mcj_primary_starchart>Star Chart</talentname.mcj_primary_starchart>
+  <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
+  <talentname.mcj_primary_guardianstar>Guardian Star</talentname.mcj_primary_guardianstar>
+  <talentname.mcj_primary_starsounding>Star Sounding</talentname.mcj_primary_starsounding>
+  <talentname.mcj_primary_malefic>Malefic</talentname.mcj_primary_malefic>
+  <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well (about 3 damage and 1 bleeding per treatment).</talentdescription.mcj_synastry>
+  <talentdescription.mcj_malefic>You deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_malefic>
+  <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
+  <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
 </infotexts>
