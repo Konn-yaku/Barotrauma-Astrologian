@@ -76,27 +76,48 @@
 
   <!-- ============================================================
        第 2 层 · 光速（二选一）
-       对齐原版 emergencyresponse（有人昏迷时 +40% 移速），略弱化为 +30%
-       额外给 CPR 加成（原版没有，属于小幅加强，可随时去掉）
+
+       = 原版「冥土追魂」+ 原版「应急反应」的合并版。
+       ① CPRBoost 1  —— 与冥土追魂（dontdieonme）同值：心肺复苏效力翻倍，常驻。
+       ② 有人昏迷时 +40% 移速 —— 原版应急反应（emergencyresponse）就是 40%，
+                                 挂在同一个「有人昏迷」条件上。
+       ③ 有人昏迷时拖拽不减速 —— MoveNormallyWhileDragging flag。
+          原版只有 firemanscarry（医生初级树，常驻）与「应急反应」给助手的
+          affliction 用过它。我们把它绑定在这个短时 buff 上，做到「只在救场时
+          全速拖人」，与初级树里那个常驻的 firemanscarry 区分开。
+
+       ②③ 合并写在 affliction「mcj_lightspeed」里，结构同原版
+       emergencyresponse_selfbuff：duration="1" + strengthchange="-1" + 每 0.5 秒刷新。
+
+       ⚠️ 与初级树的「冥土追魂」重复：两个 CPRBoost 1 若累加 = 3 倍心肺复苏。
+          这是刻意保留的，若实测太强，把下面那个 CPRBoost 整组删掉即可。
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
 
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionCrewMemberUnconscious />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.3" />
-      </Abilities>
-    </AbilityGroupInterval>
-
+    <!-- 常驻：心肺复苏效力翻倍 -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="CPRBoost" value="1" />
       </Abilities>
     </AbilityGroupEffect>
+
+    <!-- 有人昏迷时：挂上短时 buff（+40% 移速 + 拖拽不减速） -->
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionCrewMemberUnconscious />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_lightspeed" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 
   <!-- ============================================================
