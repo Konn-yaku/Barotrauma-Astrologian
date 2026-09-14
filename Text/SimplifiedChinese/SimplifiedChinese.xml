@@ -33,7 +33,7 @@
   <!-- ===== 治疗线天赋描述 ===== -->
   <talentdescription.mcj_opposition>你治疗的队友获得 ‖color:gui.green‖25‖end‖% 全伤害抗性，持续至本次任务结束。同一天赋给多人施加时效果不叠加。</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖2.2‖end‖ 倍。</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>你的心肺复苏效力翻倍。\n当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成，并且拖拽其他角色时不会减速。</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_lightspeed>你的心肺复苏效力翻倍，且拖拽其他角色时不会减速。\n当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>你在潜艇内时，‖color:gui.green‖1000‖end‖范围内的船员持续获得缓慢自愈：不断减轻其 ‖color:gui.orange‖伤害‖end‖ 与 ‖color:gui.orange‖出血‖end‖。</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员倒地（失去知觉）时，该庇护会自动触发：立即将其伤势完全恢复，随后被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
 
@@ -44,8 +44,6 @@
   <afflictiondescription.mcj_helios>你的伤势正在缓慢愈合。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>你在因伤痛倒地时不会死去，并会自动完全恢复伤势；触发后此庇护消失。</afflictiondescription.mcj_stargate>
-  <afflictionname.mcj_lightspeed>光速</afflictionname.mcj_lightspeed>
-  <afflictiondescription.mcj_lightspeed>你正受到光速加持：移动速度提升，拖拽角色时不会减速。</afflictiondescription.mcj_lightspeed>
   <!-- ===== 第二栏 · 奥秘卡：天赋名称 ===== -->
   <talentname.mcj_balance>太阳神之衡</talentname.mcj_balance>
   <talentname.mcj_spear>战争神之枪</talentname.mcj_spear>

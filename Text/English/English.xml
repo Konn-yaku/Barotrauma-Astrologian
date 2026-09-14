@@ -22,7 +22,7 @@
   <!-- ===== Healing line: talent descriptions ===== -->
   <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖25‖end‖% damage resistance until the end of the mission.</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>The CPR you apply is twice as effective.\nWhen someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed and can drag characters at full speed.</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_lightspeed>The CPR you apply is twice as effective, and you can drag characters at full speed.\nWhen someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖1000‖end‖ units slowly heal over time, continuously reducing ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖.</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
@@ -33,8 +33,6 @@
   <afflictiondescription.mcj_helios>Your wounds are slowly healing.</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>You cannot die from your wounds, and your injuries will be fully healed once you are knocked down. The charge is consumed on use.</afflictiondescription.mcj_stargate>
-  <afflictionname.mcj_lightspeed>Lightspeed</afflictionname.mcj_lightspeed>
-  <afflictiondescription.mcj_lightspeed>You are under the effect of Lightspeed: you move faster and can drag characters at full speed.</afflictiondescription.mcj_lightspeed>
 
   <!-- ===== Arcanum line: talent names ===== -->
   <talentname.mcj_balance>The Balance</talentname.mcj_balance>

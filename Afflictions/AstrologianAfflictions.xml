@@ -141,46 +141,6 @@
   </Affliction>
 
   <!-- ============================================================
-       光速 —— 救场状态（只有「船上有人失去知觉」时才会挂上）
-       来源天赋：mcj_lightspeed
-
-       由天赋每 0.5 秒重新施加一次；duration="1" + strengthchange="-1"
-       → 条件一消失，1 秒内自动掉干净。这就是原版「应急反应」
-       emergencyresponse_selfbuff 的写法（医生天赋，给的是自己）。
-
-       ① MovementSpeed 0.4 = +40% 移速，对齐原版应急反应的数值。
-       ② MoveNormallyWhileDragging = 拖拽角色时不减速。
-
-       ⚠️ flag 会不会随 affliction 到期一起收回，尚未实测。原版 miracleworker
-          用同样的写法给 CanNotDieToAfflictions（1 秒的 affliction，每个
-          0.9 秒刷新一次），推测是跟着 affliction 一起失效的。
-          若实测发现 flag 一旦生效就永久留在身上 —— 那也等于 firemanscarry
-          的效果，无害，只是与初级树重复。
-       ============================================================ -->
-  <Affliction identifier="mcj_lightspeed"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="1"
-              showiconthreshold="1000"
-              treatmentthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- ① 移动速度（固定值，不随强度插值） -->
-    <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-      <StatValue stattype="MovementSpeed" value="0.4" />
-    </Effect>
-    <!-- ② 拖拽不减速 -->
-    <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-      <AbilityFlag flagtype="MoveNormallyWhileDragging" />
-    </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ============================================================
        第二栏 · 奥秘卡（全队常驻增益）
        来源天赋：mcj_path_arcanum
 
