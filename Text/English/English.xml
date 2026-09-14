@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English text. Keep the keys identical to the Simplified Chinese file.
+-->
+<infotexts language="English" nowhitespace="false" translatedname="English">
+
+  <!-- ===== Job name ===== -->
+  <jobname.mcj_astrologian>Astrologian</jobname.mcj_astrologian>
+
+  <!-- ===== Specialization names ===== -->
+  <talenttree.mcj_path_healing>Healing</talenttree.mcj_path_healing>
+  <talenttree.mcj_path_xenologist>Xenologist</talenttree.mcj_path_xenologist>
+  <talenttree.mcj_path_scientist>Scientist</talenttree.mcj_path_scientist>
+
+  <!-- ===== Healing line: talent names ===== -->
+  <talentname.mcj_celestialopposition>Celestial Opposition</talentname.mcj_celestialopposition>
+  <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
+  <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
+  <talentname.mcj_aspectedhelios>Aspected Helios</talentname.mcj_aspectedhelios>
+  <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
+
+  <!-- ===== Healing line: talent descriptions ===== -->
+  <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖15‖end‖% damage resistance until the end of the mission.</talentdescription.mcj_opposition>
+  <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
+  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖30‖end‖% movement speed. Your CPR is slightly more effective.</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖1000‖end‖ units slowly heal over time, continuously reducing ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖.</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
+
+  <!-- ===== Healing line: hidden buffs ===== -->
+  <afflictionname.mcj_opposition>Celestial Opposition</afflictionname.mcj_opposition>
+  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖15‖end‖% damage resistance until the end of the mission.</afflictiondescription.mcj_opposition>
+  <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
+  <afflictiondescription.mcj_helios>Your wounds are slowly healing.</afflictiondescription.mcj_helios>
+  <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
+  <afflictiondescription.mcj_stargate>You cannot die from your wounds, and your injuries will be fully healed once you are knocked down. The charge is consumed on use.</afflictiondescription.mcj_stargate>
+
+</infotexts>

@@ -1,0 +1,12 @@
+# 编辑器 / 系统产生的杂项文件
+*.bak
+*.tmp
+*.log
+*~
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 备份目录
+_backup/
+.old/

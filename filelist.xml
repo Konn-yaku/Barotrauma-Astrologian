@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Astrologian —— 占星术士（最终幻想14 主题）
+  
+  定位：治疗者，数值基线完全照搬原版 medicaldoctor（医生）。
+  
+  这个文件是模组入口清单。新增任何文件后必须在这里登记，否则游戏不会加载。
+  %ModDir% 表示"本模组根目录"，游戏自动替换。
+-->
+<contentpackage name="Astrologian" modversion="0.3.0" corepackage="False" gameversion="1.13.4.0">
+
+  <!-- 职业定义：技能、初始装备、自主行为 -->
+  <Jobs file="%ModDir%/Jobs/AstrologianJob.xml" />
+
+  <!-- 天赋树 -->
+  <TalentTrees file="%ModDir%/TalentTrees/AstrologianTalentTrees.xml" />
+
+  <!-- 自定义天赋（治疗线已实装） -->
+  <Talents file="%ModDir%/Talents/AstrologianTalents.xml" />
+
+  <!-- 自定义增益状态（天赋的实现载体） -->
+  <Afflictions file="%ModDir%/Afflictions/AstrologianAfflictions.xml" />
+
+  <!-- 中文文本（游戏语言 = 简体中文时生效） -->
+  <Text file="%ModDir%/Text/SimplifiedChinese/SimplifiedChinese.xml" />
+
+  <!-- 英文文本（游戏语言 = English 时生效） -->
+  <Text file="%ModDir%/Text/English/English.xml" />
+
+</contentpackage>

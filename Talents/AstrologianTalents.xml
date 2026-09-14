@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  占星术士 · 治疗线天赋
+  
+  【重要背景】潜渊症没有"回血"概念。角色身上挂着各种状态（affliction），
+  医生的工作是【削减它们】。所以这里的每个天赋都不是"加治疗量"，
+  而是"让药更有效 / 减少用药 / 自动处理状态"。
+  
+  设计基线：原版医生「医生」专精线（4 层，第 2/3 层二选一）。
+  所有天赋目前都对应到 mcj_path_healing 这一条子树。
+-->
+<Talents>
+
+  <!-- ============================================================
+       第 1 层 · 天星交错
+       对齐原版 medicalexpertise（医疗技能 +30 + 绷带加强）
+       额外给"被治疗的队友"挂一整个任务的减伤 buff
+       ============================================================ -->
+  <Talent identifier="mcj_celestialopposition">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,5" sheetelementsize="128,128" />
+    <!-- 复用原版通用文案：技能加成 -->
+    <Description tag="talentdescription.skillbonus">
+      <Replace tag="[amount]" value="30" color="gui.green" />
+      <Replace tag="[skillname]" value="skillname.medical" color="gui.orange" />
+    </Description>
+    <Description tag="talentdescription.mcj_opposition" />
+
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 给被治疗的队友挂减伤 buff（持续性，直到任务结束） -->
+    <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
+      <Conditions>
+        <AbilityConditionCharacter targettype="Ally,NotSelf" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGiveAffliction affliction="mcj_opposition" strength="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- ============================================================
+       第 2 层 · 先天禀赋（二选一）
+       
+       【保守版】目标生命值低于 30% 时，你的治疗效果 ×2.2（+120%）；
+       其余情况无加成。
+       
+       为什么只做两档：这里用的是原版 nobodyimportantdies / healthinsurance
+       验证过的"条件 + FallbackAbilities"结构，最稳。
+       想要 5 档阶梯的话，需要先在游戏里实测"多个同类型
+       AbilityGroupEffect 是否会叠加"，确认后再扩展。
+       ============================================================ -->
+  <Talent identifier="mcj_essentialdignity">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_essentialdignity" />
+
+    <!-- 【修复】这里原本还有一个 FallbackAbilities（multiplyvalue="1.0"）
+         用来表示"不满足条件时不给加成"。但游戏会报错：
+           "added value is 0 and multiplier is 1, the ability will do nothing"
+         因为 multiplier=1 且 addedvalue=0（默认）确实是空操作。
+         直接删掉即可——不满足条件时什么也不发生，正是我们想要的行为。 -->
+    <AbilityGroupEffect abilityeffecttype="OnReduceAffliction">
+      <Conditions>
+        <AbilityConditionCharacter targetabilitytarget="true">
+          <Conditional healthpercentage="lt 30" />
+        </AbilityConditionCharacter>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyValue multiplyvalue="2.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- ============================================================
+       第 2 层 · 光速（二选一）
+       对齐原版 emergencyresponse（有人昏迷时 +40% 移速），略弱化为 +30%
+       额外给 CPR 加成（原版没有，属于小幅加强，可随时去掉）
+       ============================================================ -->
+  <Talent identifier="mcj_lightspeed">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_lightspeed" />
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionCrewMemberUnconscious />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.3" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="CPRBoost" value="1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- ============================================================
+       第 3 层 · 阳星合相（本层只有这一个）
+       
+       数值完整复刻【锤头鲨母皇基因】最强档。
+       限制：只有施术者本人在潜艇内时才生效，且只影响附近队友。
+       mcj_helios 带 duration="2"，每秒刷新 → 离开范围约 2 秒后自动失效。
+       ============================================================ -->
+  <Talent identifier="mcj_aspectedhelios">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_aspectedhelios" />
+
+    <AbilityGroupInterval interval="1.0">
+      <Conditions>
+        <AbilityConditionInHull />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="1000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_helios" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- ============================================================
+       第 4 层 · 星天开门（大招）
+       
+       进入任务时，给全船每人发一张护身符（无距离限制，原版 stayinalive
+       就是不写 maxdistance 的全图生效写法）。
+       
+       护身符的"消耗"逻辑写在 Afflictions 里的 mcj_stargate 自身，
+       所以每个人各自独立触发、只消耗自己的那一张。
+       
+       「每任务一次」用 permanent stat 标记 + 任务结束重置实现，
+       结构照抄原版 healthinsurance。
+       ============================================================ -->
+  <Talent identifier="mcj_stargate">
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,5" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_stargate" />
+
+    <!-- 进入任务时发放护身符：本任务还没发过就发 -->
+    <!-- 进入任务时发放护身符：本任务还没发过就发。
+         maxdistance 显式写一个大数值 —— 虽然原版 stayinalive 不写也能全图生效，
+         但为了排除"不写 = 距离 0 = 谁都拿不到"这种可能性，这里写死。 -->
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_stargate_given" min="1" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_stargate" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_stargate_given" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 【修改】重置标记：改用 OnRoundEnd 而不是 OnAnyMissionCompleted。
+         原因：OnAnyMissionCompleted 需要"任务被完成"才触发。
+         如果你死了、或者中途退出，标记就永远不会被清除，
+         导致之后的每一个任务都不再发放护身符。
+         OnRoundEnd 只要这一局结束就会触发，更可靠。 -->
+    <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
+      <Abilities>
+        <CharacterAbilityResetPermanentStat statidentifier="mcj_stargate_given" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+</Talents>

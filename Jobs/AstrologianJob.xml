@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  占星术士 · 职业定义
+  
+  【基线】本文件的所有数值均照搬原版 medicaldoctor（医生），
+  除 uicolor（界面配色）之外没有任何改动。这样做的目的：
+  先把"生态位"钉死在治疗者上，之后加天赋时才不会不小心把它做成半个战斗职业。
+
+  identifier 全局唯一，统一 mcj_ 前缀。
+  显示名称写在 Text/ 下（键名 jobname.mcj_astrologian）。
+-->
+<Jobs>
+
+  <Job identifier="mcj_astrologian"
+       minkarma="0"
+       uicolor="0.42,0.36,0.78"
+       vitalitymodifier="0"
+       pricemultiplier="1.15"
+       idlebehavior="Active">
+
+    <!-- ===== 图标：暂时复用原版医生的图标，阶段三换自制美术 ===== -->
+    <Jobicon>
+      <sprite texture="Content/UI/MainIconsAtlas.png" sourcerect="512,256,128,128" origin="0.5,0.5" />
+    </Jobicon>
+    <JobiconSmall>
+      <sprite texture="Content/UI/CommandUIAtlas.png" sourcerect="612,698,28,28" origin="0.5,0.5" />
+    </JobiconSmall>
+
+    <!-- ===== 技能：与医生完全一致 =====
+         medical 为主技能 40~50，是"治疗者"定位的核心。
+         其它技能维持医生水平的辅助能力，不强化战斗。
+    -->
+    <Skills>
+      <Skill identifier="medical"    level="40,50" primary="true" pvplevel="70" pricemultiplier="20" />
+      <Skill identifier="weapons"    level="15,25" pvplevel="50" />
+      <Skill identifier="mechanical" level="15,25" pvplevel="50" />
+      <Skill identifier="electrical" level="15,25" pvplevel="50" />
+      <Skill identifier="helm"       level="5,10"  pvplevel="50" pricemultiplier="10" />
+    </Skills>
+
+    <!-- ===== 初始装备：与医生一致 =====
+         阶段三会在这里换成占星术士的专属装备（天球仪等）。
+         identifierteam2 = PvP 中归属分离派时的替换物品。
+    -->
+    <ItemSet>
+      <Item identifier="idcard" equip="true" showpreview="false" />
+      <Item identifier="doctorsuniform1" identifierteam2="medicseparatistsuniform1" equip="true" outfit="true" />
+      <Item identifier="headset" equip="true" showpreview="false" />
+      <Item identifier="syringegun" GameMode="PvE" />
+      <Item identifier="antibleeding1" GameMode="PvE" />
+      <Item identifier="antidama1" GameMode="PvE" />
+      <Item identifier="divingknife" equip="false" GameMode="PvP" />
+      <Item identifier="revolver" GameMode="PvP" equip="false">
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+      </Item>
+    </ItemSet>
+
+    <ItemSet>
+      <Item identifier="idcard" equip="true" showpreview="false" />
+      <Item identifier="doctorsuniform2" identifierteam2="medicseparatistsuniform2" equip="true" outfit="true" />
+      <Item identifier="headset" equip="true" showpreview="false" />
+      <Item identifier="syringegun" GameMode="PvE" />
+      <Item identifier="antibleeding1" GameMode="PvE" />
+      <Item identifier="antidama1" GameMode="PvE" />
+      <Item identifier="divingknife" equip="false" GameMode="PvP" />
+      <Item identifier="revolver" GameMode="PvP" equip="false">
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+        <Item identifier="revolverround" />
+      </Item>
+    </ItemSet>
+
+    <!-- ===== AI 自主行为：与医生一致，救援优先 ===== -->
+    <AutonomousObjectives>
+      <Order identifier="rescue" prioritymodifier="1" />
+      <Order identifier="extinguishfires" prioritymodifier="0.5" />
+      <Order identifier="operatereactor" option="powerup" prioritymodifier="0.2" />
+      <Order identifier="fixleaks" prioritymodifier="0.1" />
+    </AutonomousObjectives>
+
+    <!-- ===== 玩家可下达的指令：与医生一致 ===== -->
+    <AppropriateOrders>
+      <Order identifier="rescue" />
+      <Order identifier="requestfirstaid" />
+    </AppropriateOrders>
+
+  </Job>
+
+</Jobs>

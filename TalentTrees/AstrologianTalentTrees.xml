@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  占星术士 · 天赋树
+  
+  【当前状态：骨架】这一版是原版医生天赋树的 1:1 镜像，天赋全部是原版的，
+  只是把子树的 id 加了 mcj_ 前缀。目的是让你可以在游戏里直接看到
+  "医生原本长什么样"，再决定我们自己的三条线怎么分。
+
+  之后我们要做的事：把这里的原版天赋逐个换成 mcj_ 自己的天赋
+  （需要同时新增 Talents/ 和 Afflictions/ 两个文件）。
+
+  ── 参数语义（来自官方 API 文档 BuildDocClient.xml）──
+    TalentTree jobidentifier
+        挂到哪个职业，必须和 Jobs 里的 identifier 一致
+    SubTree type="primary" / "specialization"
+        初级树开局可点；专精树需要 requires 指定的前置树
+    SubTree blocks
+        互斥：选了这条专精后，blocks 里列出的专精将无法再选
+    TalentOptions requiredtalents
+        官方定义："How many talents need to be unlocked to consider this tree completed"
+        → 这一组需要点出几个天赋，才算完成本组（进而解锁下一组）
+    TalentOptions maxchosentalents
+        官方定义："How many talents can be unlocked in total"
+        → 这一组最多能选几个
+    ShowCaseTalent
+        点击后展开的二选一入口（我们之后如果要"分支选择"就用它）
+-->
+<TalentTrees>
+
+  <TalentTree jobidentifier="mcj_astrologian">
+
+    <!-- ================= 初级：与医生初级树完全一致 ================= -->
+    <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
+
+      <TalentOptions requiredtalents="1" maxchosentalents="6">
+        <TalentOption identifier="healthinsurance" />
+        <TalentOption identifier="nobodyimportantdies" />
+        <TalentOption identifier="exampleofhealth" />
+        <TalentOption identifier="laresistance" />
+        <TalentOption identifier="selfcare" />
+        <TalentOption identifier="stayinalive" />
+      </TalentOptions>
+
+      <TalentOptions requiredtalents="1" maxchosentalents="5">
+        <TalentOption identifier="firemanscarry" />
+        <TalentOption identifier="medicalcompanion" />
+        <TalentOption identifier="dontdieonme" />
+        <TalentOption identifier="nopressure" />
+        <TalentOption identifier="blooddonor" />
+      </TalentOptions>
+
+    </SubTree>
+
+    <!-- ================= 专精 A：对应医生的「异星学家」=================
+         原版主题是基因工程/生物材料。
+         占星术士主题下这条线打算改造成「天象」——但先不动，等讨论。 -->
+    <SubTree identifier="mcj_path_xenologist" type="specialization"
+             requires="mcj_astrologian_primary">
+      <TalentOptions>
+        <TalentOption identifier="geneharvester" />
+      </TalentOptions>
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="bloodybusiness" />
+        <TalentOption identifier="genesplicer" />
+      </TalentOptions>
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="blackmarketgenes" />
+        <TalentOption identifier="genetampering" />
+      </TalentOptions>
+      <TalentOptions>
+        <TalentOption identifier="geneticgenious" />
+      </TalentOptions>
+    </SubTree>
+
+    <!-- ================= 专精 B：治疗线（我们自己的第一支）=================
+         这是目前唯一已经完成设计的一条线。
+         4 层结构，第 2 层二选一，其余无选择 —— 与原版医生的「医生」子树同构。
+         天赋实现见 Talents/AstrologianTalents.xml
+         状态实现见 Afflictions/AstrologianAfflictions.xml
+
+         名字是占位的，等三条线定完再统一取。 -->
+    <SubTree identifier="mcj_path_healing" type="specialization"
+             requires="mcj_astrologian_primary">
+      <TalentOptions>
+        <TalentOption identifier="mcj_celestialopposition" />
+      </TalentOptions>
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="mcj_essentialdignity" />
+        <TalentOption identifier="mcj_lightspeed" />
+      </TalentOptions>
+      <TalentOptions>
+        <TalentOption identifier="mcj_aspectedhelios" />
+      </TalentOptions>
+      <TalentOptions>
+        <TalentOption identifier="mcj_stargate" />
+      </TalentOptions>
+    </SubTree>
+
+    <!-- ================= 专精 C：对应医生的「化学家」=================
+         原版主题是药物/毒素/配方。 -->
+    <SubTree identifier="mcj_path_scientist" type="specialization"
+             requires="mcj_astrologian_primary">
+      <TalentOptions>
+        <TalentOption identifier="plaguedoctor" />
+      </TalentOptions>
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="deliverysystem" />
+        <TalentOption identifier="labcontacts" />
+      </TalentOptions>
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="supersoldiers" />
+        <TalentOption identifier="whatastench" />
+      </TalentOptions>
+      <TalentOptions>
+        <TalentOption identifier="macrodosing" />
+      </TalentOptions>
+    </SubTree>
+
+  </TalentTree>
+
+</TalentTrees>
