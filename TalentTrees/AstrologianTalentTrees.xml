@@ -7,7 +7,8 @@
     mcj_path_arcanum   —— 奥秘卡（第二栏，已实装）
     mcj_path_astrolabe —— 会奶人的DPS（第三栏，第 1 档已实装，后续档位待设计）
 
-  初级树 mcj_astrologian_primary 目前仍是医生初级树的镜像，待重做。
+  初级树 mcj_astrologian_primary 已于 2026-09-15 重做
+  （构成见 Talents/AstrologianTalents.xml 初级树章节的注释）。
 
   ── 参数语义（来自官方 API 文档 BuildDocClient.xml）──
     TalentTree jobidentifier
@@ -39,9 +40,8 @@
       <TalentOptions requiredtalents="1" maxchosentalents="6">
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
-        <TalentOption identifier="exampleofhealth" />
-        <TalentOption identifier="laresistance" />
-        <TalentOption identifier="selfcare" />
+        <TalentOption identifier="mcj_primary_wheeloffortune" />
+        <TalentOption identifier="mcj_primary_celestialopposition" />
         <TalentOption identifier="stayinalive" />
       </TalentOptions>
 
@@ -49,7 +49,7 @@
         <TalentOption identifier="firemanscarry" />
         <TalentOption identifier="mcj_primary_guardianstar" />
         <TalentOption identifier="mcj_primary_starsounding" />
-        <TalentOption identifier="dontdieonme" />
+        <TalentOption identifier="mcj_primary_ascend" />
         <TalentOption identifier="mcj_primary_malefic" />
       </TalentOptions>
 

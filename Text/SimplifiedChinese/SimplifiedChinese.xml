@@ -141,12 +141,20 @@
 
   <!-- ===== 初级树 ===== -->
   <talentname.mcj_primary_starchart>星图</talentname.mcj_primary_starchart>
-  <talentname.mcj_primary_synastry>命理交织</talentname.mcj_primary_synastry>
-  <talentname.mcj_primary_guardianstar>守护星</talentname.mcj_primary_guardianstar>
-  <talentname.mcj_primary_starsounding>星轨测深</talentname.mcj_primary_starsounding>
+  <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
+  <talentname.mcj_primary_guardianstar>擢升</talentname.mcj_primary_guardianstar>
+  <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>凶星</talentname.mcj_primary_malefic>
-  <talentdescription.mcj_synastry>你为队友施加治疗时，你们的命理短暂交织：自己也缓缓恢复（每次约 3 点伤势、1 点出血）。</talentdescription.mcj_synastry>
+
+  <!-- ===== 初级树：由原版天赋改写而来的三个 ===== -->
+  <talentname.mcj_primary_wheeloffortune>命运之轮</talentname.mcj_primary_wheeloffortune>
+  <talentname.mcj_primary_celestialopposition>天星交错</talentname.mcj_primary_celestialopposition>
+  <talentname.mcj_primary_ascend>生辰</talentname.mcj_primary_ascend>
+
+  <!-- ===== 通用：占位符描述（mcj_celestialopposition / mcj_wheeloffortune 在用） ===== -->
+  <talentdescription.mcj_placeholder>（占位符：效果待重新设计）</talentdescription.mcj_placeholder>
+  <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
   <talentdescription.mcj_malefic>你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_malefic>
-  <afflictionname.mcj_synastry>命理交织</afflictionname.mcj_synastry>
+  <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>你的命理与他人交织，伤势正在缓缓消退。</afflictiondescription.mcj_synastry>
 </infotexts>

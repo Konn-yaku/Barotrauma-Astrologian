@@ -12,34 +12,19 @@
 <Talents>
 
   <!-- ============================================================
-       第 1 层 · 天星交错
-       对齐原版 medicalexpertise（医疗技能 +30 + 绷带加强）
-       额外给"被治疗的队友"挂一整个任务的减伤 buff
+       第 1 层 · 【占位符】
+
+       2026-09-15：本档原有内容（医疗技能 +30、被治疗的队友获得 25% 减伤）
+       已按要求整档撤下。「天星交错」这个名字与图标已移交给初级树的同名天赋
+       （mcj_primary_celestialopposition，由原版「抵抗军」改写而来）。
+
+       旧实现的完整代码见 git 历史（commit 5238fff 之前的版本）；
+       相关的 affliction「mcj_opposition」定义仍保留在
+       Afflictions/AstrologianAfflictions.xml 里，下次重做时可直接复用。
        ============================================================ -->
   <Talent identifier="mcj_celestialopposition">
     <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
-    <!-- 复用原版通用文案：技能加成 -->
-    <Description tag="talentdescription.skillbonus">
-      <Replace tag="[amount]" value="30" color="gui.green" />
-      <Replace tag="[skillname]" value="skillname.medical" color="gui.orange" />
-    </Description>
-    <Description tag="talentdescription.mcj_opposition" />
-
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30" />
-      </Abilities>
-    </AbilityGroupEffect>
-
-    <!-- 给被治疗的队友挂减伤 buff（持续性，直到任务结束） -->
-    <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
-      <Conditions>
-        <AbilityConditionCharacter targettype="Ally,NotSelf" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityGiveAffliction affliction="mcj_opposition" strength="1" setvalue="true" />
-      </Abilities>
-    </AbilityGroupEffect>
+    <Description tag="talentdescription.mcj_placeholder" />
   </Talent>
 
   <!-- ============================================================
@@ -477,29 +462,18 @@
   </Talent>
 
   <!-- ============================================================
-       第三栏 · 命运之轮（mcj_path_astrolabe）第 3 档
+       第三栏 · 【占位符】
 
-       可投掷的范围减伤 + 治疗装置：掷出 → 落地碎裂 →
-       周围 400 内的人类船员获得 8 秒 50% 全伤害抗性 + 持续治疗。
-       机制与全部查证依据写在 Items/AstrologianItems.xml 里。
+       2026-09-15：本档原有的「命运之轮」投掷装置（发放物品 + 解锁配方）
+       已按要求撤下。「命运之轮」这个名字与图标已移交给初级树的同名天赋
+       （mcj_primary_wheeloffortune，由原版「健康典范」改写而来）。
 
-       和地星一样：发放一颗 + 解锁配方（AddedRecipe + requiresrecipe）。
+       物品本体 mcj_wheeloffortune 的定义仍留在 Items/AstrologianItems.xml，
+       但已没有任何途径获得（既不发也不解锁配方），下次重做这一档时可直接复用。
        ============================================================ -->
   <Talent identifier="mcj_wheeloffortune">
     <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_wheeloffortune" />
-
-    <AbilityGroupInterval interval="2.0">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="mcj_wheeloffortune_given" min="1" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityPutItem itemidentifier="mcj_wheeloffortune" amount="1" />
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_wheeloffortune_given" value="1" setvalue="true" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AddedRecipe itemidentifier="mcj_wheeloffortune" />
+    <Description tag="talentdescription.mcj_placeholder" />
   </Talent>
 
   <!-- ============================================================
@@ -606,23 +580,28 @@
   <!-- ============================================================
        初级树（mcj_astrologian_primary）
 
-       初级树是「通用医疗兵基本功」。其中 6 个沿用原版医生的天赋
-       （exampleofhealth / laresistance / selfcare / stayinalive /
-         firemanscarry / dontdieonme）—— 这些本来就是通用能力，不改。
+       2026-09-15 定稿的构成（共 10 个）：
 
-       下面 5 个是自写的，专门替换原版医生那五个「字面写着医生」的天赋：
-           healthinsurance  医疗保险       -> 星图
-           nobodyimportantdies 专门强化助手 -> 命理交织
-           medicalcompanion 医疗伴侣       -> 守护星
-           nopressure       无压           -> 星轨测深
-           blooddonor       献血者         -> 凶星
+       ① 自写的 5 个（替换原版医生那五个「字面写着医生」的天赋）
+            healthinsurance      医疗保险     -> mcj_primary_starchart      星图
+            nobodyimportantdies  专门强化助手 -> mcj_primary_synastry      星位合图
+            medicalcompanion     医疗伴侣     -> mcj_primary_guardianstar  擢升
+            nopressure           无压         -> mcj_primary_starsounding  重力
+            blooddonor           献血者       -> mcj_primary_malefic       凶星
+       ② 由原版天赋改写而来的 3 个（效果原样，只换名字与图标，见本文件末尾）
+            exampleofhealth      健康典范     -> mcj_primary_wheeloffortune        命运之轮
+            laresistance         抵抗军       -> mcj_primary_celestialopposition   天星交错
+            dontdieonme          冥土追魂     -> mcj_primary_ascend                生辰
+       ③ 直接沿用原版的 2 个：stayinalive 求生意志 / firemanscarry 消防搬运
+
+       【已删】原版 selfcare（自我保健）—— 按要求移除，不再出现在初级树里。
 
        ⚠️ 必须用新 ID。直接改写原版 ID 会连带改掉原版医生，
           而且会和「天赋增强」(TE) 打架 —— TE 正在覆盖同一批原版天赋。
 
-       名字说明：「星图」「守护星」「星轨测深」是占星术语，不是 FF14 技能名。
-          只给效果与原作一致的两个用了官方名：凶星 = Malefic（伤害）、
-          命理交织 = Synastry（治疗目标时自己也回一点）。
+       ⚠️ 名字与效果的过渡状态：命运之轮 / 天星交错 / 生辰 现在挂的
+          是原版通用医疗兵效果，与 FF14 原作效果不一致
+         （原作分别是减伤领域 / 护盾 / 复活），属于「先占名字、效果之后再换」。
        ============================================================ -->
 
   <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID） -->
@@ -713,6 +692,63 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- ============================================================
+       2026-09-15 新增：三个由原版天赋改写而来的占星技能
+
+       效果与原版完全一致，只换了名字与图标
+       （名字取自 FF14 占星术士的正式技能名，图标为该技能的原作图）：
+           健康典范 exampleofhealth -> 命运之轮 Collective Unconscious
+           抵抗军   laresistance    -> 天星交错 Celestial Intersection
+           冥土追魂 dontdieonme     -> 生辰     Ascend
+
+       ⚠️ 为什么要写成新 ID 而不是直接改原版天赋：
+          改原版 ID 会连带改掉原版医生，并和「天赋增强」(TE) 打架。
+       ============================================================ -->
+
+  <!-- 命运之轮 ← 原版 exampleofhealth（效果原样：最大生命 +20%） -->
+  <Talent identifier="mcj_primary_wheeloffortune">
+    <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.additionalstattypeself">
+      <Replace tag="[amount]" value="20" color="gui.green" />
+      <Replace tag="[stattype]" value="stattypenames.maximumhealthmultiplier" color="gui.orange" />
+    </Description>
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 天星交错 ← 原版 laresistance（效果原样：鸦片类 / 化学成瘾抗性各 +50%） -->
+  <Talent identifier="mcj_primary_celestialopposition">
+    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.additionalresistanceself">
+      <Replace tag="[amount]" value="50" color="gui.green" />
+      <Replace tag="[affliction]" value="afflictionname.opiateaddiction" color="gui.orange" />
+    </Description>
+    <Description tag="talentdescription.additionalresistanceself">
+      <Replace tag="[amount]" value="50" color="gui.green" />
+      <Replace tag="[affliction]" value="afflictionname.chemaddiction" color="gui.orange" />
+    </Description>
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveResistance resistanceid="opiateaddiction" multiplier="0.5" />
+        <CharacterAbilityGiveResistance resistanceid="chemaddiction" multiplier="0.5" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 生辰 ← 原版 dontdieonme（效果原样：心肺复苏效力翻倍） -->
+  <Talent identifier="mcj_primary_ascend">
+    <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.dontdieonme" />
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="CPRBoost" value="1" />
       </Abilities>
     </AbilityGroupEffect>
   </Talent>
