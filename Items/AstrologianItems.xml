@@ -69,8 +69,11 @@
     <!-- slots 必须包含 Any，否则物品只能待在手上、塞不进物品栏。
          对照原版：左轮 = "Any,RightHand,LeftHand"（可收纳）
                    步枪 = "RightHand+LeftHand"（只能手持） -->
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-15" aimpos="30,0"
-              handle1="0,0" handle2="0,-8" holdangle="0" msg="ItemMsgPickUpSelect" />
+    <!-- 握持姿势：照左轮（原版小型远程武器）的最小写法。
+         handle1 是唯一的握点，放在球体偏下位置，让手搭在球底。
+         觉得别扭就调这三个数：holdpos（整体偏移）/ aimpos（瞄准偏移）/ handle1（握点）。 -->
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-22" aimpos="55,0"
+              handle1="-18,-14" holdangle="0" msg="ItemMsgPickUpSelect" />
 
     <!-- reload 0.4 = 比快速裂变加速器（0.5）稍快；无蓄力时间，扣扳机即射 -->
     <RangedWeapon reload="0.4" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
@@ -83,7 +86,10 @@
       <Sound file="Content/Items/Alien/AlienTurret1.ogg" type="OnUse" range="1000" selectionmode="Random" />
       <Sound file="Content/Items/Alien/AlienTurret2.ogg" type="OnUse" range="1000" />
 
-      <ParticleEmitter particle="GlowDot" scalemin="2.0" scalemax="2.0" particleamount="10"
+      <!-- 枪口特效：照拷贝快速裂变加速器 -->
+      <ParticleEmitter particle="FlareBubbles" scalemin="1.4" scalemax="1.8" particleamount="14"
+                       anglemin="0" anglemax="360" velocitymin="0" velocitymax="50" />
+      <ParticleEmitter particle="GlowDot" scalemin="4.0" scalemax="4.0" particleamount="20"
                        anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                        colormultiplier="180,200,255,255" />
 
@@ -93,7 +99,10 @@
         <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
 
-      <RequiredItems items="mcj_starshot" type="Contained" msg="ItemMsgAmmoRequired" />
+      <!-- 【弹药提示】不写 msg！写在的话每枪都会弹一次“弹药耗尽”。
+           弹丸是开火瞬间现场生成的，检查与生成之间总有一丝时间差，
+           原版小丑的香蕉皮发射器也是这么绕开的（它的 RequiredItems 同样不写 msg）。 -->
+      <RequiredItems items="mcj_starshot" type="Contained" />
     </RangedWeapon>
 
     <!-- 【关键】容器必须真的接受星辉弹，否则 RequiredItems 永远不通过，只会报"弹药耗尽"。
@@ -122,8 +131,11 @@
 
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
 
-      <ParticleEmitter particle="GlowDot" particleamount="3" velocitymin="0" velocitymax="0"
-                       colormultiplier="180,200,255,255" scalemin="1" scalemax="1.5" />
+      <!-- 弹道动画：照拷贝快速裂变加速器的写法。
+           tracernucleargun 会沿整条射线画出一道轨迹（这才是“一个东西飞出去”的观感），
+           FlareBubbles 的 emitacrossrayinterval 则在水下沿射线吐出一串气泡。 -->
+      <ParticleEmitter particle="tracernucleargun" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="1,0.75" />
+      <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" />
 
       <!-- 原版快速裂变加速器：structuredamage 35 / itemdamage 35 / explosiondamage 50
            / radiation 25 / stun 0.5 / severlimbs 0.5。这里全部减半，辐射换成烧伤。 -->
@@ -132,6 +144,17 @@
         <Affliction identifier="explosiondamage" strength="25" />
         <Affliction identifier="burn" strength="12" />
       </Attack>
+
+      <!-- 命中特效：同样照拷贝快速裂变加速器 -->
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="muzzleflashnucleargun" anglemin="0" anglemax="360" particleamount="10"
+                         velocitymin="0" scalemin="0.5" scalemax="0.8" scalemultiplier="0.75,0.75" />
+        <ParticleEmitter particle="weldspark" particleamount="5" anglemin="0" anglemax="360"
+                         velocitymin="300" velocitymax="350" scalemin="1.5" scalemax="1.9"
+                         drawontop="true" colormultiplier="150,200,255,180" />
+        <ParticleEmitter particle="FlareBubbles" particleamount="3" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="50" />
+      </StatusEffect>
 
       <!-- 命中点的小范围灼烧 -->
       <StatusEffect type="OnImpact" target="UseTarget" disabledeltatime="true">
