@@ -384,21 +384,21 @@
   </Affliction>
 
   <!-- ===== 第三栏 · 命运之轮：高额减伤 + 持续治疗 =====
-       由投掷物 mcj_wheeloffortune 落地时施加，只持续 8 秒。
-       它是未一个「限时」buff，所以没有 resetbetweenrounds，改用 duration 自动消退。 -->
+       由投掷物 mcj_wheeloffortune 落地时施加，持续 20 秒。
+       它是一个「限时」buff，所以没有 resetbetweenrounds，改用 duration 自动消退。 -->
   <Affliction identifier="mcj_wheeloffortune"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              duration="8"
+              duration="20"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
 
     <!-- 一、减伤：固定 50%。
          原版基线：resistancefor="damage" 的原版上限就是 0.5（Afflictions.xml:2612），
-         基因材料最高到 0.6。这里取 0.5，但只持续 8 秒、且要靠一颗消耗品投掷触发，
+         基因材料最高到 0.6。这里取 0.5，但只持续 20 秒、且要靠一颗消耗品投掷触发，
          比原版那些“永久生效”的抗性天赋苛刻得多。 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
@@ -406,9 +406,11 @@
             minresistance="0.5"
             maxresistance="0.5" />
 
-    <!-- 二、治疗：8 秒内总共削减约 30 点伤害 + 10 点出血。
-         对照本模组的阳星合相：它是 0.75 / 秒 的“慢速自愈”（回满 100 点要 130 秒以上）。
-         命运之轮是 3.75 / 秒 — 5 倍速，但只有 8 秒，总量依然是“救急”而不是“回满”。 -->
+    <!-- 二、治疗：持续 20 秒。
+         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.75 / 秒）是 5 倍。
+         理论总量 = 约 75 点伤害 + 25 点出血，但那需要你活满 20 秒；
+         潜渊症战斗节奏很短，实战里能回上二三十点已经很好了。
+         觉得总量太高就把 amount 减半（速率减半，总量约 37 点）。 -->
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
         <ReduceAffliction type="damage" amount="0.375" />
@@ -417,6 +419,26 @@
     </Effect>
 
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 第三栏 · 占卜：队友的小幅增伤 =====
+       由天赋 mcj_divination 每 3 秒刷新一次，duration=4
+       → 离开 1000 范围大约 4 秒后自动失效（与阳星合相同一个手法）。
+       占卜者本人不靠这个 buff，他拿的是天赋里更大的那份。 -->
+  <Affliction identifier="mcj_divination"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="4"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 「不要太多」：队友只拿 5% -->
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="AttackMultiplier" value="0.05" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
 </Afflictions>

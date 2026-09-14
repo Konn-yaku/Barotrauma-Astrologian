@@ -266,7 +266,7 @@
        命运之轮 mcj_wheeloffortune
        可投掷的范围减伤 + 治疗装置。由第三栏第 3 档天赋发放。
 
-       【流程】掷出 → 落地碎裂 → 周围 400 内的船员获得 8 秒
+       【流程】掷出 → 落地碎裂 → 周围 400 内的所有人获得 20 秒
               50% 全伤害抗性 + 持续治疗（详见 Afflictions）
 
        ── 落地碎裂怎么写 ──
@@ -281,18 +281,18 @@
            </StatusEffect>
        所以我们用 OnBroken + NearbyCharacters + <Affliction> 即可。
 
-       ── 为什么限定 targets="human" ──
+       ── 为什么不筛选敌我 / 物种 ──
        NearbyCharacters 没有任何“队伍”过滤属性（字段全集里只有 target / targets /
-       targetidentifiers / targettags 等，没有 team）。原版的做法就是用 targets 按
-       物种过滤（Watcher.xml: "targets=\"human\""）。
-           → 不限定的话，范围内的海怪也会被减伤 + 治疗，那就成了负面效果。
-       ⚠️ 残留问题：敌方人类（海盗 / 分离主义者）仍会吃到 buff。
-          原版也没有解决这个的写法，影响很小，先接受。
+       targetidentifiers / targettags 等，没有 team）。原版也只能用 targets 按物种过滤。
+       本模组按设计意图【不筛选】，所以不加 targets —— 范围内所有角色都吃到 buff，
+       包括海怪与敌方人类。
+       ⚠️ 注意：这意味着海怪也会被减伤 + 治疗。这目前是刻意如此（“命运从不挑人”）。
+          想改回“只对人类”的话，加回 targets="human" 即可。
 
        【数值对照】
          原版 resistancefor="damage" 上限 0.5（Afflictions.xml:2612），基因材料 0.6
          本模组「天星交错」 0.15 / 「世界树之干」 0.2（都是永久生效）
-         命运之轮 0.5，但只 8 秒、且靠消耗品触发 ============================================================ -->
+         命运之轮 0.5，但只 20 秒、且靠消耗品触发 ============================================================ -->
   <Item name="" identifier="mcj_wheeloffortune" category="Equipment"
         tags="smallitem,wheeloffortune"
         cargocontaineridentifier="metalcrate" allowasextracargo="true" scale="0.5"
@@ -321,8 +321,8 @@
       <!-- 落地即碎 -->
       <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
 
-      <!-- 给周围船员上 buff（只限人类，不把怪物一并治好） -->
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="400" targets="human" disabledeltatime="true">
+      <!-- 给范围内所有人上 buff（不筛选敌我 / 物种） -->
+      <StatusEffect type="OnBroken" target="NearbyCharacters" range="400" disabledeltatime="true">
         <Affliction identifier="mcj_wheeloffortune" strength="1" />
       </StatusEffect>
 

@@ -122,7 +122,10 @@
          放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
 
          第 3 档「命运之轮」—— 辅助向投掷物：
-         掷出即碎，给周围船员 8 秒的高额减伤 + 持续治疗。
+         掷出即碎，给周围所有人 20 秒的高额减伤 + 持续治疗。
+
+         第 4 档「占卜」—— 终档：医疗技能 +45，自身伤害随医疗技能阶梯提升，
+         并给附近队友一份小幅增伤。
          后续档位待设计。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
@@ -139,6 +142,11 @@
       <!-- 第 3 档 -->
       <TalentOptions>
         <TalentOption identifier="mcj_wheeloffortune" />
+      </TalentOptions>
+
+      <!-- 第 4 档 -->
+      <TalentOptions>
+        <TalentOption identifier="mcj_divination" />
       </TalentOptions>
     </SubTree>
 

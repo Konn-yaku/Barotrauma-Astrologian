@@ -119,14 +119,23 @@
   <!-- ===== 第三栏 · 命运之轮 ===== -->
   <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
   <talentdescription.mcj_wheeloffortune>获得一副「命运之轮」，并解锁它的制造配方。
-把它掷向你的队友。它落地即碎，为周围 ‖color:gui.green‖400‖end‖ 范围内的全体船员带来
-‖color:gui.green‖8‖end‖ 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，
+把它掷向你的队友。它落地即碎，为周围 ‖color:gui.green‖400‖end‖ 范围内的所有角色带来
+‖color:gui.green‖20‖end‖ 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，
 并在持续期间不断减轻他们的 ‖color:gui.orange‖伤势‖end‖ 与 ‖color:gui.orange‖出血‖end‖。
 掷完就没了，需要重新制作。</talentdescription.mcj_wheeloffortune>
   <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>以星轨铸成的一副轮盘。掷出后在地上碎开，把一小段好运留给周围的人。
-8 秒之内，被它笼罩的人所受的伤害减半，伤势与出血也会自行消退。
+20 秒之内，被它笼罩的角色所受的伤害减半，伤势与出血也会自行消退。
 它不分辨敌我 —— 命运从不挑人。</entitydescription.mcj_wheeloffortune>
   <afflictionname.mcj_wheeloffortune>命运之轮</afflictionname.mcj_wheeloffortune>
-  <afflictiondescription.mcj_wheeloffortune>你获得 ‖color:gui.green‖50‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
+  <afflictiondescription.mcj_wheeloffortune>你会获得 20 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
+
+  <!-- ===== 第三栏 · 占卜 ===== -->
+  <talentname.mcj_divination>占卜</talentname.mcj_divination>
+  <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
+你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
+医疗 40 / 60 / 80 / 100 各再进一步提升一档，最高 ‖color:gui.green‖+20‖end‖%。
+身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会小幅受益（‖color:gui.green‖+5‖end‖% 伤害）。</talentdescription.mcj_divination>
+  <afflictionname.mcj_divination>占卜</afflictionname.mcj_divination>
+  <afflictiondescription.mcj_divination>占星术士为你揭示了天体的弱点：你造成的伤害提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_divination>
 </infotexts>
