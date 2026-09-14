@@ -11,7 +11,10 @@
     treatmentthreshold="1000"  → 极高，保证它不会被"治疗"掉
     resetbetweenrounds="true"  → 【持续一整个任务】的标准写法（原版只有 bedsidemanner 用了）
                                 任务结束时自动清除，跨任务不残留
-    iconcolors                 → 图标配色，沿用原版天赋 buff 的那一套青色
+    iconcolors                 → buff 栏图标外侧的配色渐变
+    <Icon>                     → 图标图片，指向 %ModDir%/Textures/Afflictions/ 下的本地素材
+                                （这些图片不在仓库里，见 .gitignore）
+                                color 写 255,255,255,255 = 不染色，保留原图配色
 -->
 <Afflictions>
 
@@ -36,7 +39,7 @@
             resistancefor="damage"
             minresistance="0.25"
             maxresistance="0.25" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Opposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
@@ -65,7 +68,7 @@
         <ReduceAffliction type="bleeding" amount="0.018" />
       </StatusEffect>
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
@@ -134,7 +137,7 @@
     </Effect>
     <!-- 强度 = 0：护身符已被烧掉，什么都不做 -->
     <Effect minstrength="0" maxstrength="0.1" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
@@ -175,7 +178,7 @@
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="AttackMultiplier" value="0.25" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_balance_boost"
@@ -193,7 +196,7 @@
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="AttackMultiplier" value="0.10" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 战争神之枪：全队攻击速度 ===== -->
@@ -211,7 +214,7 @@
       <StatValue stattype="MeleeAttackSpeed" value="0.30" />
       <StatValue stattype="RangedAttackSpeed" value="0.20" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_spear_boost"
@@ -230,7 +233,7 @@
       <StatValue stattype="MeleeAttackSpeed" value="0.10" />
       <StatValue stattype="RangedAttackSpeed" value="0.05" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 放浪神之箭：全队移动速度与游泳速度 ===== -->
@@ -250,7 +253,7 @@
       <StatValue stattype="WalkingSpeed" value="0.25" />
       <StatValue stattype="SwimmingSpeed" value="0.35" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_arrow_boost"
@@ -269,7 +272,7 @@
       <StatValue stattype="WalkingSpeed" value="0.10" />
       <StatValue stattype="SwimmingSpeed" value="0.10" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 世界树之干：全队伤害抗性 ===== -->
@@ -288,7 +291,7 @@
             resistancefor="damage"
             minresistance="0.25"
             maxresistance="0.25" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_bole_boost"
@@ -308,7 +311,7 @@
             resistancefor="damage"
             minresistance="0.10"
             maxresistance="0.10" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 建筑神之塔：全队修理速度与修船壳速度 ===== -->
@@ -328,7 +331,7 @@
       <StatValue stattype="RepairSpeed" value="0.35" />
       <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.35" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_spire_boost"
@@ -347,7 +350,7 @@
       <StatValue stattype="RepairSpeed" value="0.10" />
       <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.10" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 河流神之瓶：全队氧气消耗 ===== -->
@@ -366,7 +369,7 @@
             resistancefor="oxygenlow"
             minresistance="0.25"
             maxresistance="0.25" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_ewer_boost"
@@ -386,7 +389,7 @@
             resistancefor="oxygenlow"
             minresistance="0.10"
             maxresistance="0.10" />
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 第三栏 · 命运之轮：高额减伤 + 持续治疗 =====
@@ -425,7 +428,7 @@
       </StatusEffect>
     </Effect>
 
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 第三栏 · 占卜：队友的小幅增伤 =====
@@ -445,7 +448,7 @@
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="AttackMultiplier" value="0.10" />
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Divination.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 初级树 · 命理交织：治疗队友时自己也缓愈 =====
@@ -466,7 +469,7 @@
         <ReduceAffliction type="bleeding" amount="0.02" />
       </StatusEffect>
     </Effect>
-    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="2,7" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Synastry.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
 </Afflictions>

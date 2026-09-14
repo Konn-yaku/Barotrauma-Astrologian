@@ -11,6 +11,7 @@ desktop.ini
 _backup/
 .old/
 
-# 职业图标：本地素材，不随仓库分发
-Textures/JobIcon.png
-Textures/JobIconSmall.png
+# 图片素材：全部为本地素材，不随仓库分发
+# （职业图标 / 物品贴图 / 天赋与增益图标）
+# 从仓库 clone 后需要自备 Textures/ 下的同名文件，否则相关图标显示为空
+Textures/

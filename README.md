@@ -20,8 +20,8 @@
 | 奥秘卡（6 张卡 + 星力） | ✅ |
 | 会奶人的DPS（4 个天赋 + 4 件专属装备） | ✅ |
 | 初级天赋 | ✅ |
-| 职业图标 | ✅ 本地素材（不入库，见下） |
-| 物品贴图 | ✅ 自制 |
+| 职业图标 | ✅ 本地素材 |
+| 物品贴图 | ✅ 本地素材 |
 
 ## 初级天赋
 
@@ -122,6 +122,10 @@
 2. 启动游戏 → **设置 → 模组** → 启用 `Astrologian`
 3. 新建战役时即可在船员界面选择「占星术士」
 
+> ⚠️ 本仓库**不含图片素材**，`Textures/` 已被 `.gitignore` 排除。
+> 从仓库 clone 后需自备 `Textures/` 目录（结构与文件名见下），
+> 否则职业图标、物品贴图与天赋/增益图标会显示为空。
+
 > 修改任何文件后**必须完全重启游戏**才会生效。
 
 ## 文件结构
@@ -134,6 +138,11 @@ Astrologian/
 ├─ Talents/AstrologianTalents.xml        天赋实现
 ├─ Afflictions/AstrologianAfflictions.xml 天赋用的隐藏增益
 ├─ Items/AstrologianItems.xml            专属装备（天球仪 / 凶星 / 地星 / 命运之轮）
+├─ Textures/                              图片素材（本地提供，不在仓库中）
+│  ├─ JobIcon.png / JobIconSmall.png     职业图标（128×128 / 28×28）
+│  ├─ Astrolabe / EarthlyStar / WheelOfFortune / Malefic.png   物品贴图（64×64）
+│  ├─ Afflictions/                       增益图标（128×128）
+│  └─ Talents/                           天赋图标（128×128）
 └─ Text/
    ├─ SimplifiedChinese/SimplifiedChinese.xml
    └─ English/English.xml

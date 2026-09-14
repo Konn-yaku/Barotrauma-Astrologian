@@ -17,7 +17,7 @@
        额外给"被治疗的队友"挂一整个任务的减伤 buff
        ============================================================ -->
   <Talent identifier="mcj_celestialopposition">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
     <!-- 复用原版通用文案：技能加成 -->
     <Description tag="talentdescription.skillbonus">
       <Replace tag="[amount]" value="30" color="gui.green" />
@@ -54,7 +54,7 @@
        AbilityGroupEffect 是否会叠加"，确认后再扩展。
        ============================================================ -->
   <Talent identifier="mcj_essentialdignity">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/EssentialDignity.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_essentialdignity" />
 
     <!-- 【修复】这里原本还有一个 FallbackAbilities（multiplyvalue="1.0"）
@@ -80,7 +80,7 @@
        额外给 CPR 加成（原版没有，属于小幅加强，可随时去掉）
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
 
     <AbilityGroupInterval interval="0.5">
@@ -107,7 +107,7 @@
        mcj_helios 带 duration="2"，每秒刷新 → 离开范围约 2 秒后自动失效。
        ============================================================ -->
   <Talent identifier="mcj_aspectedhelios">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/AspectedHelios.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_aspectedhelios" />
 
     <AbilityGroupInterval interval="1.0">
@@ -139,7 +139,7 @@
        结构照抄原版 healthinsurance。
        ============================================================ -->
   <Talent identifier="mcj_stargate">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Stargate.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_stargate" />
 
     <!-- 进入任务时发放护身符：本任务还没发过就发 -->
@@ -194,7 +194,7 @@
 
   <!-- 太阳神之衡：全队增伤 -->
   <Talent identifier="mcj_balance">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_balance" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -211,7 +211,7 @@
 
   <!-- 战争神之枪：全队攻击速度 -->
   <Talent identifier="mcj_spear">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_spear" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -228,7 +228,7 @@
 
   <!-- 放浪神之箭：全队移动速度与游泳速度 -->
   <Talent identifier="mcj_arrow">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arrow" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -245,7 +245,7 @@
 
   <!-- 世界树之干：全队伤害抗性 -->
   <Talent identifier="mcj_bole">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_bole" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -262,7 +262,7 @@
 
   <!-- 建筑神之塔：全队修理速度与修船壳速度 -->
   <Talent identifier="mcj_spire">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_spire" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -279,7 +279,7 @@
 
   <!-- 河流神之瓶：全队氧气消耗 -->
   <Talent identifier="mcj_ewer">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_ewer" />
     <AbilityGroupInterval interval="5.0">
       <Abilities>
@@ -311,7 +311,7 @@
        基础值与强化值最终都会顶到上限，效果一样，区分不出来。
        ============================================================ -->
   <Talent identifier="mcj_astrodyne">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_astrodyne" />
 
     <AbilityGroupInterval interval="5.0">
@@ -413,7 +413,7 @@
        拿着它就干不了别的，想用就得从物品栏里取出来。
        ============================================================ -->
   <Talent identifier="mcj_astrolabe">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="7,0" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Astrolabe.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_astrolabe" />
 
     <!-- 不能只用 abilityeffecttype="None"：那个时机可能在选天赋的界面里、
@@ -446,7 +446,7 @@
        permanent stat 默认 removeondeath，所以死亡重生后会重新发放。
        ============================================================ -->
   <Talent identifier="mcj_earthlystar">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/EarthlyStar.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_earthlystar" />
 
     <AbilityGroupInterval interval="2.0">
@@ -473,7 +473,7 @@
        和地星一样：发放一颗 + 解锁配方（AddedRecipe + requiresrecipe）。
        ============================================================ -->
   <Talent identifier="mcj_wheeloffortune">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="6,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_wheeloffortune" />
 
     <AbilityGroupInterval interval="2.0">
@@ -515,7 +515,7 @@
           就把门槛改成固定一档，或者改用 4 个独立天赋分开给。
        ============================================================ -->
   <Talent identifier="mcj_divination">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,1" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_divination" />
 
     <!-- ① 医疗技能 +45 -->
@@ -614,7 +614,7 @@
 
   <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID） -->
   <Talent identifier="mcj_primary_starchart">
-    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="4,2" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/StarChart.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.healthinsurance">
       <Replace tag="[amount]" value="30" color="gui.orange" />
       <Replace tag="[money]" value="100" color="gui.green" />
@@ -653,7 +653,7 @@
   <!-- 命理交织 ← 原版 nobodyimportantdies（新效果）
        原作 Synastry 的效果就是「治疗目标时自己也回一点」，直接对应。 -->
   <Talent identifier="mcj_primary_synastry">
-    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="2,7" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Synastry.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_synastry" />
 
     <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
@@ -674,7 +674,7 @@
 
   <!-- 守护星 ← 原版 medicalcompanion -->
   <Talent identifier="mcj_primary_guardianstar">
-    <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,5" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/GuardianStar.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.unlockrecipe">
       <Replace tag="[itemname]" value="entityname.autoinjectorheadset" color="gui.orange" />
     </Description>
@@ -683,7 +683,7 @@
 
   <!-- 星轨测深 ← 原版 nopressure -->
   <Talent identifier="mcj_primary_starsounding">
-    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="7,1" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.unlockrecipe">
       <Replace tag="[itemname]" value="entityname.pressurestabilizer" color="gui.orange" />
     </Description>
@@ -694,7 +694,7 @@
        Malefic 是占星术士的核心伤害法术，效果也就对应增伤。
        基础树里的小幅增伤，对标 TE「暴力军阀 warlord」的起点 0.1。 -->
   <Talent identifier="mcj_primary_malefic">
-    <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="5,2" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Malefic.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_malefic" />
 
     <AbilityGroupEffect abilityeffecttype="OnAttack">
