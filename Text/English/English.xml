@@ -22,7 +22,7 @@
   <!-- ===== Healing line: talent descriptions ===== -->
   <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖25‖end‖% damage resistance until the end of the mission.</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>The CPR you apply is twice as effective, and you can drag characters at full speed.\nWhen someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖1000‖end‖ units slowly heal over time, continuously reducing ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖.</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 

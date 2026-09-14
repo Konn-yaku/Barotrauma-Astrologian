@@ -77,27 +77,26 @@
   <!-- ============================================================
        第 2 层 · 光速（二选一）
 
-       = 原版「冥土追魂」+ 原版「应急反应」的合并版，外加一条常驻的拖拽强化。
-       ① CPRBoost 1  —— 与冥土追魂（dontdieonme）同值：心肺复苏效力翻倍，常驻。
-       ② 拖拽角色不减速 —— MoveNormallyWhileDragging flag，常驻。
+       = 原版「应急反应的换皮」+ 一条常驻的拖拽强化。
+       ① 拖拽角色不减速 —— MoveNormallyWhileDragging flag，常驻。
           全游戏没有"拖拽速度"类 stattype（只有这一个二进制 flag），所以它没有
           可调的档位，只有"减不减速"两种状态。原版两个用例：
           firemanscarry（医生初级树直接给）与「应急反应」给助手的那条 affliction。
           ※ 我们初级树里本来就有 firemanscarry —— 对同时点了它的人这条是重复的，
             不会叠加出额外收益，但光速自己就送，不依赖初级树。
-       ③ 有人昏迷时 +40% 移速 —— 原版应急反应（emergencyresponse）的数值。
+       ② 有人昏迷时 +40% 移速 —— 原版应急反应（emergencyresponse）的数值。
 
-       ⚠️ 与初级树的「冥土追魂」重复：两个 CPRBoost 1 若累加 = 3 倍心肺复苏。
-          这是刻意保留的，若实测太强，把 CPRBoost 那行删掉即可。
+       ※ 这里刻意【不给】心肺复苏加成：原版「冥土追魂」(dontdieonme, CPRBoost 1)
+         已经在我们的初级树第 2 组里（5 选 5，人人可点）。两边都给的话，
+         万一 CPRBoost 是累加的，双修就是 3 倍心肺复苏 —— 没必要重复。
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
 
-    <!-- 常驻：心肺复苏效力翻倍 + 拖拽角色不减速 -->
+    <!-- 常驻：拖拽角色不减速 -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="CPRBoost" value="1" />
         <CharacterAbilityGiveFlag flagtype="MoveNormallyWhileDragging" />
       </Abilities>
     </AbilityGroupEffect>
