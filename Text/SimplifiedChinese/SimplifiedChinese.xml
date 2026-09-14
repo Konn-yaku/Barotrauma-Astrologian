@@ -102,7 +102,7 @@
   <entitydescription.mcj_astrolabe>占星术士的观星仪器。小到能收进随身物品栏。
 举起它，就能引导星光化为射线；魔力取之不竭，无需任何弹药。
 占星术士具备焚灼之能，被命中的目标会持续燃烧。</entitydescription.mcj_astrolabe>
-  <entityname.mcj_starshot>星辉弹</entityname.mcj_starshot>
+  <entityname.mcj_malefic>凶星</entityname.mcj_malefic>
 
   <!-- ===== 第三栏 · 地星 ===== -->
   <talentname.mcj_earthlystar>地星</talentname.mcj_earthlystar>

@@ -15,14 +15,14 @@
   思路取自原版小丑的香蕉皮发射器：开火时现场"变"出一发弹药，打完自清。
 
       <StatusEffect type="OnUse" target="This">
-        <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+        <SpawnItem identifier="mcj_malefic" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
-      <RequiredItems items="mcj_starshot" type="Contained" />
+      <RequiredItems items="mcj_malefic" type="Contained" />
       ...
       <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
-        <Containable items="mcj_starshot" />           ( 必须真的接受它 )
+        <Containable items="mcj_malefic" />           ( 必须真的接受它 )
         <StatusEffect type="OnSpawn" target="this">    ( 出生先预装一发 )
-          <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+          <SpawnItem identifier="mcj_malefic" spawnposition="ThisInventory" count="1" />
         </StatusEffect>
       </ItemContainer>
 
@@ -81,7 +81,7 @@
     <!-- reload 0.8 = 快速裂变加速器（0.5）的一半攻速；无蓄力时间，扣扳机即射 -->
     <RangedWeapon reload="0.8" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
                   combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
-                  suitableprojectiles="mcj_starshot">
+                  suitableprojectiles="mcj_malefic">
 
       <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
@@ -96,36 +96,37 @@
                        anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                        colormultiplier="180,200,255,255" />
 
-      <!-- 每次都现场生成一发星辉弹。
+      <!-- 每次都现场生成一发凶星。
            （第一次不用等这行 —— 下面的 ItemContainer 会在物品创建时预装一发） -->
       <StatusEffect type="OnUse" target="This">
-        <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+        <SpawnItem identifier="mcj_malefic" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
 
       <!-- 【弹药提示】不写 msg！写在的话每枪都会弹一次“弹药耗尽”。
            弹丸是开火瞬间现场生成的，检查与生成之间总有一丝时间差，
            原版小丑的香蕉皮发射器也是这么绕开的（它的 RequiredItems 同样不写 msg）。 -->
-      <RequiredItems items="mcj_starshot" type="Contained" />
+      <RequiredItems items="mcj_malefic" type="Contained" />
     </RangedWeapon>
 
-    <!-- 【关键】容器必须真的接受星辉弹，否则 RequiredItems 永远不通过，只会报"弹药耗尽"。
+    <!-- 【关键】容器必须真的接受凶星，否则 RequiredItems 永远不通过，只会报"弹药耗尽"。
          OnSpawn 预装一发：保证第一枪就能打，不用等 OnUse 补货。
          写法照抄原版 toolbelt 的 OnSpawn + ThisInventory。 -->
     <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
-      <Containable items="mcj_starshot" />
+      <Containable items="mcj_malefic" />
       <StatusEffect type="OnSpawn" target="this">
-        <SpawnItem identifier="mcj_starshot" spawnposition="ThisInventory" count="1" />
+        <SpawnItem identifier="mcj_malefic" spawnposition="ThisInventory" count="1" />
       </StatusEffect>
     </ItemContainer>
 
   </Item>
 
   <!-- ============================================================
-       星辉弹（隐藏物品，玩家看不到也拿不到）
+       凶星（隐藏物品，玩家看不到也拿不到）
+       取自 FF14 占星术士的伤害法术「凶星」（Malefic）。
        每次开火由天球仪现场生成，发射后立刻自我删除。
        伤害 = 快速裂变加速器的一半；并把辐射换成了「焚灼」的烧伤。
        ============================================================ -->
-  <Item name="" identifier="mcj_starshot" category="Weapon"
+  <Item name="" identifier="mcj_malefic" category="Weapon"
         scale="0.5" hideinmenus="true" sonarsize="2">
 
     <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="186,351,59,67" depth="0.55" origin="0.5,0.5" />

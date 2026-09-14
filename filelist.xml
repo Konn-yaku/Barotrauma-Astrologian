@@ -21,7 +21,7 @@
   <!-- 自定义增益状态（天赋的实现载体） -->
   <Afflictions file="%ModDir%/Afflictions/AstrologianAfflictions.xml" />
 
-  <!-- 自定义装备（天球仪 / 星辉弹 / 地星 / 命运之轮） -->
+  <!-- 自定义装备（天球仪 / 凶星 / 地星 / 命运之轮） -->
   <Item file="%ModDir%/Items/AstrologianItems.xml" />
 
   <!-- 中文文本（游戏语言 = 简体中文时生效） -->
