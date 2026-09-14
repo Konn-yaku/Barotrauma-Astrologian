@@ -7,7 +7,7 @@
   这个文件是模组入口清单。新增任何文件后必须在这里登记，否则游戏不会加载。
   %ModDir% 表示"本模组根目录"，游戏自动替换。
 -->
-<contentpackage name="Astrologian" modversion="0.7.1" corepackage="False" gameversion="1.13.4.0">
+<contentpackage name="Astrologian" modversion="0.8.0" corepackage="False" gameversion="1.13.4.0">
 
   <!-- 职业定义：技能、初始装备、自主行为 -->
   <Jobs file="%ModDir%/Jobs/AstrologianJob.xml" />
@@ -29,5 +29,7 @@
 
   <!-- 英文文本（游戏语言 = English 时生效） -->
   <Text file="%ModDir%/Text/English/English.xml" />
+
+  <!-- 自制贴图不需要在这里登记，由 %ModDir% 直接引用 -->
 
 </contentpackage>

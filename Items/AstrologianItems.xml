@@ -35,8 +35,13 @@
                  步枪 = RightHand+LeftHand（只能手持）
 
   ── 贴图说明 ──
-  占位贴图复用原版材料"fulgurium"的发光晶体图，看起来最接近一颗魔法球。
-  以后想换外观，只改 <Sprite> / <InventoryIcon> 的 texture + sourcerect 两行即可。
+  所有贴图都在 Textures/ 下，由 %ModDir% 引用（filelist.xml 不需要登记贴图）。
+  想把美术换掉：直接覆盖同名 PNG，尺寸保持不变即可，XML 不用改。
+    Astrolabe.png      天球仪    64x64
+    EarthlyStar.png    地星      64x64
+    WheelOfFortune.png 命运之轮  64x64
+    Malefic.png        凶星      64x64
+  （物品带 scale="0.5"，所以 64px 贴图在游戏里显示为 32px。）
 
   ── 地星 mcj_earthlystar ──
   第三栏第 2 档发放的「预先布置」装置。完整的机制说明写在它自己的注释里。
@@ -65,8 +70,8 @@
       <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
 
-    <InventoryIcon texture="Content/Items/Alien/AlienMaterials.png" sourcerect="186,351,59,67" origin="0.5,0.5" />
-    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="186,351,59,67" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/Textures/Astrolabe.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Astrolabe.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" density="15" />
 
     <!-- slots 必须包含 Any，否则物品只能待在手上、塞不进物品栏。
@@ -129,7 +134,7 @@
   <Item name="" identifier="mcj_malefic" category="Weapon"
         scale="0.5" hideinmenus="true" sonarsize="2">
 
-    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="186,351,59,67" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Malefic.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
     <Body width="10" height="10" density="5" />
     <Holdable slots="RightHand+LeftHand" aimable="false" />
 
@@ -230,8 +235,8 @@
       <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
 
-    <InventoryIcon texture="Content/Items/Alien/AlienMaterials.png" sourcerect="18,436,58,69" origin="0.5,0.5" />
-    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="18,436,58,69" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/Textures/EarthlyStar.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/EarthlyStar.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="18" density="15" />
 
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" handle1="0,-5"
@@ -313,8 +318,8 @@
       <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
 
-    <InventoryIcon texture="Content/Items/Alien/AlienMaterials.png" sourcerect="97,349,58,71" origin="0.5,0.5" />
-    <Sprite texture="Content/Items/Alien/AlienMaterials.png" sourcerect="97,349,58,71" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/Textures/WheelOfFortune.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/WheelOfFortune.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="40" density="30" friction="1.0" angulardamping="20.0" />
 
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5"

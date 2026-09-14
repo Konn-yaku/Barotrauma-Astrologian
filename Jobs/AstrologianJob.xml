@@ -18,12 +18,15 @@
        pricemultiplier="1.15"
        idlebehavior="Active">
 
-    <!-- ===== 图标：暂时复用原版医生的图标，阶段三换自制美术 ===== -->
-    <Jobicon>
-      <sprite texture="Content/UI/MainIconsAtlas.png" sourcerect="512,256,128,128" origin="0.5,0.5" />
-    </Jobicon>
-    <JobiconSmall>
-      <sprite texture="Content/UI/CommandUIAtlas.png" sourcerect="612,698,28,28" origin="0.5,0.5" />
+<!-- ===== 自制图标 =====
+           Jobicon      大图标（船员列表/招募界面），原版风格为灰阶金属徽章
+           JobiconSmall 小图标（指挥界面），原版风格为深灰线稿
+           贴图在 Textures/ 下，想要换只替 PNG 即可（尺寸保持不变）。 -->
+      <Jobicon>
+        <sprite texture="%ModDir%/Textures/JobIcon.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+      </Jobicon>
+      <JobiconSmall>
+        <sprite texture="%ModDir%/Textures/JobIconSmall.png" sourcerect="0,0,28,28" origin="0.5,0.5" />
     </JobiconSmall>
 
     <!-- ===== 技能：与医生完全一致 =====
