@@ -64,32 +64,32 @@
 
   <!-- ===== 第二栏 · 奥秘卡：隐藏增益 ===== -->
   <afflictionname.mcj_balance>太阳神之衢</afflictionname.mcj_balance>
-  <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_balance>
+  <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_balance>
   <afflictionname.mcj_balance_boost>太阳神之衢·星力</afflictionname.mcj_balance_boost>
   <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_balance_boost>
 
   <afflictionname.mcj_spear>战争神之枪</afflictionname.mcj_spear>
-  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖20‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_spear>
+  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖20‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖% / ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_spear>
   <afflictionname.mcj_spear_boost>战争神之枪·星力</afflictionname.mcj_spear_boost>
   <afflictiondescription.mcj_spear_boost>星力强化：近战攻击速度再提升 ‖color:gui.green‖10‖end‖%，远程再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_spear_boost>
 
   <afflictionname.mcj_arrow>放浪神之箭</afflictionname.mcj_arrow>
-  <afflictiondescription.mcj_arrow>你的移动速度提升 ‖color:gui.green‖15‖end‖%，游泳速度提升 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_arrow>
+  <afflictiondescription.mcj_arrow>你的移动速度提升 ‖color:gui.green‖15‖end‖%，游泳速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖% / ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_arrow>
   <afflictionname.mcj_arrow_boost>放浪神之箭·星力</afflictionname.mcj_arrow_boost>
   <afflictiondescription.mcj_arrow_boost>星力强化：移动速度再提升 ‖color:gui.green‖5‖end‖%，游泳速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_arrow_boost>
 
   <afflictionname.mcj_bole>世界树之干</afflictionname.mcj_bole>
-  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。</afflictiondescription.mcj_bole>
+  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_bole>
   <afflictionname.mcj_bole_boost>世界树之干·星力</afflictionname.mcj_bole_boost>
   <afflictiondescription.mcj_bole_boost>星力强化：全伤害抗性再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_bole_boost>
 
   <afflictionname.mcj_spire>建筑神之塔</afflictionname.mcj_spire>
-  <afflictiondescription.mcj_spire>你的维修速度（机械与电器）与焊接船体速度提升 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_spire>
+  <afflictiondescription.mcj_spire>你的维修速度（机械与电器）与焊接船体速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_spire>
   <afflictionname.mcj_spire_boost>建筑神之塔·星力</afflictionname.mcj_spire_boost>
   <afflictiondescription.mcj_spire_boost>星力强化：维修与焊接船体速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_spire_boost>
 
   <afflictionname.mcj_ewer>河流神之瓶</afflictionname.mcj_ewer>
-  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_ewer>
+  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_ewer>
   <afflictionname.mcj_ewer_boost>河流神之瓶·星力</afflictionname.mcj_ewer_boost>
   <afflictiondescription.mcj_ewer_boost>星力强化：氧气消耗再降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_ewer_boost>
 </infotexts>
