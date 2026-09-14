@@ -28,12 +28,14 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 固定 15% 全伤害抗性（minresistance = maxresistance 即固定值） -->
+    <!-- 固定 25% 全伤害抗性（minresistance = maxresistance 即固定值）。
+         对标 TE：`easyturtle` 随和海龟 0.2 / `stonewall` 坚如磐石 0.2→0.4 −->
+         这里是“被治疗后才生效”的常驻 buff，取 0.25。 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="damage"
-            minresistance="0.15"
-            maxresistance="0.15" />
+            minresistance="0.25"
+            maxresistance="0.25" />
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
@@ -41,10 +43,12 @@
        阳星合相 —— 潜艇内队友持续缓慢自愈
        来源天赋：mcj_aspectedhelios
        
-       数值直接复刻【锤头鲨母皇基因】的最强档（原版 healdamage，强度 80~100）：
-           每 0.1 秒  damage -0.075 / bleeding -0.02
+       数值完全对齐【锤头鲨母皇基因 healdamage】的最强档（原版强度 80~100）：
+           每 0.1 秒  damage -0.075 / bleeding -0.018
        换算：每秒 damage -0.75，回满 100 点伤害需要 130+ 秒。
        它慢，但全自动、无需选药、同时处理伤害与出血。
+       （注：TE 的 `Repairandreinforcement` 治疗速率是 3/s，比这个快 4 倍，
+         但那是单体、带 25~65% 减伤、且要养成；这里是全队常驻自动，保持基因档位。）
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -58,7 +62,7 @@
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
         <ReduceAffliction type="damage" amount="0.075" />
-        <ReduceAffliction type="bleeding" amount="0.02" />
+        <ReduceAffliction type="bleeding" amount="0.018" />
       </StatusEffect>
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,5" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
@@ -166,9 +170,10 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：安全官 implacable / tandemfire 为 0.25 / 0.20（限时·仅自己） -->
+    <!-- 对标 TE「暴力军阀 warlord」：AttackMultiplier 0.1→0.5（五层封顶）。
+         本卡是全队常驻（无层数、无时间限制），所以取低一档：基础 0.25，星力后 0.35。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.15" />
+      <StatValue stattype="AttackMultiplier" value="0.25" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
@@ -186,7 +191,7 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.05" />
+      <StatValue stattype="AttackMultiplier" value="0.10" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
@@ -201,10 +206,10 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：舰长天赋 0.30 / 0.20 -->
+    <!-- 对标 TE：MeleeAttackSpeed 最高 +0.3。本卡是全队常驻，基础取到 0.30 / 0.20 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="MeleeAttackSpeed" value="0.20" />
-      <StatValue stattype="RangedAttackSpeed" value="0.15" />
+      <StatValue stattype="MeleeAttackSpeed" value="0.30" />
+      <StatValue stattype="RangedAttackSpeed" value="0.20" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="1,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
@@ -239,10 +244,11 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
+         对标 TE：SwimmingSpeed 最高 +0.3，MovementSpeed +0.1。
          原版参照：增加行走速度基因 0.10~0.25 / 增加游泳速度基因 0.10~0.50 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.15" />
-      <StatValue stattype="SwimmingSpeed" value="0.20" />
+      <StatValue stattype="WalkingSpeed" value="0.25" />
+      <StatValue stattype="SwimmingSpeed" value="0.35" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
@@ -260,7 +266,7 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.05" />
+      <StatValue stattype="WalkingSpeed" value="0.10" />
       <StatValue stattype="SwimmingSpeed" value="0.10" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="2,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
@@ -276,12 +282,12 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：伤害抗性基因 0.10~0.25 -->
+    <!-- 对标 TE：`easyturtle` 0.2 / `stonewall` 0.2→0.4。全队常驻取 0.25，星力后 0.35 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="damage"
-            minresistance="0.15"
-            maxresistance="0.15" />
+            minresistance="0.25"
+            maxresistance="0.25" />
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
@@ -300,8 +306,8 @@
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="damage"
-            minresistance="0.05"
-            maxresistance="0.05" />
+            minresistance="0.10"
+            maxresistance="0.10" />
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="3,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
@@ -317,10 +323,10 @@
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- RepairSpeed = 通用修理速度（机械 + 电器一起覆盖）
          RepairToolStructureRepairMultiplier = 修船壳速度
-         原版参照：工程师天赋 stationengineer 为 0.50 / 0.50 -->
+         原版工程师天赋 stationengineer 是 0.50 / 0.50，本卡取 0.35 / 0.35，星力后 0.45 / 0.45 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="RepairSpeed" value="0.20" />
-      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.20" />
+      <StatValue stattype="RepairSpeed" value="0.35" />
+      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.35" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="4,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
@@ -354,12 +360,12 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：减氧消耗基因 0.20~1.00 -->
+    <!-- 原版参照：减氧消耗基因 0.20~1.00；对标 TE 取 0.25（星力后 0.35） -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="oxygenlow"
-            minresistance="0.20"
-            maxresistance="0.20" />
+            minresistance="0.25"
+            maxresistance="0.25" />
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="5,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>
 
@@ -396,18 +402,19 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
 
-    <!-- 一、减伤：固定 50%。
-         原版基线：resistancefor="damage" 的原版上限就是 0.5（Afflictions.xml:2612），
-         基因材料最高到 0.6。这里取 0.5，但只持续 20 秒、且要靠一颗消耗品投掷触发，
-         比原版那些“永久生效”的抗性天赋苛刻得多。 -->
+    <!-- 一、减伤：固定 65%。
+         对标 TE `Repairandreinforcement` 维修加固的中高档（resistance 0.25→0.65）。
+         （原版 `resistancefor="damage"` 的上限是 0.5，本模组在这里刻意高于原版，
+           因为玩家要求整体强度对标 TE；代价是只持续 20 秒且靠消耗品触发。） -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="damage"
-            minresistance="0.5"
-            maxresistance="0.5" />
+            minresistance="0.65"
+            maxresistance="0.65" />
 
     <!-- 二、治疗：持续 20 秒。
-         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.75 / 秒）是 5 倍。
+         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.75 / 秒）是 5 倍，
+         也与 TE `Repairandreinforcement` 的 3 / 秒 同一量级。
          理论总量 = 约 75 点伤害 + 25 点出血，但那需要你活满 20 秒；
          潜渊症战斗节奏很短，实战里能回上二三十点已经很好了。
          觉得总量太高就把 amount 减半（速率减半，总量约 37 点）。 -->
@@ -434,9 +441,9 @@
               duration="4"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 「不要太多」：队友只拿 5% -->
+    <!-- 对标 TE「暴力军阀 warlord」0.1→0.5。队友只拿“小份”，所以取 10%。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.05" />
+      <StatValue stattype="AttackMultiplier" value="0.10" />
     </Effect>
     <Icon texture="Content/UI/TalentsIcons1.png" sheetindex="0,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
   </Affliction>

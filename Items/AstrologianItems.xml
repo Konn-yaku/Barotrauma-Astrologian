@@ -182,10 +182,12 @@
 
        【流程】放下 → 10 秒蓄力 → 舱室进水 → 修补船体 → 自己消失
 
-       ── 为什么用负数 structuredamage 的爆炸来「修船」──
+       ── 用负数 structuredamage 的爆炸来「修船」──
        这是原版自己的做法。机械师大招道具「固化泡沫手榴弹」：
            <Explosion range="1000" structuredamage="-200" ... />
        正值是炸毁船体，负值就是修回船体。这是原版唯一的「自动修补」原语。
+       【本模组】直接取原版的 -200，也就是保证把范围内的船壳一次性【修满】，
+       不做“部分修补”。（原版用这个值封堵整艘船，我们只覆盖 250 半径。）
        （注：给舰体挂 StatusEffect 修不了船——target="Hull" 只认 oxygen 一个属性，
          原版三处用法全是氧气，没有耐久类属性。）
 
@@ -201,9 +203,8 @@
 
        【数值对照】
          焊枪（玩家手持，持续）      structurefixamount="2.0"   range 150
-         固化泡沫手榴弹（原版大招）  一次性 structuredamage="-200" range 1000
-         地星（本模组）              一次性 structuredamage="-40"  range 250
-       范围与数值都远小于原版大招；一次只能封一个舱室的破口。
+         固化泡沫手榴弹（原版大招）  一次性 structuredamage="-200" range 1000（封整艘船）
+         地星（本模组）              一次性 structuredamage="-200" range 250（封一个舱室，一次修满）
 
        【强度控制】地星是一次性的，用一次就没了，所以不存在反复刷的问题。
        要再造一颗得在制造台花 30 秒 + 1 精炼钍 + 2 塑胶。
@@ -250,8 +251,8 @@
                          scalemin="5.0" scalemax="5.0" colormultiplier="160,210,255,255" />
 
         <!-- 【修复】各项 false / force=0 / 不带 Affliction = 只修船，不伤人、不炸物。
-             写法照原版固化泡沫手榴弹的修复爆炸（mechanic_talent_items.xml:303）。 -->
-        <Explosion range="250" structuredamage="-40" itemdamage="0" force="0.0"
+             structuredamage 取原版固化泡沫手榴弹同一个值：保证一次性修满船壳。 -->
+        <Explosion range="250" structuredamage="-200" itemdamage="0" force="0.0"
                    smoke="false" flames="false" flash="false" sparks="false"
                    shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
 

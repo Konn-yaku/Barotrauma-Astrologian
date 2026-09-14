@@ -31,7 +31,7 @@
   <talentname.mcj_stargate>星天开门</talentname.mcj_stargate>
 
   <!-- ===== 治疗线天赋描述 ===== -->
-  <talentdescription.mcj_opposition>你治疗的队友获得 ‖color:gui.green‖15‖end‖% 全伤害抗性，持续至本次任务结束。同一天赋给多人施加时效果不叠加。</talentdescription.mcj_opposition>
+  <talentdescription.mcj_opposition>你治疗的队友获得 ‖color:gui.green‖25‖end‖% 全伤害抗性，持续至本次任务结束。同一天赋给多人施加时效果不叠加。</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖2.2‖end‖ 倍。</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖30‖end‖% 移动速度加成。你的心肺复苏效力小幅提升。</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>你在潜艇内时，‖color:gui.green‖1000‖end‖范围内的船员持续获得缓慢自愈：不断减轻其 ‖color:gui.orange‖伤害‖end‖ 与 ‖color:gui.orange‖出血‖end‖。</talentdescription.mcj_aspectedhelios>
@@ -39,7 +39,7 @@
 
   <!-- ===== 治疗线隐藏增益 ===== -->
   <afflictionname.mcj_opposition>天星交错</afflictionname.mcj_opposition>
-  <afflictiondescription.mcj_opposition>你获得 ‖color:gui.green‖15‖end‖% 全伤害抗性，持续至本次任务结束。</afflictiondescription.mcj_opposition>
+  <afflictiondescription.mcj_opposition>你获得 ‖color:gui.green‖25‖end‖% 全伤害抗性，持续至本次任务结束。</afflictiondescription.mcj_opposition>
   <afflictionname.mcj_helios>阳星合相</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>你的伤势正在缓慢愈合。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
@@ -54,42 +54,42 @@
   <talentname.mcj_astrodyne>星力</talentname.mcj_astrodyne>
 
   <!-- ===== 第二栏 · 奥秘卡：天赋描述 ===== -->
-  <talentdescription.mcj_balance>全部船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_balance>
-  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖% / ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_spear>
-  <talentdescription.mcj_arrow>全部船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖15‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖% / ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_arrow>
-  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_bole>
-  <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_spire>
-  <talentdescription.mcj_ewer>全部船员的 ‖color:gui.orange‖氧气消耗‖end‖ 降低 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>强化你已点出的每一张奥秘卡，使其效果提升 ‖color:gui.green‖50‖end‖%。\n只影响你已经点出的卡——点的越多，收益越高。</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_balance>全部船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_balance>
+  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖30‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖40‖end‖% / ‖color:gui.green‖25‖end‖%。</talentdescription.mcj_spear>
+  <talentdescription.mcj_arrow>全部船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖25‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖% / ‖color:gui.green‖45‖end‖%。</talentdescription.mcj_arrow>
+  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖25‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_bole>
+  <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖45‖end‖%。</talentdescription.mcj_spire>
+  <talentdescription.mcj_ewer>全部船员的 ‖color:gui.orange‖氧气消耗‖end‖ 降低 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_ewer>
+  <talentdescription.mcj_astrodyne>强化你已点出的每一张奥秘卡，使每张卡再强上一档。\n只影响你已经点出的卡——点的越多，收益越高。</talentdescription.mcj_astrodyne>
 
   <!-- ===== 第二栏 · 奥秘卡：隐藏增益 ===== -->
   <afflictionname.mcj_balance>太阳神之衡</afflictionname.mcj_balance>
-  <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_balance>
+  <afflictiondescription.mcj_balance>你造成的伤害提升 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</afflictiondescription.mcj_balance>
   <afflictionname.mcj_balance_boost>太阳神之衡·星力</afflictionname.mcj_balance_boost>
-  <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_balance_boost>
+  <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_balance_boost>
 
   <afflictionname.mcj_spear>战争神之枪</afflictionname.mcj_spear>
-  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖20‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖% / ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_spear>
+  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖30‖end‖%，远程攻击速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖40‖end‖% / ‖color:gui.green‖25‖end‖%。</afflictiondescription.mcj_spear>
   <afflictionname.mcj_spear_boost>战争神之枪·星力</afflictionname.mcj_spear_boost>
   <afflictiondescription.mcj_spear_boost>星力强化：近战攻击速度再提升 ‖color:gui.green‖10‖end‖%，远程再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_spear_boost>
 
   <afflictionname.mcj_arrow>放浪神之箭</afflictionname.mcj_arrow>
-  <afflictiondescription.mcj_arrow>你的移动速度提升 ‖color:gui.green‖15‖end‖%，游泳速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖% / ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_arrow>
+  <afflictiondescription.mcj_arrow>你的移动速度提升 ‖color:gui.green‖25‖end‖%，游泳速度提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖% / ‖color:gui.green‖45‖end‖%。</afflictiondescription.mcj_arrow>
   <afflictionname.mcj_arrow_boost>放浪神之箭·星力</afflictionname.mcj_arrow_boost>
-  <afflictiondescription.mcj_arrow_boost>星力强化：移动速度再提升 ‖color:gui.green‖5‖end‖%，游泳速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_arrow_boost>
+  <afflictiondescription.mcj_arrow_boost>星力强化：移动速度再提升 ‖color:gui.green‖10‖end‖%，游泳速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_arrow_boost>
 
   <afflictionname.mcj_bole>世界树之干</afflictionname.mcj_bole>
-  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖15‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_bole>
+  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖25‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</afflictiondescription.mcj_bole>
   <afflictionname.mcj_bole_boost>世界树之干·星力</afflictionname.mcj_bole_boost>
-  <afflictiondescription.mcj_bole_boost>星力强化：全伤害抗性再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_bole_boost>
+  <afflictiondescription.mcj_bole_boost>星力强化：全伤害抗性再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_bole_boost>
 
   <afflictionname.mcj_spire>建筑神之塔</afflictionname.mcj_spire>
-  <afflictiondescription.mcj_spire>你的维修速度（机械与电器）与焊接船体速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_spire>
+  <afflictiondescription.mcj_spire>你的维修速度（机械与电器）与焊接船体速度提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖45‖end‖%。</afflictiondescription.mcj_spire>
   <afflictionname.mcj_spire_boost>建筑神之塔·星力</afflictionname.mcj_spire_boost>
   <afflictiondescription.mcj_spire_boost>星力强化：维修与焊接船体速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_spire_boost>
 
   <afflictionname.mcj_ewer>河流神之瓶</afflictionname.mcj_ewer>
-  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_ewer>
+  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖35‖end‖%。</afflictiondescription.mcj_ewer>
   <afflictionname.mcj_ewer_boost>河流神之瓶·星力</afflictionname.mcj_ewer_boost>
   <afflictiondescription.mcj_ewer_boost>星力强化：氧气消耗再降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_ewer_boost>
 
@@ -120,7 +120,7 @@
   <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
   <talentdescription.mcj_wheeloffortune>获得一副「命运之轮」，并解锁它的制造配方。
 把它掷向你的队友。它落地即碎，为周围 ‖color:gui.green‖400‖end‖ 范围内的所有角色带来
-‖color:gui.green‖20‖end‖ 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，
+‖color:gui.green‖20‖end‖ 秒的 ‖color:gui.green‖65‖end‖% 全伤害抗性，
 并在持续期间不断减轻他们的 ‖color:gui.orange‖伤势‖end‖ 与 ‖color:gui.orange‖出血‖end‖。
 掷完就没了，需要重新制作。</talentdescription.mcj_wheeloffortune>
   <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
@@ -128,14 +128,14 @@
 20 秒之内，被它笼罩的角色所受的伤害减半，伤势与出血也会自行消退。
 它不分辨敌我 —— 命运从不挑人。</entitydescription.mcj_wheeloffortune>
   <afflictionname.mcj_wheeloffortune>命运之轮</afflictionname.mcj_wheeloffortune>
-  <afflictiondescription.mcj_wheeloffortune>你会获得 20 秒的 ‖color:gui.green‖50‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
+  <afflictiondescription.mcj_wheeloffortune>你会获得 20 秒的 ‖color:gui.green‖65‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
 
   <!-- ===== 第三栏 · 占卜 ===== -->
   <talentname.mcj_divination>占卜</talentname.mcj_divination>
   <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
 你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
-医疗 40 / 60 / 80 / 100 各再进一步提升一档，最高 ‖color:gui.green‖+20‖end‖%。
-身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会小幅受益（‖color:gui.green‖+5‖end‖% 伤害）。</talentdescription.mcj_divination>
+医疗 40 / 60 / 80 / 100 各再提升一档，从 ‖color:gui.green‖+10‖end‖% 最高到 ‖color:gui.green‖+30‖end‖%。
+身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会受益（‖color:gui.green‖+10‖end‖% 伤害）。</talentdescription.mcj_divination>
   <afflictionname.mcj_divination>占卜</afflictionname.mcj_divination>
-  <afflictiondescription.mcj_divination>占星术士为你揭示了天体的弱点：你造成的伤害提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_divination>
+  <afflictiondescription.mcj_divination>占星术士为你揭示了天体的弱点：你造成的伤害提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_divination>
 </infotexts>

@@ -494,23 +494,24 @@
 
        占星术士把星象读透：知道该打哪里、该怎么打。
 
-       ① 医疗技能 +45
-       ② 自身伤害加成，随医疗技能阶梯提升（最高 +20%）
-       ③ 附近队友（1000 内）获得 +5% 伤害
+       ① 医疗技能 +45   （对标 TE 闪电巫师 lightningwizard：ElectricalSkillBonus 45）
+       ② 自身伤害加成，随医疗技能阶梯提升（最高 +30%）
+       ③ 附近队友（1000 内）获得 +10% 伤害
 
        ── ② 的阶梯是怎么实现的 ──
-       写了 5 个 OnAttack 组，基础一个无条件 +4%，
-       另 4 个各带一道递增的医疗门槛（40 / 60 / 80 / 100），每个也是 +4%。
+       写了 5 个 OnAttack 组，基础一个无条件 +10%，
+       另 4 个各带一道递增的医疗门槛（40 / 60 / 80 / 100），每个 +5%。
        同一组内的多个条件是与关系，不同组的加成会累加，
        所以医疗技能越高，命中的组越多：
-           医疗 < 40  → 4%
-           ≥ 40      → 8%
-           ≥ 60      → 12%
-           ≥ 80      → 16%
-           ≥ 100     → 20%
+           医疗 < 40  → 10%
+           ≥ 40      → 15%
+           ≥ 60      → 20%
+           ≥ 80      → 25%
+           ≥ 100     → 30%
        技能条件写法照原版 mechanic_talent_items.xml（mechanical="lt 40"）。
+       数值上限 +30% 对标 TE「暴力军阀 warlord」的 AttackMultiplier 0.1→0.5。
 
-       ⚠️ 若发现阶梯没生效（永远只 +4% 或直接 +20%），
+       ⚠️ 若发现阶梯没生效（永远只 +10% 或直接 +30%），
           就把门槛改成固定一档，或者改用 4 个独立天赋分开给。
        ============================================================ -->
   <Talent identifier="mcj_divination">
@@ -524,10 +525,10 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- ② 自身伤害：基础 +4%（照原版 TalentsCaptain.xml:313 的 OnAttack + ModifyAttackData 结构） -->
+    <!-- ② 自身伤害：基础 +10%（照原版 TalentsCaptain.xml:313 的 OnAttack + ModifyAttackData 结构） -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.04" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.10" />
       </Abilities>
     </AbilityGroupEffect>
 
@@ -538,7 +539,7 @@
         </AbilityConditionCharacter>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.04" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.05" />
       </Abilities>
     </AbilityGroupEffect>
 
@@ -549,7 +550,7 @@
         </AbilityConditionCharacter>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.04" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.05" />
       </Abilities>
     </AbilityGroupEffect>
 
@@ -560,7 +561,7 @@
         </AbilityConditionCharacter>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.04" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.05" />
       </Abilities>
     </AbilityGroupEffect>
 
@@ -571,7 +572,7 @@
         </AbilityConditionCharacter>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.04" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.05" />
       </Abilities>
     </AbilityGroupEffect>
 
