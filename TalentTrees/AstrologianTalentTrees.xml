@@ -37,7 +37,7 @@
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
-      <TalentOptions requiredtalents="1" maxchosentalents="6">
+      <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
         <TalentOption identifier="mcj_primary_wheeloffortune" />
