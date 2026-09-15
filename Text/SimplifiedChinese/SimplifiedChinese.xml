@@ -55,11 +55,11 @@
 
   <!-- ===== 第二栏 · 奥秘卡：天赋描述 ===== -->
   <talentdescription.mcj_balance>全部船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_balance>
-  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖30‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖40‖end‖% / ‖color:gui.green‖25‖end‖%。</talentdescription.mcj_spear>
+  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_spear>
   <talentdescription.mcj_arrow>全部船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖25‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖% / ‖color:gui.green‖45‖end‖%。</talentdescription.mcj_arrow>
-  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖25‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_bole>
+  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖眩晕抗性‖end‖，并持续恢复 ‖color:gui.orange‖身体损伤、失血与流血‖end‖。</talentdescription.mcj_bole>
   <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖45‖end‖%。</talentdescription.mcj_spire>
-  <talentdescription.mcj_ewer>全部船员的 ‖color:gui.orange‖氧气消耗‖end‖ 降低 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_ewer>
+  <talentdescription.mcj_ewer>全部船员在效果期间 ‖color:gui.orange‖无需氧气‖end‖。</talentdescription.mcj_ewer>
   <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：一轮 3 张全部打出后，星力回应你，为全队带来一段增益。\n（占位效果：+100% 移动与游泳速度）</talentdescription.mcj_astrodyne>
 
   <!-- ===== 奥秘卡（抽卡制）：第 1、2 档 ===== -->
@@ -77,7 +77,7 @@
   <afflictiondescription.mcj_balance_boost>星力强化：你造成的伤害再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_balance_boost>
 
   <afflictionname.mcj_spear>战争神之枪</afflictionname.mcj_spear>
-  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖30‖end‖%，远程攻击速度提升 ‖color:gui.green‖20‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖40‖end‖% / ‖color:gui.green‖25‖end‖%。</afflictiondescription.mcj_spear>
+  <afflictiondescription.mcj_spear>你的近战攻击速度提升 ‖color:gui.green‖50‖end‖%，远程攻击速度提升 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_spear>
   <afflictionname.mcj_spear_boost>战争神之枪·星力</afflictionname.mcj_spear_boost>
   <afflictiondescription.mcj_spear_boost>星力强化：近战攻击速度再提升 ‖color:gui.green‖10‖end‖%，远程再提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_spear_boost>
 
@@ -87,7 +87,7 @@
   <afflictiondescription.mcj_arrow_boost>星力强化：移动速度再提升 ‖color:gui.green‖10‖end‖%，游泳速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_arrow_boost>
 
   <afflictionname.mcj_bole>世界树之干</afflictionname.mcj_bole>
-  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖25‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</afflictiondescription.mcj_bole>
+  <afflictiondescription.mcj_bole>你获得 ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖眩晕抗性‖end‖，并持续恢复 ‖color:gui.orange‖身体损伤、失血与流血‖end‖。</afflictiondescription.mcj_bole>
   <afflictionname.mcj_bole_boost>世界树之干·星力</afflictionname.mcj_bole_boost>
   <afflictiondescription.mcj_bole_boost>星力强化：全伤害抗性再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_bole_boost>
 
@@ -97,7 +97,7 @@
   <afflictiondescription.mcj_spire_boost>星力强化：维修与焊接船体速度再提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_spire_boost>
 
   <afflictionname.mcj_ewer>河流神之瓶</afflictionname.mcj_ewer>
-  <afflictiondescription.mcj_ewer>你的氧气消耗降低 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖35‖end‖%。</afflictiondescription.mcj_ewer>
+  <afflictiondescription.mcj_ewer>你在效果期间 ‖color:gui.orange‖无需氧气‖end‖。</afflictiondescription.mcj_ewer>
   <afflictionname.mcj_ewer_boost>河流神之瓶·星力</afflictionname.mcj_ewer_boost>
   <afflictiondescription.mcj_ewer_boost>星力强化：氧气消耗再降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_ewer_boost>
 

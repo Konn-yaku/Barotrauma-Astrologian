@@ -141,26 +141,29 @@
   </Affliction>
 
   <!-- ============================================================
-       第二栏 · 奥秘卡（全队常驻增益）
-       来源天赋：mcj_path_arcanum
+       第二栏 · 奥秘卡 —— 打出后给全队 15 秒的限时增益
+       来源：六天座（Talents/AstrologianTalents.xml）里的卡片广播组
 
-       【结构】6 张卡 = 6 个基础 affliction + 6 个 _boost affliction。
-       「星力」天赋会在你拥有某张卡天赋时，额外给全队施加对应的 _boost。
-       两个 affliction 的 StatValue 会自然相加 —— 这就是"星力放大卡牌效果"的实现。
+       【链路】卡打出（物品）→ 只给使用者上一个 2 秒的「信号弹」affliction
+               → 天赋每 0.5 秒轮询，看到信号就广播真正的 buff 给全队，再清掉信号。
 
-       【为什么不用"抬高同一个 affliction 的强度"】
-       GiveAffliction 的数值是往 maxstrength 上限累加的，
-       基础值和强化值最终都会饱和到同一个上限，区分不出来。
-       两个不同的 affliction 相加则没有这个问题。
+       【数值基准】每张卡只持续 15 秒（覆盖率 25%），属于"短时爆发"而不是常驻，
+       所以统一按「原版对应锚点 × 1.5~1.6」定档，比原版常驻天赋给得更足。
+       2026-09 定档：攻速 0.50 / 0.30（原版天花板 0.30 / 0.20）。
 
-       【数值】全部落在 {0.15, 0.20, 0.30}，_boost 只有 {0.05, 0.10}。
-       每一项都低于原版对应的天赋/基因数值（见 README）。
+       【三类效果】
+         · 数值型：StatValue（伤害 / 攻速 / 机动 / 工程）
+         · 抗性型：resistancefor + minresistance/maxresistance ——
+           只折减【新获得】的量，且原版只有 damage / stun / oxygenlow 三种先例。
+         · 治疗型：Effect 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>，
+           走的是原版 combatstimulant / pressurestabilized 的范式。
+       世界树之干（抗眩晕 + 持续愈合）与河流神之瓶（无需氧气）用第 2+3 类实现，
+       刻意不做 damage 抗性 —— 本模组不提供伤害减免。
 
-       【显示】6 张卡的 affliction 是【可见】的 —— 用图标本身告诉玩家
-       "哪几张卡正在生效"。6 个 _boost 只是纯粹的数值增量、没有独立信息，
-       因此全部隐藏，buff 栏最多只有 6 个图标（而不是 12 个）。
-       隐藏三件套：showiconthreshold / showicontoothersthreshold /
-       showinhealthscannerthreshold = "1000"（原版 melodicrespite_charging 的写法）。
+       【显示】6 张卡是【可见】的 —— 用图标本身告诉玩家"哪几张卡正在生效"。
+       隐藏三件套（showiconthreshold / showicontoothersthreshold /
+       showinhealthscannerthreshold）在 6 个 _sig_* 信号弹上全部设成 "1000"
+       （原版 melodicrespite_charging 的写法），保证 buff 栏里只看得到真正的卡片。
        ============================================================ -->
 
   <!-- ===== 太阳神之衡：全队增伤（15 秒） =====
@@ -213,11 +216,13 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE：MeleeAttackSpeed 最高 +0.3。
-         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
+    <!-- 2026-09 定档：近战 0.50 / 远程 0.30。
+         原版天花板就是 MeleeAttackSpeed 0.30、RangedAttackSpeed 0.20
+         （舰长 battleready 和医生 combatstimulant 用的正是这两个值）。
+         本卡只持续 15 秒（覆盖率 25%），所以给到原版天花板的约 1.6 倍。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="MeleeAttackSpeed" value="0.30" />
-      <StatValue stattype="RangedAttackSpeed" value="0.20" />
+      <StatValue stattype="MeleeAttackSpeed" value="0.50" />
+      <StatValue stattype="RangedAttackSpeed" value="0.30" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
@@ -276,7 +281,26 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 世界树之干：全队伤害抗性（15 秒） ===== -->
+  <!-- ===== 世界树之干：全队抗眩晕 + 持续愈合（15 秒） =====
+       照原版医生「战斗兴奋剂」combatstimulant（Content/Talents/Doctor/AfflictionsDoctor.xml:5）改写。
+       官方对该效果的描述是「让使用者快速从身体损伤与失血中恢复」，
+       它的实现正好就是「抗眩晕 + 每 0.1 秒持续治疗」这两件东西。
+
+       · resistancefor="stun" 0.5 = 新受到的眩晕量折减一半。
+         stun 的强度【就是眩晕秒数】（王冠卡的爆炸写的是 stun 7 = 7 秒硬直），
+         所以这是「硬直时间减半」，不是免疫，也不影响已经中的那一段。
+         原版用例：舰长 battleready 0.3、医生 combatstimulant 0.45 / 0.5。
+       · 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>：每 0.1 秒
+         回 0.15 点损伤 / 失血 / 流血 = 1.5 点每秒，15 秒合计约 22 点。
+         原版 combatstimulant 满档是 2 点每秒（单体），我们覆盖全队所以略低。
+
+       ⚠️ 刻意不碰 resistancefor="damage" —— 本模组不做伤害减免。
+       ⚠️ 「物品/能力给角色施加一个自带内嵌效果的 affliction」这条路是有原版先例的：
+          战斗兴奋剂注射器就是用 <Affliction identifier="combatstimulant" amount="15.0"/>
+          发出它的（Content/Items/Jobgear/Medic/medic_talent_items.xml:83），
+          所以六天座的广播组发 mcj_bole 走的是同一套逻辑。
+       ⚠️ 内嵌 StatusEffect 必须带 interval + disabledeltatime="true"（真实时间），
+          否则进站点/巡回重建时会跟着游戏内时间一起停摆。 -->
   <Affliction identifier="mcj_bole"
               type="talentbuff"
               isbuff="true"
@@ -286,13 +310,17 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE：`easyturtle` 0.2 / `stonewall` 0.2→0.4。原版 resistancefor="damage" 上限 0.5。
-         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
-            resistancefor="damage"
-            minresistance="0.25"
-            maxresistance="0.25" />
+            resistancefor="stun"
+            minresistance="0.5"
+            maxresistance="0.5">
+      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+        <ReduceAffliction type="damage" strength="0.15" />
+        <ReduceAffliction identifier="bloodloss" strength="0.15" />
+        <ReduceAffliction identifier="bleeding" strength="0.15" />
+      </StatusEffect>
+    </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -351,7 +379,17 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 河流神之瓶：全队氧气消耗（15 秒） ===== -->
+  <!-- ===== 河流神之瓶：全队无需氧气（15 秒） =====
+       照原版医生「压力稳定」pressurestabilized（Content/Talents/Doctor/AfflictionsDoctor.xml:44）改写。
+       官方对该效果的描述是：
+         "The subject is immune to pressure and has no need for oxygen at this time."
+       ——「不需要氧气」这句话对应的实现，就是
+          resistancefor="oxygenlow" 直接拉到 1.0（minresistance=maxresistance="1"）。
+
+       · 抗性 1.0 = 缺氧【完全不累积】 ⇒ 不用氧气瓶、无氧环境里也能正常活动。
+       · 抗性只折减「新获得」的量，所以原版还额外挂了一条持续清除
+         （每 tick 减 0.5 缺氧）。我们照抄这条双保险，
+         把「刚断氧那一刻」残留的那点缺氧一起清掉。 -->
   <Affliction identifier="mcj_ewer"
               type="talentbuff"
               isbuff="true"
@@ -361,13 +399,15 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：减氧消耗基因 0.20~1.00
-         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="oxygenlow"
-            minresistance="0.25"
-            maxresistance="0.25" />
+            minresistance="1"
+            maxresistance="1">
+      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+        <ReduceAffliction identifier="oxygenlow" strength="0.5" />
+      </StatusEffect>
+    </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
