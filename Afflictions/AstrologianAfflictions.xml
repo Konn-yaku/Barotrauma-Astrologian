@@ -94,15 +94,17 @@
        以便保持原来「全船每人各自一张」的结构。
 
        【新的流程】
-         身上带符 → 活力低于 5% 时：先给自己挂 15 秒的 mcj_stargate_grace，
+         身上带符 → 活力低于 1% 时：先给自己挂 15 秒的 mcj_stargate_grace，
                      再把自己的符烧掉。
          每个人各自独立判断、只消耗触发那个人的那一张。
 
        【为什么不再用 isunconscious 触发】
          以前是「倒地后满血」，现在是「倒地前免死」——
          必须在昏迷发生【之前】介入，所以改成纯阈值判定。
-         原版阈值是 vitalitypercentage="0.01"（1%），我们放宽到 5%，
-         因为 1% 太贴近死亡线，怕来不及。
+         阈值与原版完全一致：都是 1% 活力。
+         ⚠️ 单位陷阱：原版天赋写的是 vitalitypercentage="0.01"（小数，= 1%），
+            而这里用的是 healthpercentage="lt 1"（百分数，= 1%）——
+            两套单位不同，别把 0.01 直接搬过来。
 
        minstrength="0.1"：符被烧掉后强度归 0，其 Effect 全部失效。
        这是刻意设计的安全阀 —— 单纯用 -9999 删除自身有一定风险。
@@ -123,8 +125,8 @@
     <!-- 强度 > 0.1：护身符待触发 -->
     <Effect minstrength="0.1" maxstrength="1">
       <StatusEffect target="Character" interval="0.05" disabledeltatime="true">
-        <!-- 生命值低于 5%：还没昏迷，但已经站在死亡线边上 -->
-        <Conditional healthpercentage="lt 5" />
+        <!-- 生命值低于 1%：与原版 implacable 的阈值一致，最后一刻触发 -->
+        <Conditional healthpercentage="lt 1" />
         <!-- ① 先给自己 15 秒免死（写在前面，同一 tick 内就生效） -->
         <Affliction identifier="mcj_stargate_grace" amount="1" />
         <!-- ② 再烧掉护身符（强度 1 → 0） -->

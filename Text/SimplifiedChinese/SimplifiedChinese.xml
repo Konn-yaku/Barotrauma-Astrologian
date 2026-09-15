@@ -35,7 +35,7 @@
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖2.2‖end‖ 倍。</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。\n你拖拽其他角色时不会减速。</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>你在潜艇内时，‖color:gui.green‖600‖end‖范围内的船员在 ‖color:gui.orange‖生命值低于 20%‖end‖ 时会自动清除其 ‖color:gui.orange‖流血、烧伤与失血‖end‖。\n高于 20% 时不会生效 —— 它只在濒死时拉你一把。</talentdescription.mcj_aspectedhelios>
-  <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员的 ‖color:gui.orange‖生命值低于 5%‖end‖ 时，该庇护会自动触发：\n获得 15 秒的 ‖color:gui.orange‖不屈‖end‖ —— 期间不会昏迷，且造成的伤害提升 ‖color:gui.green‖25‖end‖%，随后庇护被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
+  <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员的 ‖color:gui.orange‖生命值低于 1%‖end‖ 时，该庇护会自动触发：\n获得 15 秒的 ‖color:gui.orange‖不屈‖end‖ —— 期间不会昏迷，且造成的伤害提升 ‖color:gui.green‖25‖end‖%，随后庇护被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
 
   <!-- ===== 治疗线隐藏增益 ===== -->
   <afflictionname.mcj_opposition>天星交错</afflictionname.mcj_opposition>
