@@ -46,20 +46,20 @@
   </Affliction>
 
   <!-- ============================================================
-       阳星合相 —— 范围内队友的流血与烧伤不再继续扣血
+       驱散 —— 濒死时自动清除流血与失血
        来源天赋：mcj_aspectedhelios
 
-       2026-09 改版（第二次）：不是“不受伤”，而是“受伤照常、但持续伤害停住”。
-         挨打、爆炸、水压这些【即时伤害】完全正常 ✓
-         但流血(bleeding) / 烧伤(burn) 这类会【持续扣活力】的效果，
-         一旦挂上就被快速清除 ⇒ 不再继续扣血。
+       2026-09 改版（第三次）：定为「濒死急救」。
+         · 只有角色【生命值低于 20%】时才会清除 —— 平时伤口原样保留、照常扣血，
+           高于 20% 时这个效果完全不生效（不会变成常驻治疗光环）。
+         · 低于阈值时每 0.1 秒清：bleeding 10 / burn 5 / bloodloss 10
+           （每秒 100 / 50 / 100 点，一两秒内就能清干净，足够把人从死亡线上拉回来）。
 
-       实现方式是持续 ReduceAffliction，每 0.1 秒：
-         · type="bleeding" 10 点（每秒 100）—— 同时覆盖 bleeding 与 bleedingnonstop
-         · type="burn"     5 点（每秒 50）—— 同时覆盖 burn 与 acidburn（acidburn 的 type 就是 burn）
-       速度够快，所以挂上的瞬间就会被抹掉；如果想让它“慢慢滴完”就把数值调小。
-       ⚠️ 刻意【不碰】type="damage" —— 内伤/撕裂伤/枪伤是正常受伤，不限制。
-       ⚠️ 也没碰 bloodloss(type="bloodloss", 独立类型) 与 oxygenlow。
+       ⚠️ 为什么必须连 bloodloss 一起清：
+          流血(bleeding)被清掉后，【已经流失的血】bloodloss 仍在持续扣血
+          （强度 0~100 → 每秒 0~2 点），只清 bleeding 是救不回人的。
+       ⚠️ 刻意不碰 type="damage"（内伤/撕裂/枪伤）—— 那些是正常受伤，需要队友手动救治。
+          若内伤本身在扣血，本技能只能延命、不能完全替代医疗。
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -72,8 +72,10 @@
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+        <Conditional healthpercentage="lt 20" />
         <ReduceAffliction type="bleeding" amount="10" />
         <ReduceAffliction type="burn" amount="5" />
+        <ReduceAffliction identifier="bloodloss" amount="10" />
       </StatusEffect>
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
