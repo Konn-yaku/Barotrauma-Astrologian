@@ -114,7 +114,9 @@ It cannot foresee harm — it can only be placed in advance. The timing is every
 
   <!-- ===== Combust (new tier 2 talent) ===== -->
   <talentname.mcj_combust>Combust</talentname.mcj_combust>
-  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.</talentdescription.mcj_combust>
+  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖50‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_combust>
+  <afflictionname.mcj_combust_ward>Combust</afflictionname.mcj_combust_ward>
+  <afflictiondescription.mcj_combust_ward>You take ‖color:gui.green‖50‖end‖% less Combust damage.</afflictiondescription.mcj_combust_ward>
 
   <!-- ===== Wheel of Fortune ===== -->
   <talentname.mcj_wheeloffortune>Wheel of Fortune</talentname.mcj_wheeloffortune>

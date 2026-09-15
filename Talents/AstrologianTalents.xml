@@ -622,24 +622,50 @@
          ③ ✗ 解锁喷火器配方 —— 没抄。那是工程师的职业身份，
             占星术士没有理由解锁它的配方
 
-       ⚠️ 图标借用了原版火焰狂人的（Content/UI/TalentsIcons2.png 的 7,2）。
-          想要自定义图标就往 Textures/Talents/ 里放一张 Combust.png 再叫我改。
+       ⚠️ 图标素材：Textures/Talents/Combust.png（80x80，取自 FF14 的 Combust 系技能图标）
        ============================================================ -->
   <Talent identifier="mcj_combust">
-    <Icon texture="Content/UI/TalentsIcons2.png" sheetindex="7,2" sheetelementsize="128,128" />
+    <Icon texture="%ModDir%/Textures/Talents/Combust.png" sourcerect="0,0,80,80" origin="0,0" />
     <Description tag="talentdescription.mcj_combust" />
 
+    <!-- ① 自己造成的燃烧伤害 +25% -->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Abilities>
         <CharacterAbilityModifyAffliction afflictionidentifiers="burn" addedmultiplier="0.25" />
       </Abilities>
     </AbilityGroupEffect>
 
+    <!-- ② 对压载植物群伤害 +50% -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="BallastFloraDamageMultiplier" value="0.5" />
       </Abilities>
     </AbilityGroupEffect>
+
+    <!-- ③ 自己受到的燃烧伤害降低 50%
+         用【常驻 affliction】承载 —— resistancefor 只能写在 affliction 的 Effect 上，
+         天赋没法直接把抗性授给角色。
+         发放方式与天球仪/地星一致：interval + permanent stat 去重
+         （permanent stat 默认 removeondeath，所以重生后会重新给）。
+         ⚠️ resistancefor="burn" 原版无先例（原版只用过 damage / stun / oxygenlow）。
+            依据：burn 确实是一个独立的 AfflictionType（burn / acidburn / burning 都是
+            type="burn"），而 resistancefor 就是按类型匹配的。若实测无效，
+            就改成「持续 ReduceAffliction type="burn"」那种写法。 -->
+    <AbilityGroupInterval interval="2.0">
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="mcj_combust_warded" min="1" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_combust_ward" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_combust_warded" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 
   <!-- ============================================================

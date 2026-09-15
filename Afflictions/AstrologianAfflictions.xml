@@ -162,6 +162,32 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
+  <!-- ===== 焚灼的火焰抗性（第 2 档天赋给的常驻 buff） =====
+       由天赋 mcj_combust 发放，无 duration + resetbetweenrounds="true"
+       ⇒ 持续一整个巡回，巡回结束时自动清除。
+
+       ⚠️ resistancefor="burn" 原版无先例 —— 原版只用过 damage / stun / oxygenlow。
+          依据是 burn 确实是一个独立的 AfflictionType
+          （原版 <Burn identifier="burn" type="burn">，acidburn 与 burning 也是 type="burn"），
+          而 resistancefor 就是按类型匹配的。待实测确认。
+       ⚠️ resistancefor 只折减【新获得】的量，不能清除已经烧起来的伤。 -->
+  <Affliction identifier="mcj_combust_ward"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1"
+            strengthchange="0"
+            resistancefor="burn"
+            minresistance="0.5"
+            maxresistance="0.5" />
+    <Icon texture="%ModDir%/Textures/Talents/Combust.png" sourcerect="0,0,80,80" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
   <!-- ============================================================
        第二栏 · 奥秘卡 —— 打出后给全队 15 秒的限时增益
        来源：六天座（Talents/AstrologianTalents.xml）里的卡片广播组

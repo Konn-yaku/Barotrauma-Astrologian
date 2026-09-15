@@ -115,7 +115,9 @@
 
   <!-- ===== 第三栏 · 焚灼（第 2 档新天赋） ===== -->
   <talentname.mcj_combust>焚灼</talentname.mcj_combust>
-  <talentdescription.mcj_combust>你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_combust>
+  <talentdescription.mcj_combust>你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。\n你受到的 ‖color:gui.orange‖焚灼‖end‖ 伤害降低 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_combust>
+  <afflictionname.mcj_combust_ward>焚灼</afflictionname.mcj_combust_ward>
+  <afflictiondescription.mcj_combust_ward>你受到的焚灼伤害降低 ‖color:gui.green‖50‖end‖%。</afflictiondescription.mcj_combust_ward>
   <entityname.mcj_malefic>凶星</entityname.mcj_malefic>
 
   <!-- ===== 第三栏 · 地星 ===== -->
