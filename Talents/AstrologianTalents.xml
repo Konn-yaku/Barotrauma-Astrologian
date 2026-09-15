@@ -447,9 +447,24 @@
   <Talent identifier="mcj_arcanum_minor">
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arcanum_minor" />
+    <!-- ⚠️ 不能用 CharacterAbilityGiveAffliction！
+         它的目标是【事件目标】，不是自己 —— 原版两处都是这么用的：
+           TalentsDoctor.xml:416  给「被治疗的队友」上 bedsidemanner
+           TalentsAssistant.xml:763 给「被小丑锤打晕的那个人」上 combatstimulant
+         我们这个 interval 组里没有事件目标 → affliction 哪里都挂不上，
+         于是抽卡书的 <Conditional mcj_minor_arcana="gte 1" /> 永远不成立
+         → 王冠卡一张都出不来（2026-09-15 实测）。
+         正确写法是 ApplyStatusEffects + target="Character"（= 天赋持有者本人），
+         也就是「星力」和巫女用的那套。 -->
     <AbilityGroupInterval interval="2.0">
       <Abilities>
-        <CharacterAbilityGiveAffliction affliction="mcj_minor_arcana" strength="1" setvalue="true" />
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_minor_arcana" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
