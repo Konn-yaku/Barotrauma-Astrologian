@@ -484,7 +484,14 @@
               实测发现 <Conditional 某affliction名="gte 1" /> 在那个 affliction
               【不存在时会被整条跳过】= 判定通过，于是没点天赋也发卡。
               详见 Talents/AstrologianTalents.xml 里小奥秘卡的长注释。 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
+      <!-- ⚠️⚠️ target 必须写成 "This,Character"，不能只写 "Character"！
+           只写 "Character" 时，同一行里的 <Conditional ... targetitemcomponent="ItemComponent" />
+           就没有物品可解析 → 守卫失败 → 信号永远发不出去
+           （= 点了第 3 档也拿不到王冠卡）。
+           双 target 的原版先例：巫女的降神符札
+             <StatusEffect type="OnSecondaryUse" target="This,Character" delay="0.2" Condition="-90">
+           —— Condition 作用在物品上、Affliction 作用在持有者身上，两者同时生效。 -->
+      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Affliction identifier="mcj_drew_star" strength="1" />
       </StatusEffect>
@@ -577,7 +584,9 @@
 
       <!-- ①b 小奥秘卡信号：用过这本书 → 上 2 秒隐形信号，由第 3 档天赋补「王冠之贵妇」
            ⚠️⚠️ 必须排在下面 <Use /> 的【前面】—— 原因见星极抽卡处的长注释。 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
+      <!-- ⚠️⚠️ target 必须写成 "This,Character"（原因见星极抽卡处的长注释：
+           只写 "Character" 的话 targetitemcomponent 解析不了，守卫永远失败） -->
+      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Affliction identifier="mcj_drew_umbral" strength="1" />
       </StatusEffect>
@@ -914,6 +923,13 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <!-- 没扔出去就 60 秒后自行消失 -->
+      <!-- ⚠️ 原版固化泡沫手榴弹炸完会在原地留一个 0% 耐久的空壳（原版就这行为），
+           对我们来说就成了「卡用掉了还赖着不走」→ 补一条延迟删除，
+           等 3 秒的泡沫喷淋放完再把自己删掉。
+           delay 用在 OnBroken 上有原版先例（medic_talent_items.xml:411）。 -->
+      <StatusEffect type="OnBroken" target="This" delay="3.0">
+        <Remove />
+      </StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Throwable>
     <!-- 引信：每秒 -30 耐久 → 约 3.3 秒（原版注释写的就是 "shorter fuze time"） -->
