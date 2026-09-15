@@ -39,6 +39,9 @@
   <Talent identifier="mcj_celestialopposition">
     <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_benefic" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="entityname.autoinjectorheadset" color="gui.orange" />
+    </Description>
 
     <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
       <Conditions>
@@ -48,6 +51,9 @@
         <CharacterAbilityGiveAffliction affliction="mcj_benefic" strength="600" setvalue="true" />
       </Abilities>
     </AbilityGroupEffect>
+
+    <!-- 解锁配方：原先由「摧升」送，重做后挪到这里（2026-09-15） -->
+    <AddedRecipe itemidentifier="autoinjectorheadset" />
   </Talent>
 
   <!-- ============================================================
@@ -1089,6 +1095,9 @@
   <Talent identifier="mcj_primary_starsounding">
     <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_gravity" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="entityname.pressurestabilizer" color="gui.orange" />
+    </Description>
 
     <AbilityGroupInterval interval="1.0">
       <Abilities>
@@ -1101,6 +1110,9 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- 解锁配方：原先由「摧升」送，重做后挪到这里（2026-09-15） -->
+    <AddedRecipe itemidentifier="pressurestabilizer" />
   </Talent>
 
   <!-- 凶星 ← 原版 blooddonor（新效果）
