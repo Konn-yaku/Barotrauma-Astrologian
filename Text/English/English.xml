@@ -123,8 +123,8 @@ It cannot foresee harm — it can only be placed in advance. The timing is every
   <talentdescription.mcj_wheeloffortune>Crew members near you (within ‖color:gui.green‖600‖end‖ units) continuously gain:
 ‖color:gui.orange‖+10 to all skills‖end‖ and ‖color:gui.orange‖+20% skill gain speed‖end‖.
 Cost: if your own ‖color:gui.orange‖Weapons skill is 50 or lower‖end‖, your Weapons skill takes a further -10.</talentdescription.mcj_wheeloffortune>
-  <afflictionname.mcj_wheeloffortune_gift>Wheel of Fortune</afflictionname.mcj_wheeloffortune_gift>
-  <afflictiondescription.mcj_wheeloffortune_gift>You gain +10 to all skills and +20% skill gain speed.</afflictiondescription.mcj_wheeloffortune_gift>
+  <afflictionname.mcj_primary_sect>Neutral Sect</afflictionname.mcj_primary_sect>
+  <afflictiondescription.mcj_primary_sect>You gain +10 to all skills and +20% skill gain speed.</afflictiondescription.mcj_primary_sect>
   <entityname.mcj_wheeloffortune>Wheel of Fortune</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>A wheel cast from the tracks of stars. Thrown, it shatters on the ground and leaves a brief stretch of good fortune behind.
 For 20 seconds, those it covers take half damage while their wounds and bleeding ebb away.
@@ -133,15 +133,15 @@ It does not tell friend from foe — fortune never picks.</entitydescription.mcj
   <afflictiondescription.mcj_wheeloffortune>You gain ‖color:gui.green‖65‖end‖% damage resistance for 20 seconds, and your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_wheeloffortune>
 
   <!-- ===== Divination ===== -->
-  <talentname.mcj_divination>Divination</talentname.mcj_divination>
-  <talentdescription.mcj_divination>Your ‖color:gui.orange‖Medical skill‖end‖ increases by ‖color:gui.green‖45‖end‖.
+  <talentname.mcj_celestialriver>Celestial River</talentname.mcj_celestialriver>
+  <talentdescription.mcj_celestialriver>Your ‖color:gui.orange‖Medical skill‖end‖ increases by ‖color:gui.green‖45‖end‖.
 You deal more ‖color:gui.orange‖damage‖end‖, and ‖color:gui.orange‖the higher your Medical skill, the greater the bonus‖end‖:
 Medical 40 / 60 / 80 / 100 each raise it another step, from ‖color:gui.green‖+10‖end‖% up to ‖color:gui.green‖+30‖end‖%.
 Each ‖color:gui.orange‖enemy you kill‖end‖ adds another ‖color:gui.green‖1‖end‖%, up to ‖color:gui.green‖+20‖end‖%
 (the talent panel shows how many stacks you have built up; death does not reset them).
-Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖color:gui.green‖+10‖end‖% damage).</talentdescription.mcj_divination>
-  <afflictionname.mcj_divination>Divination</afflictionname.mcj_divination>
-  <afflictiondescription.mcj_divination>The astrologian has read the heavens' weak points for you: you deal ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_divination>
+Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖color:gui.green‖+10‖end‖% damage).</talentdescription.mcj_celestialriver>
+  <afflictionname.mcj_celestialriver>Celestial River</afflictionname.mcj_celestialriver>
+  <afflictiondescription.mcj_celestialriver>The astrologian has poured a river of stars over you: you deal ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_celestialriver>
 
   <!-- ===== Primary tree ===== -->
   <talentname.mcj_primary_starchart>Star Chart</talentname.mcj_primary_starchart>
@@ -149,17 +149,17 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_malefic>Malefic</talentname.mcj_primary_malefic>
+  <talentname.mcj_primary_divination>Divination</talentname.mcj_primary_divination>
 
   <!-- ===== Primary tree: rewritten from vanilla talents ===== -->
-  <talentname.mcj_primary_wheeloffortune>Collective Unconscious</talentname.mcj_primary_wheeloffortune>
+  <talentname.mcj_primary_sect>Neutral Sect</talentname.mcj_primary_sect>
   <talentname.mcj_primary_celestialopposition>Celestial Intersection</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>Ascend</talentname.mcj_primary_ascend>
 
   <!-- ===== Primary tree: reworked 2026-09-15 ===== -->
-  <talentdescription.mcj_primary_wheeloffortune>You and crew within ‖color:gui.green‖600‖end‖ units take ‖color:gui.green‖10‖end‖% less ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_primary_wheeloffortune>
-  <afflictionname.mcj_primary_wheeloffortune>Collective Unconscious</afflictionname.mcj_primary_wheeloffortune>
-  <afflictiondescription.mcj_primary_wheeloffortune>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_primary_wheeloffortune>
+  <talentdescription.mcj_primary_sect>Crew near you (within ‖color:gui.green‖600‖end‖ units) continuously gain:\n‖color:gui.orange‖+10 to all skills‖end‖ and ‖color:gui.orange‖+20% skill gain speed‖end‖.\nCost: if your own ‖color:gui.orange‖Weapons skill is 50 or lower‖end‖, your Weapons skill takes a further -10.</talentdescription.mcj_primary_sect>
+  <afflictionname.mcj_wheeloffortune_ward>Collective Unconscious</afflictionname.mcj_wheeloffortune_ward>
+  <afflictiondescription.mcj_wheeloffortune_ward>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_wheeloffortune_ward>
 
   <talentdescription.mcj_primary_intersection>When you apply treatment to an ally, they gain an ‖color:gui.green‖8‖end‖-second ‖color:gui.orange‖shield‖end‖: maximum health +‖color:gui.green‖30‖end‖%.</talentdescription.mcj_primary_intersection>
   <afflictionname.mcj_primary_intersection>Celestial Intersection</afflictionname.mcj_primary_intersection>
@@ -174,6 +174,16 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖50‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
 
   <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖20‖end‖ stacks (‖color:gui.green‖150‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
+
+  <!-- ===== Primary tree: re-ID'd 2026-09-15 (Epicycle / Swiftcast) ===== -->
+  <talentname.mcj_primary_epicycle>Epicycle</talentname.mcj_primary_epicycle>
+  <talentdescription.mcj_primary_epicycle>You move at full speed while dragging a character.</talentdescription.mcj_primary_epicycle>
+  <talentname.mcj_primary_swiftcast>Swiftcast</talentname.mcj_primary_swiftcast>
+  <talentdescription.mcj_primary_swiftcast>No incantation needed — you simply reach out and save them: the ‖color:gui.orange‖CPR‖end‖ you perform on crew is ‖color:gui.green‖20‖end‖% more effective.</talentdescription.mcj_primary_swiftcast>
+  <afflictionname.mcj_primary_swiftcast>Swiftcast</afflictionname.mcj_primary_swiftcast>
+  <afflictiondescription.mcj_primary_swiftcast>The astrologian's hands work faster than any incantation: you are brought back a little more quickly.</afflictiondescription.mcj_primary_swiftcast>
+  <afflictionname.mcj_lightspeed_grant>Lightspeed</afflictionname.mcj_lightspeed_grant>
+  <afflictiondescription.mcj_lightspeed_grant>Borrowing another's Lightspeed, you no longer slow down while dragging a character.</afflictiondescription.mcj_lightspeed_grant>
 
   <!-- ===== Arcanum: draw items ===== -->
   <entityname.mcj_draw_star>Astral Draw</entityname.mcj_draw_star>
@@ -195,7 +205,7 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>A pitcher of endless water. Hold it and press use to reduce the whole crew's oxygen consumption.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
-  <talentdescription.mcj_malefic>You deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_malefic>
+  <talentdescription.mcj_primary_divination>The stars have shown you where the enemy is weak: you deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
 

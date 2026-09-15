@@ -136,8 +136,8 @@
   <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
   <talentdescription.mcj_wheeloffortune>接近你的队友（‖color:gui.green‖600‖end‖ 范围内）持续获得：全部 ‖color:gui.orange‖技能 +10‖end‖、‖color:gui.orange‖技能获取速度 +20%‖end‖。
 代价：若你自己的 ‖color:gui.orange‖武器技能不高于 50‖end‖，则你的武器技能额外 -10。</talentdescription.mcj_wheeloffortune>
-  <afflictionname.mcj_wheeloffortune_gift>命运之轮</afflictionname.mcj_wheeloffortune_gift>
-  <afflictiondescription.mcj_wheeloffortune_gift>你的全部技能 +10，技能获取速度 +20%。</afflictiondescription.mcj_wheeloffortune_gift>
+  <afflictionname.mcj_primary_sect>中间学派</afflictionname.mcj_primary_sect>
+  <afflictiondescription.mcj_primary_sect>你的全部技能 +10，技能获取速度 +20%。</afflictiondescription.mcj_primary_sect>
   <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>以星轨铸成的一副轮盘。掷出后在地上碎开，把一小段好运留给周围的人。
 20 秒之内，被它笼罩的角色所受的伤害减半，伤势与出血也会自行消退。
@@ -146,15 +146,15 @@
   <afflictiondescription.mcj_wheeloffortune>你会获得 20 秒的 ‖color:gui.green‖65‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
 
   <!-- ===== 第三栏 · 占卜 ===== -->
-  <talentname.mcj_divination>占卜</talentname.mcj_divination>
-  <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
+  <talentname.mcj_celestialriver>星河漫天</talentname.mcj_celestialriver>
+  <talentdescription.mcj_celestialriver>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
 你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
 医疗 40 / 60 / 80 / 100 各再提升一档，从 ‖color:gui.green‖+10‖end‖% 最高到 ‖color:gui.green‖+30‖end‖%。
 你每 ‖color:gui.orange‖击杀一名敌人‖end‖，这个加成再积累 ‖color:gui.green‖1‖end‖%，最多到 ‖color:gui.green‖+20‖end‖%
 （天赋面板上可以看到当前攒了多少层，死亡不会清零）。
-身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会受益（‖color:gui.green‖+10‖end‖% 伤害）。</talentdescription.mcj_divination>
-  <afflictionname.mcj_divination>占卜</afflictionname.mcj_divination>
-  <afflictiondescription.mcj_divination>占星术士为你揭示了天体的弱点：你造成的伤害提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_divination>
+身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会受益（‖color:gui.green‖+10‖end‖% 伤害）。</talentdescription.mcj_celestialriver>
+  <afflictionname.mcj_celestialriver>星河漫天</afflictionname.mcj_celestialriver>
+  <afflictiondescription.mcj_celestialriver>星河倾泻在你身上：你造成的伤害提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_celestialriver>
 
   <!-- ===== 初级树 ===== -->
   <talentname.mcj_primary_starchart>星图</talentname.mcj_primary_starchart>
@@ -162,17 +162,17 @@
   <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_malefic>凶星</talentname.mcj_primary_malefic>
+  <talentname.mcj_primary_divination>占卜</talentname.mcj_primary_divination>
 
   <!-- ===== 初级树：由原版天赋改写而来的三个 ===== -->
-  <talentname.mcj_primary_wheeloffortune>命运之轮</talentname.mcj_primary_wheeloffortune>
+  <talentname.mcj_primary_sect>中间学派</talentname.mcj_primary_sect>
   <talentname.mcj_primary_celestialopposition>天星交错</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>生辰</talentname.mcj_primary_ascend>
 
   <!-- ===== 初级树：2026-09-15 重做后的描述与状态名 ===== -->
-  <talentdescription.mcj_primary_wheeloffortune>你和 ‖color:gui.green‖600‖end‖ 范围内的队友受到的 ‖color:gui.orange‖伤害降低 10‖end‖%。</talentdescription.mcj_primary_wheeloffortune>
-  <afflictionname.mcj_primary_wheeloffortune>命运之轮</afflictionname.mcj_primary_wheeloffortune>
-  <afflictiondescription.mcj_primary_wheeloffortune>命运之轮笼罩着你：你受到的伤害降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_primary_wheeloffortune>
+  <talentdescription.mcj_primary_sect>接近你的队友（‖color:gui.green‖600‖end‖ 范围内）持续获得：全部 ‖color:gui.orange‖技能 +10‖end‖、‖color:gui.orange‖技能获取速度 +20%‖end‖。\n代价：若你自己的 ‖color:gui.orange‖武器技能不高于 50‖end‖，则你的武器技能额外 -10。</talentdescription.mcj_primary_sect>
+  <afflictionname.mcj_wheeloffortune_ward>命运之轮</afflictionname.mcj_wheeloffortune_ward>
+  <afflictiondescription.mcj_wheeloffortune_ward>命运之轮笼罩着你：你受到的伤害降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_wheeloffortune_ward>
 
   <talentdescription.mcj_primary_intersection>你对队友施药或治疗时，该队友获得 ‖color:gui.green‖8‖end‖ 秒的 ‖color:gui.orange‖护盾‖end‖：生命上限提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_primary_intersection>
   <afflictionname.mcj_primary_intersection>天星交错</afflictionname.mcj_primary_intersection>
@@ -187,6 +187,16 @@
   <afflictiondescription.mcj_primary_gravity>重力把你稳稳压在地上：眩晕抗性 ‖color:gui.green‖50‖end‖%。</afflictiondescription.mcj_primary_gravity>
 
   <talentdescription.mcj_primary_astral>你的 ‖color:gui.orange‖技能获取速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。\n每治疗一名队友累积 ‖color:gui.green‖1‖end‖ 层「星极」，每层再提升 ‖color:gui.green‖5‖end‖%，最多 ‖color:gui.green‖20‖end‖ 层（合计 ‖color:gui.green‖150‖end‖%）。\n天赋面板上可以查看当前层数。</talentdescription.mcj_primary_astral>
+
+  <!-- ===== 初级树：2026-09-15 换 ID 的两个（本轮 / 即刻咏唱） ===== -->
+  <talentname.mcj_primary_epicycle>本轮</talentname.mcj_primary_epicycle>
+  <talentdescription.mcj_primary_epicycle>拖拽角色时，你的移动不受限制。</talentdescription.mcj_primary_epicycle>
+  <talentname.mcj_primary_swiftcast>即刻咏唱</talentname.mcj_primary_swiftcast>
+  <talentdescription.mcj_primary_swiftcast>不必咏唱，伸手就能施救：你给队友做的 ‖color:gui.orange‖心肺复苏‖end‖ 效果提升 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_primary_swiftcast>
+  <afflictionname.mcj_primary_swiftcast>即刻咏唱</afflictionname.mcj_primary_swiftcast>
+  <afflictiondescription.mcj_primary_swiftcast>施术者的心肺复苏更加利落，你被救起得快了一点。</afflictiondescription.mcj_primary_swiftcast>
+  <afflictionname.mcj_lightspeed_grant>光速</afflictionname.mcj_lightspeed_grant>
+  <afflictiondescription.mcj_lightspeed_grant>借着他人的光速，你拖拽角色时也不会减速。</afflictiondescription.mcj_lightspeed_grant>
 
   <!-- ===== 奥秘卡：抽卡道具 ===== -->
   <entityname.mcj_draw_star>星极抽卡</entityname.mcj_draw_star>
@@ -208,7 +218,7 @@
   <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。按住右键打出，使全队的氧气消耗降低。</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
-  <talentdescription.mcj_malefic>你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_malefic>
+  <talentdescription.mcj_primary_divination>你借星象看穿了敌人的弱点：你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>你的命理与他人交织，伤势正在缓缓消退。</afflictiondescription.mcj_synastry>
 

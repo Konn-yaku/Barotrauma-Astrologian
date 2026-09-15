@@ -96,7 +96,7 @@
           全游戏没有"拖拽速度"类 stattype（只有这一个二进制 flag），所以它没有
           可调的档位，只有"减不减速"两种状态。原版两个用例：
           firemanscarry（医生初级树直接给）与「应急反应」给助手的那条 affliction。
-          ※ 我们初级树里本来就有 firemanscarry —— 对同时点了它的人这条是重复的，
+          ※ 【2026-09-15 已改版：光速现在给【队友】挂 flag，自己那一份由初级树「本轮」负责 —— 以下两句作废】原本初级树里有 firemanscarry —— 对同时点了它的人这条是重复的，
             不会叠加出额外收益，但光速自己就送，不依赖初级树。
        ② 有人昏迷时 +40% 移速 —— 原版应急反应（emergencyresponse）的数值。
 
@@ -108,12 +108,23 @@
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
 
-    <!-- 常驻：拖拽角色不减速 -->
-    <AbilityGroupEffect abilityeffecttype="None">
+    <!-- ① 队友拖拽角色不减速（2026-09-15 改版）
+         原本是给自己常驻一个 MoveNormallyWhileDragging flag；
+         现在改成每秒给【全图】队友刷新一个 1 秒的 affliction（内含同一个 flag）。
+         原版医生「应急反应」emergencyresponse 就是这么给助手挂的
+         （它写 jobs="assistant" 只对助手生效；我们不写 jobs = 全队）。
+         ⚠️ 因此光速自己【不再】享有拖拽不减速 —— 那一份由初级树的「本轮」提供。 -->
+    <AbilityGroupInterval interval="1.0">
       <Abilities>
-        <CharacterAbilityGiveFlag flagtype="MoveNormallyWhileDragging" />
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_lightspeed_grant" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupInterval>
 
     <!-- 有人昏迷时：+40% 移动速度 -->
     <AbilityGroupInterval interval="0.5">
@@ -738,28 +749,21 @@
     <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_wheeloffortune" />
 
-    <!-- ① 光环：每秒刷新，离开范围约 5 秒后失效 -->
-    <AbilityGroupInterval interval="1">
+    <!-- 2026-09-15：效果与初级树「中间学派」对调后搬到这里。
+         你和 600 范围内的队友受到的伤害 −10%，常驻；离开范围约 3 秒后失效。
+         这是本模组【唯一一条通用减伤】，而且与 FF14 名实相符 ——
+         Collective Unconscious 就是「站在你身边的队友少挨打」。 -->
+    <AbilityGroupInterval interval="1.0">
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="false">
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_wheeloffortune_gift" strength="1.0" />
+              <Affliction identifier="mcj_wheeloffortune_ward" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-
-    <!-- ② 代价：武器技能不超过 50 时再 -10 -->
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Conditions>
-        <AbilityConditionHasSkill skillidentifier="weapons" minvalue="51" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="WeaponsSkillBonus" value="-10" />
-      </Abilities>
-    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
@@ -788,11 +792,14 @@
           就把门槛改成固定一档，或者改用 4 个独立天赋分开给。
        ============================================================ -->
   <!-- trackedstat / trackedmax = 天赋面板上的进度条（原版 junctionjunkie 的写法）。
-       计数器 mcj_divination_kills 每击杀 +1，满 20；trackedmax 写 21 是为了让进度条
+       计数器 mcj_celestialriver_kills 每击杀 +1，满 20；trackedmax 写 21 是为了让进度条
        在「已满」时不会顶到头的显示问题（与巫女模组同样的取法）。 -->
-  <Talent identifier="mcj_divination" trackedstat="mcj_divination_kills" trackedmax="21">
-    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_divination" />
+  <!-- 2026-09-15：原名「占卜」（mcj_divination），现在让给初级树的新名字，
+       自己改成「星河漫天」—— FF14 7.0 占星术士的 PvP 极限技 Celestial River，
+       在 PvP 里的效果就是给队友的高额增伤，与本天赋的定位完全对应。 -->
+  <Talent identifier="mcj_celestialriver" trackedstat="mcj_celestialriver_kills" trackedmax="21">
+    <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_celestialriver" />
 
     <!-- ① 医疗技能 +45 -->
     <AbilityGroupEffect abilityeffecttype="None">
@@ -858,7 +865,7 @@
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="1000" allowself="false">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_divination" amount="1.0" />
+              <Affliction identifier="mcj_celestialriver" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
@@ -885,15 +892,15 @@
             · 这条是【永久】累积、不随巡回重置（与巫女灵力一致）；
               若想改成「每巡回清零」，加一组：
               <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
-                <Abilities><CharacterAbilityResetPermanentStat statidentifier="mcj_divination_kills" /></Abilities>
+                <Abilities><CharacterAbilityResetPermanentStat statidentifier="mcj_celestialriver_kills" /></Abilities>
               </AbilityGroupEffect> -->
     <AbilityGroupEffect abilityeffecttype="OnKillCharacter">
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy" />
-        <AbilityConditionHasPermanentStat statidentifier="mcj_divination_kills" min="20" invert="true" />
+        <AbilityConditionHasPermanentStat statidentifier="mcj_celestialriver_kills" min="20" invert="true" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_divination_kills" value="1" removeondeath="false" />
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_celestialriver_kills" value="1" removeondeath="false" />
       </Abilities>
     </AbilityGroupEffect>
 
@@ -902,7 +909,7 @@
            之后层数变化，引擎会自动重算这条永久 stat） -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_divination_kills"
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_celestialriver_kills"
                                            stattype="AttackMultiplier" value="0.01" maxvalue="0.2" />
       </Abilities>
     </AbilityGroupEffect>
@@ -918,12 +925,12 @@
             nobodyimportantdies  专门强化助手 -> mcj_primary_synastry      星位合图
             medicalcompanion     医疗伴侣     -> mcj_primary_astral        星极（已重做）
             nopressure           无压         -> mcj_primary_starsounding  重力
-            blooddonor           献血者       -> mcj_primary_malefic       凶星
+            blooddonor           献血者       -> mcj_primary_divination       凶星
        ② 由原版天赋改写而来的 3 个（效果已于 2026-09-15 全部重做，只换名字与图标，见本文件末尾）
-            exampleofhealth      健康典范     -> mcj_primary_wheeloffortune        命运之轮
+            exampleofhealth      健康典范     -> mcj_primary_sect        命运之轮
             laresistance         抵抗军       -> mcj_primary_celestialopposition   天星交错
             dontdieonme          冥土追魂     -> mcj_primary_ascend                生辰
-       ③ 直接沿用原版的 2 个：stayinalive 求生意志 / firemanscarry 消防搬运
+       ③ 直接沿用原版的 2 个：求生意志→即刻咏唱 `mcj_primary_swiftcast` / 消防搬运→本轮 `mcj_primary_epicycle`
 
        【已删】原版 selfcare（自我保健）—— 按要求移除，不再出现在初级树里。
 
@@ -1118,15 +1125,60 @@
   <!-- 凶星 ← 原版 blooddonor（新效果）
        Malefic 是占星术士的核心伤害法术，效果也就对应增伤。
        基础树里的小幅增伤，对标 TE「暴力军阀 warlord」的起点 0.1。 -->
-  <Talent identifier="mcj_primary_malefic">
-    <Icon texture="%ModDir%/Textures/Talents/Malefic.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_malefic" />
+  <!-- ★注意：【本轮」← 原版 firemanscarry，见本文件中段
+       2026-09-15：凶星 → 「占卜」（不再叫 Malefic）。
+       FF14 的「占卜」Divination 正是「提升全队伤害」，与本效果名实相符。
+       图标换成占卜（icon 3553），原来那张 Malefic 图标不再使用。 -->
+  <Talent identifier="mcj_primary_divination">
+    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_divination" />
 
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
       </Abilities>
     </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 本轮 ← 原版 firemanscarry（2026-09-15：换成自己的 ID，效果不变）
+       FF14 7.0 占星术士 PvP 技能 Epicycle（本轮）。
+       不再直接引用原版医生的 firemanscarry —— 那样想调数值就会连带改掉原版医生，
+       也没法和「天赋增强」TE 各走各的。
+       ✔ 与「光速」不再重复：光速现在管的是【队友】拖拽不减速，本轮管【自己】。
+       图标：icon 9069（Epicycle）。 -->
+  <Talent identifier="mcj_primary_epicycle">
+    <Icon texture="%ModDir%/Textures/Talents/Epicycle.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_epicycle" />
+
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveFlag flagtype="MoveNormallyWhileDragging" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 即刻咏唱 ← 原版 stayinalive（2026-09-15：换成自己的 ID，数值不变）
+       FF14 的 Swiftcast（即刻咏唱）：省去咏唱、立刻施法。
+       在潜渊症里就是「不必准备，伸手就能施救」—— 它本来就是配合复活使用的易用技能。
+       做法照原版「求生意志」：每 0.9 秒给队友刷新一个 1 秒的 affliction（CPRBoost 0.2）；
+       affliction 我们也自己复制了一份（mcj_primary_swiftcast），
+       以后想调数值不会再碰原版医生。
+       图标：icon 866（Swiftcast，通用职能技能）。 -->
+  <Talent identifier="mcj_primary_swiftcast">
+    <Icon texture="%ModDir%/Textures/Talents/Swiftcast.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_swiftcast" />
+
+    <AbilityGroupInterval interval="0.9">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_primary_swiftcast" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 
   <!-- ============================================================
@@ -1156,21 +1208,36 @@
             （那边 0.9 才是「只承受 90%」= 减 10%）。
 
        原效果「最大生命 +20%」已撤下 —— 它与占星魔法第 1 层同源，会重叠。 -->
-  <Talent identifier="mcj_primary_wheeloffortune">
-    <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_wheeloffortune" />
+  <Talent identifier="mcj_primary_sect">
+    <Icon texture="%ModDir%/Textures/Talents/NeutralSect.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_sect" />
 
+    <!-- 2026-09-15：效果与第三栏「命运之轮」对调后搬到这里。
+         名字取自 FF14 的 Neutral Sect（中间学派）—— 「中立、兼收并蓄」，
+         所以效果是让身边的人一同学得更快（全技能 +10 / 技能获取速度 +20%）。
+         代价：若自己的武器技能不高于 50，则额外 -10（这一条只对自己生效，
+         所以不能放进 ApplyStatusEffectsToAllies 里）。 -->
     <AbilityGroupInterval interval="1.0">
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="false">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_primary_wheeloffortune" amount="1.0" />
+              <Affliction identifier="mcj_primary_sect" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- 代价：武器技能不超过 50 时再 -10 -->
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Conditions>
+        <AbilityConditionHasSkill skillidentifier="weapons" minvalue="51" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="WeaponsSkillBonus" value="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- 天星交错 ← 原版 laresistance（于 2026-09-15 重做）

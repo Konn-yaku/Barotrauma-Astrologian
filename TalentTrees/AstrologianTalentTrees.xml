@@ -40,17 +40,17 @@
       <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
-        <TalentOption identifier="mcj_primary_wheeloffortune" />
+        <TalentOption identifier="mcj_primary_sect" />
         <TalentOption identifier="mcj_primary_celestialopposition" />
-        <TalentOption identifier="stayinalive" />
+        <TalentOption identifier="mcj_primary_swiftcast" />
       </TalentOptions>
 
       <TalentOptions requiredtalents="1" maxchosentalents="5">
-        <TalentOption identifier="firemanscarry" />
+        <TalentOption identifier="mcj_primary_epicycle" />
         <TalentOption identifier="mcj_primary_astral" />
         <TalentOption identifier="mcj_primary_starsounding" />
         <TalentOption identifier="mcj_primary_ascend" />
-        <TalentOption identifier="mcj_primary_malefic" />
+        <TalentOption identifier="mcj_primary_divination" />
       </TalentOptions>
 
     </SubTree>
@@ -159,7 +159,7 @@
 
       <!-- 第 4 档 -->
       <TalentOptions>
-        <TalentOption identifier="mcj_divination" />
+        <TalentOption identifier="mcj_celestialriver" />
       </TalentOptions>
     </SubTree>
 
