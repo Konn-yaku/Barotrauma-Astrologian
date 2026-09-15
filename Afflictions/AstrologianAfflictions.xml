@@ -551,9 +551,9 @@
        右键时由书给【持有人】打上，58 秒自然过期。
        目的：物品自身的 IsActive 在「进入新巡回 / 关卡重建」时会丢，
              导致同一本书能被抽第二次；角色身上的 affliction 不会被丢。
-       90 秒：这个闩既当「本副牌抽过卡」的守卫，也当【倒计时的驱动】（书每秒 -1 耐久
-       只在它存在时发生），所以它必须比书的 60 秒更长。
-       接力时书的 OnBroken 会把它清掉（不然新书会被它拦住），所以不会残留。 -->
+       60 秒 = 抽卡冷却：抽过一次后 60 秒内不能从同一本书再抽。
+       （早期版本把它当倒计时驱动用、给到 90~300 秒，那些都是弯路 ——
+         现在书用的是 Always+delay 纯计时器，不再需要这个闩驱动任何东西。） -->
   <Affliction identifier="mcj_deck_used"
               type="talentbuff"
               isbuff="true"
@@ -563,7 +563,7 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              duration="90"
+              duration="60"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" />

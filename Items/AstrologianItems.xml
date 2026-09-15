@@ -602,9 +602,15 @@
            mcj_reset_done 带 resetbetweenrounds="true"，巡回结束自动清空，下轮还能用。
            ⚠️ target 写 "This,Character"：条件用选择器读角色，动作（Remove/SpawnItem）要 This。
            ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This）。 -->
-      <!-- 接力：生成另一极的书 + 清掉「已抽过」闩（新书才能抽） -->
-      <StatusEffect type="OnBroken" target="This,Character">
-        <Affliction identifier="mcj_deck_used" amount="-100" />
+      <!-- ===== 60 秒接力（纯计时器，和卡片 60 秒自毁完全同一种机制） =====
+           Always + delay="60" —— 从【这本书生成】起算 60 秒后触发，与卡片计时完全一致。
+           ⚠️ 不再用耐久驱动（OnActive / Condition=-1）：那套依赖 ItemComponent 的 IsActive，
+              而巡回切换会重置 IsActive ⇒ 计时停摆（v0.12.17 踩过）。
+           ⚠️ 也不再走 OnBroken：书的耐久不再被改动，OnBroken 永远不会触发。
+           触发时：生成另一极的书到同一容器 + 删掉自己。
+           注意：接力不会去清「已抽过」闩 —— 那个闩是抽卡冷却（60 秒），必须从【抽卡那一刻】
+           算足 60 秒，不能被换极事件提前解除。 -->
+      <StatusEffect type="Always" target="This" delay="60">
         <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -631,12 +637,8 @@
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <!-- 倒计时：只要角色身上有「已抽过」闩（= 这本正在跑 60 秒），每秒 -1 耐久。
-           ⚠️ 不用 OnActive：它依赖 ItemComponent 的 IsActive，而巡回切换会重置 IsActive
-              （表现为耐久卡住不动）；改用 Always + 选择器读角色，与卡片计时同样抗加载。 -->
-      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" Condition="-1">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
-      </StatusEffect>
+      <!-- v0.12.19：这里的「每秒 -1 耐久」倒计时已删除 —— 接力改成上面的 Always+delay 纯计时器。
+           耐久不再参与任何逻辑（只作为物品状态显示）。 -->
     </ItemComponent>
 
   </Item>
@@ -743,8 +745,8 @@
 
       <!-- ===== 耐久归零 → 变回星极抽卡，接力下一轮 =====
            原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg（OnBroken 写在 Holdable 里） -->
-      <StatusEffect type="OnBroken" target="This,Character">
-        <Affliction identifier="mcj_deck_used" amount="-100" />
+      <!-- 60 秒接力（纯计时器，同星极抽卡，注释见那边） -->
+      <StatusEffect type="Always" target="This" delay="60">
         <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -763,10 +765,7 @@
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <!-- 倒计时：Always + 角色闩驱动（同星极抽卡，注释见那边） -->
-      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" Condition="-1">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
-      </StatusEffect>
+      <!-- v0.12.19：耐久倒计时已删除（接力改成 Always+delay 纯计时器） -->
     </ItemComponent>
   </Item>
 
