@@ -197,10 +197,7 @@
     <afflictiondescription.mcj_drew_star>星极抽卡正在生效。</afflictiondescription.mcj_drew_star>
     <afflictionname.mcj_drew_umbral>信号·灵极抽卡</afflictionname.mcj_drew_umbral>
     <afflictiondescription.mcj_drew_umbral>灵极抽卡正在生效。</afflictiondescription.mcj_drew_umbral>
-    <afflictionname.mcj_roundflag>本轮进行中</afflictionname.mcj_roundflag>
-    <afflictiondescription.mcj_roundflag>隐形标记：本轮还在进行。新的一轮开始时它会消失。</afflictiondescription.mcj_roundflag>
-    <afflictionname.mcj_reset_done>牌堆刚重置</afflictionname.mcj_reset_done>
-    <afflictiondescription.mcj_reset_done>隐形标记：抽卡系统刚刚重置过，防止连锁刷新。</afflictiondescription.mcj_reset_done>
+    <!-- v0.12.12：mcj_roundflag / mcj_reset_done 已随轮次刷新功能移除 -->
 
     <!-- ── 卡牌的隐形信号弹（只在打出一瞬间存在，由六天座广播给全队） ── -->
     <afflictionname.mcj_sig_balance>信号·太阳神之衡</afflictionname.mcj_sig_balance>

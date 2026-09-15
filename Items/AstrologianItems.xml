@@ -462,7 +462,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
-      <!-- ===== 轮次标记 mcj_roundflag =====
+      <!-- ❌ v0.12.12：整套「巡回/站点刷新牌堆」功能已移除（下面说明作废，保留仅为记录）。
            标记带 resetbetweenrounds="true"，巡回结束时会被清空，
            于是「它不见了（强度 0）」= 新的一轮刚开始 ⇒ 整副牌重置。
            ⚠️ 只在【出生】和【右键】时补，【不做定时刷新】：
@@ -470,13 +470,6 @@
              出生补一次就够 —— 每本新书（包括重置时生成的那本）都会立刻把标记补上。
            ⚠️ 右键补那一条必须排在 ① 抽卡【前面】（同一事件内按 XML 顺序执行），
              否则新一轮刚开始那几秒抽出来的卡会被误判成「上一轮的残留」。 -->
-      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_roundflag" amount="1" />
-      </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_roundflag" amount="1" />
-      </StatusEffect>
-
       <!-- ① 抽卡：只在“还没用过”时有效（IsActive=false） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
@@ -584,14 +577,6 @@
            mcj_reset_done 带 resetbetweenrounds="true"，巡回结束自动清空，下轮还能用。
            ⚠️ target 写 "This,Character"：条件用选择器读角色，动作（Remove/SpawnItem）要 This。
            ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This）。 -->
-      <StatusEffect type="Always" target="This,Character" interval="1.0" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_reset_done="lte 0.1" />
-        <Affliction identifier="mcj_reset_done" strength="1" />
-        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
-        <Remove />
-      </StatusEffect>
-
       <StatusEffect type="OnBroken" target="This">
         <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
@@ -638,10 +623,6 @@
       <!-- 轮次标记不在这里补：灵极书自己补的话，巡回刚清空就会被它自己补上，
            0.5 秒一次的判定永远抓不到「缺失窗口」。补标记的活儿交给星极书。
            （这里只在【右键】时补一下：那说明玩家正在用它，属于本轮中段，安全。） -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_roundflag" amount="1" />
-      </StatusEffect>
-
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -697,14 +678,6 @@
              所以不会来回倒）。条件用 TargetContainer / TargetGrandparent 读持有人身上的标记。 -->
       <!-- ✅ v0.12.10：和星极书一样，用角色身上的 mcj_reset_done 做「每轮只一次」的闩
            （为什么不能用物品自身状态：<SpawnItem> 会继承源物件状态，详见星极抽卡处）。 -->
-      <StatusEffect type="Always" target="This,Character" interval="1.0" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_reset_done="lte 0.1" />
-        <Affliction identifier="mcj_reset_done" strength="1" />
-        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
-        <Remove />
-      </StatusEffect>
-
       <!-- 新一轮开始：把「星力」的计数清零 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" amount="-100" />
@@ -774,11 +747,6 @@
         <Affliction identifier="mcj_sig_balance" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废（在站点抽的卡不许带进巡回） -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
-      </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">
         <Conditional jobidentifier="! mcj_astrologian" />
@@ -803,11 +771,6 @@
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_sig_arrow" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
-      </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废 -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">
@@ -834,11 +797,6 @@
         <Affliction identifier="mcj_sig_spire" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废 -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
-      </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">
         <Conditional jobidentifier="! mcj_astrologian" />
@@ -863,11 +821,6 @@
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_sig_spear" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
-      </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废 -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">
@@ -894,11 +847,6 @@
         <Affliction identifier="mcj_sig_bole" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废 -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
-      </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">
         <Conditional jobidentifier="! mcj_astrologian" />
@@ -923,11 +871,6 @@
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_sig_ewer" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
-      </StatusEffect>
-      <!-- 进入新巡回 → 抽过的卡一律作废 -->
-      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
-        <Remove />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
       <StatusEffect type="Always" target="Character" interval="1.0">

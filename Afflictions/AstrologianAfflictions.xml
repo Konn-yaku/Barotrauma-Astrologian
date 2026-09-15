@@ -548,7 +548,7 @@
     <Icon texture="%ModDir%/Textures/Talents/UmbralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 标记：本轮进行中 ──
+  <!-- ❌ v0.12.12：以下两个标记随「巡回/站点刷新牌堆」功能一起移除（说明作废） ──
        由【抽卡书自己】每 5 秒给持有人补一次（不再由六天座维护 —— 原因见天赋文件：
        六天座在巡回一开始就会把标记补上，那样「缺失窗口」会短到抓不住）。
        它【没有 duration】，所以整轮都不会消失；
@@ -561,23 +561,8 @@
        而原版 263 处 <Remove /> 全部是 target="This"，没有先例，不敢赌。
        ⚠️ 标记 B 必须"一直存在"，否则卡和书会误判成到了新一轮。
           ⇒ 施加间隔（5 秒）略长于判定间隔（0.5 秒），既保证窗口能抓到，又不会误判。 -->
-  <Affliction identifier="mcj_roundflag"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              resetbetweenrounds="true"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
 
-  <!-- ── 标记：刚刚重置过牌堆（防止重置连锁触发）──
+  <!-- ❌ v0.12.12：以下两个标记随「巡回/站点刷新牌堆」功能一起移除（说明作废） ──
        抽卡书在「巡回标记缺失」的一瞬给自己挂上，然后【按时长自然过期】重新上闸。
        ⚠️ 千万不要给它加 resetbetweenrounds="true"：
           在站点里，按轮次清理的 affliction 会被【反复】清空（mcj_roundflag 就是这样 ——
@@ -585,21 +570,6 @@
           重置效果每 1 秒触发一次，表现为「在站点里同一本书反复刷新」。
        duration=300：重置后 5 分钟自动重新上闸；中途过期也没事 ——
           因为「巡回标记」还在，重置条件根本不会成立。 -->
-  <Affliction identifier="mcj_reset_done"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="300"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
 
   <Affliction identifier="mcj_played"
               type="talentbuff"
