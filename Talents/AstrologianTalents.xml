@@ -921,7 +921,8 @@
          （原作分别是减伤领域 / 护盾 / 复活），属于「先占名字、效果之后再换」。
        ============================================================ -->
 
-  <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID） -->
+  <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID）
+       2026-09-15 追加第三条效果：队友击杀敌人时，自己也获得一点升级经验。 -->
   <Talent identifier="mcj_primary_starchart">
     <Icon texture="%ModDir%/Textures/Talents/StarChart.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.healthinsurance">
@@ -930,6 +931,9 @@
     </Description>
     <Description tag="talentdescription.medicalitemscostless">
       <Replace tag="[amount]" value="10" color="gui.green" />
+    </Description>
+    <Description tag="talentdescription.mcj_starchart_killxp">
+      <Replace tag="[amount]" value="5" color="gui.green" />
     </Description>
 
     <AbilityGroupEffect abilityeffecttype="None">
@@ -955,6 +959,38 @@
       <Abilities>
         <CharacterAbilityGiveMoney amount="100" />
         <CharacterAbilityResetPermanentStat statidentifier="mcj_starchart" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- ⭐ 队友击杀敌人 → 自己也获得一点升级经验（2026-09-15）
+
+         写法照工坊 Toxicologist（2993275947）的「猎头者」bountyhunter：
+         OnCrewKillCharacter = 「任意船员击杀时」，不是只有自己。
+         abilityeffecttype 里没有「队友获得经验」这种触发时机，
+         所以用「队友击杀」这个动作当代理。
+
+         为什么不能写成「队友获得的 25%」：
+           · 天赋能给经验的唯一能力是 CharacterAbilityGiveExperience，
+             参数只有 amount（固定值）/ level（补到某等级）—— 没有按比例分配
+           · 唯一的比例机制 StealPercentageOfExperience 只挂在 <TraitorEvent> 上
+             （TraitorEvents.xml 33 处，内鬼事件专用属性），天赋用不到
+         → 所以只能给固定值：每次 5 点。
+
+         ⚠️ OnCrewKillCharacter 不区分是谁杀的，包括自己杀的。
+            如果实测发现「自己击杀也加」，想改成只算别人杀的，
+            再想办法（目前原版没有现成的“排除自己”条件）。 -->
+    <AbilityGroupEffect abilityeffecttype="OnCrewKillCharacter">
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This">
+              <GiveExperience amount="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
   </Talent>

@@ -158,6 +158,7 @@
 
   <!-- ===== 初级树 ===== -->
   <talentname.mcj_primary_starchart>星图</talentname.mcj_primary_starchart>
+  <talentdescription.mcj_starchart_killxp>队友击杀敌人时，你获得 ‖color:gui.green‖[amount]‖end‖ 点经验。</talentdescription.mcj_starchart_killxp>
   <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_guardianstar>擢升</talentname.mcj_primary_guardianstar>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>

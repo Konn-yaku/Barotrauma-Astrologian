@@ -145,6 +145,7 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
 
   <!-- ===== Primary tree ===== -->
   <talentname.mcj_primary_starchart>Star Chart</talentname.mcj_primary_starchart>
+  <talentdescription.mcj_starchart_killxp>Whenever a crewmate kills an enemy, you gain ‖color:gui.green‖[amount]‖end‖ experience.</talentdescription.mcj_starchart_killxp>
   <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_guardianstar>Exaltation</talentname.mcj_primary_guardianstar>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
