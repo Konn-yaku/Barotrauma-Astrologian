@@ -37,15 +37,11 @@
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
-      <!-- 第 1 组现在 6 个（原版医生这一组也是 6 个）
-           ⚠️ 选项数量变了，maxchosentalents 必须跟着改，
-              否则游戏直接报 "maximum number of talents to choose is larger than the number of talents" -->
-      <TalentOptions requiredtalents="1" maxchosentalents="6">
+      <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
         <TalentOption identifier="mcj_primary_wheeloffortune" />
         <TalentOption identifier="mcj_primary_celestialopposition" />
-        <TalentOption identifier="mcj_primary_ephemeris" />
         <TalentOption identifier="stayinalive" />
       </TalentOptions>
 

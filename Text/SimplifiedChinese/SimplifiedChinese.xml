@@ -163,12 +163,6 @@
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>凶星</talentname.mcj_primary_malefic>
 
-  <!-- ===== 初级树：星历（新增） ===== -->
-  <talentname.mcj_primary_ephemeris>星历</talentname.mcj_primary_ephemeris>
-  <talentdescription.mcj_primary_ephemeris>你逐日记录星辰的位置，也因此比别人更清楚一趟航程值多少钱。
-完成任务获得的 ‖color:gui.orange‖经验‖end‖ 提升 ‖color:gui.green‖25‖end‖%，
-‖color:gui.orange‖报酬‖end‖ 提升 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_primary_ephemeris>
-
   <!-- ===== 初级树：由原版天赋改写而来的三个 ===== -->
   <talentname.mcj_primary_wheeloffortune>命运之轮</talentname.mcj_primary_wheeloffortune>
   <talentname.mcj_primary_celestialopposition>天星交错</talentname.mcj_primary_celestialopposition>

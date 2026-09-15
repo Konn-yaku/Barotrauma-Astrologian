@@ -150,12 +150,6 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>Malefic</talentname.mcj_primary_malefic>
 
-  <!-- ===== Primary tree: Ephemeris (new) ===== -->
-  <talentname.mcj_primary_ephemeris>Ephemeris</talentname.mcj_primary_ephemeris>
-  <talentdescription.mcj_primary_ephemeris>You chart the stars' positions day by day, so you know better than anyone what a voyage is worth.
-Mission ‖color:gui.orange‖experience‖end‖ is increased by ‖color:gui.green‖25‖end‖%,
-and mission ‖color:gui.orange‖pay‖end‖ by ‖color:gui.green‖20‖end‖%.</talentdescription.mcj_primary_ephemeris>
-
   <!-- ===== Primary tree: rewritten from vanilla talents ===== -->
   <talentname.mcj_primary_wheeloffortune>Collective Unconscious</talentname.mcj_primary_wheeloffortune>
   <talentname.mcj_primary_celestialopposition>Celestial Intersection</talentname.mcj_primary_celestialopposition>

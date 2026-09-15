@@ -1013,34 +1013,6 @@
     </AbilityGroupEffect>
   </Talent>
 
-  <!-- 星历（2026-09-15 新增，初级树第 1 组的第 6 个）
-
-       加它的原因：初级树原本一个「成长 / 收益」类天赋都没有。
-       两条效果都照原版已核实的写法（不是自创）：
-         · OnGainMissionExperience + CharacterAbilityModifyValue multiplyvalue
-           —— 原版助理「必有我师」peerlearning / 「邮差」mailman
-         · OnGainMissionMoney + CharacterAbilityModifyValue multiplyvalue
-           —— 原版助理「邮差」mailman
-
-       「星历」= 逐日记录星辰位置的年表。记得越细，航程就越值钱。
-       名字是自创的（FF14 没有对应技能，按本项目规则不能用官方技能名）。 -->
-  <Talent identifier="mcj_primary_ephemeris">
-    <Icon texture="%ModDir%/Textures/Talents/Ephemeris.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_ephemeris" />
-
-    <AbilityGroupEffect abilityeffecttype="OnGainMissionExperience">
-      <Abilities>
-        <CharacterAbilityModifyValue multiplyvalue="1.25" />
-      </Abilities>
-    </AbilityGroupEffect>
-
-    <AbilityGroupEffect abilityeffecttype="OnGainMissionMoney">
-      <Abilities>
-        <CharacterAbilityModifyValue multiplyvalue="1.2" />
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
-
   <!-- ============================================================
        2026-09-15 新增：三个由原版天赋改写而来的占星技能
 
