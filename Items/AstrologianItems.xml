@@ -574,9 +574,20 @@
            ✔ mcj_roundflag 用 TargetContainer / TargetGrandparent 读【持有人】身上的标记
               （原版 divinggear.xml 就是从氧气瓶这样去查角色 IsDead / NeedsAir 的）
            ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This；配 Character 无效）。 -->
-      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true">
-        <Conditional IsActive="true" targetitemcomponent="ItemComponent" />
+      <!-- ✅ v0.12.10 最终写法（上面的 IsActive 防刷方案已作废，原因如下）：
+           <SpawnItem> 生成的新物件会【继承源物件的状态】（本文件里那条「中继生成的新书
+           继承了上一本的 0 耐久」就是同一个现象）—— 新书把旧的 IsActive=true 一起继承了，
+           所以「IsActive=true 才重置」根本拦不住它 ⇒ 每 1 秒换一本 = 站点内反复刷新。
+           改成用【角色身上】的本轮标记 mcj_reset_done 做闩：
+             本轮标记消失（新一轮）+ 本轮还没重置过 → 执行一次，同时打上 mcj_reset_done
+             ⇒ 新书再跑这条效果时，mcj_reset_done 已在（强度 1）→ 条件不成立 → 不会连锁
+           mcj_reset_done 带 resetbetweenrounds="true"，巡回结束自动清空，下轮还能用。
+           ⚠️ target 写 "This,Character"：条件用选择器读角色，动作（Remove/SpawnItem）要 This。
+           ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This）。 -->
+      <StatusEffect type="Always" target="This,Character" interval="1.0" checkconditionalalways="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_reset_done="lte 0.1" />
+        <Affliction identifier="mcj_reset_done" strength="1" />
         <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -600,10 +611,12 @@
            否则新书一出生就是破损态，会立刻再触发一次 OnBroken，
            两台书就会互相刷 —— 表现为「不断地发抽卡道具」。 -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
+      <!-- ⚠️ 还要把 IsActive 复位：<SpawnItem> 生成的新书会继承上一本的 IsActive=true，
+           继承到的话它一出生就是「已使用」态（抽不了卡，也会被各种 IsActive 判定当成旧书）。 -->
+      <StatusEffect type="OnSpawn" target="This" IsActive="false" />
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <!-- 倒计时：health=60，每秒 -1 点耐久 → 整 60 秒归零 -->
       <StatusEffect type="OnActive" target="This" Condition="-1" />
     </ItemComponent>
 
@@ -682,8 +695,12 @@
            灵极书不要求 IsActive：只要巡回结束时有它在手上，就一律换回星极书
            （它生出来的是一本未使用的星极书，而那本带有 IsActive="true" 的防刷条件，
              所以不会来回倒）。条件用 TargetContainer / TargetGrandparent 读持有人身上的标记。 -->
-      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true">
+      <!-- ✅ v0.12.10：和星极书一样，用角色身上的 mcj_reset_done 做「每轮只一次」的闩
+           （为什么不能用物品自身状态：<SpawnItem> 会继承源物件状态，详见星极抽卡处）。 -->
+      <StatusEffect type="Always" target="This,Character" interval="1.0" checkconditionalalways="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_reset_done="lte 0.1" />
+        <Affliction identifier="mcj_reset_done" strength="1" />
         <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -722,6 +739,8 @@
     <ItemComponent IsActive="false" CharacterUsable="true">
       <!-- 出生锁满耐久（同星极抽卡，防中继继承 0 耐久） -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
+      <!-- ⚠️ IsActive 也要复位（新书会继承上一本的已使用态，继承到就抽不了卡） -->
+      <StatusEffect type="OnSpawn" target="This" IsActive="false" />
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>

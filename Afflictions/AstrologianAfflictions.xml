@@ -577,6 +577,30 @@
     <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
+  <!-- ── 标记：本轮的抽卡重置已经做过了 ──
+       由抽卡书在「巡回标记刚消失」的那一瞬间给自己挂上，resetbetweenrounds="true"。
+       作用：让重置【每轮只发生一次】。
+       为什么不改用物品自身的状态（比如 IsActive）：
+         <SpawnItem> 生成的新物件会【继承源物件的状态】（本模组早先那个
+         「中继生成的新书继承了上一本的 0 耐久」就是同一个现象），根本拦不住新书 ——
+         会变成每 1 秒换一本，表现为「在站点内反复刷新星极抽卡」。
+       角色身上的 affliction 不会被物件继承，所以用它做闩才可靠。 -->
+  <Affliction identifier="mcj_reset_done"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
   <Affliction identifier="mcj_played"
               type="talentbuff"
               isbuff="true"
