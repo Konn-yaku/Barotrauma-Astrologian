@@ -443,6 +443,22 @@
     <Sprite texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
 
+    <!-- ===== 制造配方：把弄丢的书补回来 =====
+         requiresrecipe="true" + 天赋里的 <AddedRecipe /> ⇒ 只有点出「六天座」才会出现在制造台。
+         写法照原版机械师天赋 hullfixer（用同样一套解锁固化泡沫手榴弹）。
+
+         【为什么需要这个配方】
+         六天座只会发一本，之后全靠书自己接力；而纯 XML 表达不出
+         "身上没有某物品"这种条件（详见 Talents/AstrologianTalents.xml 里六天座的长注释），
+         所以"丢了自动补发"做不了安全实现 —— 改成让玩家自己花材料补。
+
+         只要 1 个塑料：它是「找回丢失道具」的救济手段，不是主要产出途径。
+         多做几本也无害 —— 每本书各自接力，不会互相翻倍；
+         抽卡是 SpawnIfNotInInventory，也不会重复发卡。 -->
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" requiresrecipe="true">
+      <RequiredItem identifier="plastic" amount="1" />
+    </Fabricate>
+
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 

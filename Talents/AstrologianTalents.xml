@@ -235,6 +235,11 @@
         <CharacterAbilityGivePermanentStat statidentifier="mcj_six_given" value="1" setvalue="true" />
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- 解锁配方：书丢了可以自己花 1 个塑料重做一本，把循环拉回来。
+         这是"没有某物品"表达不出来的替代方案（见上方长注释）。
+         写法照原版机械师天赋 hullfixer，物品那边配 requiresrecipe="true"。 -->
+    <AddedRecipe itemidentifier="mcj_draw_star" />
   </Talent>
 
   <!-- ============================================================
