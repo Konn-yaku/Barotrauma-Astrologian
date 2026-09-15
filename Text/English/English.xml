@@ -137,6 +137,8 @@ It does not tell friend from foe — fortune never picks.</entitydescription.mcj
   <talentdescription.mcj_divination>Your ‖color:gui.orange‖Medical skill‖end‖ increases by ‖color:gui.green‖45‖end‖.
 You deal more ‖color:gui.orange‖damage‖end‖, and ‖color:gui.orange‖the higher your Medical skill, the greater the bonus‖end‖:
 Medical 40 / 60 / 80 / 100 each raise it another step, from ‖color:gui.green‖+10‖end‖% up to ‖color:gui.green‖+30‖end‖%.
+Each ‖color:gui.orange‖enemy you kill‖end‖ adds another ‖color:gui.green‖1‖end‖%, up to ‖color:gui.green‖+20‖end‖%
+(the talent panel shows how many stacks you have built up; death does not reset them).
 Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖color:gui.green‖+10‖end‖% damage).</talentdescription.mcj_divination>
   <afflictionname.mcj_divination>Divination</afflictionname.mcj_divination>
   <afflictiondescription.mcj_divination>The astrologian has read the heavens' weak points for you: you deal ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_divination>
@@ -147,6 +149,12 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_guardianstar>Exaltation</talentname.mcj_primary_guardianstar>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>Malefic</talentname.mcj_primary_malefic>
+
+  <!-- ===== Primary tree: Ephemeris (new) ===== -->
+  <talentname.mcj_primary_ephemeris>Ephemeris</talentname.mcj_primary_ephemeris>
+  <talentdescription.mcj_primary_ephemeris>You chart the stars' positions day by day, so you know better than anyone what a voyage is worth.
+Mission ‖color:gui.orange‖experience‖end‖ is increased by ‖color:gui.green‖25‖end‖%,
+and mission ‖color:gui.orange‖pay‖end‖ by ‖color:gui.green‖20‖end‖%.</talentdescription.mcj_primary_ephemeris>
 
   <!-- ===== Primary tree: rewritten from vanilla talents ===== -->
   <talentname.mcj_primary_wheeloffortune>Collective Unconscious</talentname.mcj_primary_wheeloffortune>

@@ -150,6 +150,8 @@
   <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
 你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
 医疗 40 / 60 / 80 / 100 各再提升一档，从 ‖color:gui.green‖+10‖end‖% 最高到 ‖color:gui.green‖+30‖end‖%。
+你每 ‖color:gui.orange‖击杀一名敌人‖end‖，这个加成再积累 ‖color:gui.green‖1‖end‖%，最多到 ‖color:gui.green‖+20‖end‖%
+（天赋面板上可以看到当前攒了多少层，死亡不会清零）。
 身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会受益（‖color:gui.green‖+10‖end‖% 伤害）。</talentdescription.mcj_divination>
   <afflictionname.mcj_divination>占卜</afflictionname.mcj_divination>
   <afflictiondescription.mcj_divination>占星术士为你揭示了天体的弱点：你造成的伤害提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_divination>
@@ -160,6 +162,12 @@
   <talentname.mcj_primary_guardianstar>擢升</talentname.mcj_primary_guardianstar>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>凶星</talentname.mcj_primary_malefic>
+
+  <!-- ===== 初级树：星历（新增） ===== -->
+  <talentname.mcj_primary_ephemeris>星历</talentname.mcj_primary_ephemeris>
+  <talentdescription.mcj_primary_ephemeris>你逐日记录星辰的位置，也因此比别人更清楚一趟航程值多少钱。
+完成任务获得的 ‖color:gui.orange‖经验‖end‖ 提升 ‖color:gui.green‖25‖end‖%，
+‖color:gui.orange‖报酬‖end‖ 提升 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_primary_ephemeris>
 
   <!-- ===== 初级树：由原版天赋改写而来的三个 ===== -->
   <talentname.mcj_primary_wheeloffortune>命运之轮</talentname.mcj_primary_wheeloffortune>

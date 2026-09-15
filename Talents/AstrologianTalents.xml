@@ -773,7 +773,10 @@
        ⚠️ 若发现阶梯没生效（永远只 +10% 或直接 +30%），
           就把门槛改成固定一档，或者改用 4 个独立天赋分开给。
        ============================================================ -->
-  <Talent identifier="mcj_divination">
+  <!-- trackedstat / trackedmax = 天赋面板上的进度条（原版 junctionjunkie 的写法）。
+       计数器 mcj_divination_kills 每击杀 +1，满 20；trackedmax 写 21 是为了让进度条
+       在「已满」时不会顶到头的显示问题（与巫女模组同样的取法）。 -->
+  <Talent identifier="mcj_divination" trackedstat="mcj_divination_kills" trackedmax="21">
     <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_divination" />
 
@@ -847,6 +850,48 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- ④ 击杀累积（2026-09-15 新增）：每击杀一名敌人 +1 层，每层 +1% 伤害，封顶 +20%。
+
+         这是纯 XML 的「层数系统」，写法照巫女模组（工坊 3668933349）的「灵力」计数器：
+            · 计数器  = 一条【不带 stattype】的 permanent stat，每事件 value="1"
+            · 派生效果 = 同一个 statidentifier 再写一条【带 stattype】的 GivePermanentStat，
+                        其中 value = 每层给多少、maxvalue = 封顶
+                        → 引擎自己算「层数 × value」，不用手写 20 组阶梯
+                        （巫女验算：20 层 × 0.005 = 0.1 = maxvalue）
+
+         封顶用了两道保险：
+           ① AbilityConditionHasPermanentStat ... invert="true" → 满 20 层后不再计数
+           ② maxvalue="0.2"                                     → 即使计数溢出也不会超
+
+         其他要点：
+            · OnKillCharacter + AbilityConditionCharacter targettypes="Enemy"
+              = 只算敌对目标（照原版安全官 warstories，TalentsSecurity.xml:210）
+            · removeondeath="false" = 死亡不清零（否则一死就白攒）
+            · 这条是【永久】累积、不随巡回重置（与巫女灵力一致）；
+              若想改成「每巡回清零」，加一组：
+              <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
+                <Abilities><CharacterAbilityResetPermanentStat statidentifier="mcj_divination_kills" /></Abilities>
+              </AbilityGroupEffect> -->
+    <AbilityGroupEffect abilityeffecttype="OnKillCharacter">
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy" />
+        <AbilityConditionHasPermanentStat statidentifier="mcj_divination_kills" min="20" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_divination_kills" value="1" removeondeath="false" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 计数器派生出伤害：20 层 × 0.01 = +20%
+         （放在 abilityeffecttype="None" 组里 = 点出天赋时就注册一次，
+           之后层数变化，引擎会自动重算这条永久 stat） -->
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_divination_kills"
+                                           stattype="AttackMultiplier" value="0.01" maxvalue="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
@@ -964,6 +1009,34 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- 星历（2026-09-15 新增，初级树第 1 组的第 6 个）
+
+       加它的原因：初级树原本一个「成长 / 收益」类天赋都没有。
+       两条效果都照原版已核实的写法（不是自创）：
+         · OnGainMissionExperience + CharacterAbilityModifyValue multiplyvalue
+           —— 原版助理「必有我师」peerlearning / 「邮差」mailman
+         · OnGainMissionMoney + CharacterAbilityModifyValue multiplyvalue
+           —— 原版助理「邮差」mailman
+
+       「星历」= 逐日记录星辰位置的年表。记得越细，航程就越值钱。
+       名字是自创的（FF14 没有对应技能，按本项目规则不能用官方技能名）。 -->
+  <Talent identifier="mcj_primary_ephemeris">
+    <Icon texture="%ModDir%/Textures/Talents/Ephemeris.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_ephemeris" />
+
+    <AbilityGroupEffect abilityeffecttype="OnGainMissionExperience">
+      <Abilities>
+        <CharacterAbilityModifyValue multiplyvalue="1.25" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <AbilityGroupEffect abilityeffecttype="OnGainMissionMoney">
+      <Abilities>
+        <CharacterAbilityModifyValue multiplyvalue="1.2" />
       </Abilities>
     </AbilityGroupEffect>
   </Talent>
