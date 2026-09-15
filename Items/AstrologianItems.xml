@@ -524,15 +524,16 @@
       </StatusEffect>
 
       <!-- ===== 本副牌「已抽过」的角色闩 mcj_deck_used =====
-           ⚠️⚠️ 必须排在 ①抽卡 与 ①b信号【后面】！
-              同一个 OnSecondaryUse 事件里特效按 XML 顺序执行 ——
-              先打闩的话，后面 ① 的守卫就马上看到闩（强度 1）→ lte 0.1 不成立 → 永远抽不出卡。
-           为什么闩打在角色身上：物品自身的 IsActive 在【进入新巡回/关卡重建】时会丢，
-              书会变回「没抽过」⇒ 在站点抽完、进巡回又能再抽一次（v0.12.13 实测）。
+           ⚠️⚠️ 必须排在 ①抽卡 与 ①b信号【后面】（同事件内按 XML 顺序执行）。
+           ⚠️⚠️ 必须额外要求「闩不存在」才能打闩：否则每次右键都会把闩刷新，
+              接力出的新书会一直被拦住（表现为「新书一直不能抽卡」）。
+           为什么闩打在角色身上：物品的 IsActive 在【进入新巡回/关卡重建】时会丢，
+              角色 affliction 不会丢。
            为什么只用选择器条件：同一个特效里不能混 targetitemcomponent（物品）和选择器（角色），
-              混用会让选择器那条解析不到角色、强度按 0 算、守卫形同虚设（v0.12.14 实测）。
-           58 秒自然过期，正好赶在书 60 秒接力成另一极之前 ⇒ 新书照常可抽。 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+              混用会让选择器那条解析不到角色、强度按 0 算、守卫形同虚设。
+           接力时（书的 OnBroken）会把闩清掉，所以新书照常能抽。 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_deck_used" amount="1" />
       </StatusEffect>
 
@@ -547,7 +548,9 @@
         <Use />
       </StatusEffect>
 
-      <!-- ===== 巡回切换后把倒计时接回去 =====
+      <!-- v0.12.18：下面这条已不再必要（倒计时改为 Always+角色闩 驱动，不依赖 IsActive），
+           保留无害，作为万一还有别处看 IsActive 的兼容处理。原注释如下——
+           巡回切换后把倒计时接回去：
            进入新巡回（关卡重建）时 ItemComponent 的 IsActive 会被重置成 false，
            而倒计时用的是 OnActive（只在 active 时跑）⇒ 耐久会停住不动（就 是卡在 80% 那种）。
            只要角色身上还有「已抽过」闩（说明这本正在倒计时中），每秒把 IsActive 补回来。
@@ -599,7 +602,9 @@
            mcj_reset_done 带 resetbetweenrounds="true"，巡回结束自动清空，下轮还能用。
            ⚠️ target 写 "This,Character"：条件用选择器读角色，动作（Remove/SpawnItem）要 This。
            ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This）。 -->
-      <StatusEffect type="OnBroken" target="This">
+      <!-- 接力：生成另一极的书 + 清掉「已抽过」闩（新书才能抽） -->
+      <StatusEffect type="OnBroken" target="This,Character">
+        <Affliction identifier="mcj_deck_used" amount="-100" />
         <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -626,7 +631,12 @@
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="This" Condition="-1" />
+      <!-- 倒计时：只要角色身上有「已抽过」闩（= 这本正在跑 60 秒），每秒 -1 耐久。
+           ⚠️ 不用 OnActive：它依赖 ItemComponent 的 IsActive，而巡回切换会重置 IsActive
+              （表现为耐久卡住不动）；改用 Always + 选择器读角色，与卡片计时同样抗加载。 -->
+      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" Condition="-1">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
+      </StatusEffect>
     </ItemComponent>
 
   </Item>
@@ -668,8 +678,10 @@
         <Affliction identifier="mcj_drew_umbral" strength="1" />
       </StatusEffect>
 
-      <!-- 「已抽过」的角色闩：必须排在 ①/①b 后面（原因见星极抽卡处的长注释） -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+      <!-- 「已抽过」的角色闩（同星极抽卡，注释见那边）
+           ⚠️ 排在 ①/①b 后面，且要求闩不存在才打 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_deck_used" amount="1" />
       </StatusEffect>
 
@@ -717,7 +729,7 @@
         <Use />
       </StatusEffect>
 
-      <!-- 巡回切换后把倒计时接回去（同星极抽卡，注释见那边） -->
+      <!-- 巡回切换后把 IsActive 接回去（v0.12.18 起已不必要，保留无害；同星极抽卡） -->
       <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" IsActive="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
       </StatusEffect>
@@ -731,7 +743,8 @@
 
       <!-- ===== 耐久归零 → 变回星极抽卡，接力下一轮 =====
            原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg（OnBroken 写在 Holdable 里） -->
-      <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This,Character">
+        <Affliction identifier="mcj_deck_used" amount="-100" />
         <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
@@ -750,7 +763,10 @@
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="This" Condition="-1" />
+      <!-- 倒计时：Always + 角色闩驱动（同星极抽卡，注释见那边） -->
+      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" Condition="-1">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
+      </StatusEffect>
     </ItemComponent>
   </Item>
 

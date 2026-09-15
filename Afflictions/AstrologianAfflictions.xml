@@ -551,9 +551,9 @@
        右键时由书给【持有人】打上，58 秒自然过期。
        目的：物品自身的 IsActive 在「进入新巡回 / 关卡重建」时会丢，
              导致同一本书能被抽第二次；角色身上的 affliction 不会被丢。
-       62 秒【略长于】书的 60 秒接力：闩必须撑到书把倒计时跑完
-       （太短的话，书自己的倒计时会因为闩先过期而提前停摆）。
-       代价只是接力出的新书有约 2 秒不能抽 —— 可忽略。 -->
+       90 秒：这个闩既当「本副牌抽过卡」的守卫，也当【倒计时的驱动】（书每秒 -1 耐久
+       只在它存在时发生），所以它必须比书的 60 秒更长。
+       接力时书的 OnBroken 会把它清掉（不然新书会被它拦住），所以不会残留。 -->
   <Affliction identifier="mcj_deck_used"
               type="talentbuff"
               isbuff="true"
@@ -563,7 +563,7 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              duration="62"
+              duration="90"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" />
