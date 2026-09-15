@@ -16,7 +16,7 @@
   <talentname.mcj_celestialopposition>Celestial Opposition</talentname.mcj_celestialopposition>
   <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
-  <talentname.mcj_aspectedhelios>Esuna</talentname.mcj_aspectedhelios>
+  <talentname.mcj_aspectedhelios>Aspected Helios</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
@@ -24,15 +24,17 @@
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units have their ‖color:gui.orange‖bleeding, burns and bloodloss‖end‖ cleared once their health drops below ‖color:gui.green‖20‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
-  <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
+  <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member's ‖color:gui.orange‖health drops below 5%‖end‖, the charge is automatically consumed:\nthey gain 15 seconds of ‖color:gui.orange‖Unyielding‖end‖ — they cannot fall unconscious and deal ‖color:gui.green‖25‖end‖% more damage.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_opposition>Celestial Opposition</afflictionname.mcj_opposition>
   <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the round.</afflictiondescription.mcj_opposition>
-  <afflictionname.mcj_helios>Esuna</afflictionname.mcj_helios>
+  <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>Your bleeding, burns and bloodloss are being cleared.</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
-  <afflictiondescription.mcj_stargate>You cannot die from your wounds, and your injuries will be fully healed once you are knocked down. The charge is consumed on use.</afflictiondescription.mcj_stargate>
+  <afflictiondescription.mcj_stargate>When you are close to death, this charge is consumed to grant you 15 seconds of Unyielding.</afflictiondescription.mcj_stargate>
+  <afflictionname.mcj_stargate_grace>Unyielding</afflictionname.mcj_stargate_grace>
+  <afflictiondescription.mcj_stargate_grace>You cannot fall unconscious and you deal ‖color:gui.green‖25‖end‖% more damage.</afflictiondescription.mcj_stargate_grace>
 
   <!-- ===== Arcanum line: talent names ===== -->
   <talentname.mcj_balance>The Balance</talentname.mcj_balance>

@@ -46,7 +46,7 @@
   </Affliction>
 
   <!-- ============================================================
-       驱散 —— 濒死时自动清除流血与失血
+       阳星合相 —— 濒死时自动清除流血与失血
        来源天赋：mcj_aspectedhelios
 
        2026-09 改版（第三次）：定为「濒死急救」。
@@ -84,34 +84,32 @@
   <!-- ============================================================
        星天开门 —— 护身符（每人一份，濒死时自动消耗）
        来源天赋：mcj_stargate
-       
-       对应 FF14 中治疗职业的 3 段极限技「星天开门」（全体复活 + 满血）。
-       潜渊症做不到"复活死者"，所以这里实现为"濒死时自动满血"。
-       
-       【核心思路】把"消耗"做进 buff 自身，而不是靠天赋去检测。
-       每个船员身上各挂一份，各自独立判断自己的状态：
-         身上带符 → 不会因伤痛死亡
-         自己倒地（失去知觉）→ 一次性恢复到满血，同时把自己的符烧掉
-       这样天然就是"只消耗触发那个人的"，而且不需要任何外部检测。
-       
-       【触发条件为什么是两个】
-         isunconscious="true"       → 真正的"倒地"。比 healthpercentage 精确：
-                                       旧写法 <10% 会在角色还剩 9% 血、
-                                       还站着的时候就把符烧掉。
-         healthpercentage="lt 30"   → 保险栓。避免"因眩晕等其他原因被判定为
-                                       失去知觉"时白烧一张符。
-         两者用 ConditionalComparison="And" 组合（原版 25 处在用）。
-       若实测发现护身符从不触发，先把 healthpercentage 那一行删掉试试。
-       
-       满血的实现：潜渊症没有"回血"，所谓满血 = 把决定血条的状态全部清零。
-       伤害(damage) 是总类，但烧灼/出血/失血不在它下面，必须分列。
-       其中 amount=100 是超过上限的值，确保一次清干净。
-       出血与失血必须一并清，否则刚回满就会被连锁反应重新拉下去。
-       
-       minstrength="0.1"：符被烧掉后强度归 0，AbilityFlag 就不再生效。
-       这是刻意设计的安全阀——单纯用 -9999 删除自身有一定风险。
-       
+
+       2026-09-15 改版：效果换成【安全官最终技「不屈」implacable 同款的短时间免死】。
+       原版实现（Content/Talents/Security/TalentsSecurity.xml:522）：
+         AbilityGroupInterval maxtriggercount="1"            ← 每任务只触发一次
+         AbilityConditionAboveVitality invert="true"          ← 活力跌破阈值
+         → 给自己挂 implacable 15 秒（AlwaysStayConscious + AttackMultiplier 0.25）
+       我们把它从「天赋侧自检」改成「护身符自检」，
+       以便保持原来「全船每人各自一张」的结构。
+
+       【新的流程】
+         身上带符 → 活力低于 5% 时：先给自己挂 15 秒的 mcj_stargate_grace，
+                     再把自己的符烧掉。
+         每个人各自独立判断、只消耗触发那个人的那一张。
+
+       【为什么不再用 isunconscious 触发】
+         以前是「倒地后满血」，现在是「倒地前免死」——
+         必须在昏迷发生【之前】介入，所以改成纯阈值判定。
+         原版阈值是 vitalitypercentage="0.01"（1%），我们放宽到 5%，
+         因为 1% 太贴近死亡线，怕来不及。
+
+       minstrength="0.1"：符被烧掉后强度归 0，其 Effect 全部失效。
+       这是刻意设计的安全阀 —— 单纯用 -9999 删除自身有一定风险。
+
        resetbetweenrounds="true"：任务结束自动清符，下个任务重发。
+       ⚠️ 护身符本身不再带 CanNotDieToAfflictions —— 免死改由 grace 那边的
+          AlwaysStayConscious 承担（原版 implacable 同款），符只是个开关。
        ============================================================ -->
   <Affliction identifier="mcj_stargate"
               type="talentbuff"
@@ -122,31 +120,43 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 强度 > 0.1：护身符已激活 -->
+    <!-- 强度 > 0.1：护身符待触发 -->
     <Effect minstrength="0.1" maxstrength="1">
-      <!-- ① 免死 -->
-      <AbilityFlag flagtype="CanNotDieToAfflictions" />
-      <!-- ② 自己倒地时：恢复满血，并把护身符烧掉
-           检测间隔从 0.2 缩到 0.05 —— 因为水压一类"瞬时致死"的伤害
-           每帧就能扣 10 点活力，0.2 秒的间隔根本追不上。 -->
-      <StatusEffect target="Character" interval="0.05" disabledeltatime="true" ConditionalComparison="And">
-        <!-- 真正的倒地（失去知觉） -->
-        <Conditional isunconscious="true" />
-        <!-- 保险栓：确保确实是伤重而倒，而非瞬时眩晕 -->
-        <Conditional healthpercentage="lt 30" />
-        <!-- 伤害总类（含撕裂伤/钝器伤/枪伤/咬伤/内伤等） -->
-        <ReduceAffliction type="damage" amount="100" />
-        <!-- 烧灼不在 damage 下面，单列 -->
-        <ReduceAffliction type="burn" amount="100" />
-        <!-- 出血→失血→伤害是连锁反应，必须一起清 -->
-        <ReduceAffliction type="bleeding" amount="100" />
-        <ReduceAffliction identifier="bloodloss" amount="100" />
-        <!-- 强度 1 → 0，护身符失效（不再给任何免死） -->
+      <StatusEffect target="Character" interval="0.05" disabledeltatime="true">
+        <!-- 生命值低于 5%：还没昏迷，但已经站在死亡线边上 -->
+        <Conditional healthpercentage="lt 5" />
+        <!-- ① 先给自己 15 秒免死（写在前面，同一 tick 内就生效） -->
+        <Affliction identifier="mcj_stargate_grace" amount="1" />
+        <!-- ② 再烧掉护身符（强度 1 → 0） -->
         <Affliction identifier="mcj_stargate" amount="-1" />
       </StatusEffect>
     </Effect>
     <!-- 强度 = 0：护身符已被烧掉，什么都不做 -->
     <Effect minstrength="0" maxstrength="0.1" />
+    <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 星天开门的免死状态：不屈（15 秒） =====
+       数值与结构完全照搬原版安全官最终技 implacable
+       （Content/Talents/Security/AfflictionsSecurity.xml:70）：
+         AlwaysStayConscious   = 15 秒内不会昏迷 —— 这就是「短时间免死」的本体
+         AttackMultiplier 0.25 = 临死反扑，伤害 +25%
+       原版 implacable 写的是 maxstrength="15" + duration="15"；
+       我们只需要固定强度，所以 maxstrength="1"、Effect 区间 0~1。
+       ⚠️ 它与本模组的太阳神之衡（AttackMultiplier 0.40）会相加，这是有意为之。 -->
+  <Affliction identifier="mcj_stargate_grace"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="15"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <AbilityFlag flagtype="AlwaysStayConscious" />
+      <StatValue stattype="AttackMultiplier" value="0.25" />
+    </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
