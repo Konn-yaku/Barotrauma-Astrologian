@@ -112,6 +112,10 @@
   <entitydescription.mcj_astrolabe>占星术士的观星仪器。小到能收进随身物品栏。
 举起它，就能引导星光化为射线；魔力取之不竭，无需任何弹药。
 占星术士具备焚灼之能，被命中的目标会持续燃烧。</entitydescription.mcj_astrolabe>
+
+  <!-- ===== 第三栏 · 焚灼（第 2 档新天赋） ===== -->
+  <talentname.mcj_combust>焚灼</talentname.mcj_combust>
+  <talentdescription.mcj_combust>你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_combust>
   <entityname.mcj_malefic>凶星</entityname.mcj_malefic>
 
   <!-- ===== 第三栏 · 地星 ===== -->
@@ -128,11 +132,10 @@
 
   <!-- ===== 第三栏 · 命运之轮 ===== -->
   <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
-  <talentdescription.mcj_wheeloffortune>获得一副「命运之轮」，并解锁它的制造配方。
-把它掷向你的队友。它落地即碎，为周围 ‖color:gui.green‖400‖end‖ 范围内的所有角色带来
-‖color:gui.green‖20‖end‖ 秒的 ‖color:gui.green‖65‖end‖% 全伤害抗性，
-并在持续期间不断减轻他们的 ‖color:gui.orange‖伤势‖end‖ 与 ‖color:gui.orange‖出血‖end‖。
-掷完就没了，需要重新制作。</talentdescription.mcj_wheeloffortune>
+  <talentdescription.mcj_wheeloffortune>接近你的队友（‖color:gui.green‖600‖end‖ 范围内）持续获得：全部 ‖color:gui.orange‖技能 +10‖end‖、‖color:gui.orange‖技能获取速度 +20%‖end‖。
+代价：若你自己的 ‖color:gui.orange‖武器技能不高于 50‖end‖，则你的武器技能额外 -10。</talentdescription.mcj_wheeloffortune>
+  <afflictionname.mcj_wheeloffortune_gift>命运之轮</afflictionname.mcj_wheeloffortune_gift>
+  <afflictiondescription.mcj_wheeloffortune_gift>你的全部技能 +10，技能获取速度 +20%。</afflictiondescription.mcj_wheeloffortune_gift>
   <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>以星轨铸成的一副轮盘。掷出后在地上碎开，把一小段好运留给周围的人。
 20 秒之内，被它笼罩的角色所受的伤害减半，伤势与出血也会自行消退。

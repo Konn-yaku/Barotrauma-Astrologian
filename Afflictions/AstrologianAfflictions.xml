@@ -451,8 +451,39 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 第三栏 · 命运之轮：高额减伤 + 持续治疗 =====
-       由投掷物 mcj_wheeloffortune 落地时施加，持续 20 秒。
+  <!-- ===== 第三栏 · 命运之轮的团队光环（5 秒，每秒被刷新） =====
+       由天赋 mcj_wheeloffortune 施加给 600 范围内的队友（不含自己）。
+       数值照搬原版助手「摸鱼船员」的 pickinguptheslack
+       （Content/Talents/Assistant/AfflictionsAssistant.xml:27），
+       但把它的「修理速度 +25%」换成了「技能获取速度 +20%」——
+       修理速度已经由「建筑神之塔」那张卡占了，不重复。
+
+       duration="5" + 天赋每秒刷新 = 离开范围约 5 秒后自动失效。 -->
+  <Affliction identifier="mcj_wheeloffortune_gift"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="5"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="ElectricalSkillBonus" value="10" />
+      <StatValue stattype="HelmSkillBonus" value="10" />
+      <StatValue stattype="MechanicalSkillBonus" value="10" />
+      <StatValue stattype="MedicalSkillBonus" value="10" />
+      <StatValue stattype="WeaponsSkillBonus" value="10" />
+      <StatValue stattype="SkillGainSpeed" value="0.2" />
+    </Effect>
+    <Icon texture="%ModDir%/Textures/Afflictions/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 第三栏 · 命运之轮（旧版）：高额减伤 + 持续治疗 =====
+       ⚠️ 2026-09-15：这个投掷装置的获取途径已被撤下，
+          目前没有任何天赋会施加本 affliction。保留定义以备以后复用；
+          「命运之轮」这个名字现已由第 2 档天赋使用（它的是 mcj_wheeloffortune_gift）。
+       以下是原本的说明：由投掷物 mcj_wheeloffortune 落地时施加，持续 20 秒。
        它是一个「限时」buff，所以没有 resetbetweenrounds，改用 duration 自动消退。 -->
   <Affliction identifier="mcj_wheeloffortune"
               type="talentbuff"

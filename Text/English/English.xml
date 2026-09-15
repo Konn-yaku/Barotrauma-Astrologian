@@ -112,13 +112,17 @@ Each Earthly Star works only once — you must fabricate a new one.</talentdescr
 Once charged, it needs only to be submerged: it blooms, mends the hull around it, and fades.
 It cannot foresee harm — it can only be placed in advance. The timing is everything.</entitydescription.mcj_earthlystar>
 
+  <!-- ===== Combust (new tier 2 talent) ===== -->
+  <talentname.mcj_combust>Combust</talentname.mcj_combust>
+  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.</talentdescription.mcj_combust>
+
   <!-- ===== Wheel of Fortune ===== -->
   <talentname.mcj_wheeloffortune>Wheel of Fortune</talentname.mcj_wheeloffortune>
-  <talentdescription.mcj_wheeloffortune>Gain a Wheel of Fortune, and unlock its fabrication recipe.
-Throw it at your crew. It shatters on impact, granting every character within ‖color:gui.green‖400‖end‖ units
-‖color:gui.green‖65‖end‖% damage resistance for ‖color:gui.green‖20‖end‖ seconds,
-and continuously reducing their ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖ while it lasts.
-It is consumed on use — you must fabricate a new one.</talentdescription.mcj_wheeloffortune>
+  <talentdescription.mcj_wheeloffortune>Crew members near you (within ‖color:gui.green‖600‖end‖ units) continuously gain:
+‖color:gui.orange‖+10 to all skills‖end‖ and ‖color:gui.orange‖+20% skill gain speed‖end‖.
+Cost: if your own ‖color:gui.orange‖Weapons skill is 50 or lower‖end‖, your Weapons skill takes a further -10.</talentdescription.mcj_wheeloffortune>
+  <afflictionname.mcj_wheeloffortune_gift>Wheel of Fortune</afflictionname.mcj_wheeloffortune_gift>
+  <afflictiondescription.mcj_wheeloffortune_gift>You gain +10 to all skills and +20% skill gain speed.</afflictiondescription.mcj_wheeloffortune_gift>
   <entityname.mcj_wheeloffortune>Wheel of Fortune</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>A wheel cast from the tracks of stars. Thrown, it shatters on the ground and leaves a brief stretch of good fortune behind.
 For 20 seconds, those it covers take half damage while their wounds and bleeding ebb away.

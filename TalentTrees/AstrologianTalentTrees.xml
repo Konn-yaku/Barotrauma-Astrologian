@@ -124,11 +124,15 @@
          （见 Items/AstrologianItems.xml）。
          不给队友发任何团队 buff，完全靠自己打。
 
-         第 2 档「地星」—— 不做输出，做「预先布置」：
-         放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
+         第 2 档（两个都能选）：
+           「焚灼」—— 燃烧伤害 +25%、对压载植物群 +50%
+                      （照搬原版工程师「火焰狂人」）
+           「命运之轮」—— 600 范围内队友：技能 +10、技能获取速度 +20%；
+                         自己武器技能 ≤50 时 -10（照搬原版助手「摸鱼船员」）
 
-         第 3 档「命运之轮」—— 辅助向投掷物：
-         掷出即碎，给周围所有人 20 秒的高额减伤 + 持续治疗。
+         第 3 档「地星」—— 不做输出，做「预先布置」：
+         放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
+         （2026-09-15 从原第 2 档挪到第 3 档）
 
          第 4 档「占卜」—— 终档：医疗技能 +45，自身伤害随医疗技能阶梯提升，
          并给附近队友一份小幅增伤。
@@ -140,14 +144,17 @@
         <TalentOption identifier="mcj_astrolabe" />
       </TalentOptions>
 
-      <!-- 第 2 档 -->
-      <TalentOptions>
-        <TalentOption identifier="mcj_earthlystar" />
+      <!-- 第 2 档：焚灼 / 命运之轮（两个都能选）
+           注：maxchosentalents="2" = 这一层最多可选 2 个 ⇒ 两个都拿得到。
+           原版专精树里不写属性的 <TalentOptions> 才是单选。 -->
+      <TalentOptions requiredtalents="1" maxchosentalents="2">
+        <TalentOption identifier="mcj_combust" />
+        <TalentOption identifier="mcj_wheeloffortune" />
       </TalentOptions>
 
-      <!-- 第 3 档 -->
+      <!-- 第 3 档：地星（从原第 2 档挪来） -->
       <TalentOptions>
-        <TalentOption identifier="mcj_wheeloffortune" />
+        <TalentOption identifier="mcj_earthlystar" />
       </TalentOptions>
 
       <!-- 第 4 档 -->

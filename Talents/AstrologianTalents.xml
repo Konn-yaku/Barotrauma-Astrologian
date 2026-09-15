@@ -609,7 +609,41 @@
   </Talent>
 
   <!-- ============================================================
-       第三栏 · 地星（mcj_path_astrolabe）第 2 档
+       第三栏 · 焚灼（mcj_path_astrolabe）第 2 档（与命运之轮同层）
+
+       效果照搬原版工程师「火焰狂人」pyromaniac
+       （Content/Talents/Engineer/TalentsEngineer.xml:93）。
+       原版是三件事拼起来的，我们抄前两件：
+         ① 自己施加的「燃烧」强度 +25%
+            OnAddDamageAffliction + CharacterAbilityModifyAffliction
+            afflictionidentifiers="burn" addedmultiplier="0.25"
+         ② 对球藻（ballast flora）伤害 +50%
+            CharacterAbilityGiveStat stattype="BallastFloraDamageMultiplier" value="0.5"
+         ③ ✗ 解锁喷火器配方 —— 没抄。那是工程师的职业身份，
+            占星术士没有理由解锁它的配方
+
+       ⚠️ 图标借用了原版火焰狂人的（Content/UI/TalentsIcons2.png 的 7,2）。
+          想要自定义图标就往 Textures/Talents/ 里放一张 Combust.png 再叫我改。
+       ============================================================ -->
+  <Talent identifier="mcj_combust">
+    <Icon texture="Content/UI/TalentsIcons2.png" sheetindex="7,2" sheetelementsize="128,128" />
+    <Description tag="talentdescription.mcj_combust" />
+
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="burn" addedmultiplier="0.25" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="BallastFloraDamageMultiplier" value="0.5" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <!-- ============================================================
+       第三栏 · 地星（mcj_path_astrolabe）第 3 档（从原第 2 档挪来）
 
        地星是一件「预先布置」的一次性装置：
        放下 → 10 秒蓄力 → 舱室进水 → 修补船体 → 自己消失。
@@ -641,18 +675,51 @@
   </Talent>
 
   <!-- ============================================================
-       第三栏 · 【占位符】
+       第三栏 · 命运之轮（mcj_path_astrolabe）第 2 档（与焚灼同层）
 
-       2026-09-15：本档原有的「命运之轮」投掷装置（发放物品 + 解锁配方）
-       已按要求撤下。「命运之轮」这个名字与图标已移交给初级树的同名天赋
-       （mcj_primary_wheeloffortune，由原版「健康典范」改写而来）。
+       机制照搬原版助手「摸鱼船员」crewlayabout
+       （Content/Talents/Assistant/TalentsAssistant.xml:570）：
+         · 每秒给 600 范围内【不含自己】的队友刷新一个 5 秒的 buff
+         · 自己承担代价
 
-       物品本体 mcj_wheeloffortune 的定义仍留在 Items/AstrologianItems.xml，
-       但已没有任何途径获得（既不发也不解锁配方），下次重做这一档时可直接复用。
+       2026-09-15 定档：
+         队友（600 内）：电气/操舵/机械/医疗/武器 技能各 +10
+                         + 技能获取速度 +20%（SkillGainSpeed 0.2）
+         自己：武器技能 ≤ 50 时，武器技能 -10
+         （刻意不给修理速度 —— 那一项已经由「建筑神之塔」那张卡占了）
+
+       ⚠️ 技能阈值写法：原版 AbilityConditionHasSkill 只出现过 minvalue
+          （TalentsEngineer.xml:474，skillidentifier="electrical" minvalue="100"），
+          没见过 maxvalue ⇒ 用 minvalue="51" + invert="true" 表达「不高于 50」
+       ⚠️ 队友 buff 的 duration 是 5 秒、天赋每秒刷新 ⇒
+          离开范围约 5 秒后自动失效
        ============================================================ -->
   <Talent identifier="mcj_wheeloffortune">
     <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_placeholder" />
+    <Description tag="talentdescription.mcj_wheeloffortune" />
+
+    <!-- ① 光环：每秒刷新，离开范围约 5 秒后失效 -->
+    <AbilityGroupInterval interval="1">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_wheeloffortune_gift" strength="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- ② 代价：武器技能不超过 50 时再 -10 -->
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Conditions>
+        <AbilityConditionHasSkill skillidentifier="weapons" minvalue="51" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="WeaponsSkillBonus" value="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
