@@ -457,6 +457,11 @@
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="180,255,210,255" />
       </StatusEffect>
 
+      <!-- 新一轮开始：把「星力」的计数清零 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_played" amount="-100" />
+      </StatusEffect>
+
       <!-- ② 开始 60 秒倒计时（只启动一次） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
@@ -465,8 +470,8 @@
 
     </Holdable>
 
-    <!-- 3 个槽：只接受星极的 3 张卡 -->
-    <ItemContainer capacity="3" maxstacksize="1">
+    <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
+    <ItemContainer capacity="4" maxstacksize="1">
       <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire" />
     </ItemContainer>
 
@@ -477,6 +482,18 @@
       <!-- 倒计时：health=60，每秒 -1 点耐久 → 整 60 秒归零 -->
       <StatusEffect type="OnActive" target="This" Condition="-1" />
     </ItemComponent>
+
+    <!-- ===== 职业锁：非占星术士拿着就烫手 =====
+         写法参考原版重机枪（weapons.xml:1690）——
+         那也是一个 Holdable，用
+           <StatusEffect type="Always" target="Character" SpeedMultiplier="0.75" />
+         给【持有者】上效果，证明 target="Character" 对携带物有效。
+         Conditional 里的 "!" 取反也是原版写法（<Conditional hasstatustag="! xxx" />）。
+         每秒 +20 点烧伤：100 血的角色撑 5 秒 —— 目的是让人根本不敢拿。 -->
+    <StatusEffect type="Always" target="Character" interval="1.0">
+      <Conditional jobidentifier="! mcj_astrologian" />
+      <Affliction identifier="burn" strength="20" />
+    </StatusEffect>
 
     <!-- 耐久归零 → 变成灵极抽卡，接力下一轮 -->
     <StatusEffect type="OnBroken" target="This">
@@ -508,6 +525,11 @@
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="200,170,255,255" />
       </StatusEffect>
 
+      <!-- 新一轮开始：把「星力」的计数清零 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_played" amount="-100" />
+      </StatusEffect>
+
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Use />
@@ -515,7 +537,8 @@
 
     </Holdable>
 
-    <ItemContainer capacity="3" maxstacksize="1">
+    <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
+    <ItemContainer capacity="4" maxstacksize="1">
       <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer" />
     </ItemContainer>
 
@@ -525,6 +548,12 @@
       </StatusEffect>
       <StatusEffect type="OnActive" target="This" Condition="-1" />
     </ItemComponent>
+
+    <!-- ===== 职业锁：非占星术士拿着就烫手（同星极抽卡） ===== -->
+    <StatusEffect type="Always" target="Character" interval="1.0">
+      <Conditional jobidentifier="! mcj_astrologian" />
+      <Affliction identifier="burn" strength="20" />
+    </StatusEffect>
 
     <!-- 耐久归零 → 变回星极抽卡 -->
     <StatusEffect type="OnBroken" target="This">
@@ -554,8 +583,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_balance" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
@@ -572,8 +608,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_arrow" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
@@ -590,8 +633,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_spire" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
@@ -608,8 +658,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_spear" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
@@ -626,8 +683,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_bole" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
@@ -644,8 +708,15 @@
     <Sprite texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_ewer" strength="1" />
+        <Affliction identifier="mcj_played" strength="1" />
+      </StatusEffect>
+      <!-- 职业锁：非占星术士拿着会持续烧伤 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />

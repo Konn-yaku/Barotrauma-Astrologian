@@ -472,4 +472,57 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Synastry.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
+  <!-- ============================================================
+       第二栏 · 星力（第 4 档）—— 一轮 3 张卡全部打出后，给全队的群体增益
+       由天赋 mcj_arcanum_astrodyne 施加；附魔本身也是"打了 3 张卡"的奖励载体。
+
+       ⚠️ 占位数值：+100% 移动 / 游泳速度，纯粹为了"一眼看出有没有生效"。
+          正式数值待定。
+       ============================================================ -->
+  <Affliction identifier="mcj_astrodyne"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="20"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatValue stattype="WalkingSpeed" value="1.0" />
+      <StatValue stattype="SwimmingSpeed" value="1.0" />
+    </Effect>
+    <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ============================================================
+       计数器：本轮已经打出的奥秘卡张数（隐藏）
+
+       每打出一张奥秘卡 +1（上限 3，所以 maxstrength="3"）；
+       抽卡时清零；星力天赋检测到它满 3 → 发群体 buff → 再清零。
+
+       ⚠️ 为什么用 affliction 而不是 permanent stat（巫女那套）
+          "打出一张卡"是【物品】触发的，而物品只能给角色上 affliction，
+          无法写 permanent stat（那是天赋专属能力）。
+          代价：这个进度不会显示在天赋面板上。
+       ============================================================ -->
+  <Affliction identifier="mcj_played"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="3"
+              resetbetweenrounds="true"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 纯计数器，三档全部留空，效果由天赋负责 -->
+    <Effect minstrength="0" maxstrength="1" />
+    <Effect minstrength="1" maxstrength="2" />
+    <Effect minstrength="2" maxstrength="3" />
+    <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
 </Afflictions>

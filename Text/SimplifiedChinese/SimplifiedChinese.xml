@@ -60,7 +60,15 @@
   <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖25‖end‖% 全伤害抗性。\n「星力」会使此效果提升至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_bole>
   <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖35‖end‖%。\n「星力」会使此效果提升至 ‖color:gui.green‖45‖end‖%。</talentdescription.mcj_spire>
   <talentdescription.mcj_ewer>全部船员的 ‖color:gui.orange‖氧气消耗‖end‖ 降低 ‖color:gui.green‖25‖end‖%。\n「星力」会使此效果降低至 ‖color:gui.green‖35‖end‖%。</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>强化你已点出的每一张奥秘卡，使每张卡再强上一档。\n只影响你已经点出的卡——点的越多，收益越高。</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：一轮 3 张全部打出后，星力回应你，为全队带来一段增益。\n（占位效果：+100% 移动与游泳速度）</talentdescription.mcj_astrodyne>
+
+  <!-- ===== 奥秘卡（抽卡制）：第 1、2 档 ===== -->
+  <talentname.mcj_arcanum_six>六天座</talentname.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>你开始抽卡：手上没有抽卡工具时，会自动获得一本「星极抽卡」。\n按住右键使用它，就会抽出这一极的 3 张奥秘卡；60 秒后它会变成另一极的书。\n⚠️ 这些牌只认占星术士——别的人拿了会被灼伤。</talentdescription.mcj_arcanum_six>
+  <talentname.mcj_arcanum_redraw>重抽</talentname.mcj_arcanum_redraw>
+  <talentdescription.mcj_arcanum_redraw>拆解物品时，有 ‖color:gui.green‖20‖end‖% 的概率产出翻倍。\n（基因材料与电路元件除外。）</talentdescription.mcj_arcanum_redraw>
+  <talentname.mcj_arcanum_draw>抽卡</talentname.mcj_arcanum_draw>
+  <talentdescription.mcj_arcanum_draw>搜刮大型生物尸体时，有 ‖color:gui.green‖20‖end‖% 的概率额外获得一份 ‖color:gui.orange‖未研究基因材料‖end‖。\n研究站与城市的商店也会开始出售基因材料。</talentdescription.mcj_arcanum_draw>
 
   <!-- ===== 第二栏 · 奥秘卡：隐藏增益 ===== -->
   <afflictionname.mcj_balance>太阳神之衡</afflictionname.mcj_balance>

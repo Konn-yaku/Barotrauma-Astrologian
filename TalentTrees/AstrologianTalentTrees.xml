@@ -55,36 +55,35 @@
 
     </SubTree>
 
-    <!-- ================= 专精 A：奥秘卡（第二栏 · 团队辅助）=================
-         6 张奥秘卡（FF14 占星术士的标志性机制）+ 第 4 档大招「星力」。
-         被动、全队常驻，不做抽卡、不做随机目标。
-         每档 = 1 张星极 + 1 张灵极，对应原作的两个抽卡按钮。
+    <!-- ================= 专精 A：奥秘卡（第二栏 · 抽卡制）=================
+         第 1 档「六天座」开启抽卡循环：
+           天赋发一本抽卡书 → 右键抽出 3 张卡 → 60 秒后书变成另一极的书 →
+           循环往复；书丢了或玩家死了，天赋会在 2 秒内补一本。
+         第 2 档二选一：「重抽」（拆解产出概率翻倍）
+                       「抽卡」（摸怪尸体拿基因材料 + 商店开卖基因材料）
+         第 3 档：小奥秘卡（王冠之领主 / 王冠之贵妇）—— 待实装
+         第 4 档「星力」：一轮 3 张卡全部打出后，给全队群体增益
 
-         数值全部取自原版对应天赋/基因的下方区间，星力后仍低于原版。
+         6 张卡的效果不再由天赋发放，而是【卡牌物品打出后】施加给全队。
          天赋实现见 Talents/AstrologianTalents.xml
          状态实现见 Afflictions/AstrologianAfflictions.xml -->
     <SubTree identifier="mcj_path_arcanum" type="specialization"
              requires="mcj_astrologian_primary">
 
-      <!-- 第 1 档 -->
-      <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="mcj_balance" />
-        <TalentOption identifier="mcj_spear" />
+      <!-- 第 1 档：六天座 -->
+      <TalentOptions>
+        <TalentOption identifier="mcj_arcanum_six" />
       </TalentOptions>
 
-      <!-- 第 2 档 -->
+      <!-- 第 2 档：二选一 -->
       <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="mcj_arrow" />
-        <TalentOption identifier="mcj_bole" />
+        <TalentOption identifier="mcj_arcanum_redraw" />
+        <TalentOption identifier="mcj_arcanum_draw" />
       </TalentOptions>
 
-      <!-- 第 3 档 -->
-      <TalentOptions requiredtalents="1" maxchosentalents="2">
-        <TalentOption identifier="mcj_spire" />
-        <TalentOption identifier="mcj_ewer" />
-      </TalentOptions>
+      <!-- 第 3 档：小奥秘卡（待实装，暂不占位） -->
 
-      <!-- 第 4 档 -->
+      <!-- 第 4 档：星力 -->
       <TalentOptions>
         <TalentOption identifier="mcj_astrodyne" />
       </TalentOptions>

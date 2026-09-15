@@ -50,7 +50,15 @@
   <talentdescription.mcj_bole>All crew members gain ‖color:gui.green‖25‖end‖% damage resistance.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖%.</talentdescription.mcj_bole>
   <talentdescription.mcj_spire>All crew members gain ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.\nAstrodyne raises this to ‖color:gui.green‖45‖end‖%.</talentdescription.mcj_spire>
   <talentdescription.mcj_ewer>All crew members consume ‖color:gui.green‖25‖end‖% less ‖color:gui.orange‖oxygen‖end‖.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖%.</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>Astrodyne empowers every Arcanum card you have unlocked, raising each card another step further.\nOnly cards you have actually unlocked are affected — the more you invest, the more you gain.</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers and grants the whole crew a boon.\n(Placeholder effect: +100% walking and swimming speed)</talentdescription.mcj_astrodyne>
+
+  <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
+  <talentname.mcj_arcanum_six>The Six</talentname.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>You begin to draw: whenever you carry no draw tool, an ‖color:gui.orange‖Astral Draw‖end‖ appears in your hands.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
+  <talentname.mcj_arcanum_redraw>Redraw</talentname.mcj_arcanum_redraw>
+  <talentdescription.mcj_arcanum_redraw>When you deconstruct an item, there is a ‖color:gui.green‖20‖end‖% chance the output is doubled.\n(Genetic materials and circuit components excluded.)</talentdescription.mcj_arcanum_redraw>
+  <talentname.mcj_arcanum_draw>Draw</talentname.mcj_arcanum_draw>
+  <talentdescription.mcj_arcanum_draw>When you loot a large creature, there is a ‖color:gui.green‖20‖end‖% chance to find ‖color:gui.orange‖unresearched genetic material‖end‖.\nShops on research stations and cities will also begin selling genetic materials.</talentdescription.mcj_arcanum_draw>
 
   <!-- ===== Arcanum line: hidden buffs ===== -->
   <afflictionname.mcj_balance>The Balance</afflictionname.mcj_balance>

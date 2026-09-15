@@ -190,218 +190,146 @@
        【数值定稿】见 Afflictions/AstrologianAfflictions.xml 的注释。
        ============================================================ -->
 
-  <!-- 太阳神之衡：全队增伤 -->
-  <Talent identifier="mcj_balance">
-    <Icon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_balance" />
-    <AbilityGroupInterval interval="5.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_balance" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
+  <!-- ============================================================
+       第 1 档 · 六天座 —— 抽卡循环的开关
 
-  <!-- 战争神之枪：全队攻击速度 -->
-  <Talent identifier="mcj_spear">
-    <Icon texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_spear" />
-    <AbilityGroupInterval interval="5.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spear" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
+       点出后开始循环：
+         手上没有抽卡道具（tag = mcjarcanumdraw）→ 发一本「星极抽卡」
+       之后全靠书自己接力（星极 → 灵极 → 星极…），
+       天赋只在"书丢了 / 玩家死了"时补一本，把循环重新拉起来。
 
-  <!-- 放浪神之箭：全队移动速度与游泳速度 -->
-  <Talent identifier="mcj_arrow">
-    <Icon texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_arrow" />
-    <AbilityGroupInterval interval="5.0">
+       【为什么用 FallbackAbilities 表达"没有道具"】
+         <Conditions> 里写"有道具" → 走 <Abilities>（什么都不做）；
+         条件不成立 → 走 <FallbackAbilities>（发书）。
+         这样完全不需要 invert —— 而 invert 用在 HasItem 上没有原版先例。
+       ============================================================ -->
+  <Talent identifier="mcj_arcanum_six">
+    <Icon texture="%ModDir%/Textures/Talents/SixCards.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_arcanum_six" />
+    <AbilityGroupInterval interval="2.0">
+      <Conditions>
+        <AbilityConditionHasItem tags="mcjarcanumdraw" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_arrow" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_six_active" value="1" setvalue="true" />
       </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-
-  <!-- 世界树之干：全队伤害抗性 -->
-  <Talent identifier="mcj_bole">
-    <Icon texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_bole" />
-    <AbilityGroupInterval interval="5.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_bole" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-
-  <!-- 建筑神之塔：全队修理速度与修船壳速度 -->
-  <Talent identifier="mcj_spire">
-    <Icon texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_spire" />
-    <AbilityGroupInterval interval="5.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spire" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-
-  <!-- 河流神之瓶：全队氧气消耗 -->
-  <Talent identifier="mcj_ewer">
-    <Icon texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_ewer" />
-    <AbilityGroupInterval interval="5.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_ewer" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
+      <FallbackAbilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_draw_star" amount="1" />
+      </FallbackAbilities>
     </AbilityGroupInterval>
   </Talent>
 
   <!-- ============================================================
-       星力 —— 第二栏第 4 档（大招）
-       把上面 6 张卡的效果整体放大。
+       第 2 档 · 重抽 —— 拆解产出概率翻倍
+       照原版机修工「残留废料」residualwaste：
+         OnItemDeconstructedMaterial + ServerRandom 20% + ModifyValue ×2
+       排除清单也照抄（防刷：基因材料、FPGA 电路、灯管组件）
+       ============================================================ -->
+  <Talent identifier="mcj_arcanum_redraw">
+    <Icon texture="%ModDir%/Textures/Talents/Redraw.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_arcanum_redraw" />
+    <AbilityGroupEffect abilityeffecttype="OnItemDeconstructedMaterial">
+      <Conditions>
+        <AbilityConditionServerRandom randomChance="0.2" />
+        <AbilityConditionItem tags="geneticmaterial,unidentifiedgeneticmaterial,circuitboxcomponent,lightcomponent,disallowduplicatedeconstructoutput" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyValue multiplyvalue="2" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
 
-       【实现方式】给每张卡各配一个 "_boost" affliction，
-       当且仅当你点出了那张卡的天赋时才施加。
-       两个 affliction 的 StatValue 自然相加 = 基础值 + 增量。
+  <!-- ============================================================
+       第 2 档 · 抽卡 —— 摸怪尸体拿基因材料 + 商店开卖基因材料
+       = 原版医生的 geneharvester + blackmarketgenes，
+         但【删掉】了"基因材料出售价格 +50%"那两条 StoreSellMultiplier。
 
-       【为什么每张卡要单独一块 AbilityGroupInterval】
-       条件写在 AbilityGroup 层级，无法只作用于组里的某一条 ability，
-       所以"逐卡判断是否已解锁"就必须拆成 6 块。
+       三段式照抄原版：
+         ① 每回合重置"已摸过"标记
+         ② 20% 概率额外获得未研究基因材料（用 spawnitemrandomly）
+         ③ 标记这具尸体已摸过（防止反复触发）
+       ============================================================ -->
+  <Talent identifier="mcj_arcanum_draw">
+    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_arcanum_draw" />
+    <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
+      <Abilities>
+        <CharacterAbilityResetPermanentStat statidentifier="mcj_arcanum_loot_*" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnLootCharacter">
+      <Conditions>
+        <AbilityConditionCharacter targettype="Monster">
+          <Conditional maxhealth="gt 25" />
+          <Conditional ismachine="false" />
+          <Conditional ispet="false" />
+        </AbilityConditionCharacter>
+        <AbilityConditionCharacterNotLooted identifier="mcj_arcanum_loot" />
+        <AbilityConditionServerRandom randomchance="0.2" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="UseTarget" spawnitemrandomly="true">
+              <SpawnItem identifiers="geneticmaterial_unresearched" spawnposition="ThisInventory" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnLootCharacter">
+      <Conditions>
+        <AbilityConditionCharacter targettype="Monster" />
+        <AbilityConditionCharacterNotLooted identifier="mcj_arcanum_loot" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityMarkAsLooted identifier="mcj_arcanum_loot" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AddedStoreItem itemtag="blackmarketgenes" />
+  </Talent>
 
-       【为什么不抬高同一个 affliction 的强度】
-       GiveAffliction 是往 maxstrength 累加饱和的，
-       基础值与强化值最终都会顶到上限，效果一样，区分不出来。
+  <!-- ============================================================
+       第 3 档 · 星力 —— 一轮 3 张卡全部打出后，给全队的群体增益
+
+       【怎么数"打出了几张卡"】
+         · 每打出一张卡 → 角色获得 mcj_played +1（上限 3）
+         · 抽卡时书把 mcj_played 清零（新一轮开始）
+         · 天赋检测到它满 3 → 发群体 buff → 再把计数清掉
+       ⚠️ 计数只能用 affliction（物品没法给角色写 permanent stat），
+          所以看不到天赋面板上的进度条 —— 这是与巫女灵力系统的差别。
+
+       ⚠️ 数值是【占位】：+100% 移速 / 泳速，只为了一眼看出有没有生效。
        ============================================================ -->
   <Talent identifier="mcj_astrodyne">
     <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_astrodyne" />
-
-    <AbilityGroupInterval interval="5.0">
+    <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_balance" />
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_played" minimumpercentage="1.0" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_balance_boost" amount="1.0" />
+              <Affliction identifier="mcj_astrodyne" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="5.0">
-      <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_spear" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spear_boost" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="5.0">
-      <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_arrow" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_arrow_boost" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="5.0">
-      <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_bole" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_bole_boost" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="5.0">
-      <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_spire" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spire_boost" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="5.0">
-      <Conditions>
-        <AbilityConditionHasTalent identifier="mcj_ewer" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_ewer_boost" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_played" amount="3" />
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
+
+  <!-- （被动卡天赋已全部移除：6 张卡的效果改由卡牌物品打出后施加） -->
+
+
+  <!-- （世界树之干 / 建筑神之塔 / 河流神之瓶 —— 被动卡天赋已移除） -->
+
+
+  <!-- （旧的「星力」天赋已重做：改为"一轮 3 张卡全部打出后给全队群体 buff"，
+       定义见本文件前面的 mcj_astrodyne） -->
+
 
   <!-- ============================================================
        第三栏 · 天球仪（mcj_path_astrolabe）第 1 档
