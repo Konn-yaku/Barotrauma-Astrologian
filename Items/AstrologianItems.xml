@@ -596,9 +596,11 @@
            否则新书一出生就是破损态，会立刻再触发一次 OnBroken，
            两台书就会互相刷 —— 表现为「不断地发抽卡道具」。 -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
-      <!-- ⚠️ 还要把 IsActive 复位：<SpawnItem> 生成的新书会继承上一本的 IsActive=true，
-           继承到的话它一出生就是「已使用」态（抽不了卡，也会被各种 IsActive 判定当成旧书）。 -->
-      <StatusEffect type="OnSpawn" target="This" IsActive="false" />
+      <!-- ❌ v0.12.13 已删除这里的「OnSpawn 复位 IsActive」：
+           当初担心 <SpawnItem> 会把旧的 IsActive=true 继承过来（那是推测，并不成立 ——
+           跑通 60 秒接力后就一直没人抱怨过「灵极书抽不了卡」）。
+           而 OnSpawn 在【进入新巡回/关卡重建】时也会重新触发，
+           结果书被当成「没抽过」⇒ 在站点抽完、进巡回又能再抽一次。 -->
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
@@ -712,8 +714,7 @@
     <ItemComponent IsActive="false" CharacterUsable="true">
       <!-- 出生锁满耐久（同星极抽卡，防中继继承 0 耐久） -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
-      <!-- ⚠️ IsActive 也要复位（新书会继承上一本的已使用态，继承到就抽不了卡） -->
-      <StatusEffect type="OnSpawn" target="This" IsActive="false" />
+      <!-- ❌ v0.12.13 已删除 IsActive 复位（原因见星极抽卡处的注释） -->
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
