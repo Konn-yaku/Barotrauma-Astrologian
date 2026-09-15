@@ -19,7 +19,7 @@
 <Afflictions>
 
   <!-- ============================================================
-       天星交错 —— 被治疗的队友获得全伤害抗性，持续一整个任务
+       天星交错 —— 被治疗的队友获得生命上限提升，持续一整个任务
        来源天赋：mcj_celestialopposition
        ============================================================ -->
   <Affliction identifier="mcj_opposition"
@@ -31,27 +31,29 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 固定 25% 全伤害抗性（minresistance = maxresistance 即固定值）。
-         对标 TE：`easyturtle` 随和海龟 0.2 / `stonewall` 坚如磐石 0.2→0.4 −->
-         这里是“被治疗后才生效”的常驻 buff，取 0.25。 -->
-    <Effect minstrength="0" maxstrength="1"
-            strengthchange="0"
-            resistancefor="damage"
-            minresistance="0.25"
-            maxresistance="0.25" />
+    <!-- 生命上限 +20% —— 原版医生「健康典范」exampleofhealth 的数值
+         （CharacterAbilityGiveStat MaximumHealthMultiplier 0.2；
+           原版还有 bedsidemanner 同样 0.2、genetampering 0.10）。
+         这里是“被治疗后才生效”的常驻 buff。
+         ⚠️ 生命上限是乘算的：效果到期时上限回落，若此时活力高于新上限会被截断
+            —— 那只是少一点缓冲，不会扣血。 -->
+    <Effect minstrength="0" maxstrength="1" strengthchange="0">
+      <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
+    </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Opposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
-       阳星合相 —— 潜艇内队友持续缓慢自愈
+       阳星合相 —— 范围内队友的伤害不会继续加深
        来源天赋：mcj_aspectedhelios
        
-       数值完全对齐【锤头鲨母皇基因 healdamage】的最强档（原版强度 80~100）：
-           每 0.1 秒  damage -0.075 / bleeding -0.018
-       换算：每秒 damage -0.75，回满 100 点伤害需要 130+ 秒。
-       它慢，但全自动、无需选药、同时处理伤害与出血。
-       （注：TE 的 `Repairandreinforcement` 治疗速率是 3/s，比这个快 4 倍，
-         但那是单体、带 25~65% 减伤、且要养成；这里是全队常驻自动，保持基因档位。）
+       2026-09 改版：不再是「持续自愈」（HOT），改成阻止新伤害。
+       实现是 resistancefor="damage" 拉满 1.0 —— 范围内队友不再受到新的
+       damage 类伤害（枪伤 / 咬伤 / 爆炸 / 水压…），但也【不治疗】已经形成的伤势。
+       ⚠️ 流血(bleeding)、烧灼(burn)、缺氧(oxygenlow) 是独立类型，
+          不在 damage 之下，所以这个光环挡不住它们。
+       ⚠️ resistancefor 只能写上 buff 之前新受到的伤害；
+          已经有伤的人不会因此变轻 —— 这正是“不再加深而不是变好”的设计意图。
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -62,12 +64,10 @@
               duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
-        <ReduceAffliction type="damage" amount="0.075" />
-        <ReduceAffliction type="bleeding" amount="0.018" />
-      </StatusEffect>
-    </Effect>
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="damage"
+            minresistance="1"
+            maxresistance="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -177,11 +177,11 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE「暴力军阀 warlord」：AttackMultiplier 0.1→0.5（五层封顶）。
-         ⚠️ 当前仍是【旧的常驻版数值】：改成 15 秒限时后理论上应当上调，
-            但档位等实测手感之后再定。 -->
+    <!-- 2026-09 定档：0.40。
+         原版 AttackMultiplier 天花板是 0.25（TE 的暴力军阀 warlord 是 0.1/层、
+         五层封顶 0.5）。本卡只持续 15 秒（覆盖率 25%），按「原版锚点 × 1.6」取 0.40。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.25" />
+      <StatValue stattype="AttackMultiplier" value="0.40" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
@@ -254,12 +254,13 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
-         原版参照：增加行走速度基因 0.10~0.25 / 增加游泳速度基因 0.10~0.50
-         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
+    <!-- 2026-09 定档：移速 0.35 / 泳速 0.50。
+         WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat，
+         原版区间是 0.10~0.25 与 0.10~0.50 —— 泳速直接取到原版天花板，
+         因为水下地图里泳速的权重远高于移速。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.25" />
-      <StatValue stattype="SwimmingSpeed" value="0.35" />
+      <StatValue stattype="WalkingSpeed" value="0.35" />
+      <StatValue stattype="SwimmingSpeed" value="0.50" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
@@ -351,13 +352,13 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- RepairSpeed = 通用修理速度（机械 + 电器一起覆盖）
+    <!-- 2026-09 定档：0.50 / 0.50（= 原版工程师常驻天赋 stationengineer 的顶配值）。
+         RepairSpeed = 通用修理速度（机械 + 电器一起覆盖）
          RepairToolStructureRepairMultiplier = 修船壳速度
-         原版工程师天赋 stationengineer 是 0.50 / 0.50
-         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
+         修理是持续工程量而不是瞬时爆发，所以不再往上堆 —— 0.50 已有原版先例。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="RepairSpeed" value="0.35" />
-      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.35" />
+      <StatValue stattype="RepairSpeed" value="0.50" />
+      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.50" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>

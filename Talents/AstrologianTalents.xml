@@ -99,9 +99,14 @@
 
   <!-- ============================================================
        第 3 层 · 阳星合相（本层只有这一个）
-       
-       数值完整复刻【锤头鲨母皇基因】最强档。
-       限制：只有施术者本人在潜艇内时才生效，且只影响附近队友。
+
+       2026-09 改版：不再是「持续自愈」，改成「范围内队友的伤害不会继续加深」。
+       实现是 resistancefor="damage" 拉满 1.0（见 mcj_helios）—— 不再受到新的
+       damage 类伤害，但也不治疗已经形成的伤势。
+
+       范围 600 = 原版医生「奇迹工作者」miracleworker 的 maxdistance
+       （原版免死光环的写法：CharacterAbilityApplyStatusEffectsToAllies maxdistance="600"）。
+       限制：只有施术者本人在潜艇内时才生效。
        mcj_helios 带 duration="2"，每秒刷新 → 离开范围约 2 秒后自动失效。
        ============================================================ -->
   <Talent identifier="mcj_aspectedhelios">
@@ -113,7 +118,7 @@
         <AbilityConditionInHull />
       </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="1000" allowself="true">
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
               <Affliction identifier="mcj_helios" amount="1.0" />

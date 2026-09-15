@@ -20,17 +20,17 @@
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
-  <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖25‖end‖% damage resistance until the end of the mission.</talentdescription.mcj_opposition>
+  <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the mission.</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖1000‖end‖ units slowly heal over time, continuously reducing ‖color:gui.orange‖damage‖end‖ and ‖color:gui.orange‖bleeding‖end‖.</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units take ‖color:gui.orange‖no further damage‖end‖: new injuries are prevented, but existing ones are not healed.</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_opposition>Celestial Opposition</afflictionname.mcj_opposition>
-  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖25‖end‖% damage resistance until the end of the mission.</afflictiondescription.mcj_opposition>
+  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the mission.</afflictiondescription.mcj_opposition>
   <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>Your wounds are slowly healing.</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>Your wounds will not deepen any further.</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>You cannot die from your wounds, and your injuries will be fully healed once you are knocked down. The charge is consumed on use.</afflictiondescription.mcj_stargate>
 
@@ -44,11 +44,11 @@
   <talentname.mcj_astrodyne>Astrodyne</talentname.mcj_astrodyne>
 
   <!-- ===== Arcanum line: talent descriptions ===== -->
-  <talentdescription.mcj_balance>All crew members deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖damage‖end‖.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖%.</talentdescription.mcj_balance>
+  <talentdescription.mcj_balance>All crew members deal ‖color:gui.green‖40‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_balance>
   <talentdescription.mcj_spear>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖melee attack speed‖end‖ and ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖ranged attack speed‖end‖.</talentdescription.mcj_spear>
-  <talentdescription.mcj_arrow>All crew members gain ‖color:gui.green‖25‖end‖% ‖color:gui.orange‖movement speed‖end‖ and ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖swimming speed‖end‖.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖% / ‖color:gui.green‖45‖end‖%.</talentdescription.mcj_arrow>
+  <talentdescription.mcj_arrow>All crew members gain ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖movement speed‖end‖ and ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖swimming speed‖end‖.</talentdescription.mcj_arrow>
   <talentdescription.mcj_bole>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</talentdescription.mcj_bole>
-  <talentdescription.mcj_spire>All crew members gain ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.\nAstrodyne raises this to ‖color:gui.green‖45‖end‖%.</talentdescription.mcj_spire>
+  <talentdescription.mcj_spire>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.</talentdescription.mcj_spire>
   <talentdescription.mcj_ewer>All crew members have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</talentdescription.mcj_ewer>
   <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers and grants the whole crew a boon.\n(Placeholder effect: +100% walking and swimming speed)</talentdescription.mcj_astrodyne>
 
@@ -62,7 +62,7 @@
 
   <!-- ===== Arcanum line: hidden buffs ===== -->
   <afflictionname.mcj_balance>The Balance</afflictionname.mcj_balance>
-  <afflictiondescription.mcj_balance>You deal ‖color:gui.green‖25‖end‖% more damage.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖%.</afflictiondescription.mcj_balance>
+  <afflictiondescription.mcj_balance>You deal ‖color:gui.green‖40‖end‖% more damage.</afflictiondescription.mcj_balance>
   <afflictionname.mcj_balance_boost>The Balance (Astrodyne)</afflictionname.mcj_balance_boost>
   <afflictiondescription.mcj_balance_boost>Astrodyne: you deal a further ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_balance_boost>
 
@@ -72,7 +72,7 @@
   <afflictiondescription.mcj_spear_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% melee and ‖color:gui.green‖5‖end‖% ranged attack speed.</afflictiondescription.mcj_spear_boost>
 
   <afflictionname.mcj_arrow>The Arrow</afflictionname.mcj_arrow>
-  <afflictiondescription.mcj_arrow>You gain ‖color:gui.green‖25‖end‖% movement speed and ‖color:gui.green‖35‖end‖% swimming speed.\nAstrodyne raises this to ‖color:gui.green‖35‖end‖% / ‖color:gui.green‖45‖end‖%.</afflictiondescription.mcj_arrow>
+  <afflictiondescription.mcj_arrow>You gain ‖color:gui.green‖35‖end‖% movement speed and ‖color:gui.green‖50‖end‖% swimming speed.</afflictiondescription.mcj_arrow>
   <afflictionname.mcj_arrow_boost>The Arrow (Astrodyne)</afflictionname.mcj_arrow_boost>
   <afflictiondescription.mcj_arrow_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% movement and ‖color:gui.green‖10‖end‖% swimming speed.</afflictiondescription.mcj_arrow_boost>
 
@@ -82,7 +82,7 @@
   <afflictiondescription.mcj_bole_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% damage resistance.</afflictiondescription.mcj_bole_boost>
 
   <afflictionname.mcj_spire>The Spire</afflictionname.mcj_spire>
-  <afflictiondescription.mcj_spire>You gain ‖color:gui.green‖35‖end‖% repair speed (mechanical and electrical) and hull welding speed.\nAstrodyne raises this to ‖color:gui.green‖45‖end‖%.</afflictiondescription.mcj_spire>
+  <afflictiondescription.mcj_spire>You gain ‖color:gui.green‖50‖end‖% repair speed (mechanical and electrical) and hull welding speed.</afflictiondescription.mcj_spire>
   <afflictionname.mcj_spire_boost>The Spire (Astrodyne)</afflictionname.mcj_spire_boost>
   <afflictiondescription.mcj_spire_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% repair and hull welding speed.</afflictiondescription.mcj_spire_boost>
 
