@@ -19,30 +19,115 @@
 <Afflictions>
 
   <!-- ============================================================
-       天星交错 —— 被治疗的队友获得生命上限提升，持续一整个任务
-       来源天赋：mcj_celestialopposition
+       初级树新增的 4 个光环 / 短时状态（2026-09-15）
+       加上占星魔法第 1 层改版后的 mcj_benefic
+
+       ⚠️ 抗性记法（重要）：这四条里的 resistancefor 用的都是【affliction 层】写法，
+          数值 = 抗性本身（0.10 = 减 10%、0.5 = 减半、1.0 = 完全免疫）。
+          这与天赋层 CharacterAbilityGiveResistance 的 multiplier（承伤倍率，
+          0.9 = 只承受 90% = 减 10%）记法相反，两边不要互抄数字。
        ============================================================ -->
-  <Affliction identifier="mcj_opposition"
+
+  <!-- 命运之轮：伤害 −10% 光环（duration 3 + 天赋每秒刷新） -->
+  <Affliction identifier="mcj_primary_wheeloffortune"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
-              maxstrength="60"
-              resetbetweenrounds="true"
+              maxstrength="1"
+              duration="3"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 生命上限 +20%，持续到巡回结束。
-         结构直接照抄原版医生「维生素补充剂」vitaminsupplements 用的 bedsidemanner
-         （Content/Talents/Doctor/AfflictionsDoctor.xml）：
-           maxstrength="60" + resetbetweenrounds="true" + Effect 区间 0~60，
-           天赋侧用 CharacterAbilityGiveAffliction strength="600"（会被封顶到 60）。
-         数值 0.2 也来自原版医生（exampleofhealth 与 bedsidemanner 都是 0.2）。
-         ⚠️ 生命上限是乘算的：效果到期上限回落时，若当前活力高于新上限会被截断
-            —— 那只是少一点缓冲，不会扣血。 -->
-    <Effect minstrength="0" maxstrength="60" strengthchange="0">
-      <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
+    <!-- 本模组唯一一条通用减伤。0.10 参照原版基因 damageresistance（10%~25%）的最低档。 -->
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="damage"
+            minresistance="0.10"
+            maxresistance="0.10" />
+    <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- 天星交错：8 秒「护盾」= 最大生命 +30%
+       潜渊症没有护盾系统，用临时最大生命当等价物。
+       重复施药会刷新时长（与阳星合相同一个 2 秒 buff 每秒刷新的验证前提）。 -->
+  <Affliction identifier="mcj_primary_intersection"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="8"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" strengthchange="0">
+      <StatValue stattype="MaximumHealthMultiplier" value="0.3" />
     </Effect>
-    <Icon texture="%ModDir%/Textures/Afflictions/Opposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- 生辰：拖延死亡 —— 6 项抗性 +75%（只在有人昏迷时由天赋发放） -->
+  <Affliction identifier="mcj_primary_extend"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="3"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 6 项全部是【具名】目标，不写 damage 大类 —— 写了就变成通用减伤了。
+         explosiondamage = 中文的「深层组织损伤」。
+         radiationsickness 没有 type 属性，只能按 identifier 命中。 -->
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="bleeding,bloodloss,oxygenlow,burn,radiationsickness,explosiondamage"
+            minresistance="0.75"
+            maxresistance="0.75" />
+    <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- 重力：眩晕抗性 50%（0.5 = 原版 stun 抗性上限） -->
+  <Affliction identifier="mcj_primary_gravity"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="3"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="stun"
+            minresistance="0.5"
+            maxresistance="0.5" />
+    <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ============================================================
+       吉星相位（占星魔法第 1 层）—— 施药给队友 10 秒持续缓愈
+       来源天赋：mcj_celestialopposition
+
+       2026-09-15 重做：原为「天星交错 / 生命上限 +20%」（100% 拷贝原版 bedsidemanner），
+       与初级树的同名天赋重叠，已改为名实相符的持续治疗。
+
+       ⚠️ 数值刻意保守：这是【常驻每次施药都触发】的持续回复，
+          1 秒共 reduce damage 0.5 / bleeding 0.2；
+          对比阳星合相（只在 <20% 生命时生效）是 0.75/0.2 每秒，量级相当。
+       ============================================================ -->
+  <Affliction identifier="mcj_benefic"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="10"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1">
+      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+        <ReduceAffliction type="damage" amount="0.05" />
+        <ReduceAffliction type="bleeding" amount="0.02" />
+      </StatusEffect>
+    </Effect>
+    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================

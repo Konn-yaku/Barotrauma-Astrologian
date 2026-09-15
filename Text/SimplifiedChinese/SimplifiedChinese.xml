@@ -24,22 +24,22 @@
   <talenttree.mcj_path_astrolabe>会奶人的DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== 治疗线天赋名称 ===== -->
-  <talentname.mcj_celestialopposition>天星交错</talentname.mcj_celestialopposition>
+  <talentname.mcj_celestialopposition>吉星相位</talentname.mcj_celestialopposition>
   <talentname.mcj_essentialdignity>先天禀赋</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>光速</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>阳星合相</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>星天开门</talentname.mcj_stargate>
 
   <!-- ===== 治疗线天赋描述 ===== -->
-  <talentdescription.mcj_opposition>你对盟友施药后，该盟友获得 ‖color:gui.orange‖生命上限‖end‖ 提升 ‖color:gui.green‖20‖end‖%，持续至巡回结束。\n同一天赋给多人施加时效果不叠加。</talentdescription.mcj_opposition>
+  <talentdescription.mcj_benefic>你对队友施药或治疗时，星象交汇 —— 该队友获得 ‖color:gui.green‖10‖end‖ 秒的持续回复：伤势与出血缓缓消退。</talentdescription.mcj_benefic>
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖2.2‖end‖ 倍。</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。\n你拖拽其他角色时不会减速。</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>你在潜艇内时，‖color:gui.green‖600‖end‖范围内的船员在 ‖color:gui.orange‖生命值低于 20%‖end‖ 时会自动清除其 ‖color:gui.orange‖流血、烧伤与失血‖end‖。\n高于 20% 时不会生效 —— 它只在濒死时拉你一把。</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员的 ‖color:gui.orange‖生命值低于 1%‖end‖ 时，该庇护会自动触发：\n获得 15 秒的 ‖color:gui.orange‖不屈‖end‖ —— 期间不会昏迷，且造成的伤害提升 ‖color:gui.green‖25‖end‖%，随后庇护被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
 
   <!-- ===== 治疗线隐藏增益 ===== -->
-  <afflictionname.mcj_opposition>天星交错</afflictionname.mcj_opposition>
-  <afflictiondescription.mcj_opposition>你的 ‖color:gui.orange‖生命上限‖end‖ 提升 ‖color:gui.green‖20‖end‖%，持续至巡回结束。</afflictiondescription.mcj_opposition>
+  <afflictionname.mcj_benefic>吉星相位</afflictionname.mcj_benefic>
+  <afflictiondescription.mcj_benefic>吉星映照着你：伤势与出血正在缓缓消退。</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>阳星合相</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>你的流血、烧伤与失血正在被清除。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
@@ -160,7 +160,7 @@
   <talentname.mcj_primary_starchart>星图</talentname.mcj_primary_starchart>
   <talentdescription.mcj_starchart_killxp>队友击杀敌人时，你获得 ‖color:gui.green‖[amount]‖end‖ 点经验。</talentdescription.mcj_starchart_killxp>
   <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
-  <talentname.mcj_primary_guardianstar>擢升</talentname.mcj_primary_guardianstar>
+  <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>凶星</talentname.mcj_primary_malefic>
 
@@ -169,8 +169,24 @@
   <talentname.mcj_primary_celestialopposition>天星交错</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>生辰</talentname.mcj_primary_ascend>
 
-  <!-- ===== 通用：占位符描述（mcj_celestialopposition / mcj_wheeloffortune 在用） ===== -->
-  <talentdescription.mcj_placeholder>（占位符：效果待重新设计）</talentdescription.mcj_placeholder>
+  <!-- ===== 初级树：2026-09-15 重做后的描述与状态名 ===== -->
+  <talentdescription.mcj_primary_wheeloffortune>你和 ‖color:gui.green‖600‖end‖ 范围内的队友受到的 ‖color:gui.orange‖伤害降低 10‖end‖%。</talentdescription.mcj_primary_wheeloffortune>
+  <afflictionname.mcj_primary_wheeloffortune>命运之轮</afflictionname.mcj_primary_wheeloffortune>
+  <afflictiondescription.mcj_primary_wheeloffortune>命运之轮笼罩着你：你受到的伤害降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_primary_wheeloffortune>
+
+  <talentdescription.mcj_primary_intersection>你对队友施药或治疗时，该队友获得 ‖color:gui.green‖8‖end‖ 秒的 ‖color:gui.orange‖护盾‖end‖：生命上限提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_primary_intersection>
+  <afflictionname.mcj_primary_intersection>天星交错</afflictionname.mcj_primary_intersection>
+  <afflictiondescription.mcj_primary_intersection>星辰在你身上交汇：生命上限提升 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_primary_intersection>
+
+  <talentdescription.mcj_primary_ascend>当有人失去知觉时，全队获得 ‖color:gui.green‖75‖end‖% 的 ‖color:gui.orange‖出血、失血、缺氧、烧伤、辐射病与深层组织损伤抗性‖end‖。\n倒下的人撑得更久，你才有时间把他带回来。</talentdescription.mcj_primary_ascend>
+  <afflictionname.mcj_primary_extend>生辰</afflictionname.mcj_primary_extend>
+  <afflictiondescription.mcj_primary_extend>死亡的倒计时被拖慢了：你对出血、失血、缺氧、烧伤、辐射病与深层组织损伤的抗性大幅提升。</afflictiondescription.mcj_primary_extend>
+
+  <talentdescription.mcj_primary_gravity>你和 ‖color:gui.green‖600‖end‖ 范围内的队友获得 ‖color:gui.green‖50‖end‖% 的 ‖color:gui.orange‖眩晕抗性‖end‖ —— 更不容易被撞倒、被打得跄跄。</talentdescription.mcj_primary_gravity>
+  <afflictionname.mcj_primary_gravity>重力</afflictionname.mcj_primary_gravity>
+  <afflictiondescription.mcj_primary_gravity>重力把你稳稳压在地上：眩晕抗性 ‖color:gui.green‖50‖end‖%。</afflictiondescription.mcj_primary_gravity>
+
+  <talentdescription.mcj_primary_astral>你的 ‖color:gui.orange‖技能获取速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。\n每治疗一名队友累积 ‖color:gui.green‖1‖end‖ 层「星极」，每层再提升 ‖color:gui.green‖5‖end‖%，最多 ‖color:gui.green‖20‖end‖ 层（合计 ‖color:gui.green‖150‖end‖%）。\n天赋面板上可以查看当前层数。</talentdescription.mcj_primary_astral>
 
   <!-- ===== 奥秘卡：抽卡道具 ===== -->
   <entityname.mcj_draw_star>星极抽卡</entityname.mcj_draw_star>

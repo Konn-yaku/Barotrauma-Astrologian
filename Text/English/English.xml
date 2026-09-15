@@ -13,22 +13,22 @@
   <talenttree.mcj_path_astrolabe>Green DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== Healing line: talent names ===== -->
-  <talentname.mcj_celestialopposition>Celestial Opposition</talentname.mcj_celestialopposition>
+  <talentname.mcj_celestialopposition>Aspected Benefic</talentname.mcj_celestialopposition>
   <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>Aspected Helios</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
-  <talentdescription.mcj_opposition>After you treat an ally, they gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the round.\nDoes not stack when the same talent is applied by multiple astrologians.</talentdescription.mcj_opposition>
+  <talentdescription.mcj_benefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_benefic>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units have their ‖color:gui.orange‖bleeding, burns and bloodloss‖end‖ cleared once their health drops below ‖color:gui.green‖20‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member's ‖color:gui.orange‖health drops below 1%‖end‖, the charge is automatically consumed:\nthey gain 15 seconds of ‖color:gui.orange‖Unyielding‖end‖ — they cannot fall unconscious and deal ‖color:gui.green‖25‖end‖% more damage.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
-  <afflictionname.mcj_opposition>Celestial Opposition</afflictionname.mcj_opposition>
-  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the round.</afflictiondescription.mcj_opposition>
+  <afflictionname.mcj_benefic>Aspected Benefic</afflictionname.mcj_benefic>
+  <afflictiondescription.mcj_benefic>The Benefic's light rests on you: your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>Your bleeding, burns and bloodloss are being cleared.</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
@@ -147,7 +147,7 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_starchart>Star Chart</talentname.mcj_primary_starchart>
   <talentdescription.mcj_starchart_killxp>Whenever a crewmate kills an enemy, you gain ‖color:gui.green‖[amount]‖end‖ experience.</talentdescription.mcj_starchart_killxp>
   <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
-  <talentname.mcj_primary_guardianstar>Exaltation</talentname.mcj_primary_guardianstar>
+  <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
   <talentname.mcj_primary_malefic>Malefic</talentname.mcj_primary_malefic>
 
@@ -156,8 +156,24 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_celestialopposition>Celestial Intersection</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>Ascend</talentname.mcj_primary_ascend>
 
-  <!-- ===== Placeholder description (used by mcj_celestialopposition / mcj_wheeloffortune) ===== -->
-  <talentdescription.mcj_placeholder>(Placeholder - effect pending redesign)</talentdescription.mcj_placeholder>
+  <!-- ===== Primary tree: reworked 2026-09-15 ===== -->
+  <talentdescription.mcj_primary_wheeloffortune>You and crew within ‖color:gui.green‖600‖end‖ units take ‖color:gui.green‖10‖end‖% less ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_primary_wheeloffortune>
+  <afflictionname.mcj_primary_wheeloffortune>Collective Unconscious</afflictionname.mcj_primary_wheeloffortune>
+  <afflictiondescription.mcj_primary_wheeloffortune>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_primary_wheeloffortune>
+
+  <talentdescription.mcj_primary_intersection>When you apply treatment to an ally, they gain an ‖color:gui.green‖8‖end‖-second ‖color:gui.orange‖shield‖end‖: maximum health +‖color:gui.green‖30‖end‖%.</talentdescription.mcj_primary_intersection>
+  <afflictionname.mcj_primary_intersection>Celestial Intersection</afflictionname.mcj_primary_intersection>
+  <afflictiondescription.mcj_primary_intersection>The stars cross over you: maximum health +‖color:gui.green‖30‖end‖%.</afflictiondescription.mcj_primary_intersection>
+
+  <talentdescription.mcj_primary_ascend>Whenever someone is unconscious, the whole crew gains ‖color:gui.green‖75‖end‖% resistance to ‖color:gui.orange‖bleeding, blood loss, oxygen deprivation, burns, radiation sickness and deep tissue damage‖end‖.\nThe one who fell lasts longer — which is the time you need to bring them back.</talentdescription.mcj_primary_ascend>
+  <afflictionname.mcj_primary_extend>Ascend</afflictionname.mcj_primary_extend>
+  <afflictiondescription.mcj_primary_extend>Death's countdown has slowed: you are far more resistant to bleeding, blood loss, oxygen deprivation, burns, radiation sickness and deep tissue damage.</afflictiondescription.mcj_primary_extend>
+
+  <talentdescription.mcj_primary_gravity>You and crew within ‖color:gui.green‖600‖end‖ units gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ — harder to knock down or stagger.</talentdescription.mcj_primary_gravity>
+  <afflictionname.mcj_primary_gravity>Gravity</afflictionname.mcj_primary_gravity>
+  <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖50‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
+
+  <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖20‖end‖ stacks (‖color:gui.green‖150‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
 
   <!-- ===== Arcanum: draw items ===== -->
   <entityname.mcj_draw_star>Astral Draw</entityname.mcj_draw_star>

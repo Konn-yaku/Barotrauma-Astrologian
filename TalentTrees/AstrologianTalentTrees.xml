@@ -47,7 +47,7 @@
 
       <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="firemanscarry" />
-        <TalentOption identifier="mcj_primary_guardianstar" />
+        <TalentOption identifier="mcj_primary_astral" />
         <TalentOption identifier="mcj_primary_starsounding" />
         <TalentOption identifier="mcj_primary_ascend" />
         <TalentOption identifier="mcj_primary_malefic" />
