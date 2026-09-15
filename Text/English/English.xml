@@ -174,13 +174,15 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
 
     <!-- ── Tier 3 · Minor Arcana ── -->
     <talentname.mcj_arcanum_minor>Minor Arcana</talentname.mcj_arcanum_minor>
-    <talentdescription.mcj_arcanum_minor>Every draw yields one extra minor arcana, filling the fourth slot of the deck.\nAstral Draw grants the ‖color:gui.orange‖Lord of Crowns‖end‖, Umbral Draw the ‖color:gui.orange‖Lady of Crowns‖end‖.</talentdescription.mcj_arcanum_minor>
+    <talentdescription.mcj_arcanum_minor>Every draw yields one extra minor arcana.\nAstral Draw grants the ‖color:gui.orange‖Lord of Crowns‖end‖, Umbral Draw the ‖color:gui.orange‖Lady of Crowns‖end‖.</talentdescription.mcj_arcanum_minor>
     <entityname.mcj_card_lord>The Lord of Crowns</entityname.mcj_card_lord>
-    <entitydescription.mcj_card_lord>The burning face of the crown. Hold it and press use to add a frag grenade to your inventory.</entitydescription.mcj_card_lord>
+    <entitydescription.mcj_card_lord>The burning face of the crown. Throw it — it detonates on impact.</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>The Lady of Crowns</entityname.mcj_card_lady>
     <entitydescription.mcj_card_lady>The merciful face of the crown. Hold it and press use to seal the damaged hull around you.</entitydescription.mcj_card_lady>
-    <afflictionname.mcj_minor_arcana>Minor Arcana</afflictionname.mcj_minor_arcana>
-    <afflictiondescription.mcj_minor_arcana>You have mastered the minor arcana.</afflictiondescription.mcj_minor_arcana>
+    <afflictionname.mcj_drew_star>Signal · Astral Draw</afflictionname.mcj_drew_star>
+    <afflictiondescription.mcj_drew_star>The Astral Draw is in effect.</afflictiondescription.mcj_drew_star>
+    <afflictionname.mcj_drew_umbral>Signal · Umbral Draw</afflictionname.mcj_drew_umbral>
+    <afflictiondescription.mcj_drew_umbral>The Umbral Draw is in effect.</afflictiondescription.mcj_drew_umbral>
 
     <!-- ── Invisible card signals (only exist for a heartbeat, broadcast by The Six) ── -->
     <afflictionname.mcj_sig_balance>Signal · The Balance</afflictionname.mcj_sig_balance>

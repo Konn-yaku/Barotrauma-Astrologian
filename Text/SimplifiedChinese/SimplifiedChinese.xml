@@ -188,13 +188,15 @@
 
     <!-- ── 第 3 档 · 小奥秘卡 ── -->
     <talentname.mcj_arcanum_minor>小奥秘卡</talentname.mcj_arcanum_minor>
-    <talentdescription.mcj_arcanum_minor>抽卡时额外多抽一张小奥秘卡，占用书本的第 4 格。\n星极抽卡给出‖color:gui.orange‖王冠之领主‖end‖，灵极抽卡给出‖color:gui.orange‖王冠之贵妇‖end‖。</talentdescription.mcj_arcanum_minor>
+    <talentdescription.mcj_arcanum_minor>抽卡时额外多得到一张小奥秘卡。\n星极抽卡给出‖color:gui.orange‖王冠之领主‖end‖，灵极抽卡给出‖color:gui.orange‖王冠之贵妇‖end‖。</talentdescription.mcj_arcanum_minor>
     <entityname.mcj_card_lord>王冠之领主</entityname.mcj_card_lord>
-    <entitydescription.mcj_card_lord>王冠上燃烧的那一面。按住右键打出，背包里会多出一颗破片手榴弹。</entitydescription.mcj_card_lord>
+    <entitydescription.mcj_card_lord>王冠上燃烧的那一面。直接扔出去，落地即炸。</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>王冠之贵妇</entityname.mcj_card_lady>
     <entitydescription.mcj_card_lady>王冠上垂怜的那一面。按住右键打出，就地封堵周围受损的船体。</entitydescription.mcj_card_lady>
-    <afflictionname.mcj_minor_arcana>小奥秘卡</afflictionname.mcj_minor_arcana>
-    <afflictiondescription.mcj_minor_arcana>你已掌握小奥秘卡。</afflictiondescription.mcj_minor_arcana>
+    <afflictionname.mcj_drew_star>信号·星极抽卡</afflictionname.mcj_drew_star>
+    <afflictiondescription.mcj_drew_star>星极抽卡正在生效。</afflictiondescription.mcj_drew_star>
+    <afflictionname.mcj_drew_umbral>信号·灵极抽卡</afflictionname.mcj_drew_umbral>
+    <afflictiondescription.mcj_drew_umbral>灵极抽卡正在生效。</afflictiondescription.mcj_drew_umbral>
 
     <!-- ── 卡牌的隐形信号弹（只在打出一瞬间存在，由六天座广播给全队） ── -->
     <afflictionname.mcj_sig_balance>信号·太阳神之衡</afflictionname.mcj_sig_balance>

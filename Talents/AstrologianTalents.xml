@@ -431,40 +431,53 @@
   <!-- ============================================================
        第 3 档 · 小奥秘卡 —— 抽卡时额外给一张王冠卡
        ============================================================
-       星极抽卡 → 多一张「王冠之领主」（破片手榴弹）
-       灵极抽卡 → 多一张「王冠之贵妇」（修复手雷）
-       两张王冠卡占书本容器的第 4 格（前 3 格是普通卡）。
+       星极抽卡用过后 → 补一张「王冠之领主」（可以直接丢出去的破片手榴弹）
+       灵极抽卡用过后 → 补一张「王冠之贵妇」（原地修复船体）
 
-       【怎么让"点了这个天赋才发第 4 张"生效】
-         物品读不到天赋，但 <Conditional> 能读角色身上的 affliction
-         （原版缇拉鞠就是这么用的：<Conditional XXJ_tz="lte 0.1" />）。
-         所以这个天赋只做一件事：给玩家挂一个隐形的永久标记 mcj_minor_arcana；
-         抽卡书那边再写一条 <Conditional mcj_minor_arcana="gte 1" /> 来开第 4 格。
+       【链路：信号弹中转】（与六天座的卡牌广播完全同一套写法）
+         抽卡书被使用时 → 给使用者上一个 2 秒的隐形信号
+                              mcj_drew_star / mcj_drew_umbral
+         → 这里每 0.5 秒轮询，看到信号就发卡，然后把信号清掉。
+         所以「没点这个天赋」的人根本不会发卡 —— 发卡的是天赋自己。
 
-         ⚠️ 这个标记没有 duration —— 靠每 2 秒重施维持，
-            setvalue 让它恒等于 1，重复施加无副作用。
+       ⛔ 为什么不用「物品侧 <Conditional> 判断天赋」：
+         试过在书里写 <Conditional mcj_minor_arcana="gte 1" />，
+         结果【没点天赋也发卡】。原因：
+         <Conditional 某个affliction名="..."/> 里那个名字如果在角色身上
+         【不存在】，这个属性就不被识别 → 整条条件被跳过 → 判定为「通过」。
+         （缇拉鞠的 <Conditional XXJ_tz="lte 0.1" /> 之所以能当「非本职业就烫手」用，
+           正是利用这一点：没标记 = 条件通过 = 上伤害。）
+         ⇒ 这种写法只能表达「【不】具备某 affliction」，表达不了「具备」。
+         要表达「具备」必须用天赋侧的 AbilityConditionHasAffliction（正经条件类）。
+
+       ⚠️ 另一个踩过的坑：CharacterAbilityGiveAffliction 的目标是【事件目标】而不是自己
+          （原版 TalentsDoctor.xml:416 / TalentsAssistant.xml:763 都是给事件目标），
+          在 interval 组里什么都挂不上。所以信号由【物品】那一侧用
+          <StatusEffect target="Character"><Affliction …/></StatusEffect> 施加 —— 这条可靠。
        ============================================================ -->
   <Talent identifier="mcj_arcanum_minor">
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arcanum_minor" />
-    <!-- ⚠️ 不能用 CharacterAbilityGiveAffliction！
-         它的目标是【事件目标】，不是自己 —— 原版两处都是这么用的：
-           TalentsDoctor.xml:416  给「被治疗的队友」上 bedsidemanner
-           TalentsAssistant.xml:763 给「被小丑锤打晕的那个人」上 combatstimulant
-         我们这个 interval 组里没有事件目标 → affliction 哪里都挂不上，
-         于是抽卡书的 <Conditional mcj_minor_arcana="gte 1" /> 永远不成立
-         → 王冠卡一张都出不来（2026-09-15 实测）。
-         正确写法是 ApplyStatusEffects + target="Character"（= 天赋持有者本人），
-         也就是「星力」和巫女用的那套。 -->
-    <AbilityGroupInterval interval="2.0">
+
+    <!-- 星极抽卡用过 → 王冠之领主 -->
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_drew_star" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_minor_arcana" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityPutItem itemidentifier="mcj_card_lord" amount="1" />
+        <CharacterAbilityReduceAffliction afflictionId="mcj_drew_star" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 灵极抽卡用过 → 王冠之贵妇 -->
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_drew_umbral" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_card_lady" amount="1" />
+        <CharacterAbilityReduceAffliction afflictionId="mcj_drew_umbral" amount="999" />
       </Abilities>
     </AbilityGroupInterval>
   </Talent>

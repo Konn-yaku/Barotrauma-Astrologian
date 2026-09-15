@@ -502,11 +502,12 @@
           无法写 permanent stat（那是天赋专属能力）。
           代价：这个进度不会显示在天赋面板上。
        ============================================================ -->
-  <!-- ── 「小奥秘卡」天赋的隐形标记 ──
-       第 3 档天赋每 2 秒重施一次；抽卡书靠
-       <Conditional mcj_minor_arcana="gte 1" /> 判断要不要开第 4 格。
-       没有 duration → 一直挂在身上。 -->
-  <Affliction identifier="mcj_minor_arcana"
+  <!-- ── 「小奥秘卡」的两个信号弹 ──
+       抽卡书被使用时只给使用者上这一条 2 秒的隐形信号；
+       第 3 档天赋 mcj_arcanum_minor 轮询到就发对应的王冠卡，然后把信号清掉。
+       ⚠️ 这里必须用「天赋侧 AbilityConditionHasAffliction」来判，
+          不能用物品侧 <Conditional 信号名="gte 1" /> —— 那个在信号不存在时会被跳过。 -->
+  <Affliction identifier="mcj_drew_star"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -515,10 +516,27 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_drew_umbral"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              duration="2"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/UmbralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_played"
