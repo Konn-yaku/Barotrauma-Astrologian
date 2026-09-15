@@ -494,7 +494,7 @@
                      它的 <Holdable> 里就是
                         <StatusEffect type="OnBroken" target="This"> … <Remove /> </StatusEffect> -->
       <StatusEffect type="OnBroken" target="This">
-        <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" />
+        <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
 
@@ -506,6 +506,11 @@
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
+      <!-- 出生就把耐久锁满 60。
+           防御「中继生成的新书继承了上一本的 0 耐久」这种情况：
+           否则新书一出生就是破损态，会立刻再触发一次 OnBroken，
+           两台书就会互相刷 —— 表现为「不断地发抽卡道具」。 -->
+      <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
@@ -558,7 +563,7 @@
       <!-- ===== 耐久归零 → 变回星极抽卡，接力下一轮 =====
            原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg（OnBroken 写在 Holdable 里） -->
       <StatusEffect type="OnBroken" target="This">
-        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" />
+        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
         <Remove />
       </StatusEffect>
 
@@ -570,6 +575,8 @@
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
+      <!-- 出生锁满耐久（同星极抽卡，防中继继承 0 耐久） -->
+      <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>

@@ -193,29 +193,47 @@
   <!-- ============================================================
        第 1 档 · 六天座 —— 抽卡循环的开关
 
-       点出后开始循环：
-         手上没有抽卡道具（tag = mcjarcanumdraw）→ 发一本「星极抽卡」
-       之后全靠书自己接力（星极 → 灵极 → 星极…），
-       天赋只在"书丢了 / 玩家死了"时补一本，把循环重新拉起来。
+       点出后发一本「星极抽卡」，之后全靠书自己接力：
+         星极 →（60 秒）→ 灵极 →（60 秒）→ 星极 …
+       天赋本身【只发这一本】。
 
-       【为什么用 FallbackAbilities 表达"没有道具"】
-         <Conditions> 里写"有道具" → 走 <Abilities>（什么都不做）；
-         条件不成立 → 走 <FallbackAbilities>（发书）。
-         这样完全不需要 invert —— 而 invert 用在 HasItem 上没有原版先例。
+       ⚠️⚠️⚠️ 血的教训：不要用 HasItem + FallbackAbilities 做"没书就自动补一本" ⚠️⚠️⚠️
+
+       官方文档（<游戏目录>/BuildDocClient.xml，搜索 fallbackAbilities）原文：
+         "Fallback abilities are triggered if the conditional fails"
+       ⇒ 条件不成立时，fallback 会【按 interval 的节奏反复执行】。
+
+       所以 `interval="2.0"` + 条件 `AbilityConditionHasItem tags="mcjarcanumdraw"`
+       + fallback `PutItem` 这套写法，只要那个条件有任何一次判不出来
+       （书放在通用背包格而不是手持/穿戴格、中继那一步没生成出新书、
+        背包满导致 PutItem 放不下……），
+       就会立刻变成「每 2 秒塞一本书」的无限刷书 —— 2026-09-15 实测踩到。
+
+       而且 HasItem 这条路走不通的地方在于：
+         · 原版 3 处 HasItem 全部用在【穿戴品】上（潜水服 / 防化服 / 小丑装），
+           它的判定范围没有原版实据；
+         · 想反过来写"没有书"也不行 —— HasItem 不支持 invert（原版零实例），
+           HasAffliction 也不支持 invert（原版 + 工坊全域零实例）；
+         · AbilityConditionItemInSubmarine 只有 submarinetype / invert 两个属性，
+           没法按 tag 筛；AbilityConditionCharacter 不带 targettype 时指的是
+           【事件目标】而不是自己（原版 TalentsMechanic.xml:84 可证），
+           放进 interval 组里没有意义。
+
+       【现在的写法】永久属性当锁，只发一次。与天球仪（mcj_astrolabe）、
+       地星（mcj_earthlystar）用的是同一个已验证模式。
+       permanent stat 的 removeondeath 默认为 true，所以角色重生后锁自动清掉。
        ============================================================ -->
   <Talent identifier="mcj_arcanum_six">
     <Icon texture="%ModDir%/Textures/Talents/SixCards.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arcanum_six" />
     <AbilityGroupInterval interval="2.0">
       <Conditions>
-        <AbilityConditionHasItem tags="mcjarcanumdraw" />
+        <AbilityConditionHasPermanentStat statidentifier="mcj_six_given" min="1" invert="true" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_six_active" value="1" setvalue="true" />
-      </Abilities>
-      <FallbackAbilities>
         <CharacterAbilityPutItem itemidentifier="mcj_draw_star" amount="1" />
-      </FallbackAbilities>
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_six_given" value="1" setvalue="true" />
+      </Abilities>
     </AbilityGroupInterval>
   </Talent>
 

@@ -54,7 +54,7 @@
 
   <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
   <talentname.mcj_arcanum_six>The Six</talentname.mcj_arcanum_six>
-  <talentdescription.mcj_arcanum_six>You begin to draw: whenever you carry no draw tool, an ‖color:gui.orange‖Astral Draw‖end‖ appears in your hands.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>You begin to draw: you receive an ‖color:gui.orange‖Astral Draw‖end‖.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck, and the cycle continues.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
   <talentname.mcj_arcanum_redraw>Redraw</talentname.mcj_arcanum_redraw>
   <talentdescription.mcj_arcanum_redraw>When you deconstruct an item, there is a ‖color:gui.green‖20‖end‖% chance the output is doubled.\n(Genetic materials and circuit components excluded.)</talentdescription.mcj_arcanum_redraw>
   <talentname.mcj_arcanum_draw>Draw</talentname.mcj_arcanum_draw>

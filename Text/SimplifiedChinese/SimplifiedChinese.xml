@@ -64,7 +64,7 @@
 
   <!-- ===== 奥秘卡（抽卡制）：第 1、2 档 ===== -->
   <talentname.mcj_arcanum_six>六天座</talentname.mcj_arcanum_six>
-  <talentdescription.mcj_arcanum_six>你开始抽卡：手上没有抽卡工具时，会自动获得一本「星极抽卡」。\n按住右键使用它，就会抽出这一极的 3 张奥秘卡；60 秒后它会变成另一极的书。\n⚠️ 这些牌只认占星术士——别的人拿了会被灼伤。</talentdescription.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>你开始抽卡：获得一本「星极抽卡」。\n按住右键使用它，就会抽出这一极的 3 张奥秘卡；60 秒后它会变成另一极的书，如此循环。\n⚠️ 这些牌只认占星术士——别的人拿了会被灼伤。</talentdescription.mcj_arcanum_six>
   <talentname.mcj_arcanum_redraw>重抽</talentname.mcj_arcanum_redraw>
   <talentdescription.mcj_arcanum_redraw>拆解物品时，有 ‖color:gui.green‖20‖end‖% 的概率产出翻倍。\n（基因材料与电路元件除外。）</talentdescription.mcj_arcanum_redraw>
   <talentname.mcj_arcanum_draw>抽卡</talentname.mcj_arcanum_draw>
