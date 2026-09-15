@@ -14,17 +14,32 @@
   <!-- ============================================================
        第 1 层 · 【占位符】
 
-       2026-09-15：本档原有内容（医疗技能 +30、被治疗的队友获得 25% 减伤）
-       已按要求整档撤下。「天星交错」这个名字与图标已移交给初级树的同名天赋
-       （mcj_primary_celestialopposition，由原版「抵抗军」改写而来）。
-
-       旧实现的完整代码见 git 历史（commit 5238fff 之前的版本）；
-       相关的 affliction「mcj_opposition」定义仍保留在
-       Afflictions/AstrologianAfflictions.xml 里，下次重做时可直接复用。
+       2026-09-15：本档改为「天星交错 —— 对盟友施药后，该盟友获得生命上限加成」。
+       实现完全照抄原版医生「维生素补充剂」vitaminsupplements
+       （Content/Talents/Doctor/TalentsDoctor.xml:406）：
+         · abilityeffecttype="OnApplyTreatment" —— 只在【对盟友施药/治疗】时触发
+         · AbilityConditionCharacter targettype="Ally,NotSelf" —— 目标必须是盟友、且不是自己
+         · CharacterAbilityGiveAffliction strength="600" setvalue="true"
+           —— 给该盟友挂上 mcj_opposition（生命上限 +20%），持续到巡回结束。
+       原版给的 strength 是 600，而 affliction 的 maxstrength="60" 会把它封顶，
+       所以实际效果就是「把强度拉满」。
+       ⚠️ CharacterAbilityGiveAffliction 的目标是【事件目标】（不是自己）——
+          这里的事件目标就是被施药的盟友，正合需求。
+       ⚠️ 本模组初级树里的「命运之轮」（mcj_primary_wheeloffortune）已经是
+          「最大生命 +20%」（原版健康典范换皮），两者会重叠，之后若要区分再调。
        ============================================================ -->
   <Talent identifier="mcj_celestialopposition">
     <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_placeholder" />
+    <Description tag="talentdescription.mcj_opposition" />
+
+    <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
+      <Conditions>
+        <AbilityConditionCharacter targettype="Ally,NotSelf" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGiveAffliction affliction="mcj_opposition" strength="600" setvalue="true" />
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
@@ -100,9 +115,10 @@
   <!-- ============================================================
        第 3 层 · 阳星合相（本层只有这一个）
 
-       2026-09 改版：不再是「持续自愈」，改成「范围内队友的伤害不会继续加深」。
-       实现是 resistancefor="damage" 拉满 1.0（见 mcj_helios）—— 不再受到新的
-       damage 类伤害，但也不治疗已经形成的伤势。
+       2026-09 改版（第二次）：把上一版的 resistancefor="damage" 拉满改掉 ——
+       那样是“不再受伤”（连挨打都免疫），不符合需求。
+       现在的效果是：**正常受伤照常，但流血与烧伤不再继续扣血**。
+       实现见 mcj_helios：每 0.1 秒清除 bleeding / burn，不碰 type="damage"。
 
        范围 600 = 原版医生「奇迹工作者」miracleworker 的 maxdistance
        （原版免死光环的写法：CharacterAbilityApplyStatusEffectsToAllies maxdistance="600"）。

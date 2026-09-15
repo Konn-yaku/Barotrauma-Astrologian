@@ -20,17 +20,17 @@
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
-  <talentdescription.mcj_opposition>Allies you treat gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the mission.</talentdescription.mcj_opposition>
+  <talentdescription.mcj_opposition>After you treat an ally, they gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the round.\nDoes not stack when the same talent is applied by multiple astrologians.</talentdescription.mcj_opposition>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units take ‖color:gui.orange‖no further damage‖end‖: new injuries are prevented, but existing ones are not healed.</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units stop losing health to ‖color:gui.orange‖bleeding and burns‖end‖ (normal injuries are unaffected).</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member is knocked down (unconscious), their charge is automatically consumed: their injuries are fully healed.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_opposition>Celestial Opposition</afflictionname.mcj_opposition>
-  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the mission.</afflictiondescription.mcj_opposition>
+  <afflictiondescription.mcj_opposition>You gain ‖color:gui.green‖20‖end‖% more ‖color:gui.orange‖maximum health‖end‖ until the end of the round.</afflictiondescription.mcj_opposition>
   <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>Your wounds will not deepen any further.</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>Your bleeding and burns no longer drain your health.</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>You cannot die from your wounds, and your injuries will be fully healed once you are knocked down. The charge is consumed on use.</afflictiondescription.mcj_stargate>
 

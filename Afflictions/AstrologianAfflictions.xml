@@ -27,33 +27,39 @@
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
-              maxstrength="1"
+              maxstrength="60"
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 生命上限 +20% —— 原版医生「健康典范」exampleofhealth 的数值
-         （CharacterAbilityGiveStat MaximumHealthMultiplier 0.2；
-           原版还有 bedsidemanner 同样 0.2、genetampering 0.10）。
-         这里是“被治疗后才生效”的常驻 buff。
-         ⚠️ 生命上限是乘算的：效果到期时上限回落，若此时活力高于新上限会被截断
+    <!-- 生命上限 +20%，持续到巡回结束。
+         结构直接照抄原版医生「维生素补充剂」vitaminsupplements 用的 bedsidemanner
+         （Content/Talents/Doctor/AfflictionsDoctor.xml）：
+           maxstrength="60" + resetbetweenrounds="true" + Effect 区间 0~60，
+           天赋侧用 CharacterAbilityGiveAffliction strength="600"（会被封顶到 60）。
+         数值 0.2 也来自原版医生（exampleofhealth 与 bedsidemanner 都是 0.2）。
+         ⚠️ 生命上限是乘算的：效果到期上限回落时，若当前活力高于新上限会被截断
             —— 那只是少一点缓冲，不会扣血。 -->
-    <Effect minstrength="0" maxstrength="1" strengthchange="0">
+    <Effect minstrength="0" maxstrength="60" strengthchange="0">
       <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Opposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
-       阳星合相 —— 范围内队友的伤害不会继续加深
+       阳星合相 —— 范围内队友的流血与烧伤不再继续扣血
        来源天赋：mcj_aspectedhelios
-       
-       2026-09 改版：不再是「持续自愈」（HOT），改成阻止新伤害。
-       实现是 resistancefor="damage" 拉满 1.0 —— 范围内队友不再受到新的
-       damage 类伤害（枪伤 / 咬伤 / 爆炸 / 水压…），但也【不治疗】已经形成的伤势。
-       ⚠️ 流血(bleeding)、烧灼(burn)、缺氧(oxygenlow) 是独立类型，
-          不在 damage 之下，所以这个光环挡不住它们。
-       ⚠️ resistancefor 只能写上 buff 之前新受到的伤害；
-          已经有伤的人不会因此变轻 —— 这正是“不再加深而不是变好”的设计意图。
+
+       2026-09 改版（第二次）：不是“不受伤”，而是“受伤照常、但持续伤害停住”。
+         挨打、爆炸、水压这些【即时伤害】完全正常 ✓
+         但流血(bleeding) / 烧伤(burn) 这类会【持续扣活力】的效果，
+         一旦挂上就被快速清除 ⇒ 不再继续扣血。
+
+       实现方式是持续 ReduceAffliction，每 0.1 秒：
+         · type="bleeding" 10 点（每秒 100）—— 同时覆盖 bleeding 与 bleedingnonstop
+         · type="burn"     5 点（每秒 50）—— 同时覆盖 burn 与 acidburn（acidburn 的 type 就是 burn）
+       速度够快，所以挂上的瞬间就会被抹掉；如果想让它“慢慢滴完”就把数值调小。
+       ⚠️ 刻意【不碰】type="damage" —— 内伤/撕裂伤/枪伤是正常受伤，不限制。
+       ⚠️ 也没碰 bloodloss(type="bloodloss", 独立类型) 与 oxygenlow。
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -64,10 +70,12 @@
               duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" strengthchange="0"
-            resistancefor="damage"
-            minresistance="1"
-            maxresistance="1" />
+    <Effect minstrength="0" maxstrength="1">
+      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
+        <ReduceAffliction type="bleeding" amount="10" />
+        <ReduceAffliction type="burn" amount="5" />
+      </StatusEffect>
+    </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
