@@ -524,16 +524,16 @@
       </StatusEffect>
 
       <!-- ===== 本副牌「已抽过」的角色闩 mcj_deck_used =====
-           ⚠️⚠️ 必须排在 ①抽卡 与 ①b信号【后面】（同事件内按 XML 顺序执行）。
-           ⚠️⚠️ 必须额外要求「闩不存在」才能打闩：否则每次右键都会把闩刷新，
-              接力出的新书会一直被拦住（表现为「新书一直不能抽卡」）。
-           为什么闩打在角色身上：物品的 IsActive 在【进入新巡回/关卡重建】时会丢，
-              角色 affliction 不会丢。
-           为什么只用选择器条件：同一个特效里不能混 targetitemcomponent（物品）和选择器（角色），
-              混用会让选择器那条解析不到角色、强度按 0 算、守卫形同虚设。
-           接力时（书的 OnBroken）会把闩清掉，所以新书照常能抽。 -->
+           ⚠️⚠️ 必须排在 ①抽卡 与 ①b信号【后面】（同一事件内按 XML 顺序执行）。
+           ⚠️⚠️ 必须额外要求「闩不存在」才能打闩：否则每次右键都会把闩刷新。
+           ⚠️⚠️ 本条是 target="Character" 的特效，条件【不能带选择器】！
+              TargetContainer / TargetGrandparent 是在「物品特效」里用来向上找角色的；
+              写在角色特效里没有物品链可走 ⇒ 条件永远不成立 ⇒ 闩根本打不上
+              ⇒ 冷却失效、能反复抽卡（v0.12.19 踩过）。
+              角色特效默认就解析角色（原版 divinggear.xml、本模组的职业锁都这么用）。
+           而 ①/①b 是物品特效，那里【必须】带选择器才读得到角色（v0.12.15 已验证）。 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
+        <Conditional mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_deck_used" amount="1" />
       </StatusEffect>
 
@@ -681,9 +681,9 @@
       </StatusEffect>
 
       <!-- 「已抽过」的角色闩（同星极抽卡，注释见那边）
-           ⚠️ 排在 ①/①b 后面，且要求闩不存在才打 -->
+           ⚠️ 排在 ①/①b 后面；⚠️ 本条是角色特效，条件不能带选择器 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
+        <Conditional mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_deck_used" amount="1" />
       </StatusEffect>
 
