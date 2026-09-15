@@ -183,7 +183,8 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
     <afflictiondescription.mcj_drew_star>The Astral Draw is in effect.</afflictiondescription.mcj_drew_star>
     <afflictionname.mcj_drew_umbral>Signal · Umbral Draw</afflictionname.mcj_drew_umbral>
     <afflictiondescription.mcj_drew_umbral>The Umbral Draw is in effect.</afflictiondescription.mcj_drew_umbral>
-    <!-- v0.12.12: mcj_roundflag / mcj_reset_done were removed with the round-reset feature -->
+    <afflictionname.mcj_deck_used>Deck Already Drawn</afflictionname.mcj_deck_used>
+    <afflictiondescription.mcj_deck_used>Hidden marker: this deck has already been drawn from. Wait for it to flip to the other pole.</afflictiondescription.mcj_deck_used>
 
     <!-- ── Invisible card signals (only exist for a heartbeat, broadcast by The Six) ── -->
     <afflictionname.mcj_sig_balance>Signal · The Balance</afflictionname.mcj_sig_balance>

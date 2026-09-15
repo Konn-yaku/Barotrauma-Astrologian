@@ -547,7 +547,26 @@
     <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Talents/UmbralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
-
+  <!-- ── 标记：这本抽卡书已经抽过卡了 ──
+       右键时由书给【持有人】打上，58 秒自然过期。
+       目的：物品自身的 IsActive 在「进入新巡回 / 关卡重建」时会丢，
+             导致同一本书能被抽第二次；角色身上的 affliction 不会被丢。
+       58 秒略短于书的 60 秒接力，所以接力生成的新书（另一极）照常能抽。 -->
+  <Affliction identifier="mcj_deck_used"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              duration="58"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
   <!-- ❌ v0.12.12：以下两个标记随「巡回/站点刷新牌堆」功能一起移除（说明作废） ──
        由【抽卡书自己】每 5 秒给持有人补一次（不再由六天座维护 —— 原因见天赋文件：
        六天座在巡回一开始就会把标记补上，那样「缺失窗口」会短到抓不住）。

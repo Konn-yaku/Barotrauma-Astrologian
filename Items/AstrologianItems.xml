@@ -470,9 +470,20 @@
              出生补一次就够 —— 每本新书（包括重置时生成的那本）都会立刻把标记补上。
            ⚠️ 右键补那一条必须排在 ① 抽卡【前面】（同一事件内按 XML 顺序执行），
              否则新一轮刚开始那几秒抽出来的卡会被误判成「上一轮的残留」。 -->
-      <!-- ① 抽卡：只在“还没用过”时有效（IsActive=false） -->
+      <!-- ===== 本副牌「已抽过」的角色闩 mcj_deck_used =====
+           ⚠️ 不能只靠物品自身的 IsActive：运行期状态在【进入新巡回/关卡重建】时会丢，
+              书会变回「没抽过」⇒ 在站点抽完、进巡回又能再抽一次（v0.12.13 实测）。
+           所以右键时在【角色身上】打一个 58 秒的闩：
+             ①抽卡 与 ①b信号 都额外要求这个闩不存在（用 TargetContainer 选择器读角色）。
+           58 秒自然过期，正好赶在书 60 秒接力成另一极之前 ⇒ 新书照常可抽。 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_deck_used" amount="1" />
+      </StatusEffect>
+
+      <!-- ① 抽卡：只在“还没用过”时有效（物品 IsActive=false 且 角色闩不在） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <SpawnItem identifier="mcj_card_balance" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_arrow"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_spire"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -520,6 +531,7 @@
            代价：天赋侧的 PutItem 只能放进随身物品栏，所以王冠卡不占卡槽（卡槽已缩到 3 格）。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_drew_star" strength="1" />
       </StatusEffect>
 
@@ -625,8 +637,14 @@
       <!-- 轮次标记不在这里补：灵极书自己补的话，巡回刚清空就会被它自己补上，
            0.5 秒一次的判定永远抓不到「缺失窗口」。补标记的活儿交给星极书。
            （这里只在【右键】时补一下：那说明玩家正在用它，属于本轮中段，安全。） -->
+      <!-- 灵极书：先打「已抽过」的角色闩（同星极抽卡，注释见那边） -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_deck_used" amount="1" />
+      </StatusEffect>
+
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_bole"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_ewer"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -643,6 +661,7 @@
       <!-- ✅ v0.12.7：书只给持有人发 2 秒信号 mcj_drew_umbral，由第 3 档天赋发卡（详见星极抽卡处）。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_drew_umbral" strength="1" />
       </StatusEffect>
 
