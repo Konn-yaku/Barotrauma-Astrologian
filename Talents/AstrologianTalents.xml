@@ -537,16 +537,20 @@
   </Talent>
 
   <!-- ============================================================
-       第 4 档 · 星力 —— 一轮 3 张卡全部打出后，给全队的群体增益
+       第 4 档 · 星力 —— 一轮 3 张卡全部打出后，给自己的奖励 buff
 
        【怎么数"打出了几张卡"】
          · 每打出一张卡 → 角色获得 mcj_played +1（上限 3）
          · 抽卡时书把 mcj_played 清零（新一轮开始）
-         · 天赋检测到它满 3 → 发群体 buff → 再把计数清掉
+         · 天赋检测到它满 3 → 发 buff → 再把计数清掉
        ⚠️ 计数只能用 affliction（物品没法给角色写 permanent stat），
           所以看不到天赋面板上的进度条 —— 这是与巫女灵力系统的差别。
 
-       ⚠️ 数值是【占位】：+100% 移速 / 泳速，只为了一眼看出有没有生效。
+       2026-09-15 定档：
+         · 【只给自己】—— 用 CharacterAbilityApplyStatusEffects，
+           而不是 CharacterAbilityApplyStatusEffectsToAllies
+         · 效果见 Afflictions 里的 mcj_astrodyne：
+           步行/游泳速度 +25%、近战攻速 +25%、远程攻速 +15%，持续 20 秒
        ============================================================ -->
   <Talent identifier="mcj_astrodyne">
     <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" origin="0,0" />
@@ -556,13 +560,13 @@
         <AbilityConditionHasAffliction afflictionidentifier="mcj_played" minimumpercentage="1.0" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
               <Affliction identifier="mcj_astrodyne" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        </CharacterAbilityApplyStatusEffects>
         <CharacterAbilityReduceAffliction afflictionId="mcj_played" amount="3" />
       </Abilities>
     </AbilityGroupInterval>

@@ -532,11 +532,27 @@
   </Affliction>
 
   <!-- ============================================================
-       第二栏 · 星力（第 4 档）—— 一轮 3 张卡全部打出后，给全队的群体增益
-       由天赋 mcj_arcanum_astrodyne 施加；附魔本身也是"打了 3 张卡"的奖励载体。
+       第二栏 · 星力（第 4 档）—— 一轮 3 张卡全部打出后，给自己的奖励 buff
+       由天赋 mcj_astrodyne 施加（注意：是【只给自己】，不是全队）。
 
-       ⚠️ 占位数值：+100% 移动 / 游泳速度，纯粹为了"一眼看出有没有生效"。
-          正式数值待定。
+       2026-09-15 定档：持续 20 秒
+         步行 / 游泳速度 +25%
+         近战攻速 +25% / 远程攻速 +15%
+
+       【为什么用 WalkingSpeed + SwimmingSpeed 而不写 MovementSpeed】
+         官方名分别是「移动速度 / 步行速度 / 游泳速度」。原版两个速度基因
+         用的是 WalkingSpeed（0.10~0.25）和 SwimmingSpeed（0.10~0.50），
+         而 MovementSpeed 是否覆盖游泳没有依据 ⇒ 直接分写两个，无歧义。
+       【数值依据】取原版单项的经典档位：
+         移速 0.25 = 步行速度基因上限；近战 0.25 ≈ 原版天花板 0.3；
+         远程 0.15 ≈ 原版天花板 0.2。
+       ⚠️ 刻意不给 AttackMultiplier —— 增伤交给太阳神之衡那张卡，
+          一个乘算属性不要在两个地方同时出现。
+
+       叠加说明（有意为之）：星力与卡片是两套独立 buff、数值相加。
+         抽星极套 → 移速 0.35(放浪神之箭) + 0.25 = 0.60
+         抽灵极套 → 近战 0.50(战争神之枪) + 0.25 = 0.75 / 远程 0.45
+         所以不管抽到哪一套，星力都能补上缺的那一半 —— 这就是 20 秒爆发窗口。
        ============================================================ -->
   <Affliction identifier="mcj_astrodyne"
               type="talentbuff"
@@ -548,8 +564,10 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="1.0" />
-      <StatValue stattype="SwimmingSpeed" value="1.0" />
+      <StatValue stattype="WalkingSpeed" value="0.25" />
+      <StatValue stattype="SwimmingSpeed" value="0.25" />
+      <StatValue stattype="MeleeAttackSpeed" value="0.25" />
+      <StatValue stattype="RangedAttackSpeed" value="0.15" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
@@ -558,7 +576,7 @@
        计数器：本轮已经打出的奥秘卡张数（隐藏）
 
        每打出一张奥秘卡 +1（上限 3，所以 maxstrength="3"）；
-       抽卡时清零；星力天赋检测到它满 3 → 发群体 buff → 再清零。
+       抽卡时清零；星力天赋检测到它满 3 → 给自己发 buff → 再清零。
 
        ⚠️ 为什么用 affliction 而不是 permanent stat（巫女那套）
           "打出一张卡"是【物品】触发的，而物品只能给角色上 affliction，

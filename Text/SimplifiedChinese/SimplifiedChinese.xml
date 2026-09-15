@@ -62,7 +62,7 @@
   <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖眩晕抗性‖end‖，并持续恢复 ‖color:gui.orange‖身体损伤、失血与流血‖end‖。</talentdescription.mcj_bole>
   <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_spire>
   <talentdescription.mcj_ewer>全部船员在效果期间 ‖color:gui.orange‖无需氧气‖end‖。</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：一轮 3 张全部打出后，星力回应你，为全队带来一段增益。\n（占位效果：+100% 移动与游泳速度）</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：本轮的 3 张全部打出后，星力回应你——\n步行与游泳速度提升 ‖color:gui.green‖25‖end‖%，近战攻击速度提升 ‖color:gui.green‖25‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%，持续 20 秒。</talentdescription.mcj_astrodyne>
 
   <!-- ===== 奥秘卡（抽卡制）：第 1、2 档 ===== -->
   <talentname.mcj_arcanum_six>六天座</talentname.mcj_arcanum_six>

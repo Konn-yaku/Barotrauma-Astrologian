@@ -52,7 +52,7 @@
   <talentdescription.mcj_bole>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</talentdescription.mcj_bole>
   <talentdescription.mcj_spire>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.</talentdescription.mcj_spire>
   <talentdescription.mcj_ewer>All crew members have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers and grants the whole crew a boon.\n(Placeholder effect: +100% walking and swimming speed)</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers you —\ngaining ‖color:gui.green‖25‖end‖% walking and swimming speed, ‖color:gui.green‖25‖end‖% melee attack speed and ‖color:gui.green‖15‖end‖% ranged attack speed for 20 seconds.</talentdescription.mcj_astrodyne>
 
   <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
   <talentname.mcj_arcanum_six>The Six</talentname.mcj_arcanum_six>
