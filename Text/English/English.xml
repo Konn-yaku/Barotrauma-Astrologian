@@ -179,10 +179,10 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
     <entitydescription.mcj_card_lord>The burning face of the crown. It is simply a frag grenade — pull the pin, throw it, and wait for the fuse.</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>The Lady of Crowns</entityname.mcj_card_lady>
     <entitydescription.mcj_card_lady>The merciful face of the crown. A fix-foam grenade — pull the pin, throw it, and it seals the hull all around where it lands.</entitydescription.mcj_card_lady>
-    <afflictionname.mcj_drew_star>Signal · Astral Draw</afflictionname.mcj_drew_star>
-    <afflictiondescription.mcj_drew_star>The Astral Draw is in effect.</afflictiondescription.mcj_drew_star>
-    <afflictionname.mcj_drew_umbral>Signal · Umbral Draw</afflictionname.mcj_drew_umbral>
-    <afflictiondescription.mcj_drew_umbral>The Umbral Draw is in effect.</afflictiondescription.mcj_drew_umbral>
+    <afflictionname.mcj_minor_flag>Minor Arcana Lock</afflictionname.mcj_minor_flag>
+    <afflictiondescription.mcj_minor_flag>Hidden marker: the Minor Arcana talent is not unlocked yet.</afflictiondescription.mcj_minor_flag>
+    <afflictionname.mcj_roundflag>Round Active</afflictionname.mcj_roundflag>
+    <afflictiondescription.mcj_roundflag>Hidden marker: the current round is still running. It disappears when a new round begins.</afflictiondescription.mcj_roundflag>
 
     <!-- ── Invisible card signals (only exist for a heartbeat, broadcast by The Six) ── -->
     <afflictionname.mcj_sig_balance>Signal · The Balance</afflictionname.mcj_sig_balance>

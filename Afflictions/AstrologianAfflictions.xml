@@ -502,12 +502,20 @@
           无法写 permanent stat（那是天赋专属能力）。
           代价：这个进度不会显示在天赋面板上。
        ============================================================ -->
-  <!-- ── 「小奥秘卡」的两个信号弹 ──
-       抽卡书被使用时只给使用者上这一条 2 秒的隐形信号；
-       第 3 档天赋 mcj_arcanum_minor 轮询到就发对应的王冠卡，然后把信号清掉。
-       ⚠️ 这里必须用「天赋侧 AbilityConditionHasAffliction」来判，
-          不能用物品侧 <Conditional 信号名="gte 1" /> —— 那个在信号不存在时会被跳过。 -->
-  <Affliction identifier="mcj_drew_star"
+  <!-- ══════════════════════════════════════════════════════════
+       两个「开关标记」—— 都是隐形、没有 duration，靠外部反复施加维持
+       ══════════════════════════════════════════════════════════ -->
+
+  <!-- ── 标记 A：小奥秘卡没解锁 ──
+       六天座开局挂上（maxtriggercount=1，只挂一次）；
+       点了第 3 档「小奥秘卡」的话，那个天赋会每 0.5 秒把它清掉 → 于是它变成"不存在"。
+
+       抽卡书靠 <Conditional mcj_minor_flag="lte 0.1" /> 判断要不要多发一张王冠卡：
+         · 没点第 3 档 → 标记在（强度 1）→ 1 <= 0.1 不成立 → 不发 ✓
+         · 点了第 3 档 → 标记被清掉 → 属性名"不存在"→ 整条条件被跳过 = 判定通过 → 发 ✓
+       ⚠️ 这正是利用了「<Conditional 不存在的 affliction 名> 会被跳过」这个语义 ——
+          所以是【有标记 = 不发】，故意反过来写。 -->
+  <Affliction identifier="mcj_minor_flag"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -516,27 +524,36 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              duration="2"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ── 标记 B：本轮有效 ──
+       六天座每 10 秒补一次，一直挂在身上；它【没有 duration】，所以整轮都不会消失。
+       唯一会消失的时刻是巡回结束 —— resetbetweenrounds="true" 会把它清掉。
+       于是「它不见了」= 「新的一轮刚开始」：
+         · 灵极抽卡 → 自己变回星极抽卡（重置抽卡的极，且不会重复发书）
+         · 卡牌 → 因为大多还在书的容器里，会跟着旧书一起消失
+       之所以不做"每张卡自己删自己"：那需要 <Remove /> 出现在 target="Character" 上，
+       而原版 263 处 <Remove /> 全部是 target="This"，没有先例，不敢赌。
+       ⚠️ 标记 B 必须"一直存在"，否则卡和书会误判成到了新一轮。
+          所以它的重新施加间隔（10 秒）远小于它需要的判定窗口。 -->
+  <Affliction identifier="mcj_roundflag"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <Affliction identifier="mcj_drew_umbral"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Talents/UmbralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <Affliction identifier="mcj_played"

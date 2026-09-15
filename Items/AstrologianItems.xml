@@ -473,16 +473,16 @@
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="180,255,210,255" />
       </StatusEffect>
 
-      <!-- ①b 小奥秘卡信号：用过这本书 → 给使用者上一个 2 秒的隐形信号弹。
-           第 3 档天赋 mcj_arcanum_minor 轮询到信号就补一张「王冠之领主」，
-           然后把信号清掉。（发卡的是天赋，所以没点天赋根本不会有卡。）
+      <!-- ①b 小奥秘卡（细节见下面紧挨着的长注释）
+           只有点了第 3 档天赋才会额外发一张王冠卡，
+           而且直接进书本的第 4 格（不是随身物品栏）。
 
            ⚠️⚠️ 必须排在 ② 的 <Use />【前面】：
               <Use /> 之后 ItemComponent 变成 active，这条 IsActive="false" 的守卫
               就永远失败了 —— 不但发不出卡，重复右键也拦不住。
-           为什么不干脆在物品这边用 <Conditional> 判天赋：
-              实测发现 <Conditional 某affliction名="gte 1" /> 在那个 affliction
-              【不存在时会被整条跳过】= 判定通过，于是没点天赋也发卡。
+           怎么在物品这边判天赋（反向标记）：
+              <Conditional 某affliction名="..." /> 在该 affliction 不存在时
+              会被整条跳过 = 判定通过，所以这里刻意用「没解锁」标记来反着控制。
               详见 Talents/AstrologianTalents.xml 里小奥秘卡的长注释。 -->
       <!-- ⚠️⚠️ target 必须写成 "This,Character"，不能只写 "Character"！
            只写 "Character" 时，同一行里的 <Conditional ... targetitemcomponent="ItemComponent" />
@@ -491,9 +491,24 @@
            双 target 的原版先例：巫女的降神符札
              <StatusEffect type="OnSecondaryUse" target="This,Character" delay="0.2" Condition="-90">
            —— Condition 作用在物品上、Affliction 作用在持有者身上，两者同时生效。 -->
+      <!-- ①b 小奥秘卡：点了第 3 档天赋才会额外发一张「王冠之领主」，直接进书本的第 4 格。
+           ⚠️ 必须排在 ② 的 <Use />【前面】：<Use /> 之后 ItemComponent 变成 active，
+              这条 IsActive="false" 的守卫就永远失败了 —— 卡发不出，重复右键也拦不住。
+
+           【判定技巧】标记 mcj_minor_flag 的语义是「没解锁」，故意反过来写：
+              · 没点第 3 档 → 标记在（强度 1）→ lte 0.1 不成立 → 不发 ✓
+              · 点了第 3 档 → 天赋每 0.5 秒把它清掉 → 属性名「不存在」→ 整条条件被跳过
+                = 判定通过 → 发 ✓
+
+           ⚠️ target 必须写 "This,Character"（双 target）：
+              这样 targetitemcomponent 才算得到物品、affliction 才查得到持有者。
+              只写 "This" 时 affliction 会去物品上找 → 永远不存在 → 条件永远通过（旧 bug）。
+              只写 "Character" 时 targetitemcomponent 没物品可算 → 永远失败（旧 bug）。
+              原版先例：巫女的降神符札。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Affliction identifier="mcj_drew_star" strength="1" />
+        <Conditional mcj_minor_flag="lte 0.1" />
+        <SpawnItem identifier="mcj_card_lord" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
       </StatusEffect>
 
       <!-- 新一轮开始：把「星力」的计数清零 -->
@@ -584,11 +599,31 @@
 
       <!-- ①b 小奥秘卡信号：用过这本书 → 上 2 秒隐形信号，由第 3 档天赋补「王冠之贵妇」
            ⚠️⚠️ 必须排在下面 <Use /> 的【前面】—— 原因见星极抽卡处的长注释。 -->
-      <!-- ⚠️⚠️ target 必须写成 "This,Character"（原因见星极抽卡处的长注释：
-           只写 "Character" 的话 targetitemcomponent 解析不了，守卫永远失败） -->
+      <!-- ①b 小奥秘卡：点了第 3 档才会额外发一张「王冠之贵妇」。
+           ⚠️⚠️ 必须在 <Use /> 之前、target 必须写 "This,Character"
+              —— 两个原因详见星极抽卡处的长注释。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Affliction identifier="mcj_drew_umbral" strength="1" />
+        <Conditional mcj_minor_flag="lte 0.1" />
+        <SpawnItem identifier="mcj_card_lady" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+      </StatusEffect>
+
+      <!-- ===== 新一轮开始 → 变回星极抽卡 =====
+           标记 mcj_roundflag 由六天座每 10 秒补一次、并且 resetbetweenrounds="true"，
+           所以「它不见了」= 新的一轮刚开始。
+
+           做法：把自己打成 0 耐久，走【已有的 OnBroken】—— 它的内容正好就是
+           「生成一本星极抽卡 + 删除自己」，一举两得。
+           ⚠️ 不要在这里直接写 <Remove />：<Remove /> 出现在 target="Character" 上
+              原版零先例（263 处全是 target="This"），万一它是删角色就毁了。
+              用 Condition 打成破损是最安全的写法（原版 petegg / 巫女的降神符札都这么干）。
+
+           只让【灵极】书做这个转换（星极书不动）⇒ 一轮开始时手上一定是星极书，
+           而且不会像「重新发一本」那样越攒越多。
+           旧书被删除时，它容器里还没打出去的卡会跟着一起消失 ✓ -->
+      <StatusEffect type="Always" target="This,Character" interval="2.0" checkconditionalalways="true"
+                    Condition="0" setvalue="true">
+        <Conditional mcj_roundflag="lte 0.1" />
       </StatusEffect>
 
       <!-- 新一轮开始：把「星力」的计数清零 -->

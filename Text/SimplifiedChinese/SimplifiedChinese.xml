@@ -193,10 +193,10 @@
     <entitydescription.mcj_card_lord>王冠上燃烧的那一面。它就是一颗破片手榴弹 —— 拔销、扭出去，引信烧完后炸开。</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>王冠之贵妇</entityname.mcj_card_lady>
     <entitydescription.mcj_card_lady>王冠上垂怜的那一面。它就是一颗修复手雷 —— 拔销、扭出去，落点周围大范围封堵船体。</entitydescription.mcj_card_lady>
-    <afflictionname.mcj_drew_star>信号·星极抽卡</afflictionname.mcj_drew_star>
-    <afflictiondescription.mcj_drew_star>星极抽卡正在生效。</afflictiondescription.mcj_drew_star>
-    <afflictionname.mcj_drew_umbral>信号·灵极抽卡</afflictionname.mcj_drew_umbral>
-    <afflictiondescription.mcj_drew_umbral>灵极抽卡正在生效。</afflictiondescription.mcj_drew_umbral>
+    <afflictionname.mcj_minor_flag>小奥秘卡·未解锁</afflictionname.mcj_minor_flag>
+    <afflictiondescription.mcj_minor_flag>隐形标记：还没点出「小奥秘卡」天赋。</afflictiondescription.mcj_minor_flag>
+    <afflictionname.mcj_roundflag>本轮进行中</afflictionname.mcj_roundflag>
+    <afflictiondescription.mcj_roundflag>隐形标记：本轮还在进行。新的一轮开始时它会消失。</afflictiondescription.mcj_roundflag>
 
     <!-- ── 卡牌的隐形信号弹（只在打出一瞬间存在，由六天座广播给全队） ── -->
     <afflictionname.mcj_sig_balance>信号·太阳神之衡</afflictionname.mcj_sig_balance>
