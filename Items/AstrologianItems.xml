@@ -547,6 +547,15 @@
         <Use />
       </StatusEffect>
 
+      <!-- ===== 巡回切换后把倒计时接回去 =====
+           进入新巡回（关卡重建）时 ItemComponent 的 IsActive 会被重置成 false，
+           而倒计时用的是 OnActive（只在 active 时跑）⇒ 耐久会停住不动（就 是卡在 80% 那种）。
+           只要角色身上还有「已抽过」闩（说明这本正在倒计时中），每秒把 IsActive 补回来。
+           ⚠️ 只用选择器条件读角色，不要混 targetitemcomponent（混了会失效，见抽卡处的注释）。 -->
+      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" IsActive="true">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
+      </StatusEffect>
+
       <!-- ===== 职业锁：非占星术士拿着就烫手 =====
            写法参考原版重机枪（Content/Items/Weapons/weapons.xml:1690）──
            那也是一个 Holdable，用
@@ -706,6 +715,11 @@
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Use />
+      </StatusEffect>
+
+      <!-- 巡回切换后把倒计时接回去（同星极抽卡，注释见那边） -->
+      <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" IsActive="true">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
       </StatusEffect>
 
       <!-- ===== 职业锁：非占星术士拿着就烫手（同星极抽卡） =====
