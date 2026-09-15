@@ -506,20 +506,17 @@
        两个「开关标记」—— 都是隐形、没有 duration，靠外部反复施加维持
        ══════════════════════════════════════════════════════════ -->
 
-  <!-- ── 标记：小奥秘卡【已】解锁 ──
-       由第 3 档天赋 mcj_arcanum_minor 每 0.5 秒 SET 为 1（目标=自己）。
-       没点那个天赋时它【不存在】，强度按 0 算。
+  <!-- ── 「小奥秘卡」的两个信号弹（v0.12.7 恢复） ──
+       抽卡书被使用时，用 target="This,Character" 的特效给【持有者】上一条 2 秒的隐形信号；
+       第 3 档天赋每 0.5 秒轮询，看到信号就发对应的王冠卡，然后（用天赋侧的 ReduceAffliction）把信号清掉。
+       所以没点那个天赋的人根本不会拿到王冠卡 —— 门禁在天赋侧，可靠。
 
-       王冠卡靠 <Conditional mcj_arcanum_unlocked="lte 0.5" /> 自判：
-         · 已解锁 → 强度 1 → 1 <= 0.5 不成立 → 条件不满足 → 卡留下 ✓
-         · 未解锁 → 不存在 = 0 → 0 <= 0.5 成立 → 卡当场移除 ✓
-       ⚠️ 这个判定【必须】写在 target="Character" 的特效里：
-          条件默认拿【特效的目标实体】解析（targetitemcomponent 那类才是显式覆盖），
-          所以写 target="This,Character" 时会先拿物品去找角色身上的 affliction →
-          找不到 → 强度按 0 算 → 条件恒成立（v0.12.5 那个 bug 的根因）。
-       ⚠️ 这正是利用了「<Conditional 不存在的 affliction 名> 会被跳过」这个语义 ——
-          所以是【有标记 = 不发】，故意反过来写。 -->
-  <Affliction identifier="mcj_arcanum_unlocked"
+       为什么不用物品侧判定：<Conditional 某affliction名="..."> 会拿【物品】解析，
+       写在物品特效里就永远查不到角色身上的标记 → 强度按 0 算 → 条件恒成立。
+       v0.12.5（反向标记）与 v0.12.6（卡自删）两次都输在这一条上。
+       ⚠️ v0.12.7 已删除本标记 —— 恢复到「信号弹 + 天赋侧发卡」方案。 -->
+          （下面这一行是 v0.12.5 的旧结论，作废：条件不会被跳过，只是按强度 0 参与比较。） -->
+  <Affliction identifier="mcj_drew_star"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -528,10 +525,27 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <Affliction identifier="mcj_drew_umbral"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              duration="2"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/UmbralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ── 标记：本轮进行中 ──

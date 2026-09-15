@@ -193,8 +193,10 @@
     <entitydescription.mcj_card_lord>王冠上燃烧的那一面。它就是一颗破片手榴弹 —— 拔销、扭出去，引信烧完后炸开。</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>王冠之贵妇</entityname.mcj_card_lady>
     <entitydescription.mcj_card_lady>王冠上垂怜的那一面。它就是一颗修复手雷 —— 拔销、扭出去，落点周围大范围封堵船体。</entitydescription.mcj_card_lady>
-    <afflictionname.mcj_arcanum_unlocked>小奥秘卡·已解锁</afflictionname.mcj_arcanum_unlocked>
-    <afflictiondescription.mcj_arcanum_unlocked>隐形标记：已点出「小奥秘卡」天赋，王冠卡可以留在牌堆里。</afflictiondescription.mcj_arcanum_unlocked>
+    <afflictionname.mcj_drew_star>信号·星极抽卡</afflictionname.mcj_drew_star>
+    <afflictiondescription.mcj_drew_star>星极抽卡正在生效。</afflictiondescription.mcj_drew_star>
+    <afflictionname.mcj_drew_umbral>信号·灵极抽卡</afflictionname.mcj_drew_umbral>
+    <afflictiondescription.mcj_drew_umbral>灵极抽卡正在生效。</afflictiondescription.mcj_drew_umbral>
     <afflictionname.mcj_roundflag>本轮进行中</afflictionname.mcj_roundflag>
     <afflictiondescription.mcj_roundflag>隐形标记：本轮还在进行。新的一轮开始时它会消失。</afflictiondescription.mcj_roundflag>
 

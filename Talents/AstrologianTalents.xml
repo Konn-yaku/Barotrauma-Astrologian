@@ -480,24 +480,33 @@
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arcanum_minor" />
 
-    <!-- 唯一的职责：给【自己】持续挂一个「已解锁」标记 mcj_arcanum_unlocked。
-        王冠卡一生出来就会检查这个标记（target="Character"，条件按【角色】解析）：
-          标记在（强度 1）→ <Conditional mcj_arcanum_unlocked="lte 0.5" /> 不成立 → 卡留下 ✓
-          没点天赋（标记不存在，强度按 0 算）→ 0 <= 0.5 成立 → 卡当场自己删掉 ✓
-        ⇒ 没点天赋就绝对拿不到王冠卡，而卡仍然落在书本容器的第 4 格。
+    <!-- 职责：看到抽卡书发来的 2 秒信号就补一张王冠卡。
+        信号由【物品侧】的 <StatusEffect target="This,Character"> + <Affliction> 施加 ——
+        那条写法本身是可靠的（原版巫女的降神符札、本模组 6 张卡的信号弹都这么用）。
+        而「物品侧直接判天赋」两次都失败：<Conditional 某affliction名="...">
+        会拿【物品】解析，写在物品特效里永远查不到角色身上的标记 → 强度按 0 算 →
+        条件恒成立 → 没点天赋也发卡（v0.12.5 / v0.12.6 都栽在这里）。
 
-        ⚠️ 发卡本身由【物品】那一侧做（SpawnItem 到书的容器），不在这里发：
-           所以发卡仍然由【物品】那一侧做（SpawnItem 到书的容器），
-           天赋这边只负责挂标记 —— 两边各用自己可靠的机制。 -->
+        （v0.12.7：发卡挪回天赋侧 —— 物品侧只能把卡塞进背包，而门禁在物品侧做不出来。）
+          星极抽卡的信号 → 王冠之领主；灵极抽卡的信号 → 王冠之贵妇。
+          发完立刻把信号清掉，所以一次抽卡只补一张卡。 -->
     <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_drew_star" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_arcanum_unlocked" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityPutItem itemidentifier="mcj_card_lord" amount="1" />
+        <CharacterAbilityReduceAffliction afflictionId="mcj_drew_star" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_drew_umbral" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="mcj_card_lady" amount="1" />
+        <CharacterAbilityReduceAffliction afflictionId="mcj_drew_umbral" amount="999" />
       </Abilities>
     </AbilityGroupInterval>
   </Talent>

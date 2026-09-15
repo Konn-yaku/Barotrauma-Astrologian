@@ -515,16 +515,17 @@
               （这一段已作废，保留只为记录踩过的坑。）
               结论：<Conditional 某affliction名="..."> 会拿 target 里的第一个实体解析，
               角色身上的标记写在物品特效里是查不到的 —— 判定必须放在对的目标上。 -->
-      <!-- ✅ v0.12.6 正确写法（上面几行是 v0.12.5 的旧思路，已作废）：
-           抽卡书【只负责把卡放进自己的容器】—— ThisInventory 落位已验证可靠。
-           「有没有点第 3 档天赋」交给【王冠卡自己】在生成瞬间判定（见 mcj_card_lord）。
-
-           为什么不在这里判：<Conditional 某affliction名="..."> 是拿【特效目标里的物品】
-           解析的 —— 写 "This" 或 "This,Character" 都会去物品上找角色身上的标记，
-           找不到就把强度当 0 → 条件恒成立 → 没点天赋也发卡（这就是那个 bug）。 -->
-      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+      <!-- ✅ v0.12.7 最终写法（以上注释全部作废，保留只为记录踩过的坑）：
+           门禁必须在【天赋侧】做：书只给持有人发一个 2 秒信号 mcj_drew_star，
+           第 3 档天赋轮询到就发一张「王冠之领主」到持有人背包，然后把信号清掉。
+           所以没点天赋的人根本拿不到卡。
+           ⚠️ 为什么不在物品侧判天赋：<Conditional 某affliction名="..."> 会拿【物品】解析
+              （条件按强度参与比较，不存在 = 0），写在物品特效里永远查不到角色身上的标记
+              → 条件恒成立 → 没点天赋也发卡。v0.12.5、v0.12.6 两次都栽在这里。
+           代价：天赋侧的 PutItem 只能放进随身物品栏，所以王冠卡不占卡槽（卡槽已缩到 3 格）。 -->
+      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <SpawnItem identifier="mcj_card_lord" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <Affliction identifier="mcj_drew_star" strength="1" />
       </StatusEffect>
 
       <!-- 新一轮开始：把「星力」的计数清零 -->
@@ -571,8 +572,9 @@
     </Holdable>
 
     <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
-    <ItemContainer capacity="4" maxstacksize="1">
-      <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire,mcj_card_lord" />
+    <!-- 3 个卡槽（v0.12.7 起）：3 张普通卡。小奥秘卡不占槽位，由天赋发到背包 -->
+    <ItemContainer capacity="3" maxstacksize="1">
+      <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire" />
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
@@ -626,10 +628,10 @@
       <!-- ①b 小奥秘卡：点了第 3 档才会额外发一张「王冠之贵妇」。
            ⚠️⚠️ 必须在 <Use /> 之前（target 用 "This"，条件按物品解析，不在这里判天赋）
                （v0.12.6 起 target 改回 "This"：条件会拿物品解析，判定已挪到卡自身） -->
-      <!-- ✅ v0.12.6：书只负责往自己容器里发卡；天赋判定见 mcj_card_lady 的自删块。 -->
-      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+      <!-- ✅ v0.12.7：书只给持有人发 2 秒信号 mcj_drew_umbral，由第 3 档天赋发卡（详见星极抽卡处）。 -->
+      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <SpawnItem identifier="mcj_card_lady" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+        <Affliction identifier="mcj_drew_umbral" strength="1" />
       </StatusEffect>
 
       <!-- ===== 新一轮开始 → 变回星极抽卡 =====
@@ -680,8 +682,9 @@
     </Holdable>
 
     <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
-    <ItemContainer capacity="4" maxstacksize="1">
-      <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer,mcj_card_lady" />
+    <!-- 3 个卡槽（v0.12.7 起）：3 张普通卡。小奥秘卡不占槽位，由天赋发到背包 -->
+    <ItemContainer capacity="3" maxstacksize="1">
+      <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer" />
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
@@ -895,7 +898,9 @@
          使用方式与原版完全一致：右键拔销 → 引信烧完（Condition -24/秒 ≈ 4 秒）→ 爆炸。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
 
-      <!-- ===== 没点第 3 档天赋就不该拿到王冠卡 =====
+      <!-- ❌ v0.12.7 已移除下面那段「卡自删」逻辑：实测 target="Character" 下的
+           <RemoveItem /> 不生效，没点天赋照样能拿到卡。现在门禁改回天赋侧。
+           以下保留只为记录踩过的坑。
            卡在「生成瞬间」检查持有者身上的 mcj_arcanum_unlocked 标记：
              没点天赋 → 标记不存在 → 强度按 0 算 → 0 <= 0.5 成立 → 立刻删掉自己 ✓
              点了天赋 → 标记在（强度 1）→ 条件不成立 → 卡保留 ✓
@@ -907,15 +912,6 @@
               RemoveItem 删的是「这颗手榴弹本体」，不会触发 OnBroken，
               所以误删时也不会在手雷堆里殉爆。（原版 32 处 RemoveItem 都这么用）
            ⚠️ 两条都留着：OnSpawn 管生成那一刻，Always 兜底（万一 OnSpawn 不触发）。 -->
-      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional mcj_arcanum_unlocked="lte 0.5" />
-        <RemoveItem />
-      </StatusEffect>
-      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
-        <Conditional mcj_arcanum_unlocked="lte 0.5" />
-        <RemoveItem />
-      </StatusEffect>
-
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="10000" selectionmode="All" />
         <sound file="Content/Items/Weapons/ExplosionDebris1.ogg" range="10000" />
@@ -979,16 +975,7 @@
          使用方式与原版一致：右键拔销 → 引信烧完 → 爆炸修船。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
 
-      <!-- 没点第 3 档天赋就不该拿到王冠卡 —— 同 mcj_card_lord 的自删块，注释见那里 -->
-      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional mcj_arcanum_unlocked="lte 0.5" />
-        <RemoveItem />
-      </StatusEffect>
-      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
-        <Conditional mcj_arcanum_unlocked="lte 0.5" />
-        <RemoveItem />
-      </StatusEffect>
-
+      <!-- ❌ v0.12.7 已移除这段「卡自删」逻辑（原因见 mcj_card_lord 处的注释） -->
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/StunGrenade.ogg" range="2000" />
         <Explosion range="200" force="0.5" smoke="false" flames="false" underwaterbubble="false" sparks="false" />
