@@ -808,75 +808,128 @@
        ============================================================ -->
 
   <Item name="" identifier="mcj_card_lord" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade,mcjarcanumcard"
+        maxstacksize="1" scale="0.5" cargocontaineridentifier="explosivecrate"
+        impactsoundtag="impact_metal_heavy">
     <InventoryIcon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
-    <Body width="28" height="36" density="20" />
+    <Body width="36" height="56" density="30" friction="1.0" angulardamping="20.0" />
 
-    <!-- 王冠之领主 = 一张「本身就能丢出去」的破片手榴弹。
-         结构照抄本模组的命运之轮（以及原版手雷）：
-           落地 → OnImpact 把自身耐久打成 0 → OnBroken 触发爆炸 → 自我删除
-         爆炸数值取原版 fraggrenade 的约六成（原版：range 750 /
-         structuredamage 20 / itemdamage 500 / 爆炸伤害 150 / force 5）。
-         理由：这张卡每 60 秒抽卡循环就会来一张，不能按原版手雷的原价给。
-         觉得太强/太弱就按比例调下面这一组数（保持彼此比例即可）。 -->
-    <Throwable characterusable="false" slots="Any,RightHand,LeftHand"
-               throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-
-      <!-- 落地即炸 -->
-      <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
-
+    <!-- 王冠之领主 = 【原版破片手榴弹 fraggrenade 的完整换皮】。
+         参数逐行照抄 Content/Items/Weapons/weapons.xml:619（引信、爆炸范围、
+         各条 Affliction、拔销粒子与音效全部保留），只改了三处：
+           ① identifier → mcj_card_lord，贴图 → 王冠之领主卡面
+           ② tags 追加 mcjarcanumcard
+           ③ 末尾加一条职业锁 + 一条 60 秒自毁（与其它卡牌同节奏）
+         使用方式与原版完全一致：右键拔销 → 引信烧完（Condition -24/秒 ≈ 4 秒）→ 爆炸。 -->
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnBroken" target="This">
-        <Sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="10000" selectionmode="All" />
-        <Explosion range="450" ballastfloradamage="60" structuredamage="15" levelwalldamage="80"
-                   itemdamage="300" force="3" severlimbsprobability="0.4"
-                   decal="explosion" decalsize="0.5">
-          <Affliction identifier="explosiondamage" strength="90" />
+        <sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="10000" selectionmode="All" />
+        <sound file="Content/Items/Weapons/ExplosionDebris1.ogg" range="10000" />
+        <Explosion range="750.0" ballastfloradamage="100" structuredamage="20" levelwalldamage="140" itemdamage="500" force="5" severlimbsprobability="0.5" decal="explosion" decalsize="0.5">
+          <Affliction identifier="explosiondamage" strength="150" />
+          <Affliction identifier="bleeding" strength="100" />
+          <Affliction identifier="bleeding" strength="50" probability="0.1" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="7" />
         </Explosion>
         <Remove />
       </StatusEffect>
-
-      <!-- 职业锁 -->
+      <!-- 装进引爆器 / 电磁炮炮弹 / 深水炸弹时直接炸，不走引信 -->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- 右键拔销（玩家没拔就帮他拔） -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+      <!-- 职业锁（原版没有，本模组加的） -->
       <StatusEffect type="Always" target="Character" interval="1.0">
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-
-      <!-- 没扔出去就 60 秒后自行消失（与普通卡同一节奏） -->
+      <!-- 没扔出去就 60 秒后自行消失（与其它卡牌同一节奏） -->
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Throwable>
+    <!-- 拔销后开始烧引信：每秒 -24 耐久 → 约 4 秒后自毁爆炸 -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" IsDangerous="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="Content/Items/Weapons/pinpull.ogg" type="OnUse" range="720" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-24">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
   </Item>
 
   <Item name="" identifier="mcj_card_lady" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade,mcjarcanumcard"
+        maxstacksize="1" scale="0.5" cargocontaineridentifier="explosivecrate"
+        impactsoundtag="impact_metal_light">
     <InventoryIcon texture="%ModDir%/Textures/Talents/LadyOfCrowns.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/LadyOfCrowns.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
-    <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：原地一次修复爆炸（负 structuredamage = 封堵/修补船体）
-           会误伤角色与物品的部分全部关掉，只保留修船 -->
-      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true">
-        <Explosion range="250" structuredamage="-40" itemdamage="0" force="0.0"
-                   smoke="false" flames="false" flash="false" sparks="false"
-                   shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
+    <Body width="30" height="62" density="30" friction="1.0" angulardamping="20.0" />
+
+    <!-- 王冠之贵妇 = 【原版固化泡沫手榴弹 fixfoamgrenade 的完整换皮】。
+         参数逐行照抄 Content/Items/Jobgear/Mechanic/mechanic_talent_items.xml:275，
+         包括：修复爆炸 range="1000" structuredamage="-200"、小推挤爆炸、
+         喷淋音效 + fixfoam 粒子、以及更短的引信（每秒 -30 ≈ 3.3 秒）。
+         只改了三处：identifier/贴图、tags 追加 mcjarcanumcard、末尾加职业锁 + 60 秒自毁。
+         使用方式与原版一致：右键拔销 → 引信烧完 → 爆炸修船。 -->
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <sound file="Content/Items/Weapons/StunGrenade.ogg" range="2000" />
+        <Explosion range="200" force="0.5" smoke="false" flames="false" underwaterbubble="false" sparks="false" />
       </StatusEffect>
+      <StatusEffect type="OnBroken" target="This">
+        <Explosion range="1000" force="0.0" camerashake="0" smoke="false" flames="false" flash="false" sparks="false" underwaterbubble="false" structuredamage="-200" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" duration="3.0" soundselectionmode="All">
+        <sound file="Content/Items/Tools/Sprayer.ogg" range="1000" volume="0.5" />
+        <sound file="Content/Items/Tools/FlareLoop.ogg" range="1000" />
+        <ParticleEmitter particle="fixfoam" anglemax="360" velocitymin="4000" velocitymax="4000" particlespersecond="64" />
+        <ParticleEmitter particle="fixfoamgoosplash" anglemax="360" distancemax="10" particlespersecond="60" />
+        <ParticleEmitter particle="fixfoamgoosplash" anglemax="360" distancemax="10" scalemultiplier="2.0,2.0" particlespersecond="20" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+      <!-- 职业锁（原版没有，本模组加的） -->
       <StatusEffect type="Always" target="Character" interval="1.0">
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <!-- 音效 / 粒子照抄原版固化泡沫手榴弹 fixfoamgrenade
-           （Content/Items/Jobgear/Mechanic/mechanic_talent_items.xml:299 附近）：
-           Sprayer.ogg + fixfoamgoosplash 就是原版"修复手雷"的观感。
-           ⚠️ 之前随手写的 Content/Items/Repair/ToolRepairSuccess.ogg 并不存在，
-              游戏会刷 "Failed to load sound file" 报错 ——
-              加音效/贴图/粒子路径前，先用 Test-Path 确认文件真的在 Content 下。 -->
-      <StatusEffect type="OnSecondaryUse" target="This">
-        <Sound file="Content/Items/Tools/Sprayer.ogg" range="1000" volume="0.5" />
-        <ParticleEmitter particle="fixfoamgoosplash" anglemax="360" distancemax="10" particlespersecond="60" />
-      </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <!-- 没扔出去就 60 秒后自行消失 -->
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
-    </Holdable>
+    </Throwable>
+    <!-- 引信：每秒 -30 耐久 → 约 3.3 秒（原版注释写的就是 "shorter fuze time"） -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="Content/Items/Weapons/pinpull.ogg" type="OnUse" range="720" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-30">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
   </Item>
 
 </Items>

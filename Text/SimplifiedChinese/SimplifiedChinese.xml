@@ -190,9 +190,9 @@
     <talentname.mcj_arcanum_minor>小奥秘卡</talentname.mcj_arcanum_minor>
     <talentdescription.mcj_arcanum_minor>抽卡时额外多得到一张小奥秘卡。\n星极抽卡给出‖color:gui.orange‖王冠之领主‖end‖，灵极抽卡给出‖color:gui.orange‖王冠之贵妇‖end‖。</talentdescription.mcj_arcanum_minor>
     <entityname.mcj_card_lord>王冠之领主</entityname.mcj_card_lord>
-    <entitydescription.mcj_card_lord>王冠上燃烧的那一面。直接扔出去，落地即炸。</entitydescription.mcj_card_lord>
+    <entitydescription.mcj_card_lord>王冠上燃烧的那一面。它就是一颗破片手榴弹 —— 拔销、扭出去，引信烧完后炸开。</entitydescription.mcj_card_lord>
     <entityname.mcj_card_lady>王冠之贵妇</entityname.mcj_card_lady>
-    <entitydescription.mcj_card_lady>王冠上垂怜的那一面。按住右键打出，就地封堵周围受损的船体。</entitydescription.mcj_card_lady>
+    <entitydescription.mcj_card_lady>王冠上垂怜的那一面。它就是一颗修复手雷 —— 拔销、扭出去，落点周围大范围封堵船体。</entitydescription.mcj_card_lady>
     <afflictionname.mcj_drew_star>信号·星极抽卡</afflictionname.mcj_drew_star>
     <afflictiondescription.mcj_drew_star>星极抽卡正在生效。</afflictiondescription.mcj_drew_star>
     <afflictionname.mcj_drew_umbral>信号·灵极抽卡</afflictionname.mcj_drew_umbral>
