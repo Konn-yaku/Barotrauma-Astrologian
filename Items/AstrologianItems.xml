@@ -468,6 +468,36 @@
         <Use />
       </StatusEffect>
 
+      <!-- ===== 职业锁：非占星术士拿着就烫手 =====
+           写法参考原版重机枪（Content/Items/Weapons/weapons.xml:1690）──
+           那也是一个 Holdable，用
+             <StatusEffect type="Always" target="Character" SpeedMultiplier="0.75" />
+           给【持有者】上效果，证明 target="Character" 对携带物有效。
+           Conditional 里的 "!" 取反也是原版写法（<Conditional hasstatustag="! xxx" />）。
+           每秒 +20 点烧伤：100 血的角色撑 5 秒 —— 目的是让人根本不敢拿。 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
+      </StatusEffect>
+
+      <!-- ===== 耐久归零 → 变成灵极抽卡，接力下一轮 =====
+           ⚠️⚠️ 这两条必须写在【组件】里，绝对不能直接挂在 <Item> 下面！⚠️⚠️
+           Barotrauma 的 Item 只认组件元素（Holdable / ItemContainer / ItemComponent…）
+           和少数特殊元素（Sprite / Body / Price / Deconstruct…）。
+           看到不认识的元素名（比如 <StatusEffect>）它就会当成组件去反射构造，
+           然后报「Could not find the constructor of the component …」，
+           整个物品预置体创建失败 —— 物品根本刷不出来。
+           后果：六天座每 2 秒判定一次「手上没有抽卡道具」→ 永远不成立 →
+                   无限循环发书 + 无限刷报错。
+
+           原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg，
+                     它的 <Holdable> 里就是
+                        <StatusEffect type="OnBroken" target="This"> … <Remove /> </StatusEffect> -->
+      <StatusEffect type="OnBroken" target="This">
+        <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" />
+        <Remove />
+      </StatusEffect>
+
     </Holdable>
 
     <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
@@ -483,23 +513,6 @@
       <StatusEffect type="OnActive" target="This" Condition="-1" />
     </ItemComponent>
 
-    <!-- ===== 职业锁：非占星术士拿着就烫手 =====
-         写法参考原版重机枪（weapons.xml:1690）——
-         那也是一个 Holdable，用
-           <StatusEffect type="Always" target="Character" SpeedMultiplier="0.75" />
-         给【持有者】上效果，证明 target="Character" 对携带物有效。
-         Conditional 里的 "!" 取反也是原版写法（<Conditional hasstatustag="! xxx" />）。
-         每秒 +20 点烧伤：100 血的角色撑 5 秒 —— 目的是让人根本不敢拿。 -->
-    <StatusEffect type="Always" target="Character" interval="1.0">
-      <Conditional jobidentifier="! mcj_astrologian" />
-      <Affliction identifier="burn" strength="20" />
-    </StatusEffect>
-
-    <!-- 耐久归零 → 变成灵极抽卡，接力下一轮 -->
-    <StatusEffect type="OnBroken" target="This">
-      <SpawnItem identifier="mcj_draw_umbral" count="1" spawnposition="SameInventory" />
-      <Remove />
-    </StatusEffect>
   </Item>
 
   <!-- ===== 抽卡道具 ②：灵极抽卡 ===== -->
@@ -535,6 +548,20 @@
         <Use />
       </StatusEffect>
 
+      <!-- ===== 职业锁：非占星术士拿着就烫手（同星极抽卡） =====
+           ⚠️ 必须写在 <Holdable> 里，不能直接挂 <Item> 下面（原因见星极抽卡处的长注释） -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
+      </StatusEffect>
+
+      <!-- ===== 耐久归零 → 变回星极抽卡，接力下一轮 =====
+           原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg（OnBroken 写在 Holdable 里） -->
+      <StatusEffect type="OnBroken" target="This">
+        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" />
+        <Remove />
+      </StatusEffect>
+
     </Holdable>
 
     <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
@@ -548,18 +575,6 @@
       </StatusEffect>
       <StatusEffect type="OnActive" target="This" Condition="-1" />
     </ItemComponent>
-
-    <!-- ===== 职业锁：非占星术士拿着就烫手（同星极抽卡） ===== -->
-    <StatusEffect type="Always" target="Character" interval="1.0">
-      <Conditional jobidentifier="! mcj_astrologian" />
-      <Affliction identifier="burn" strength="20" />
-    </StatusEffect>
-
-    <!-- 耐久归零 → 变回星极抽卡 -->
-    <StatusEffect type="OnBroken" target="This">
-      <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" />
-      <Remove />
-    </StatusEffect>
   </Item>
 
   <!-- ============================================================
