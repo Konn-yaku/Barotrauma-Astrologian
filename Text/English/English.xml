@@ -185,8 +185,8 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
     <afflictiondescription.mcj_drew_umbral>The Umbral Draw is in effect.</afflictiondescription.mcj_drew_umbral>
     <afflictionname.mcj_roundflag>Round Active</afflictionname.mcj_roundflag>
     <afflictiondescription.mcj_roundflag>Hidden marker: the current round is still running. It disappears when a new round begins.</afflictiondescription.mcj_roundflag>
-    <afflictionname.mcj_reset_done>Deck Already Reset</afflictionname.mcj_reset_done>
-    <afflictiondescription.mcj_reset_done>Hidden marker: this round's deck reset has already happened, so it only happens once per round.</afflictiondescription.mcj_reset_done>
+    <afflictionname.mcj_reset_done>Deck Just Reset</afflictionname.mcj_reset_done>
+    <afflictiondescription.mcj_reset_done>Hidden marker: the draw system was just reset, which prevents it from chaining.</afflictiondescription.mcj_reset_done>
 
     <!-- ── Invisible card signals (only exist for a heartbeat, broadcast by The Six) ── -->
     <afflictionname.mcj_sig_balance>Signal · The Balance</afflictionname.mcj_sig_balance>
