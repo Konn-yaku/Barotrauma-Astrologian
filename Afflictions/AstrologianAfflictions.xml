@@ -506,16 +506,20 @@
        两个「开关标记」—— 都是隐形、没有 duration，靠外部反复施加维持
        ══════════════════════════════════════════════════════════ -->
 
-  <!-- ── 标记 A：小奥秘卡没解锁 ──
-       六天座开局挂上（maxtriggercount=1，只挂一次）；
-       点了第 3 档「小奥秘卡」的话，那个天赋会每 0.5 秒把它清掉 → 于是它变成"不存在"。
+  <!-- ── 标记：小奥秘卡【已】解锁 ──
+       由第 3 档天赋 mcj_arcanum_minor 每 0.5 秒 SET 为 1（目标=自己）。
+       没点那个天赋时它【不存在】，强度按 0 算。
 
-       抽卡书靠 <Conditional mcj_minor_flag="lte 0.1" /> 判断要不要多发一张王冠卡：
-         · 没点第 3 档 → 标记在（强度 1）→ 1 <= 0.1 不成立 → 不发 ✓
-         · 点了第 3 档 → 标记被清掉 → 属性名"不存在"→ 整条条件被跳过 = 判定通过 → 发 ✓
+       王冠卡靠 <Conditional mcj_arcanum_unlocked="lte 0.5" /> 自判：
+         · 已解锁 → 强度 1 → 1 <= 0.5 不成立 → 条件不满足 → 卡留下 ✓
+         · 未解锁 → 不存在 = 0 → 0 <= 0.5 成立 → 卡当场移除 ✓
+       ⚠️ 这个判定【必须】写在 target="Character" 的特效里：
+          条件默认拿【特效的目标实体】解析（targetitemcomponent 那类才是显式覆盖），
+          所以写 target="This,Character" 时会先拿物品去找角色身上的 affliction →
+          找不到 → 强度按 0 算 → 条件恒成立（v0.12.5 那个 bug 的根因）。
        ⚠️ 这正是利用了「<Conditional 不存在的 affliction 名> 会被跳过」这个语义 ——
           所以是【有标记 = 不发】，故意反过来写。 -->
-  <Affliction identifier="mcj_minor_flag"
+  <Affliction identifier="mcj_arcanum_unlocked"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -530,16 +534,19 @@
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 标记 B：本轮有效 ──
-       六天座每 10 秒补一次，一直挂在身上；它【没有 duration】，所以整轮都不会消失。
-       唯一会消失的时刻是巡回结束 —— resetbetweenrounds="true" 会把它清掉。
-       于是「它不见了」= 「新的一轮刚开始」：
-         · 灵极抽卡 → 自己变回星极抽卡（重置抽卡的极，且不会重复发书）
-         · 卡牌 → 因为大多还在书的容器里，会跟着旧书一起消失
+  <!-- ── 标记：本轮进行中 ──
+       由【抽卡书自己】每 5 秒给持有人补一次（不再由六天座维护 —— 原因见天赋文件：
+       六天座在巡回一开始就会把标记补上，那样「缺失窗口」会短到抓不住）。
+       它【没有 duration】，所以整轮都不会消失；
+       唯一会消失的时刻是巡回结束 —— resetbetweenrounds="true" 会把它清空。
+       于是「它不见了（强度 0）」= 「新的一轮刚开始」：
+         · 灵极抽卡 → 自己换回星极抽卡（旧容器里的卡跟着一起消失）
+       判定必须写在 target="Character" 的特效里：条件会拿 target 的第一个实体解析，
+       写成 "This,Character" 会拿物品去查 → 查不到 → 按 0 算 → 恒成立（v0.12.5 的 bug）。
        之所以不做"每张卡自己删自己"：那需要 <Remove /> 出现在 target="Character" 上，
        而原版 263 处 <Remove /> 全部是 target="This"，没有先例，不敢赌。
        ⚠️ 标记 B 必须"一直存在"，否则卡和书会误判成到了新一轮。
-          所以它的重新施加间隔（10 秒）远小于它需要的判定窗口。 -->
+          ⇒ 施加间隔（5 秒）略长于判定间隔（0.5 秒），既保证窗口能抓到，又不会误判。 -->
   <Affliction identifier="mcj_roundflag"
               type="talentbuff"
               isbuff="true"

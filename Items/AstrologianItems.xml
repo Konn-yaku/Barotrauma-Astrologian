@@ -462,6 +462,19 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
+      <!-- ===== 轮次标记 mcj_roundflag =====
+           这本书每 5 秒给持有人补一次标记；标记本身 resetbetweenrounds="true"，
+           所以巡回结束时会被清空 →「它不见了」= 新的一轮刚开始。
+           灵极书靠这个把自己换回星极抽卡（见下面的转换块）。
+           ⚠️ 右键时先补一次（下面这条 OnSecondaryUse 必须排在 ① 抽卡【前面】），
+              否则新一轮刚开始那几秒内抽出来的卡会被误判成「上一轮的残留」。 -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_roundflag" amount="1" />
+      </StatusEffect>
+      <StatusEffect type="Always" target="Character" interval="5.0">
+        <Affliction identifier="mcj_roundflag" amount="1" />
+      </StatusEffect>
+
       <!-- ① 抽卡：只在“还没用过”时有效（IsActive=false） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
@@ -495,19 +508,22 @@
            ⚠️ 必须排在 ② 的 <Use />【前面】：<Use /> 之后 ItemComponent 变成 active，
               这条 IsActive="false" 的守卫就永远失败了 —— 卡发不出，重复右键也拦不住。
 
-           【判定技巧】标记 mcj_minor_flag 的语义是「没解锁」，故意反过来写：
-              · 没点第 3 档 → 标记在（强度 1）→ lte 0.1 不成立 → 不发 ✓
-              · 点了第 3 档 → 天赋每 0.5 秒把它清掉 → 属性名「不存在」→ 整条条件被跳过
-                = 判定通过 → 发 ✓
+           （v0.12.5 的反向标记 mcj_minor_flag 已废弃：那是按「affliction 不存在时
+             整条条件被跳过」的假设写的，实测并不成立 —— 它就是查不到所以恒成立。）
 
-           ⚠️ target 必须写 "This,Character"（双 target）：
-              这样 targetitemcomponent 才算得到物品、affliction 才查得到持有者。
-              只写 "This" 时 affliction 会去物品上找 → 永远不存在 → 条件永远通过（旧 bug）。
-              只写 "Character" 时 targetitemcomponent 没物品可算 → 永远失败（旧 bug）。
-              原版先例：巫女的降神符札。 -->
-      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
+           ⚠️ v0.12.5 的旧结论（已作废，真正原因见下面 ✅）：
+              （这一段已作废，保留只为记录踩过的坑。）
+              结论：<Conditional 某affliction名="..."> 会拿 target 里的第一个实体解析，
+              角色身上的标记写在物品特效里是查不到的 —— 判定必须放在对的目标上。 -->
+      <!-- ✅ v0.12.6 正确写法（上面几行是 v0.12.5 的旧思路，已作废）：
+           抽卡书【只负责把卡放进自己的容器】—— ThisInventory 落位已验证可靠。
+           「有没有点第 3 档天赋」交给【王冠卡自己】在生成瞬间判定（见 mcj_card_lord）。
+
+           为什么不在这里判：<Conditional 某affliction名="..."> 是拿【特效目标里的物品】
+           解析的 —— 写 "This" 或 "This,Character" 都会去物品上找角色身上的标记，
+           找不到就把强度当 0 → 条件恒成立 → 没点天赋也发卡（这就是那个 bug）。 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Conditional mcj_minor_flag="lte 0.1" />
         <SpawnItem identifier="mcj_card_lord" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
       </StatusEffect>
 
@@ -587,6 +603,14 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
+      <!-- 轮次标记：同星极抽卡，每 5 秒补一次（详见那边的长注释） -->
+      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_roundflag" amount="1" />
+      </StatusEffect>
+      <StatusEffect type="Always" target="Character" interval="5.0">
+        <Affliction identifier="mcj_roundflag" amount="1" />
+      </StatusEffect>
+
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -597,23 +621,25 @@
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="200,170,255,255" />
       </StatusEffect>
 
-      <!-- ①b 小奥秘卡信号：用过这本书 → 上 2 秒隐形信号，由第 3 档天赋补「王冠之贵妇」
-           ⚠️⚠️ 必须排在下面 <Use /> 的【前面】—— 原因见星极抽卡处的长注释。 -->
+      <!-- ①b 小奥秘卡（v0.12.6：书只负责把卡放进自己容器，天赋判定见王冠卡的自删块）
+           ⚠️⚠️ 必须排在下面 <Use /> 的【前面】。 -->
       <!-- ①b 小奥秘卡：点了第 3 档才会额外发一张「王冠之贵妇」。
-           ⚠️⚠️ 必须在 <Use /> 之前、target 必须写 "This,Character"
-              —— 两个原因详见星极抽卡处的长注释。 -->
-      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
+           ⚠️⚠️ 必须在 <Use /> 之前（target 用 "This"，条件按物品解析，不在这里判天赋）
+               （v0.12.6 起 target 改回 "This"：条件会拿物品解析，判定已挪到卡自身） -->
+      <!-- ✅ v0.12.6：书只负责往自己容器里发卡；天赋判定见 mcj_card_lady 的自删块。 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Conditional mcj_minor_flag="lte 0.1" />
         <SpawnItem identifier="mcj_card_lady" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
       </StatusEffect>
 
       <!-- ===== 新一轮开始 → 变回星极抽卡 =====
-           标记 mcj_roundflag 由六天座每 10 秒补一次、并且 resetbetweenrounds="true"，
-           所以「它不见了」= 新的一轮刚开始。
-
-           做法：把自己打成 0 耐久，走【已有的 OnBroken】—— 它的内容正好就是
-           「生成一本星极抽卡 + 删除自己」，一举两得。
+           mcj_roundflag 由【这本书自己】每 5 秒补一次，且带 resetbetweenrounds="true"，
+           所以「它不存在了（强度 0）」就是「新的一轮刚开始」。
+           ⚠️ v0.12.6 修正：条件必须写在 target="Character" 的特效里 ——
+              条件的解析对象是 target 里的第一个实体；写成 "This,Character" 会拿【物品】
+              去查 mcj_roundflag → 查不到 → 强度按 0 算 → lte 0.1 恒成立
+              → 每 2 秒就把灵极书换回星极书（看起来像「重置很灵」，其实是牌堆一直在被打回）。
+           下面是 v0.12.5 的旧思路，已作废，保留只为记录踩过的坑。
            ⚠️ 不要在这里直接写 <Remove />：<Remove /> 出现在 target="Character" 上
               原版零先例（263 处全是 target="This"），万一它是删角色就毁了。
               用 Condition 打成破损是最安全的写法（原版 petegg / 巫女的降神符札都这么干）。
@@ -621,9 +647,10 @@
            只让【灵极】书做这个转换（星极书不动）⇒ 一轮开始时手上一定是星极书，
            而且不会像「重新发一本」那样越攒越多。
            旧书被删除时，它容器里还没打出去的卡会跟着一起消失 ✓ -->
-      <StatusEffect type="Always" target="This,Character" interval="2.0" checkconditionalalways="true"
-                    Condition="0" setvalue="true">
+      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
         <Conditional mcj_roundflag="lte 0.1" />
+        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
+        <RemoveItem />
       </StatusEffect>
 
       <!-- 新一轮开始：把「星力」的计数清零 -->
@@ -867,6 +894,28 @@
            ③ 末尾加一条职业锁 + 一条 60 秒自毁（与其它卡牌同节奏）
          使用方式与原版完全一致：右键拔销 → 引信烧完（Condition -24/秒 ≈ 4 秒）→ 爆炸。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+
+      <!-- ===== 没点第 3 档天赋就不该拿到王冠卡 =====
+           卡在「生成瞬间」检查持有者身上的 mcj_arcanum_unlocked 标记：
+             没点天赋 → 标记不存在 → 强度按 0 算 → 0 <= 0.5 成立 → 立刻删掉自己 ✓
+             点了天赋 → 标记在（强度 1）→ 条件不成立 → 卡保留 ✓
+
+           ⚠️ target 必须是 "Character"：条件要拿【角色】解析。
+              写成 "This" / "This,Character" 会拿物品解析 → 找不到标记 → 强度 0
+              → 条件恒成立 → 连点了天赋的卡也会被删掉。
+           ⚠️ 用 <RemoveItem /> 而不是 <Remove />：
+              RemoveItem 删的是「这颗手榴弹本体」，不会触发 OnBroken，
+              所以误删时也不会在手雷堆里殉爆。（原版 32 处 RemoveItem 都这么用）
+           ⚠️ 两条都留着：OnSpawn 管生成那一刻，Always 兜底（万一 OnSpawn 不触发）。 -->
+      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional mcj_arcanum_unlocked="lte 0.5" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
+        <Conditional mcj_arcanum_unlocked="lte 0.5" />
+        <RemoveItem />
+      </StatusEffect>
+
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="10000" selectionmode="All" />
         <sound file="Content/Items/Weapons/ExplosionDebris1.ogg" range="10000" />
@@ -929,6 +978,17 @@
          只改了三处：identifier/贴图、tags 追加 mcjarcanumcard、末尾加职业锁 + 60 秒自毁。
          使用方式与原版一致：右键拔销 → 引信烧完 → 爆炸修船。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+
+      <!-- 没点第 3 档天赋就不该拿到王冠卡 —— 同 mcj_card_lord 的自删块，注释见那里 -->
+      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional mcj_arcanum_unlocked="lte 0.5" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
+        <Conditional mcj_arcanum_unlocked="lte 0.5" />
+        <RemoveItem />
+      </StatusEffect>
+
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/StunGrenade.ogg" range="2000" />
         <Explosion range="200" force="0.5" smoke="false" flames="false" underwaterbubble="false" sparks="false" />

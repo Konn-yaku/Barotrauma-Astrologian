@@ -236,39 +236,22 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!-- ===== 两个开关标记（隐形、无 duration） =====
-         标记 A mcj_minor_flag：「小奥秘卡」没解锁。只挂一次。
-           抽卡书靠 <Conditional mcj_minor_flag="lte 0.1" /> 反向判定要不要发第 4 张；
-           点了第 3 档后，那个天赋每 0.5 秒把它清掉 → 属性名不存在 → 条件被跳过 → 发卡。
+    <!-- ===== v0.12.6：本天赋不再维护任何标记 =====
+         mcj_roundflag 改由【抽卡书自己】每 5 秒补（见物品文件）。
+         为什么不在这里补：六天座在巡回一开始就会把标记补上 →
+         「标记缺失」这个窗口会缩短到看不见 → 牌的轮次重置就永远不会触发。
+         下面两段是 v0.12.5 的说明，已作废。
+         （另一个标记 mcj_minor_flag 已在 v0.12.6 废弃：它想表达「没解锁」，
+           但 <Conditional mcj_minor_flag="lte 0.1" /> 写在 target="This,Character"
+           的特效里时，条件会拿【物品】去解析 → 角色身上的标记永远找不到 →
+           强度按 0 算 → lte 0.1 恒成立 → 没点天赋也发卡。
+           现在改成「已解锁」标记 mcj_arcanum_unlocked，由第 3 档天赋每 0.5 秒
+           挂给自己，判定挪到【王冠卡自己】身上，见物品文件。）
          标记 B mcj_roundflag：「本轮有效」。每 10 秒补一次、本身没有 duration，
            所以整轮都在；只有 resetbetweenrounds="true" 会让它在巡回结束时消失。
            于是「它不见了」= 新的一轮刚开始 → 灵极书自行变回星极书（见物品文件）。
          两个都必须用 ApplyStatusEffects + target="Character"（给自己），
          因为 CharacterAbilityGiveAffliction 的目标是【事件目标】不是自己。 -->
-    <AbilityGroupInterval interval="2.0" maxtriggercount="1">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_minor_flag" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="10.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_roundflag" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
     <!-- ============================================================
          卡牌广播组：把 6 张卡的增益扩散给全队
          ============================================================
@@ -467,14 +450,15 @@
        星极抽卡用过后 → 补一张「王冠之领主」（可以直接丢出去的破片手榴弹）
        灵极抽卡用过后 → 补一张「王冠之贵妇」（原地修复船体）
 
-       【链路：反向标记】（v0.12.5 起，已不再用信号弹中转）
-         六天座开局挂一个【没解锁】标记 mcj_minor_flag（只挂一次）；
-         点出这个天赋 → 天赋每 0.5 秒把标记清掉 → 标记变成「不存在」。
-         抽卡书用 <Conditional mcj_minor_flag="lte 0.1" /> 判定：
-           标记在（没点天赋）→ lte 0.1 不成立 → 不发；
-           标记被清掉（点了天赋）→ 属性名不存在 → 整条条件被跳过 = 通过 → 发。
-         发卡由【物品侧】的 SpawnItem spawnposition="ThisInventory" 完成，
-         于是王冠卡落在书本的第 4 格（天赋侧 PutItem 只能进随身物品栏）。
+【链路：已解锁标记 + 卡自删】（v0.12.6）
+        抽卡书（物品侧）在第一次右键时把王冠卡放进【自己的容器】——
+          spawnposition="ThisInventory"，落位与卡牌自毁都已实测可靠。
+        王冠卡生成的那一刻自检持有者身上的 mcj_arcanum_unlocked：
+          没点天赋 → 标记不存在 → 强度按 0 算 → lte 0.5 成立 → 卡当场用 <RemoveItem /> 删掉自己；
+          点了天赋 → 标记在（本天赋每 0.5 秒给自己挂一次）→ 条件不成立 → 卡留下。
+        ⇒ 没点天赋就绝对拿不到王冠卡，而且卡是落在书本第 4 格，不是随身物品栏。
+        ⚠️ 判定必须在 target="Character" 的特效里：条件的解析对象是 target 的第一个实体，
+           写在物品特效里会拿物品去查，查不到就按 0 算 —— v0.12.5 的 bug 就是这么来的。
 
        ⛔ 为什么不用「物品侧 <Conditional> 判断天赋」：
          试过在书里写 <Conditional mcj_minor_arcana="gte 1" />，
@@ -496,19 +480,24 @@
     <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_arcanum_minor" />
 
-    <!-- 唯一的职责：把「没解锁」标记一直清掉。
-        标记一旦不存在，抽卡书里的 <Conditional mcj_minor_flag="lte 0.1" />
-        就会被跳过 = 判定通过 → 第 4 格的小奥秘卡才会发。
+    <!-- 唯一的职责：给【自己】持续挂一个「已解锁」标记 mcj_arcanum_unlocked。
+        王冠卡一生出来就会检查这个标记（target="Character"，条件按【角色】解析）：
+          标记在（强度 1）→ <Conditional mcj_arcanum_unlocked="lte 0.5" /> 不成立 → 卡留下 ✓
+          没点天赋（标记不存在，强度按 0 算）→ 0 <= 0.5 成立 → 卡当场自己删掉 ✓
+        ⇒ 没点天赋就绝对拿不到王冠卡，而卡仍然落在书本容器的第 4 格。
 
         ⚠️ 发卡本身由【物品】那一侧做（SpawnItem 到书的容器），不在这里发：
-           天赋侧的 PutItem 只能放进随身物品栏，塞不进指定的容器。
-           而物品侧能可靠地判断「有没有天赋」，靠的就是上面那个反向标记。 -->
+           所以发卡仍然由【物品】那一侧做（SpawnItem 到书的容器），
+           天赋这边只负责挂标记 —— 两边各用自己可靠的机制。 -->
     <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_minor_flag" />
-      </Conditions>
       <Abilities>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_minor_flag" amount="999" />
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_arcanum_unlocked" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
