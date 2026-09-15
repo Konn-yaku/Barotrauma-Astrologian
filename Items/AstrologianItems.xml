@@ -484,6 +484,15 @@
         <Use />
       </StatusEffect>
 
+      <!-- ③ 小奥秘卡：点了第 3 档天赋才会额外出一张「王冠之领主」。
+           判断依据是天赋挂的隐形标记 mcj_minor_arcana（物品读不到天赋，
+           只能靠 <Conditional> 读 affliction —— 原版缇拉鞠就是这么用的）。 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional mcj_minor_arcana="gte 1" />
+        <SpawnItem identifier="mcj_card_lord" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+      </StatusEffect>
+
       <!-- ===== 职业锁：非占星术士拿着就烫手 =====
            写法参考原版重机枪（Content/Items/Weapons/weapons.xml:1690）──
            那也是一个 Holdable，用
@@ -516,9 +525,9 @@
 
     </Holdable>
 
-    <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
+    <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
     <ItemContainer capacity="4" maxstacksize="1">
-      <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire" />
+      <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire,mcj_card_lord" />
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
@@ -569,6 +578,13 @@
         <Use />
       </StatusEffect>
 
+      <!-- ③ 小奥秘卡：点了第 3 档天赋才会额外出一张「王冠之贵妇」 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Conditional mcj_minor_arcana="gte 1" />
+        <SpawnItem identifier="mcj_card_lady" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
+      </StatusEffect>
+
       <!-- ===== 职业锁：非占星术士拿着就烫手（同星极抽卡） =====
            ⚠️ 必须写在 <Holdable> 里，不能直接挂 <Item> 下面（原因见星极抽卡处的长注释） -->
       <StatusEffect type="Always" target="Character" interval="1.0">
@@ -585,9 +601,9 @@
 
     </Holdable>
 
-    <!-- 4 个槽：3 张普通卡 + 1 张留给以后的小奥秘卡 -->
+    <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
     <ItemContainer capacity="4" maxstacksize="1">
-      <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer" />
+      <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer,mcj_card_lady" />
     </ItemContainer>
 
     <ItemComponent IsActive="false" CharacterUsable="true">
@@ -623,7 +639,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_balance" strength="1" />
+        <Affliction identifier="mcj_sig_balance" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -648,7 +664,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_arrow" strength="1" />
+        <Affliction identifier="mcj_sig_arrow" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -673,7 +689,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_spire" strength="1" />
+        <Affliction identifier="mcj_sig_spire" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -698,7 +714,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_spear" strength="1" />
+        <Affliction identifier="mcj_sig_spear" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -723,7 +739,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_bole" strength="1" />
+        <Affliction identifier="mcj_sig_bole" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -748,7 +764,7 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
       <!-- 打出：本职 buff + 星力计数 +1 -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_ewer" strength="1" />
+        <Affliction identifier="mcj_sig_ewer" strength="1" />
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -759,6 +775,75 @@
       <StatusEffect type="OnSecondaryUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
+  <!-- ============================================================
+       小奥秘卡（由第 3 档天赋「小奥秘卡」解锁，占书本容器的第 4 格）
+
+       FF14 里这两张是 70 级特性「小奥秘卡精通」才进池的，一攻一守：
+         王冠之领主 Lord of Crowns —— 伤害
+         王冠之贵妇 Lady of Crowns —— 治疗
+       潜渊症没有指向性技能，所以落点是：
+
+         王冠之领主 = 一颗【破片手榴弹】。
+           为什么不直接在自己脚下炸：卡是按住右键从手上打出的，
+           爆炸就炸在自己和队友身上 —— 潜渊症里"脚下的手雷"等于自杀。
+           所以改成把真手雷塞进持有者的背包，扔哪儿由玩家决定。
+           SameInventory = "装着这张卡的那个容器"，也就是使用者的物品栏
+           （抽卡书的接力用的也是这一条，已实测可用）。
+
+         王冠之贵妇 = 一次【修复手雷】效果的爆炸（负 structuredamage 修船体）。
+           修船不需要瞄准，原地生效正好；参数照抄本模组的地星，
+           也就是原版固化泡沫手榴弹 fixfoamgrenade 的已验证写法。
+       ============================================================ -->
+
+  <Item name="" identifier="mcj_card_lord" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：一颗破片手榴弹进背包 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true">
+        <SpawnItem identifier="fraggrenade" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
+      </StatusEffect>
+      <!-- 职业锁 -->
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
+        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="20" scalemin="5.0" scalemax="5.0" colormultiplier="255,120,120,255" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
+      <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
+    </Holdable>
+  </Item>
+
+  <Item name="" identifier="mcj_card_lady" category="Misc"
+        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="%ModDir%/Textures/Talents/LadyOfCrowns.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/Talents/LadyOfCrowns.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- 打出：原地一次修复爆炸（负 structuredamage = 封堵/修补船体）
+           会误伤角色与物品的部分全部关掉，只保留修船 -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true">
+        <Explosion range="250" structuredamage="-40" itemdamage="0" force="0.0"
+                   smoke="false" flames="false" flash="false" sparks="false"
+                   shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
+      </StatusEffect>
+      <StatusEffect type="Always" target="Character" interval="1.0">
+        <Conditional jobidentifier="! mcj_astrologian" />
+        <Affliction identifier="burn" strength="20" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This">
+        <Sound file="Content/Items/Repair/ToolRepairSuccess.ogg" range="1500" />
+        <ParticleEmitter particle="FlareBubbles" scalemin="1.2" scalemax="1.6" particleamount="16" anglemin="0" anglemax="360" velocitymin="0" velocitymax="60" colormultiplier="200,255,220,255" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>

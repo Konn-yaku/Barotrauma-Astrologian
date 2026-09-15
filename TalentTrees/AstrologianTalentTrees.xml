@@ -81,7 +81,10 @@
         <TalentOption identifier="mcj_arcanum_draw" />
       </TalentOptions>
 
-      <!-- 第 3 档：小奥秘卡（待实装，暂不占位） -->
+      <!-- 第 3 档：小奥秘卡 —— 抽卡时额外给一张王冠卡（占第 4 格） -->
+      <TalentOptions>
+        <TalentOption identifier="mcj_arcanum_minor" />
+      </TalentOptions>
 
       <!-- 第 4 档：星力 -->
       <TalentOptions>

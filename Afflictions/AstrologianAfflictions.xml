@@ -163,25 +163,31 @@
        showinhealthscannerthreshold = "1000"（原版 melodicrespite_charging 的写法）。
        ============================================================ -->
 
-  <!-- ===== 太阳神之衡：全队增伤 ===== -->
+  <!-- ===== 太阳神之衡：全队增伤（15 秒） =====
+       真正的增益由「六天座」广播组施加（含自己、无视距离）。 -->
   <Affliction identifier="mcj_balance"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- 对标 TE「暴力军阀 warlord」：AttackMultiplier 0.1→0.5（五层封顶）。
-         本卡是全队常驻（无层数、无时间限制），所以取低一档：基础 0.25，星力后 0.35。 -->
+         ⚠️ 当前仍是【旧的常驻版数值】：改成 15 秒限时后理论上应当上调，
+            但档位等实测手感之后再定。 -->
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="AttackMultiplier" value="0.25" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_balance_boost"
+  <!-- ── 「太阳神之衡」的信号弹 ──
+       卡打出时只给【使用者自己】上这一条 2 秒的隐形标记，
+       真正的团队增益由「六天座」广播组施加（Talents/AstrologianTalents.xml）。
+       这样 6 张卡只需要维护一份数值，不会出现"自己一份、队友一份"的数值漂移。 -->
+  <Affliction identifier="mcj_sig_balance"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -190,26 +196,25 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.10" />
-    </Effect>
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 战争神之枪：全队攻击速度 ===== -->
+  <!-- ===== 战争神之枪：全队攻击速度（15 秒） ===== -->
   <Affliction identifier="mcj_spear"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE：MeleeAttackSpeed 最高 +0.3。本卡是全队常驻，基础取到 0.30 / 0.20 -->
+    <!-- 对标 TE：MeleeAttackSpeed 最高 +0.3。
+         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="MeleeAttackSpeed" value="0.30" />
       <StatValue stattype="RangedAttackSpeed" value="0.20" />
@@ -217,7 +222,8 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_spear_boost"
+  <!-- ── 「战争神之枪」的信号弹 ── -->
+  <Affliction identifier="mcj_sig_spear"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -226,29 +232,26 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="MeleeAttackSpeed" value="0.10" />
-      <StatValue stattype="RangedAttackSpeed" value="0.05" />
-    </Effect>
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 放浪神之箭：全队移动速度与游泳速度 ===== -->
+  <!-- ===== 放浪神之箭：全队移动速度与游泳速度（15 秒） ===== -->
   <Affliction identifier="mcj_arrow"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
-         对标 TE：SwimmingSpeed 最高 +0.3，MovementSpeed +0.1。
-         原版参照：增加行走速度基因 0.10~0.25 / 增加游泳速度基因 0.10~0.50 -->
+         原版参照：增加行走速度基因 0.10~0.25 / 增加游泳速度基因 0.10~0.50
+         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="WalkingSpeed" value="0.25" />
       <StatValue stattype="SwimmingSpeed" value="0.35" />
@@ -256,7 +259,8 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_arrow_boost"
+  <!-- ── 「放浪神之箭」的信号弹 ── -->
+  <Affliction identifier="mcj_sig_arrow"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -265,27 +269,25 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.10" />
-      <StatValue stattype="SwimmingSpeed" value="0.10" />
-    </Effect>
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 世界树之干：全队伤害抗性 ===== -->
+  <!-- ===== 世界树之干：全队伤害抗性（15 秒） ===== -->
   <Affliction identifier="mcj_bole"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE：`easyturtle` 0.2 / `stonewall` 0.2→0.4。全队常驻取 0.25，星力后 0.35 -->
+    <!-- 对标 TE：`easyturtle` 0.2 / `stonewall` 0.2→0.4。原版 resistancefor="damage" 上限 0.5。
+         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="damage"
@@ -294,7 +296,8 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_bole_boost"
+  <!-- ── 「世界树之干」的信号弹 ── -->
+  <Affliction identifier="mcj_sig_bole"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -303,30 +306,27 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1"
-            strengthchange="0"
-            resistancefor="damage"
-            minresistance="0.10"
-            maxresistance="0.10" />
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 建筑神之塔：全队修理速度与修船壳速度 ===== -->
+  <!-- ===== 建筑神之塔：全队修理速度与修船壳速度（15 秒） ===== -->
   <Affliction identifier="mcj_spire"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- RepairSpeed = 通用修理速度（机械 + 电器一起覆盖）
          RepairToolStructureRepairMultiplier = 修船壳速度
-         原版工程师天赋 stationengineer 是 0.50 / 0.50，本卡取 0.35 / 0.35，星力后 0.45 / 0.45 -->
+         原版工程师天赋 stationengineer 是 0.50 / 0.50
+         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1">
       <StatValue stattype="RepairSpeed" value="0.35" />
       <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.35" />
@@ -334,7 +334,8 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_spire_boost"
+  <!-- ── 「建筑神之塔」的信号弹 ── -->
+  <Affliction identifier="mcj_sig_spire"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -343,27 +344,25 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="RepairSpeed" value="0.10" />
-      <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.10" />
-    </Effect>
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 河流神之瓶：全队氧气消耗 ===== -->
+  <!-- ===== 河流神之瓶：全队氧气消耗（15 秒） ===== -->
   <Affliction identifier="mcj_ewer"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 原版参照：减氧消耗基因 0.20~1.00；对标 TE 取 0.25（星力后 0.35） -->
+    <!-- 原版参照：减氧消耗基因 0.20~1.00
+         ⚠️ 当前仍是【旧的常驻版数值】，档位待 15 秒版本实测后再定 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="oxygenlow"
@@ -372,7 +371,8 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="mcj_ewer_boost"
+  <!-- ── 「河流神之瓶」的信号弹 ── -->
+  <Affliction identifier="mcj_sig_ewer"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -381,14 +381,10 @@
               showinhealthscannerthreshold="1000"
               limbspecific="false"
               maxstrength="1"
-              resetbetweenrounds="true"
+              duration="2"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1"
-            strengthchange="0"
-            resistancefor="oxygenlow"
-            minresistance="0.10"
-            maxresistance="0.10" />
+    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -506,6 +502,25 @@
           无法写 permanent stat（那是天赋专属能力）。
           代价：这个进度不会显示在天赋面板上。
        ============================================================ -->
+  <!-- ── 「小奥秘卡」天赋的隐形标记 ──
+       第 3 档天赋每 2 秒重施一次；抽卡书靠
+       <Conditional mcj_minor_arcana="gte 1" /> 判断要不要开第 4 格。
+       没有 duration → 一直挂在身上。 -->
+  <Affliction identifier="mcj_minor_arcana"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              showiconthreshold="1000"
+              showicontoothersthreshold="1000"
+              showinhealthscannerthreshold="1000"
+              limbspecific="false"
+              maxstrength="1"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
   <Affliction identifier="mcj_played"
               type="talentbuff"
               isbuff="true"

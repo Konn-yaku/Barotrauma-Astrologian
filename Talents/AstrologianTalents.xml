@@ -236,6 +236,122 @@
       </Abilities>
     </AbilityGroupInterval>
 
+    <!-- ============================================================
+         卡牌广播组：把 6 张卡的增益扩散给全队
+         ============================================================
+         链路：卡打出（物品）→ 只给使用者上一个 2 秒的「信号弹」affliction
+               → 这里每 0.5 秒轮询一次，看到信号就广播真 buff，然后把信号清掉。
+
+         【为什么必须挂在天赋里，不能靠卡自己】
+           物品拿不到 CharacterAbilityApplyStatusEffectsToAllies。
+           而卡自己写 target="NearbyCharacters" 既没有队伍过滤（会顺手给敌人上 buff）、
+           又有距离限制，做不到"全队、无视距离"。
+
+         【为什么用信号弹，而不是直接检测 buff 本身】
+           如果直接检测 mcj_balance，buff 还在的 15 秒里会被每 0.5 秒重新广播一次，
+           等于把 15 秒续成永久。信号弹是"即用即清"的，天生不会反复触发。
+
+         【maxdistance="200000" + allowself="true"】
+           与第 4 档「星力」完全同一写法（星力已实测：全船都能吃到增益）。
+           allowself 让施术者自己也吃到 → "只给自己"和"给全队"是同一份数值，
+           不会出现两套数字互相漂移。
+         ============================================================ -->
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_balance" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_balance" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_balance" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_spear" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spear" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_spear" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_arrow" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_arrow" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_arrow" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_bole" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_bole" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_bole" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_spire" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_spire" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_spire" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupInterval interval="0.5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_ewer" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_ewer" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_ewer" amount="999" />
+      </Abilities>
+    </AbilityGroupInterval>
+
     <!-- 解锁配方：书丢了可以自己花 1 个塑料重做一本，把循环拉回来。
          这是"没有某物品"表达不出来的替代方案（见上方长注释）。
          写法照原版机械师天赋 hullfixer，物品那边配 requiresrecipe="true"。 -->
@@ -313,7 +429,33 @@
   </Talent>
 
   <!-- ============================================================
-       第 3 档 · 星力 —— 一轮 3 张卡全部打出后，给全队的群体增益
+       第 3 档 · 小奥秘卡 —— 抽卡时额外给一张王冠卡
+       ============================================================
+       星极抽卡 → 多一张「王冠之领主」（破片手榴弹）
+       灵极抽卡 → 多一张「王冠之贵妇」（修复手雷）
+       两张王冠卡占书本容器的第 4 格（前 3 格是普通卡）。
+
+       【怎么让"点了这个天赋才发第 4 张"生效】
+         物品读不到天赋，但 <Conditional> 能读角色身上的 affliction
+         （原版缇拉鞠就是这么用的：<Conditional XXJ_tz="lte 0.1" />）。
+         所以这个天赋只做一件事：给玩家挂一个隐形的永久标记 mcj_minor_arcana；
+         抽卡书那边再写一条 <Conditional mcj_minor_arcana="gte 1" /> 来开第 4 格。
+
+         ⚠️ 这个标记没有 duration —— 靠每 2 秒重施维持，
+            setvalue 让它恒等于 1，重复施加无副作用。
+       ============================================================ -->
+  <Talent identifier="mcj_arcanum_minor">
+    <Icon texture="%ModDir%/Textures/Talents/LordOfCrowns.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_arcanum_minor" />
+    <AbilityGroupInterval interval="2.0">
+      <Abilities>
+        <CharacterAbilityGiveAffliction affliction="mcj_minor_arcana" strength="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <!-- ============================================================
+       第 4 档 · 星力 —— 一轮 3 张卡全部打出后，给全队的群体增益
 
        【怎么数"打出了几张卡"】
          · 每打出一张卡 → 角色获得 mcj_played +1（上限 3）

@@ -171,4 +171,28 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentdescription.mcj_malefic>You deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
-</infotexts>
+
+    <!-- ── Tier 3 · Minor Arcana ── -->
+    <talentname.mcj_arcanum_minor>Minor Arcana</talentname.mcj_arcanum_minor>
+    <talentdescription.mcj_arcanum_minor>Every draw yields one extra minor arcana, filling the fourth slot of the deck.\nAstral Draw grants the ‖color:gui.orange‖Lord of Crowns‖end‖, Umbral Draw the ‖color:gui.orange‖Lady of Crowns‖end‖.</talentdescription.mcj_arcanum_minor>
+    <entityname.mcj_card_lord>The Lord of Crowns</entityname.mcj_card_lord>
+    <entitydescription.mcj_card_lord>The burning face of the crown. Hold it and press use to add a frag grenade to your inventory.</entitydescription.mcj_card_lord>
+    <entityname.mcj_card_lady>The Lady of Crowns</entityname.mcj_card_lady>
+    <entitydescription.mcj_card_lady>The merciful face of the crown. Hold it and press use to seal the damaged hull around you.</entitydescription.mcj_card_lady>
+    <afflictionname.mcj_minor_arcana>Minor Arcana</afflictionname.mcj_minor_arcana>
+    <afflictiondescription.mcj_minor_arcana>You have mastered the minor arcana.</afflictiondescription.mcj_minor_arcana>
+
+    <!-- ── Invisible card signals (only exist for a heartbeat, broadcast by The Six) ── -->
+    <afflictionname.mcj_sig_balance>Signal · The Balance</afflictionname.mcj_sig_balance>
+    <afflictionname.mcj_sig_spear>Signal · The Spear</afflictionname.mcj_sig_spear>
+    <afflictionname.mcj_sig_arrow>Signal · The Arrow</afflictionname.mcj_sig_arrow>
+    <afflictionname.mcj_sig_bole>Signal · The Bole</afflictionname.mcj_sig_bole>
+    <afflictionname.mcj_sig_spire>Signal · The Spire</afflictionname.mcj_sig_spire>
+    <afflictionname.mcj_sig_ewer>Signal · The Ewer</afflictionname.mcj_sig_ewer>
+    <afflictiondescription.mcj_sig_balance>An arcanum is taking effect.</afflictiondescription.mcj_sig_balance>
+    <afflictiondescription.mcj_sig_spear>An arcanum is taking effect.</afflictiondescription.mcj_sig_spear>
+    <afflictiondescription.mcj_sig_arrow>An arcanum is taking effect.</afflictiondescription.mcj_sig_arrow>
+    <afflictiondescription.mcj_sig_bole>An arcanum is taking effect.</afflictiondescription.mcj_sig_bole>
+    <afflictiondescription.mcj_sig_spire>An arcanum is taking effect.</afflictiondescription.mcj_sig_spire>
+    <afflictiondescription.mcj_sig_ewer>An arcanum is taking effect.</afflictiondescription.mcj_sig_ewer>
+  </infotexts>

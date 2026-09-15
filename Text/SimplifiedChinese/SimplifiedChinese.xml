@@ -185,4 +185,28 @@
   <talentdescription.mcj_malefic>你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_malefic>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>你的命理与他人交织，伤势正在缓缓消退。</afflictiondescription.mcj_synastry>
-</infotexts>
+
+    <!-- ── 第 3 档 · 小奥秘卡 ── -->
+    <talentname.mcj_arcanum_minor>小奥秘卡</talentname.mcj_arcanum_minor>
+    <talentdescription.mcj_arcanum_minor>抽卡时额外多抽一张小奥秘卡，占用书本的第 4 格。\n星极抽卡给出‖color:gui.orange‖王冠之领主‖end‖，灵极抽卡给出‖color:gui.orange‖王冠之贵妇‖end‖。</talentdescription.mcj_arcanum_minor>
+    <entityname.mcj_card_lord>王冠之领主</entityname.mcj_card_lord>
+    <entitydescription.mcj_card_lord>王冠上燃烧的那一面。按住右键打出，背包里会多出一颗破片手榴弹。</entitydescription.mcj_card_lord>
+    <entityname.mcj_card_lady>王冠之贵妇</entityname.mcj_card_lady>
+    <entitydescription.mcj_card_lady>王冠上垂怜的那一面。按住右键打出，就地封堵周围受损的船体。</entitydescription.mcj_card_lady>
+    <afflictionname.mcj_minor_arcana>小奥秘卡</afflictionname.mcj_minor_arcana>
+    <afflictiondescription.mcj_minor_arcana>你已掌握小奥秘卡。</afflictiondescription.mcj_minor_arcana>
+
+    <!-- ── 卡牌的隐形信号弹（只在打出一瞬间存在，由六天座广播给全队） ── -->
+    <afflictionname.mcj_sig_balance>信号·太阳神之衡</afflictionname.mcj_sig_balance>
+    <afflictionname.mcj_sig_spear>信号·战争神之枪</afflictionname.mcj_sig_spear>
+    <afflictionname.mcj_sig_arrow>信号·放浪神之箭</afflictionname.mcj_sig_arrow>
+    <afflictionname.mcj_sig_bole>信号·世界树之干</afflictionname.mcj_sig_bole>
+    <afflictionname.mcj_sig_spire>信号·建筑神之塔</afflictionname.mcj_sig_spire>
+    <afflictionname.mcj_sig_ewer>信号·河流神之瓶</afflictionname.mcj_sig_ewer>
+    <afflictiondescription.mcj_sig_balance>奥秘卡正在生效。</afflictiondescription.mcj_sig_balance>
+    <afflictiondescription.mcj_sig_spear>奥秘卡正在生效。</afflictiondescription.mcj_sig_spear>
+    <afflictiondescription.mcj_sig_arrow>奥秘卡正在生效。</afflictiondescription.mcj_sig_arrow>
+    <afflictiondescription.mcj_sig_bole>奥秘卡正在生效。</afflictiondescription.mcj_sig_bole>
+    <afflictiondescription.mcj_sig_spire>奥秘卡正在生效。</afflictiondescription.mcj_sig_spire>
+    <afflictiondescription.mcj_sig_ewer>奥秘卡正在生效。</afflictiondescription.mcj_sig_ewer>
+  </infotexts>
