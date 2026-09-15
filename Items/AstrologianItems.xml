@@ -463,15 +463,20 @@
               msg="ItemMsgPickUpSelect">
 
       <!-- ===== 轮次标记 mcj_roundflag =====
-           这本书每 5 秒给持有人补一次标记；标记本身 resetbetweenrounds="true"，
-           所以巡回结束时会被清空 →「它不见了」= 新的一轮刚开始。
-           灵极书靠这个把自己换回星极抽卡（见下面的转换块）。
-           ⚠️ 右键时先补一次（下面这条 OnSecondaryUse 必须排在 ① 抽卡【前面】），
-              否则新一轮刚开始那几秒内抽出来的卡会被误判成「上一轮的残留」。 -->
+           标记带 resetbetweenrounds="true"，巡回结束时会被清空，
+           于是「它不见了（强度 0）」= 新的一轮刚开始 —— 灵极书靠这个换回星极抽卡。
+           三条一起用：出生补、右键补、每 30 秒补。
+           ⚠️ 补的间隔要【足够长】（30 秒）：间隔太短时，标记刚被巡回清掉就又被补上，
+             灵极书 0.5 秒一次的判定根本抓不到那个「缺失窗口」→ 轮次重置永不触发。
+           ⚠️ 右键补那一条必须排在 ① 抽卡【前面】（同一事件内按 XML 顺序执行），
+             否则新一轮刚开始那几秒抽出来的卡会被误判成「上一轮的残留」。 -->
+      <StatusEffect type="OnSpawn" target="Character" disabledeltatime="true">
+        <Affliction identifier="mcj_roundflag" amount="1" />
+      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_roundflag" amount="1" />
       </StatusEffect>
-      <StatusEffect type="Always" target="Character" interval="5.0">
+      <StatusEffect type="Always" target="Character" interval="30.0">
         <Affliction identifier="mcj_roundflag" amount="1" />
       </StatusEffect>
 
@@ -605,11 +610,10 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
-      <!-- 轮次标记：同星极抽卡，每 5 秒补一次（详见那边的长注释） -->
+      <!-- 轮次标记不在这里补：灵极书自己补的话，巡回刚清空就会被它自己补上，
+           0.5 秒一次的判定永远抓不到「缺失窗口」。补标记的活儿交给星极书。
+           （这里只在【右键】时补一下：那说明玩家正在用它，属于本轮中段，安全。） -->
       <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_roundflag" amount="1" />
-      </StatusEffect>
-      <StatusEffect type="Always" target="Character" interval="5.0">
         <Affliction identifier="mcj_roundflag" amount="1" />
       </StatusEffect>
 
@@ -649,10 +653,20 @@
            只让【灵极】书做这个转换（星极书不动）⇒ 一轮开始时手上一定是星极书，
            而且不会像「重新发一本」那样越攒越多。
            旧书被删除时，它容器里还没打出去的卡会跟着一起消失 ✓ -->
-      <StatusEffect type="Always" target="Character" interval="0.5" checkconditionalalways="true">
-        <Conditional mcj_roundflag="lte 0.1" />
-        <SpawnItem identifier="mcj_draw_star" count="1" spawnposition="SameInventory" SpawnIfInventoryFull="true" />
-        <RemoveItem />
+      <!-- ✅ v0.12.8 正确写法（上面那几段注释都是旧思路，已作废）：
+           不能在这条特效里「直接生成星极书 + 删自己」——<RemoveItem /> 在
+           target="Character" 下无效（原版 32 处 RemoveItem 全是 target="This" /
+           This,Character / 不写 target，没有只写 Character 的），结果灵极书删不掉、
+           每 0.5 秒刷一本星极书 —— 就是「进入新巡回后刷出大量星极抽卡」那个 bug。
+           现在改成：把书自己的耐久打到 0（Condition/setvalue 必须配 target="This"），
+           走它【已有的 OnBroken】—— 那里面正好是「生成星极抽卡 + <Remove /> 自己」。
+           条件用 TargetContainer / TargetGrandparent 选择器指到【持有人】：
+             原版 divinggear.xml 就是从「氧气瓶」这样去查角色的 IsDead / NeedsAir 的。
+           ✔ 安全属性：就算条件判定不如预期，最坏也只是「耐久被设成 0 → 换成星极书」，
+              不会像上一版那样无限生成。 -->
+      <StatusEffect type="Always" target="This" interval="0.5" checkconditionalalways="true"
+                    Condition="0" setvalue="true">
+        <Conditional TargetContainer="true" TargetGrandparent="true" mcj_roundflag="lte 0.1" />
       </StatusEffect>
 
       <!-- 新一轮开始：把「星力」的计数清零 -->
@@ -681,7 +695,6 @@
 
     </Holdable>
 
-    <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
     <!-- 3 个卡槽（v0.12.7 起）：3 张普通卡。小奥秘卡不占槽位，由天赋发到背包 -->
     <ItemContainer capacity="3" maxstacksize="1">
       <Containable items="mcj_card_spear,mcj_card_bole,mcj_card_ewer" />
