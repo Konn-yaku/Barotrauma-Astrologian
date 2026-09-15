@@ -482,7 +482,6 @@
 
       <!-- ① 抽卡：只在“还没用过”时有效（物品 IsActive=false 且 角色闩不在） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <SpawnItem identifier="mcj_card_balance" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_arrow"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -530,7 +529,6 @@
               → 条件恒成立 → 没点天赋也发卡。v0.12.5、v0.12.6 两次都栽在这里。
            代价：天赋侧的 PutItem 只能放进随身物品栏，所以王冠卡不占卡槽（卡槽已缩到 3 格）。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_drew_star" strength="1" />
       </StatusEffect>
@@ -643,7 +641,6 @@
       </StatusEffect>
 
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_bole"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -660,7 +657,6 @@
                （v0.12.6 起 target 改回 "This"：条件会拿物品解析，判定已挪到卡自身） -->
       <!-- ✅ v0.12.7：书只给持有人发 2 秒信号 mcj_drew_umbral，由第 3 档天赋发卡（详见星极抽卡处）。 -->
       <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <Affliction identifier="mcj_drew_umbral" strength="1" />
       </StatusEffect>

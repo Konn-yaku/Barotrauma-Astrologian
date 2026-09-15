@@ -232,7 +232,7 @@
       </Conditions>
       <Abilities>
         <CharacterAbilityPutItem itemidentifier="mcj_draw_star" amount="1" />
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_six_given" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="mcj_six_given" value="1" setvalue="true" removeondeath="false" />
       </Abilities>
     </AbilityGroupInterval>
 
