@@ -1,4 +1,4 @@
-# Astrologian 占星术士
+# Astrologian 占星术士(未完成)
 
 《潜渊症》(Barotrauma) 的职业模组。加入一个以《最终幻想14》**占星术士**（Astrologian）为主题的治疗职业，
 职业定位取自原版**医生**（Medical Doctor）。
@@ -244,3 +244,8 @@ Astrologian/
 
 - [Talent Enhancement 天赋增强](https://steamcommunity.com/sharedfiles/filedetails/?id=2803561945)（天赋树结构风格）
 - [Toxicologist Job](https://steamcommunity.com/sharedfiles/filedetails/?id=2993275947)
+
+## TODO
+移除重力的眩晕抗性，调整为其他效果
+世界树之干的眩晕抗性buff能否与战斗兴奋剂的互相冲突？
+天星交错，效果改为与医生的维生素补充剂效果相同（对盟友施药后，该盟友获得 20% 生命加成，直到巡回结束。）
