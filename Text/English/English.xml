@@ -179,7 +179,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_primary_gravity>Gravity</afflictionname.mcj_primary_gravity>
   <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖30‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
   <afflictionname.mcj_exaltation>Exaltation</afflictionname.mcj_exaltation>
-  <afflictiondescription.mcj_exaltation>The stars watch over an unbroken crew: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_exaltation>
+  <afflictiondescription.mcj_exaltation>The stars walk beside you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_exaltation>
 
   <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖10‖end‖ stacks (‖color:gui.green‖100‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
 
@@ -209,7 +209,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>A pitcher of endless water. Hold it and press use to reduce the whole crew's oxygen consumption.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
-  <talentdescription.mcj_primary_divination>While no crew member has fallen, you take ‖color:gui.green‖10‖end‖% less ‖color:gui.orange‖damage‖end‖.\nOnce someone falls, the stars withdraw their protection.</talentdescription.mcj_primary_divination>
+  <talentdescription.mcj_primary_divination>While a crewmate is within ‖color:gui.green‖600‖end‖ units, you take ‖color:gui.green‖10‖end‖% less ‖color:gui.orange‖damage‖end‖.\nThe stars only shine for those who walk together — the protection fades when you are alone.</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
 

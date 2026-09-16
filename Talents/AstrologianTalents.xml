@@ -1097,17 +1097,22 @@
             所以「什么条件下生效」必须由我们自己设计。
 
        【效果】受到的伤害 **−10%**（= FF14 原值）。
-       【条件】**没有船员阵亡时**（AbilityConditionNoCrewDied）。
-         ⇒ 队伍完整时星象护佑你；一旦有人牺牲，这层庇泽随之消失。
+       【条件】**600 范围内有队友时**（AbilityConditionAllyNearby）。
+         ⇒ 身边有人，星象才为你闪耀；独自行动时这层守护消失。
+         ⚠️ 2026-09-16 用户改定：原本用 AbilityConditionNoCrewDied（没有船员阵亡时），
+            改成「附近有队友」—— 条件**放宽**了（约 85% 时间成立），
+            但给这个初级树位子留下了一个真实的取舍：落单时没有减伤。
 
        【原版对照（2026-09-16 读原文核对）】
          · 机械师 `foolhardy`（brawler 专精 3 档）= 活力 ≤50% → damage −20%
          · 船长  `lonewolf`（gunslinger 专精 2 档）= 2000 内无队友 → damage,stun −20% + 近战 +20%
          · 机械师 `mudraptorwrestler`（brawler 专精 2 档）= **无条件** → damage −10%（+ 对泥鳄近战 +50%）
-         · 船长  `camaraderie`（**初级树**）= 同一条件 AbilityConditionNoCrewDied
-                 → 给**全队（含自己）** 挂 camaraderie（5% 减伤）+ 全队 +10% XP
-         ⇒ 我们的条件与 `camaraderie` **完全相同**，位置同为**初级树**；
-           差别是它「全队 5%」、我们「只给自己 10%」—— **用覆盖面换数值**，量级相当。
+         · 船长  `lonewolf`（gunslinger 专精 2 档）= **2000 内【没有】队友** → damage,stun −20% + 近战 +20%
+         · 船长  `camaraderie`（**初级树**）= 没有船员阵亡时 → 给**全队（含自己）** 挂 5% 减伤 + 全队 +10% XP
+         ⇒ **我们与 `lonewolf` 正好互为镜像**：
+             它   = 周围【没有】队友 → `damage,stun` **−20%** + 近战 +20%
+             我们 = 周围【有】队友   → `damage` **−10%**，且**无任何附加项**
+           ⇒ 数值只有它的一半，而且它多送眩晕抗性与近战伤害 ⇒ **严格更弱**。
          ⇒ 数值等于 `mudraptorwrestler` 的 −10%，但它是**无条件**的，
            我们多了一道条件 ⇒ 更弱。
          ⇒ 而 foolhardy / lonewolf / mudraptorwrestler **全在专精树**，
@@ -1126,13 +1131,22 @@
     <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_divination" />
 
-    <!-- 写法照抄原版船长 camaraderie（Content/Talents/Captain/TalentsCaptain.xml）：
+    <!-- 结构照抄原版船长 camaraderie（Content/Talents/Captain/TalentsCaptain.xml）：
          interval + 条件 → 挂 buff。
          区别：camaraderie 用 ApplyStatusEffectsToAllies（全队），
-               我们去掉 ToAllies ⇒ 只作用于天赋持有者。 -->
+               我们去掉 ToAllies ⇒ 只作用于天赋持有者。
+
+         条件 AbilityConditionAllyNearby 的写法来自原版船长 lonewolf
+         （它写的是 distance="2000" truthywhen="NoCharacterMatches"）：
+           · truthywhen 的类型是枚举 NearbyCharacterTruthy，
+             成员两个：OneCharacterMatches / NoCharacterMatches
+           · 原版【显式写出】NoCharacterMatches ⇒ 说明它不是默认值
+             ⇒ 默认值就是 OneCharacterMatches（= 有角色在范围内时条件成立）
+           ⇒ 我们显式写 truthywhen="OneCharacterMatches"（比依赖默认值安全；
+             万一枚举名不被识别，游戏也会回落到默认值 = 同一个语义）。 -->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionNoCrewDied />
+        <AbilityConditionAllyNearby distance="600" truthywhen="OneCharacterMatches" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
