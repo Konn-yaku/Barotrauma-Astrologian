@@ -33,7 +33,7 @@
     <!-- ================= 初级：通用医疗兵基本功 + 占星专属 =================
          2026-09-16 结构改版 + 效果定稿：
            第 1 行：星图 / 星位合图 / 光速 / 待设计（占位）/ 康复
-           第 2 行：本轮 / 星极 / 重力 / 生辰 / 擢升
+           第 2 行：本轮 / 星极 / 重力 / 生辰 / 待设计 II（占位）
          【本轮效果全部重写过，不再有任何一项是原版医生的拷贝】——
            光速：删掉了「队友拖拽不减速」（与「本轮」重复），只剩“有人昏迷时自己 +40% 移速”
            康复：由「即刻咏唱」改名而来，效果改成原版 medicalexpertise 的绷带强化
@@ -44,6 +44,10 @@
 
          ⚠️ 初级树第 2 行第 5 位原本叫「占卜」，那个名字已让给第三栏的终档
             （FF14 的 Divination 就是全队增伤），这一位现在也是占位天赋。
+         2026-09-16 二次变更：这一位上的「擢升」搬去了「占星魔法第 2 档」
+            （ID 由 mcj_primary_divination 改为 mcj_exaltation），
+            位子重新空出来 ⇒ 恢复为占位天赋 mcj_primary_placeholder2
+            （名字「待设计 II」/「To Be Designed II」）。
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
@@ -60,7 +64,7 @@
         <TalentOption identifier="mcj_primary_astral" />
         <TalentOption identifier="mcj_primary_starsounding" />
         <TalentOption identifier="mcj_primary_ascend" />
-        <TalentOption identifier="mcj_primary_divination" />
+        <TalentOption identifier="mcj_primary_placeholder2" />
       </TalentOptions>
 
     </SubTree>
@@ -110,7 +114,7 @@
          2026-09-16 定稿：
            第 1 档 吉星相位：施药给队友 10 秒持续缓愈（白昼相 · 单体）
            第 2 档二选一：先天禀赋（低血治疗 ×1.5）
-                          / 待设计 III（占位；原「天星交错」）
+                          / 擢升（600 内有队友时承伤 −15%；2026-09-16 从初级树搬来）
            第 3 档 阳星合相：600 内低血船员自动愈合（白昼相 · 范围）
            第 4 档 中间学派：两相同存（Neutral Sect）
                  · 给吉星相位补一份【单体黑夜相】= 施药时 +20% 生命上限、持续到巡回结束
@@ -118,7 +122,9 @@
                  （后者的数值与原版医生 genetampering 完全相同，只多了 600 距离限制）
 
          ⇒ 白昼相（回复）由 1/3 档提供，黑夜相（生命上限）由 4 档给两个相各补一份。
-         ⚠️ 原「天星交错」的效果已整体移交给中间学派，天赋位改为占位。
+         ⚠️ 原「天星交错」的效果已整体移交给中间学派。它的天赋位（第 2 档）
+            现在给「擢升」——FF14 里擢升与先天禀赋同为占星术士常用的能力技，
+            放在同一档二选一最自然。
          天赋实现见 Talents/AstrologianTalents.xml
          状态实现见 Afflictions/AstrologianAfflictions.xml -->
     <SubTree identifier="mcj_path_healing" type="specialization"
@@ -128,10 +134,10 @@
         <TalentOption identifier="mcj_celestialopposition" />
       </TalentOptions>
 
-      <!-- 第 2 档：二选一 —— 先天禀赋 / 天星交错 -->
+      <!-- 第 2 档：二选一 —— 先天禀赋 / 擢升 -->
       <TalentOptions requiredtalents="1" maxchosentalents="2">
         <TalentOption identifier="mcj_essentialdignity" />
-        <TalentOption identifier="mcj_primary_celestialopposition" />
+        <TalentOption identifier="mcj_exaltation" />
       </TalentOptions>
 
       <!-- 第 3 档：阳星合相 -->

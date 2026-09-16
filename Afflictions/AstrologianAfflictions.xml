@@ -123,8 +123,9 @@
     <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- 擢升 · 队伍完整时的护佑（2026-09-16 新增）
-       来源天赋：mcj_primary_divination（初级树第 2 行第 5 位）
+  <!-- 擢升 · 星象同行（2026-09-16 新增，同日随天赋搬到占星魔法第 2 档）
+       来源天赋：mcj_exaltation（占星魔法第 2 档，与「先天禀赋」二选一；
+                 2026-09-16 之前挂在初级树的 mcj_primary_divination 上）
 
        形状完全克隆原版机械师「蛮牛」foolhardy 的 affliction
        （Content/Talents/Mechanic/AfflictionsMechanic.xml）：
@@ -133,11 +134,17 @@
        天赋侧每 0.9 秒刷新一次 ⇒ 条件一旦不满足，最多 1 秒后自动消失。
 
        ⚠️ 数值记法：resistancefor 的 min/max = **抗性本身**，
-          0.1 = 减 10%。（而 CharacterAbilityGiveResistance 的
-          multiplier 是承伤倍率，那边要写 0.9。两套反着写。）
-       ⚠️ 数值来源：FF14 擢升 Exaltation 原值就是 10%。
-          原版锚点：机械师 mudraptorwrestler（**无条件** −10%）、
-                   船长 camaraderie（同条件、全队 5%）。
+          0.15 = 减 15%。（而 CharacterAbilityGiveResistance 的
+          multiplier 是承伤倍率，那边要写 0.85。两套反着写。）
+       ⚠️ 数值来源：用户 2026-09-16 定稿 15%（不是 FF14 原值的 10%）。
+          理由：位子从初级树搬到「占星魔法第 2 档（二选一）」⇒ 机会成本上升，
+                而 10% 打不过同档的「先天禀赋」⇒ 会变成陷阱选项。
+          原版锚点（都是专精 2 档）：
+            · 机械师 mudraptorwrestler = **无条件** −10%
+            · 船长  lonewolf = 2000 内无队友 → −20% + 近战（生效率低）
+          15% 取两者中间，且我们带条件 ⇒ 未越界。
+          叠加「命运之轮」（蹲满 5 秒 −10%）最多 −25%
+          = 原版安全官 stonewall（挨打后 4 秒 25%），条件比它更严。
        ============================================================ -->
   <Affliction identifier="mcj_exaltation"
               type="talentbuff"
@@ -150,8 +157,8 @@
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" strengthchange="0"
             resistancefor="damage"
-            minresistance="0.1"
-            maxresistance="0.1" />
+            minresistance="0.15"
+            maxresistance="0.15" />
     <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 

@@ -1085,10 +1085,17 @@
   </Talent>
 
   <!-- ============================================================
-       第 2 行 · 擢升（mcj_primary_divination）
-       2026-09-16 定稿并落地。原名占位「待设计 II」，
-       本名取自 FF14 治疗职能共通技能 **擢升 Exaltation**
-       （Action 25873 / icon 3561 / 86 级）。
+       占星魔法 第 2 档 · 擢升（mcj_exaltation）
+       ⚠️ 本天赋【属于占星魔法第 2 档】（与「先天禀赋」二选一），
+          只是物理上还留在这个靠近初级树的位置（本文件本来就不严格按树排序）。
+          2026-09-16 从初级树第 2 行第 5 位搬到这里（用户决定）。
+
+       ID / 名称 / 图标 三者对应：
+         · ID     = mcj_exaltation
+         · 英文名 = Exaltation
+         · 中文名 = 擢升（FF14 官方中文名）
+         · 图标   = Exaltation.png（icon 3561，FF14 该技能原图）
+       Action 25873 / 86 级。
 
        【FF14 原型】「令自身或一名队员受到的伤害减轻 10%，持续 8 秒，
          结束后恢复目标的体力（恢复力 500）」—— range 30、recast 600 秒。
@@ -1096,40 +1103,41 @@
             你主动给一个即将挨打的人罩上。潜渊症没有施法键，
             所以「什么条件下生效」必须由我们自己设计。
 
-       【效果】受到的伤害 **−10%**（= FF14 原值）。
+       【效果】受到的伤害 **−15%**（用户 2026-09-16 定稿）。
        【条件】**600 范围内有队友时**（AbilityConditionAllyNearby）。
          ⇒ 身边有人，星象才为你闪耀；独自行动时这层守护消失。
-         ⚠️ 2026-09-16 用户改定：原本用 AbilityConditionNoCrewDied（没有船员阵亡时），
-            改成「附近有队友」—— 条件**放宽**了（约 85% 时间成立），
-            但给这个初级树位子留下了一个真实的取舍：落单时没有减伤。
 
-       【原版对照（2026-09-16 读原文核对）】
-         · 机械师 `foolhardy`（brawler 专精 3 档）= 活力 ≤50% → damage −20%
-         · 船长  `lonewolf`（gunslinger 专精 2 档）= 2000 内无队友 → damage,stun −20% + 近战 +20%
+       【为什么是 15% 而不是 FF14 原值的 10%】
+         位子从“初级树第 2 行（点 1 个解锁下一行、可全点 10/10）”搬到
+         “占星魔法第 2 档（与先天禀赋**二选一**）” ⇒ 机会成本翻了；
+         而先天禀赋（目标 <30% 血时治疗 ×1.5）是“救命级”效果，
+         −10% 会打不过它 ⇒ 变成陷阱选项。
+         原版「专精 2 档」的减伤先例正好构成上下界（见下）⇒ 取中间值 15%。
+
+       【原版对照（2026-09-16 读原文核对）—— 「专精 2 档」的减伤先例】
          · 机械师 `mudraptorwrestler`（brawler 专精 2 档）= **无条件** → damage −10%（+ 对泥鳄近战 +50%）
-         · 船长  `lonewolf`（gunslinger 专精 2 档）= **2000 内【没有】队友** → damage,stun −20% + 近战 +20%
-         · 船长  `camaraderie`（**初级树**）= 没有船员阵亡时 → 给**全队（含自己）** 挂 5% 减伤 + 全队 +10% XP
-         ⇒ **我们与 `lonewolf` 正好互为镜像**：
-             它   = 周围【没有】队友 → `damage,stun` **−20%** + 近战 +20%
-             我们 = 周围【有】队友   → `damage` **−10%**，且**无任何附加项**
-           ⇒ 数值只有它的一半，而且它多送眩晕抗性与近战伤害 ⇒ **严格更弱**。
-         ⇒ 数值等于 `mudraptorwrestler` 的 −10%，但它是**无条件**的，
-           我们多了一道条件 ⇒ 更弱。
-         ⇒ 而 foolhardy / lonewolf / mudraptorwrestler **全在专精树**，
-           我们放在初级树 ⇒ 位置偏强，这是刻意用「有条件的 10%」去抵消的。
+         · 船长  `lonewolf`（gunslinger 专精 2 档）= 2000 内无队友 → damage,stun **−20%** + 近战 +20%
+           ⇒ 条件生效率约 20% ⇒ 有效减伤仅约 4%
+         · 船长  `camaraderie`（**初级树**）= 没有船员阵亡时 → 全队（含自己）5% 减伤 + 全队 +10% XP
+         我们的条件（600 内有队友）约 85% 时间成立，落在两者之间：
+           · 比 `mudraptorwrestler` 的 10% 高 5%，但**我们多一道条件**（它无条件）
+           · 离 `lonewolf` 的 20% 还差 5%，而且它多送眩晕抗性与近战伤害
+         ⇒ 取 **15%**：这是同档先例的中间值，两侧都能对标。
 
-       【叠加】＋「命运之轮」（蹲满 5 秒）−10% ⇒ 最多 **−20%**，
-         等于原版安全官 `easyturtle`（在水中 20%），**没有越界**。
+       【叠加】＋「命运之轮」（蹲满 5 秒 −10%）⇒ 最多 **−25%**，
+         等于原版安全官 `stonewall`（挨打后 4 秒 25%），
+         而我们的条件（有队友 + 蹲满 5 秒）比它更严 ⇒ **没有越界**。
+       （对照：原版最高档 `revengesquad` = 队友阵亡后 120 秒 30%）
 
        ⚠️ 单位陷阱（两种记法相反，别互抄）：
-         · affliction 的 `resistancefor` = **抗性本身**（0.1 = 减 10%）
-         · `CharacterAbilityGiveResistance` 的 `multiplier` = **承伤倍率**（0.9 = 减 10%）
+         · affliction 的 `resistancefor` = **抗性本身**（0.15 = 减 15%）
+         · `CharacterAbilityGiveResistance` 的 `multiplier` = **承伤倍率**（0.85 = 减 15%）
        ⚠️ 旧的占位版本里残留了一组「OnAttack → damage +10%」——
           已删除。它曾经让一个写着“待设计”的占位天赋白送 10% 伤害。
        ============================================================ -->
-  <Talent identifier="mcj_primary_divination">
+  <Talent identifier="mcj_exaltation">
     <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_divination" />
+    <Description tag="talentdescription.mcj_exaltation" />
 
     <!-- 结构照抄原版船长 camaraderie（Content/Talents/Captain/TalentsCaptain.xml）：
          interval + 条件 → 挂 buff。
@@ -1308,21 +1316,31 @@
     </AbilityGroupInterval>
   </Talent>
 
-  <!-- 占位天赋（占星魔法第 2 档）—— 2026-09-16 起待设计
-       原名「天星交错」。它的效果（施药给队友 +20% 生命上限、持续到巡回结束）
-       已经【整体移交给第 4 档「中间学派」】（那边就是「给吉星相位补上黑夜相」，
-       连 affliction 都搬过去了：mcj_primary_intersection → mcj_sect_shield）。
+  <!-- ============================================================
+       占位天赋：初级树第 2 行第 5 位（待设计 II）
+       ============================================================
+       2026-09-16：「擢升」从这一位搬去了「占星魔法第 2 档」
+       （因为 FF14 里擢升与先天禀赋都是常用的**能力技**，放同一档二选一最自然）。
+       位子重新空出来，仍用占位天赋占着，保证：
+         · 初级树第 2 行仍然是 5 个选项（maxchosentalents="5" 不变）
+         · 玩家点进去能看到“待设计”，而不是一个看起来有效果、实际啥也没有的陷阱
 
-       ⚠️ 千万不要给它加「空的能力组」（如 multiplyvalue="1"）——
-          会报 added value is 0 and multiplier is 1, the ability will do nothing。
-          原版空天赋写法见助手线 apprenticeship：什么 AbilityGroup 都不写。
-       ⚠️ 图标：AspectedBenefic.png 已被第 1 档「吉星相位」占用，
-          这里改用 CelestialRiver.png（占卜换用 Divination.png 后它空出来了）。
-          （⚠️ 2026-09-16 修正：旧文件 CelestialOpposition.png 里装的其实是
-            3556 天星交错的图，已改名为 CelestialIntersection.png 备用。） -->
-  <Talent identifier="mcj_primary_celestialopposition">
+       ⚠️ 千万不要给它加“空的能力组”（例如 multiplyvalue="1"）——
+          游戏会报 added value is 0 and multiplier is 1, the ability will do nothing。
+          原版空天赋（助手线的 apprenticeship：只有 Icon + Description）
+          就是【什么 AbilityGroup 都不写】。
+
+       ⚠️ ID / 名称对应：
+         · mcj_primary_placeholder   → 「待设计」/「To Be Designed」（初级树第 1 行第 4 位）
+         · mcj_primary_placeholder2  → 「待设计 II」/「To Be Designed II」（本处，第 2 行第 5 位）
+       ⚠️ 图标：借用 Textures/Talents/CelestialRiver.png（FF14 的「星河漫天」
+          Celestial River，PvP 技能原图）。原先用在「占星魔法第 2 档」的占位上，
+          那一档现在给了擢升，所以它空出来正好接手。图标只是显示用，
+          正式设计时再换成对得上的图。
+       ============================================================ -->
+  <Talent identifier="mcj_primary_placeholder2">
     <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_celestialopposition" />
+    <Description tag="talentdescription.mcj_primary_placeholder2" />
   </Talent>
 
   <!-- 生辰 ← 原版 dontdieonme / thewaitinglist 的历史（2026-09-16 第二次重做）

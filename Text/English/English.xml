@@ -151,14 +151,15 @@ Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within 
   <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_divination>Exaltation</talentname.mcj_primary_divination>
+  <talentname.mcj_exaltation>Exaltation</talentname.mcj_exaltation>
   <!-- Placeholder talent (2026-09-16): the slot is reserved, the effect is still being designed -->
   <talentname.mcj_primary_placeholder>To Be Designed</talentname.mcj_primary_placeholder>
   <talentdescription.mcj_primary_placeholder>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_placeholder>
+  <talentname.mcj_primary_placeholder2>To Be Designed II</talentname.mcj_primary_placeholder2>
+  <talentdescription.mcj_primary_placeholder2>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_placeholder2>
 
   <!-- ===== Neutral Sect (tier 4 of the Astrology line; one entry point is still a placeholder) ===== -->
   <talentname.mcj_primary_sect>Neutral Sect</talentname.mcj_primary_sect>
-  <talentname.mcj_primary_celestialopposition>To Be Designed III</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>Ascend</talentname.mcj_primary_ascend>
 
   <!-- ===== Reworked 2026-09-16 ===== -->
@@ -169,8 +170,6 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_wheeloffortune_ward>Collective Unconscious</afflictionname.mcj_wheeloffortune_ward>
   <afflictiondescription.mcj_wheeloffortune_ward>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_wheeloffortune_ward>
 
-  <talentdescription.mcj_primary_celestialopposition>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_celestialopposition>
-
   <talentdescription.mcj_primary_ascend>Whenever someone is unconscious, the ‖color:gui.orange‖CPR‖end‖ you perform is ‖color:gui.green‖100‖end‖% more effective.\nYou bring people back from unconsciousness twice as fast.</talentdescription.mcj_primary_ascend>
   <afflictionname.mcj_ascend>Ascend</afflictionname.mcj_ascend>
   <afflictiondescription.mcj_ascend>Someone has fallen: the rescuer's hands work twice as fast.</afflictiondescription.mcj_ascend>
@@ -179,7 +178,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_primary_gravity>Gravity</afflictionname.mcj_primary_gravity>
   <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖30‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
   <afflictionname.mcj_exaltation>Exaltation</afflictionname.mcj_exaltation>
-  <afflictiondescription.mcj_exaltation>The stars walk beside you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_exaltation>
+  <afflictiondescription.mcj_exaltation>The stars walk beside you: you take ‖color:gui.green‖15‖end‖% less damage.</afflictiondescription.mcj_exaltation>
 
   <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖10‖end‖ stacks (‖color:gui.green‖100‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
 
@@ -209,7 +208,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>A pitcher of endless water. Hold it and press use to reduce the whole crew's oxygen consumption.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
-  <talentdescription.mcj_primary_divination>While a crewmate is within ‖color:gui.green‖600‖end‖ units, you take ‖color:gui.green‖10‖end‖% less ‖color:gui.orange‖damage‖end‖.\nThe stars only shine for those who walk together — the protection fades when you are alone.</talentdescription.mcj_primary_divination>
+  <talentdescription.mcj_exaltation>While a crewmate is within ‖color:gui.green‖600‖end‖ units, you take ‖color:gui.green‖15‖end‖% less ‖color:gui.orange‖damage‖end‖.\nThe stars only shine for those who walk together — the protection fades when you are alone.</talentdescription.mcj_exaltation>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
 
