@@ -1124,9 +1124,15 @@
 
        ⚠️ target="Limb" 与 tags="medical" 都是原版原文，别自作主张枚举成
           Character / statuseffecttags —— 数值对标原版的前提是写法也一模一样。
-       ⚠️ 图标：FF14 通用职能技能 Esuna。
-          ⚠️ 待办：Textures/Talents/Esuna.png 还没放进去，需要去找素材；
-             素材到位之前，临时把下面这行指回 Swiftcast.png 即可。 -->
+
+       ✅ 图标：FF14 治疗职能共通技能「康复」Esuna。
+          数据来源 ff14.huijiwiki.com → Data:Action/7568.json
+            {"cn":"康复","jp":"エスナ","en":"Esuna","icon":884,"level":10,"cast":0}
+          图标原画：https://xivapi.com/i/000000/000884_hr1.png（80×80 高清版）
+          → 已用高质量双三次插值放大到 128×128，存为 Textures/Talents/Esuna.png
+          ⚠️ Action 表里有两个同名 Esuna：**7568** 是现行技能（cast 0、等级 10），
+             126 是远古版本（cast 10 秒、job 0）—— 必须取 7568。
+          ⚠️ Textures/ 已被 .gitignore 排除 ⇒ 这张图不进仓库，clone 后需自备。 -->
   <Talent identifier="mcj_primary_esuna">
     <Icon texture="%ModDir%/Textures/Talents/Esuna.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_esuna" />
