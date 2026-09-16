@@ -47,10 +47,18 @@
             另存为 Textures/Talents/AspectedBenefic.png。
           ⇒ 旧的 CelestialOpposition.png 已改名为 CelestialIntersection.png 备用。
           ⇒ affliction mcj_benefic 的图标同步换掉（原来也是那个错文件）。
+
+       ⚠️ 2026-09-16 ID 修正：本天赋的 identifier 原本是 mcj_celestialopposition
+          （当年它叫「天星交错」时留下的），与现在的名字「吉星相位 / Aspected Benefic」
+          对不上 ⇒ 已改为 mcj_aspectedbenefic，Description 键同步改为
+          talentdescription.mcj_aspectedbenefic。
+          （⚠️ 状态键 afflictionname / afflictiondescription.mcj_benefic 保持不变 ——
+             那是「吉星」状态本身的名字。）
+          ⇒ 空出来的 ID mcj_celestialopposition 留给真正叫「天星冲日」的技能用。
        ============================================================ -->
-  <Talent identifier="mcj_celestialopposition">
+  <Talent identifier="mcj_aspectedbenefic">
     <Icon texture="%ModDir%/Textures/Talents/AspectedBenefic.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_benefic" />
+    <Description tag="talentdescription.mcj_aspectedbenefic" />
     <Description tag="talentdescription.unlockrecipe">
       <Replace tag="[itemname]" value="entityname.autoinjectorheadset" color="gui.orange" />
     </Description>
@@ -874,29 +882,48 @@
          中间学派 mcj_primary_sect               → 占星魔法第 4 档
          天星交错 mcj_primary_celestialopposition → 占星魔法第 2 档
          光速     mcj_lightspeed                 ← 从占星魔法第 2 档搬进来
-       腾出的第 4 位由占位天赋 mcj_primary_placeholder 先占着。
+       腾出的第 4 位先由占位天赋占着，2026-09-16 已定稿为「大宇宙」mcj_primary_macrocosmos。
        ============================================================ -->
 
   <!-- ============================================================
-       占位天赋：初级树第 1 行第 4 位（待设计）
+       初级树 第 1 行 第 4 位 · 大宇宙（mcj_primary_macrocosmos）
        ============================================================
-       天星交错搬到「占星魔法」第 2 档后，这个位置空了出来。
-       在效果设计完成之前用这个空天赋占位，保证：
-         · 初级树第 1 行仍然是 5 个选项（maxchosentalents="5" 不变）
-         · 玩家点进去能看到“待设计”，而不是一个看起来有效果、实际啥也没有的陷阱
+       2026-09-16 定稿并落地（用户确认）。原本是「待设计」占位天赋。
 
-       ⚠️ 千万不要给它加“空的能力组”（例如 multiplyvalue="1"）——
-          游戏会报 added value is 0 and multiplier is 1, the ability will do nothing。
-          原版的空天赋（助手线的 apprenticeship：只有 Icon + Description）
-          就是【什么 AbilityGroup 都不写】。
+       【FF14 原型】Macrocosmos（大宇宙）
+         Action 25874 / icon 3562 / 90 级，占星术士 6.0 的招牌技能。
+         效果是「记录目标在此期间受到的伤害，倒计时结束时按 50% 一次性转成治疗」
+         —— 语义就是【先储存，之后一次性兑现】。
+         ⚠️ 我们只借用它的名字与这个「储备 → 兑现」的意象；
+            天赋的实际效果是「每完成任务得 1 袋血袋」，机制逐字照抄原版（见下）。
 
-       ⚠️ 图标暂时借用 Textures/Talents/Ephemeris.png ——
-          这是一张目前全模组都没引用的素材，如果它是给别的天赋留的，
-          换一张同名文件即可（图标只是显示用）。
+       【效果】每完成一次任务，你获得 1 袋血袋（antibloodloss2）。
+       【写法】逐字照抄原版医生【初级树】天赋 blooddonor
+         （Content/Talents/Doctor/TalentsDoctor.xml）：
+           <AbilityGroupEffect abilityeffecttype="OnAnyMissionCompleted">
+             <CharacterAbilityPutItem itemidentifier="antibloodloss2" amount="1" />
+         本模组「星图」已经在用同一个钩子（OnAnyMissionCompleted），写法已绌。
+
+       【强度对标】逐字等于原版同一个位置的天赋 ⇒ 不存在超模问题。
+         血袋是潜渊症里唯一能补【失血 bloodloss】的东西，而失血是流血致死的主因
+         ⇒ 这个天赋的价值就是「口袋里永远多一份输血的余量」。
+
+       ⚠️ 与「康复」的分工：康复管【止血】（清流血/烧伤），
+          大宇宙管【补血】（补给血袋）—— 两者不重叠。
+       ⚠️ 图标：Textures/Talents/Macrocosmos.png（Macrocosmos 原图 3562）。
+       （⚠️ 2026-09-16：这一位原本定名「袖里藏卡」Sleeve Draw / icon 3107，
+         但那张官方图自带一道红斜杠（看着像“已禁用”），已改成「大宇宙」。）
        ============================================================ -->
-  <Talent identifier="mcj_primary_placeholder">
-    <Icon texture="%ModDir%/Textures/Talents/Ephemeris.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_placeholder" />
+  <Talent identifier="mcj_primary_macrocosmos">
+    <Icon texture="%ModDir%/Textures/Talents/Macrocosmos.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_macrocosmos" />
+
+    <!-- 逐字照抄原版医生初级树 blooddonor -->
+    <AbilityGroupEffect abilityeffecttype="OnAnyMissionCompleted">
+      <Abilities>
+        <CharacterAbilityPutItem itemidentifier="antibloodloss2" amount="1" />
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID）
@@ -1317,30 +1344,44 @@
   </Talent>
 
   <!-- ============================================================
-       占位天赋：初级树第 2 行第 5 位（待设计 II）
+       初级树 第 2 行 第 5 位 · 吉星（mcj_primary_benefic）
        ============================================================
-       2026-09-16：「擢升」从这一位搬去了「占星魔法第 2 档」
-       （因为 FF14 里擢升与先天禀赋都是常用的**能力技**，放同一档二选一最自然）。
-       位子重新空出来，仍用占位天赋占着，保证：
-         · 初级树第 2 行仍然是 5 个选项（maxchosentalents="5" 不变）
-         · 玩家点进去能看到“待设计”，而不是一个看起来有效果、实际啥也没有的陷阱
+       2026-09-16 定稿并落地（用户确认）。这一位的历史：
+         原「占卜」→ 占位「待设计 II」→「擢升」→（擢升搬去占星魔法第 2 档）→ 现在的「吉星」。
 
-       ⚠️ 千万不要给它加“空的能力组”（例如 multiplyvalue="1"）——
-          游戏会报 added value is 0 and multiplier is 1, the ability will do nothing。
-          原版空天赋（助手线的 apprenticeship：只有 Icon + Description）
-          就是【什么 AbilityGroup 都不写】。
+       【FF14 原型】Benefic（吉星）
+         Action 3594 / icon 3126。占星术士最基础的【单体治疗术】；
+         我们的第 1 档「吉星相位」是它的「相位」版（Aspected Benefic），
+         两者在 FF14 里本来就是一对，名字并列不会冲突。
+         ⚠️ 不要用「吉星 II」：它在中文客户端叫【福星】，是完全不同的另一个技能。
 
-       ⚠️ ID / 名称对应：
-         · mcj_primary_placeholder   → 「待设计」/「To Be Designed」（初级树第 1 行第 4 位）
-         · mcj_primary_placeholder2  → 「待设计 II」/「To Be Designed II」（本处，第 2 行第 5 位）
-       ⚠️ 图标：借用 Textures/Talents/CelestialRiver.png（FF14 的「星河漫天」
-          Celestial River，PvP 技能原图）。原先用在「占星魔法第 2 档」的占位上，
-          那一档现在给了擢升，所以它空出来正好接手。图标只是显示用，
-          正式设计时再换成对得上的图。
+       【效果】你的【医疗技能】提升 30。
+       【写法】逐字照抄原版医生 medic 第 1 档 medicalexpertise 的第 ① 组
+         （Content/Talents/Doctor/TalentsDoctor.xml）：
+           <AbilityGroupEffect abilityeffecttype="None">
+             <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30"/>
+         ⚠️ 该天赋的第 ② 组（绷带强化：施药时每秒额外清 bleeding 1.5 + burn 1.5）
+            我们早在「康复」里就用掉了 ⇒ 本天赋只拿第 ① 组，两边不重复。
+
+       【强度对标】原版给过三个 MedicalSkillBonus 值：
+         30（医生 medicalexpertise · medic 专精 1 档）
+         20（助手 apprenticeship_doctor · apprentice 专精 1 档）
+         10（助手 journeyman · apprentice 专精 2 档）
+       ⚠️ 三个先例【都在专精树】，我们放在初级树 ⇒ 属“位置偏强”。
+          这是有意接受的：本模组初级树是“点 1 个即解锁下一行、10 个全能点”，
+          而医疗技能只影响施药的成功率与治疗质量，不增加任何伤害/减伤数值。
+       ⚠️ 图标：Textures/Talents/Benefic.png（Benefic 原图 3126）。
        ============================================================ -->
-  <Talent identifier="mcj_primary_placeholder2">
-    <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_placeholder2" />
+  <Talent identifier="mcj_primary_benefic">
+    <Icon texture="%ModDir%/Textures/Talents/Benefic.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_benefic" />
+
+    <!-- 逐字照抄原版医生 medicalexpertise 的第 ① 组 -->
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30"/>
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- 生辰 ← 原版 dontdieonme / thewaitinglist 的历史（2026-09-16 第二次重做）

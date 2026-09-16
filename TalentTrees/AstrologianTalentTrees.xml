@@ -5,7 +5,7 @@
   【当前状态】三条专精线：
     mcj_path_healing   —— 占星魔法（第一栏，已实装）
     mcj_path_arcanum   —— 奥秘卡（第二栏，已实装）
-    mcj_path_astrolabe —— 会奶人的DPS（第三栏，第 1 档已实装，后续档位待设计）
+    mcj_path_astrolabe —— 会奶人的DPS（第三栏，4 档已全部实装）
 
   初级树 mcj_astrologian_primary 已于 2026-09-15 重做
   （构成见 Talents/AstrologianTalents.xml 初级树章节的注释）。
@@ -32,8 +32,8 @@
 
     <!-- ================= 初级：通用医疗兵基本功 + 占星专属 =================
          2026-09-16 结构改版 + 效果定稿：
-           第 1 行：星图 / 星位合图 / 光速 / 待设计（占位）/ 康复
-           第 2 行：本轮 / 星极 / 重力 / 生辰 / 待设计 II（占位）
+           第 1 行：星图 / 星位合图 / 光速 / 大宇宙 / 康复
+           第 2 行：本轮 / 星极 / 重力 / 生辰 / 吉星
          【本轮效果全部重写过，不再有任何一项是原版医生的拷贝】——
            光速：删掉了「队友拖拽不减速」（与「本轮」重复），只剩“有人昏迷时自己 +40% 移速”
            康复：由「即刻咏唱」改名而来，效果改成原版 medicalexpertise 的绷带强化
@@ -46,8 +46,10 @@
             （FF14 的 Divination 就是全队增伤），这一位现在也是占位天赋。
          2026-09-16 二次变更：这一位上的「擢升」搬去了「占星魔法第 2 档」
             （ID 由 mcj_primary_divination 改为 mcj_exaltation），
-            位子重新空出来 ⇒ 恢复为占位天赋 mcj_primary_placeholder2
-            （名字「待设计 II」/「To Be Designed II」）。
+            腾出的位子 2026-09-16 定稿为「吉星」mcj_primary_benefic（医疗技能 +30）。
+         2 个占位天赋（第 1 行第 4 位 / 第 2 行第 5 位）已于同日全部定稿：
+            第 1 行第 4 位 = 「大宇宙」mcj_primary_macrocosmos（每完成任务得 1 袋血袋）
+         ⇒ 本模组不再有任何占位天赋。
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
@@ -55,7 +57,7 @@
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
         <TalentOption identifier="mcj_lightspeed" />
-        <TalentOption identifier="mcj_primary_placeholder" />
+        <TalentOption identifier="mcj_primary_macrocosmos" />
         <TalentOption identifier="mcj_primary_esuna" />
       </TalentOptions>
 
@@ -64,7 +66,7 @@
         <TalentOption identifier="mcj_primary_astral" />
         <TalentOption identifier="mcj_primary_starsounding" />
         <TalentOption identifier="mcj_primary_ascend" />
-        <TalentOption identifier="mcj_primary_placeholder2" />
+        <TalentOption identifier="mcj_primary_benefic" />
       </TalentOptions>
 
     </SubTree>
@@ -131,7 +133,7 @@
              requires="mcj_astrologian_primary">
       <!-- 第 1 档：吉星相位 -->
       <TalentOptions>
-        <TalentOption identifier="mcj_celestialopposition" />
+        <TalentOption identifier="mcj_aspectedbenefic" />
       </TalentOptions>
 
       <!-- 第 2 档：二选一 —— 先天禀赋 / 擢升 -->

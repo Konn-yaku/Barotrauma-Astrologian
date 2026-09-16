@@ -24,14 +24,14 @@
   <talenttree.mcj_path_astrolabe>会奶人的DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== 治疗线天赋名称 ===== -->
-  <talentname.mcj_celestialopposition>吉星相位</talentname.mcj_celestialopposition>
+  <talentname.mcj_aspectedbenefic>吉星相位</talentname.mcj_aspectedbenefic>
   <talentname.mcj_essentialdignity>先天禀赋</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>光速</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>阳星合相</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>星天开门</talentname.mcj_stargate>
 
   <!-- ===== 治疗线天赋描述 ===== -->
-  <talentdescription.mcj_benefic>你对队友施药或治疗时，星象交汇 —— 该队友获得 ‖color:gui.green‖10‖end‖ 秒的持续回复：伤势与出血缓缓消退。</talentdescription.mcj_benefic>
+  <talentdescription.mcj_aspectedbenefic>你对队友施药或治疗时，星象交汇 —— 该队友获得 ‖color:gui.green‖10‖end‖ 秒的持续回复：伤势与出血缓缓消退。</talentdescription.mcj_aspectedbenefic>
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖1.5‖end‖ 倍。</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>‖color:gui.green‖600‖end‖ 范围内的船员在 ‖color:gui.orange‖生命值低于 40%‖end‖ 时会持续回复其 ‖color:gui.orange‖伤势‖end‖（每秒 ‖color:gui.green‖1.5‖end‖）。
@@ -166,11 +166,10 @@
   <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_exaltation>擢升</talentname.mcj_exaltation>
-  <!-- 占位天赋（2026-09-16）：位置已留，效果待设计 -->
-  <talentname.mcj_primary_placeholder>待设计</talentname.mcj_primary_placeholder>
-  <talentdescription.mcj_primary_placeholder>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_placeholder>
-  <talentname.mcj_primary_placeholder2>待设计 II</talentname.mcj_primary_placeholder2>
-  <talentdescription.mcj_primary_placeholder2>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_placeholder2>
+  <talentname.mcj_primary_macrocosmos>大宇宙</talentname.mcj_primary_macrocosmos>
+  <talentdescription.mcj_primary_macrocosmos>每完成一次任务，你获得 ‖color:gui.green‖1‖end‖ 袋血袋。\n失血只能靠输血补回来 —— 这一项让你口袋里永远多一份余量。</talentdescription.mcj_primary_macrocosmos>
+  <talentname.mcj_primary_benefic>吉星</talentname.mcj_primary_benefic>
+  <talentdescription.mcj_primary_benefic>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖30‖end‖。</talentdescription.mcj_primary_benefic>
 
   <!-- ===== 初级树：由原版天赋改写而来的三个（其中一个已移入占星魔法第 4 档） ===== -->
   <talentname.mcj_primary_sect>中间学派</talentname.mcj_primary_sect>
@@ -201,7 +200,7 @@
   <talentname.mcj_primary_epicycle>本轮</talentname.mcj_primary_epicycle>
   <talentdescription.mcj_primary_epicycle>拖拽角色时，你的移动不受限制。</talentdescription.mcj_primary_epicycle>
   <talentname.mcj_primary_esuna>康复</talentname.mcj_primary_esuna>
-  <talentdescription.mcj_primary_esuna>你用 ‖color:gui.orange‖止血剂‖end‖ 为队友施药时，会一并清除目标身上的 ‖color:gui.orange‖流血、烧伤与失血‖end‖。\n止血剂原本只治流血 —— 这一项把它变成一本正经的急救手段。</talentdescription.mcj_primary_esuna>
+  <talentdescription.mcj_primary_esuna>你用 ‖color:gui.orange‖绷带‖end‖ 为队友施药时，会一并清除目标身上的 ‖color:gui.orange‖流血与烧伤‖end‖。\n绷带原本只治流血 —— 这一项把它变成一本正经的急救手段。</talentdescription.mcj_primary_esuna>
 
   <!-- ===== 奥秘卡：抽卡道具 ===== -->
   <entityname.mcj_draw_star>星极抽卡</entityname.mcj_draw_star>

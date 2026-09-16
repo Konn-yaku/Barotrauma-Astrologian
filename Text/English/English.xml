@@ -13,14 +13,14 @@
   <talenttree.mcj_path_astrolabe>Green DPS</talenttree.mcj_path_astrolabe>
 
   <!-- ===== Healing line: talent names ===== -->
-  <talentname.mcj_celestialopposition>Aspected Benefic</talentname.mcj_celestialopposition>
+  <talentname.mcj_aspectedbenefic>Aspected Benefic</talentname.mcj_aspectedbenefic>
   <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>Helios Conjunction</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
-  <talentdescription.mcj_benefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_benefic>
+  <talentdescription.mcj_aspectedbenefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_aspectedbenefic>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖1.5‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>Crew within ‖color:gui.green‖600‖end‖ units of you continuously recover from their ‖color:gui.orange‖injuries‖end‖ (‖color:gui.green‖1.5‖end‖ per second) while their health is below ‖color:gui.green‖40‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
@@ -152,11 +152,10 @@ Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within 
   <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
   <talentname.mcj_exaltation>Exaltation</talentname.mcj_exaltation>
-  <!-- Placeholder talent (2026-09-16): the slot is reserved, the effect is still being designed -->
-  <talentname.mcj_primary_placeholder>To Be Designed</talentname.mcj_primary_placeholder>
-  <talentdescription.mcj_primary_placeholder>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_placeholder>
-  <talentname.mcj_primary_placeholder2>To Be Designed II</talentname.mcj_primary_placeholder2>
-  <talentdescription.mcj_primary_placeholder2>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_placeholder2>
+  <talentname.mcj_primary_macrocosmos>Macrocosmos</talentname.mcj_primary_macrocosmos>
+  <talentdescription.mcj_primary_macrocosmos>Each time you complete a mission, you gain ‖color:gui.green‖1‖end‖ blood pack.\nBlood loss can only be replaced by transfusion — this keeps a spare on you at all times.</talentdescription.mcj_primary_macrocosmos>
+  <talentname.mcj_primary_benefic>Benefic</talentname.mcj_primary_benefic>
+  <talentdescription.mcj_primary_benefic>Your ‖color:gui.orange‖medical skill‖end‖ is increased by ‖color:gui.green‖30‖end‖.</talentdescription.mcj_primary_benefic>
 
   <!-- ===== Neutral Sect (tier 4 of the Astrology line; one entry point is still a placeholder) ===== -->
   <talentname.mcj_primary_sect>Neutral Sect</talentname.mcj_primary_sect>
@@ -186,7 +185,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <talentname.mcj_primary_epicycle>Epicycle</talentname.mcj_primary_epicycle>
   <talentdescription.mcj_primary_epicycle>You move at full speed while dragging a character.</talentdescription.mcj_primary_epicycle>
   <talentname.mcj_primary_esuna>Esuna</talentname.mcj_primary_esuna>
-  <talentdescription.mcj_primary_esuna>When you apply a ‖color:gui.orange‖hemostatic‖end‖ to a crewmate, it also clears their ‖color:gui.orange‖bleeding, burns and blood loss‖end‖.\nHemostatics normally only stop bleeding — this turns them into proper first aid.</talentdescription.mcj_primary_esuna>
+  <talentdescription.mcj_primary_esuna>When you apply a ‖color:gui.orange‖bandage‖end‖ to a crewmate, it also clears their ‖color:gui.orange‖bleeding and burns‖end‖.\nA bandage normally only stops bleeding — this turns it into proper first aid.</talentdescription.mcj_primary_esuna>
 
   <!-- ===== Arcanum: draw items ===== -->
   <entityname.mcj_draw_star>Astral Draw</entityname.mcj_draw_star>
