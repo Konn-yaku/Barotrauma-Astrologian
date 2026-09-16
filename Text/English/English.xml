@@ -21,16 +21,16 @@
 
   <!-- ===== Healing line: talent descriptions ===== -->
   <talentdescription.mcj_benefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_benefic>
-  <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖2.2‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.\nYou can drag characters at full speed.</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>While you are inside the submarine, crew members within ‖color:gui.green‖600‖end‖ units have their ‖color:gui.orange‖bleeding, burns and bloodloss‖end‖ cleared once their health drops below ‖color:gui.green‖20‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖1.5‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
+  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_aspectedhelios>Crew within ‖color:gui.green‖600‖end‖ units of you continuously recover from their ‖color:gui.orange‖injuries‖end‖ (‖color:gui.green‖1.5‖end‖ per second) while their health is below ‖color:gui.green‖40‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member's ‖color:gui.orange‖health drops below 1%‖end‖, the charge is automatically consumed:\nthey gain 15 seconds of ‖color:gui.orange‖Unyielding‖end‖ — they cannot fall unconscious and deal ‖color:gui.green‖25‖end‖% more damage.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_benefic>Aspected Benefic</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>The Benefic's light rests on you: your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>Your bleeding, burns and bloodloss are being cleared.</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>Your injuries are being soothed by starlight (‖color:gui.green‖1.5‖end‖ per second).</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>When you are close to death, this charge is consumed to grant you 15 seconds of Unyielding.</afflictiondescription.mcj_stargate>
   <afflictionname.mcj_stargate_grace>Unyielding</afflictionname.mcj_stargate_grace>
@@ -46,17 +46,17 @@
   <talentname.mcj_astrodyne>Astrodyne</talentname.mcj_astrodyne>
 
   <!-- ===== Arcanum line: talent descriptions ===== -->
-  <talentdescription.mcj_balance>All crew members deal ‖color:gui.green‖40‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_balance>
-  <talentdescription.mcj_spear>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖melee attack speed‖end‖ and ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖ranged attack speed‖end‖.</talentdescription.mcj_spear>
-  <talentdescription.mcj_arrow>All crew members gain ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖movement speed‖end‖ and ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖swimming speed‖end‖.</talentdescription.mcj_arrow>
-  <talentdescription.mcj_bole>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</talentdescription.mcj_bole>
-  <talentdescription.mcj_spire>All crew members gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.</talentdescription.mcj_spire>
-  <talentdescription.mcj_ewer>All crew members have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers you —\ngaining ‖color:gui.green‖25‖end‖% walking and swimming speed, ‖color:gui.green‖25‖end‖% melee attack speed and ‖color:gui.green‖15‖end‖% ranged attack speed for 20 seconds.</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_balance>The chosen crew member deals ‖color:gui.green‖40‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_balance>
+  <talentdescription.mcj_spear>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖melee attack speed‖end‖ and ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖ranged attack speed‖end‖.</talentdescription.mcj_spear>
+  <talentdescription.mcj_arrow>The chosen crew member gains ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖movement speed‖end‖ and ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖swimming speed‖end‖.</talentdescription.mcj_arrow>
+  <talentdescription.mcj_bole>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</talentdescription.mcj_bole>
+  <talentdescription.mcj_spire>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.</talentdescription.mcj_spire>
+  <talentdescription.mcj_ewer>The chosen crew member has ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</talentdescription.mcj_ewer>
+  <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers you —\ngaining ‖color:gui.green‖15‖end‖% walking speed, ‖color:gui.green‖30‖end‖% swimming speed and ‖color:gui.green‖15‖end‖% ranged attack speed for 20 seconds.</talentdescription.mcj_astrodyne>
 
   <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
   <talentname.mcj_arcanum_six>The Six</talentname.mcj_arcanum_six>
-  <talentdescription.mcj_arcanum_six>You begin to draw: you receive an ‖color:gui.orange‖Astral Draw‖end‖.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck, and the cycle continues.\nIf you lose it, you can fabricate a replacement from ‖color:gui.green‖1 plastic‖end‖.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>You begin to draw: you receive an ‖color:gui.orange‖Astral Draw‖end‖.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck, and the cycle continues.\nTo play one, take the card out of the deck and drag it onto a crew member's limb in the health interface — only that one character receives its effect, and the card is spent.\nIf you lose it, you can fabricate a replacement from ‖color:gui.green‖1 plastic‖end‖.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
   <talentname.mcj_arcanum_redraw>Redraw</talentname.mcj_arcanum_redraw>
   <talentdescription.mcj_arcanum_redraw>When you deconstruct an item, there is a ‖color:gui.green‖20‖end‖% chance the output is doubled.\n(Genetic materials and circuit components excluded.)</talentdescription.mcj_arcanum_redraw>
   <talentname.mcj_arcanum_draw>Draw</talentname.mcj_arcanum_draw>
@@ -114,17 +114,19 @@ It cannot foresee harm — it can only be placed in advance. The timing is every
 
   <!-- ===== Combust (new tier 2 talent) ===== -->
   <talentname.mcj_combust>Combust</talentname.mcj_combust>
-  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖50‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_combust>
+  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖20‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_combust>
   <afflictionname.mcj_combust_ward>Combust</afflictionname.mcj_combust_ward>
-  <afflictiondescription.mcj_combust_ward>You take ‖color:gui.green‖50‖end‖% less Combust damage.</afflictiondescription.mcj_combust_ward>
+  <afflictiondescription.mcj_combust_ward>You take ‖color:gui.green‖20‖end‖% less Combust damage.</afflictiondescription.mcj_combust_ward>
 
   <!-- ===== Wheel of Fortune ===== -->
   <talentname.mcj_wheeloffortune>Wheel of Fortune</talentname.mcj_wheeloffortune>
-  <talentdescription.mcj_wheeloffortune>Crew members near you (within ‖color:gui.green‖600‖end‖ units) continuously gain:
-‖color:gui.orange‖+10 to all skills‖end‖ and ‖color:gui.orange‖+20% skill gain speed‖end‖.
-Cost: if your own ‖color:gui.orange‖Weapons skill is 50 or lower‖end‖, your Weapons skill takes a further -10.</talentdescription.mcj_wheeloffortune>
-  <afflictionname.mcj_primary_sect>Neutral Sect</afflictionname.mcj_primary_sect>
-  <afflictiondescription.mcj_primary_sect>You gain +10 to all skills and +20% skill gain speed.</afflictiondescription.mcj_primary_sect>
+  <talentdescription.mcj_wheeloffortune>Crouch and hold for ‖color:gui.green‖5‖end‖ seconds, and the Wheel unfolds beneath you:
+you and crew within ‖color:gui.green‖600‖end‖ units take ‖color:gui.green‖10‖end‖% less damage.
+Crew keep it for about 5 more seconds after you stand up — you must crouch again to renew it.</talentdescription.mcj_wheeloffortune>
+  <afflictionname.mcj_sect_bastion>Umbral · Bastion</afflictionname.mcj_sect_bastion>
+  <afflictiondescription.mcj_sect_bastion>The umbral phase settles over you: maximum health +‖color:gui.green‖10‖end‖%, movement speed +‖color:gui.green‖5‖end‖%.</afflictiondescription.mcj_sect_bastion>
+  <afflictionname.mcj_sect_shield>Umbral · Shield</afflictionname.mcj_sect_shield>
+  <afflictiondescription.mcj_sect_shield>The stars cross over you: maximum health +‖color:gui.green‖20‖end‖%.</afflictiondescription.mcj_sect_shield>
   <entityname.mcj_wheeloffortune>Wheel of Fortune</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>A wheel cast from the tracks of stars. Thrown, it shatters on the ground and leaves a brief stretch of good fortune behind.
 For 20 seconds, those it covers take half damage while their wounds and bleeding ebb away.
@@ -132,16 +134,16 @@ It does not tell friend from foe — fortune never picks.</entitydescription.mcj
   <afflictionname.mcj_wheeloffortune>Wheel of Fortune</afflictionname.mcj_wheeloffortune>
   <afflictiondescription.mcj_wheeloffortune>You gain ‖color:gui.green‖65‖end‖% damage resistance for 20 seconds, and your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_wheeloffortune>
 
-  <!-- ===== Divination ===== -->
-  <talentname.mcj_celestialriver>Celestial River</talentname.mcj_celestialriver>
-  <talentdescription.mcj_celestialriver>Your ‖color:gui.orange‖Medical skill‖end‖ increases by ‖color:gui.green‖45‖end‖.
+  <!-- ===== Divination (final tier) ===== -->
+  <talentname.mcj_divination>Divination</talentname.mcj_divination>
+  <talentdescription.mcj_divination>Your ‖color:gui.orange‖Medical skill‖end‖ increases by ‖color:gui.green‖45‖end‖.
 You deal more ‖color:gui.orange‖damage‖end‖, and ‖color:gui.orange‖the higher your Medical skill, the greater the bonus‖end‖:
 Medical 40 / 60 / 80 / 100 each raise it another step, from ‖color:gui.green‖+10‖end‖% up to ‖color:gui.green‖+30‖end‖%.
-Each ‖color:gui.orange‖enemy you kill‖end‖ adds another ‖color:gui.green‖1‖end‖%, up to ‖color:gui.green‖+20‖end‖%
-(the talent panel shows how many stacks you have built up; death does not reset them).
-Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖color:gui.green‖+10‖end‖% damage).</talentdescription.mcj_celestialriver>
-  <afflictionname.mcj_celestialriver>Celestial River</afflictionname.mcj_celestialriver>
-  <afflictiondescription.mcj_celestialriver>The astrologian has poured a river of stars over you: you deal ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_celestialriver>
+Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within ‖color:gui.green‖1000‖end‖ units gain ‖color:gui.green‖+15‖end‖% damage for 20 seconds, then it goes on a 120-second cooldown.</talentdescription.mcj_divination>
+  <afflictionname.mcj_divination_buff>Divination</afflictionname.mcj_divination_buff>
+  <afflictiondescription.mcj_divination_buff>The stars have been read in your favour: you deal ‖color:gui.green‖15‖end‖% more damage.</afflictiondescription.mcj_divination_buff>
+  <afflictionname.mcj_divination_cd>Divination · Cooldown</afflictionname.mcj_divination_cd>
+  <afflictiondescription.mcj_divination_cd>Divination is on cooldown — you cannot read the stars for your crew just yet.</afflictiondescription.mcj_divination_cd>
 
   <!-- ===== Primary tree ===== -->
   <talentname.mcj_primary_starchart>Star Chart</talentname.mcj_primary_starchart>
@@ -149,41 +151,41 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <talentname.mcj_primary_synastry>Synastry</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_divination>Divination</talentname.mcj_primary_divination>
+  <talentname.mcj_primary_divination>To Be Designed II</talentname.mcj_primary_divination>
+  <!-- Placeholder talent (2026-09-16): the slot is reserved, the effect is still being designed -->
+  <talentname.mcj_primary_placeholder>To Be Designed</talentname.mcj_primary_placeholder>
+  <talentdescription.mcj_primary_placeholder>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_placeholder>
 
-  <!-- ===== Primary tree: rewritten from vanilla talents ===== -->
+  <!-- ===== Neutral Sect (tier 4 of the Astrology line; one entry point is still a placeholder) ===== -->
   <talentname.mcj_primary_sect>Neutral Sect</talentname.mcj_primary_sect>
-  <talentname.mcj_primary_celestialopposition>Celestial Intersection</talentname.mcj_primary_celestialopposition>
+  <talentname.mcj_primary_celestialopposition>To Be Designed III</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>Ascend</talentname.mcj_primary_ascend>
 
-  <!-- ===== Primary tree: reworked 2026-09-15 ===== -->
-  <talentdescription.mcj_primary_sect>Crew near you (within ‖color:gui.green‖600‖end‖ units) continuously gain:\n‖color:gui.orange‖+10 to all skills‖end‖ and ‖color:gui.orange‖+20% skill gain speed‖end‖.\nCost: if your own ‖color:gui.orange‖Weapons skill is 50 or lower‖end‖, your Weapons skill takes a further -10.</talentdescription.mcj_primary_sect>
+  <!-- ===== Reworked 2026-09-16 ===== -->
+  <talentdescription.mcj_primary_sect>Neutral Sect keeps both phases active at once:
+· ‖color:gui.orange‖Aspected Benefic‖end‖: when you apply treatment to an ally, they gain an additional ‖color:gui.green‖20‖end‖% maximum health until the end of the round.
+· ‖color:gui.orange‖Aspected Helios‖end‖: crew within ‖color:gui.green‖600‖end‖ units gain a permanent aura of ‖color:gui.green‖10‖end‖% maximum health and ‖color:gui.green‖5‖end‖% movement speed.
+The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_wheeloffortune_ward>Collective Unconscious</afflictionname.mcj_wheeloffortune_ward>
   <afflictiondescription.mcj_wheeloffortune_ward>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_wheeloffortune_ward>
 
-  <talentdescription.mcj_primary_intersection>When you apply treatment to an ally, they gain an ‖color:gui.green‖8‖end‖-second ‖color:gui.orange‖shield‖end‖: maximum health +‖color:gui.green‖30‖end‖%.</talentdescription.mcj_primary_intersection>
-  <afflictionname.mcj_primary_intersection>Celestial Intersection</afflictionname.mcj_primary_intersection>
-  <afflictiondescription.mcj_primary_intersection>The stars cross over you: maximum health +‖color:gui.green‖30‖end‖%.</afflictiondescription.mcj_primary_intersection>
+  <talentdescription.mcj_primary_celestialopposition>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_celestialopposition>
 
-  <talentdescription.mcj_primary_ascend>Whenever someone is unconscious, the whole crew gains ‖color:gui.green‖75‖end‖% resistance to ‖color:gui.orange‖bleeding, blood loss, oxygen deprivation, burns, radiation sickness and deep tissue damage‖end‖.\nThe one who fell lasts longer — which is the time you need to bring them back.</talentdescription.mcj_primary_ascend>
-  <afflictionname.mcj_primary_extend>Ascend</afflictionname.mcj_primary_extend>
-  <afflictiondescription.mcj_primary_extend>Death's countdown has slowed: you are far more resistant to bleeding, blood loss, oxygen deprivation, burns, radiation sickness and deep tissue damage.</afflictiondescription.mcj_primary_extend>
+  <talentdescription.mcj_primary_ascend>Whenever someone is unconscious, the ‖color:gui.orange‖CPR‖end‖ you perform is ‖color:gui.green‖100‖end‖% more effective.\nYou bring people back from unconsciousness twice as fast.</talentdescription.mcj_primary_ascend>
+  <afflictionname.mcj_ascend>Ascend</afflictionname.mcj_ascend>
+  <afflictiondescription.mcj_ascend>Someone has fallen: the rescuer's hands work twice as fast.</afflictiondescription.mcj_ascend>
 
-  <talentdescription.mcj_primary_gravity>You and crew within ‖color:gui.green‖600‖end‖ units gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ — harder to knock down or stagger.</talentdescription.mcj_primary_gravity>
+  <talentdescription.mcj_primary_gravity>You gain ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖stun resistance‖end‖ — harder to knock down or stagger.</talentdescription.mcj_primary_gravity>
   <afflictionname.mcj_primary_gravity>Gravity</afflictionname.mcj_primary_gravity>
-  <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖50‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
+  <afflictiondescription.mcj_primary_gravity>Gravity holds you steady: ‖color:gui.green‖30‖end‖% stun resistance.</afflictiondescription.mcj_primary_gravity>
 
-  <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖20‖end‖ stacks (‖color:gui.green‖150‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
+  <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖10‖end‖ stacks (‖color:gui.green‖100‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
 
-  <!-- ===== Primary tree: re-ID'd 2026-09-15 (Epicycle / Swiftcast) ===== -->
+  <!-- ===== Primary tree: re-ID'd 2026-09-16 (Epicycle / Esuna) ===== -->
   <talentname.mcj_primary_epicycle>Epicycle</talentname.mcj_primary_epicycle>
   <talentdescription.mcj_primary_epicycle>You move at full speed while dragging a character.</talentdescription.mcj_primary_epicycle>
-  <talentname.mcj_primary_swiftcast>Swiftcast</talentname.mcj_primary_swiftcast>
-  <talentdescription.mcj_primary_swiftcast>No incantation needed — you simply reach out and save them: the ‖color:gui.orange‖CPR‖end‖ you perform on crew is ‖color:gui.green‖20‖end‖% more effective.</talentdescription.mcj_primary_swiftcast>
-  <afflictionname.mcj_primary_swiftcast>Swiftcast</afflictionname.mcj_primary_swiftcast>
-  <afflictiondescription.mcj_primary_swiftcast>The astrologian's hands work faster than any incantation: you are brought back a little more quickly.</afflictiondescription.mcj_primary_swiftcast>
-  <afflictionname.mcj_lightspeed_grant>Lightspeed</afflictionname.mcj_lightspeed_grant>
-  <afflictiondescription.mcj_lightspeed_grant>Borrowing another's Lightspeed, you no longer slow down while dragging a character.</afflictiondescription.mcj_lightspeed_grant>
+  <talentname.mcj_primary_esuna>Esuna</talentname.mcj_primary_esuna>
+  <talentdescription.mcj_primary_esuna>When you apply a ‖color:gui.orange‖hemostatic‖end‖ to a crewmate, it also clears their ‖color:gui.orange‖bleeding, burns and blood loss‖end‖.\nHemostatics normally only stop bleeding — this turns them into proper first aid.</talentdescription.mcj_primary_esuna>
 
   <!-- ===== Arcanum: draw items ===== -->
   <entityname.mcj_draw_star>Astral Draw</entityname.mcj_draw_star>
@@ -205,7 +207,7 @@ Nearby crew within ‖color:gui.green‖1000‖end‖ units also benefit (‖col
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>A pitcher of endless water. Hold it and press use to reduce the whole crew's oxygen consumption.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
-  <talentdescription.mcj_primary_divination>The stars have shown you where the enemy is weak: you deal ‖color:gui.green‖10‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_primary_divination>
+  <talentdescription.mcj_primary_divination>This talent is still on the drawing board — it currently does nothing.</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>Your fate is intertwined with another's; your wounds are slowly ebbing away.</afflictiondescription.mcj_synastry>
 

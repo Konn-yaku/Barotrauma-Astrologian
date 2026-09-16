@@ -32,16 +32,17 @@
 
   <!-- ===== 治疗线天赋描述 ===== -->
   <talentdescription.mcj_benefic>你对队友施药或治疗时，星象交汇 —— 该队友获得 ‖color:gui.green‖10‖end‖ 秒的持续回复：伤势与出血缓缓消退。</talentdescription.mcj_benefic>
-  <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖2.2‖end‖ 倍。</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。\n你拖拽其他角色时不会减速。</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>你在潜艇内时，‖color:gui.green‖600‖end‖范围内的船员在 ‖color:gui.orange‖生命值低于 20%‖end‖ 时会自动清除其 ‖color:gui.orange‖流血、烧伤与失血‖end‖。\n高于 20% 时不会生效 —— 它只在濒死时拉你一把。</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖1.5‖end‖ 倍。</talentdescription.mcj_essentialdignity>
+  <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_aspectedhelios>‖color:gui.green‖600‖end‖ 范围内的船员在 ‖color:gui.orange‖生命值低于 40%‖end‖ 时会持续回复其 ‖color:gui.orange‖伤势‖end‖（每秒 ‖color:gui.green‖1.5‖end‖）。
+高于 40% 时不会生效 —— 它只在濒死时拉你一把。</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员的 ‖color:gui.orange‖生命值低于 1%‖end‖ 时，该庇护会自动触发：\n获得 15 秒的 ‖color:gui.orange‖不屈‖end‖ —— 期间不会昏迷，且造成的伤害提升 ‖color:gui.green‖25‖end‖%，随后庇护被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
 
   <!-- ===== 治疗线隐藏增益 ===== -->
   <afflictionname.mcj_benefic>吉星相位</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>吉星映照着你：伤势与出血正在缓缓消退。</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>阳星合相</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>你的流血、烧伤与失血正在被清除。</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>你的伤势正在被星光抚平（每秒 ‖color:gui.green‖1.5‖end‖）。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>你濒死时此庇护会自动触发，为你换来 15 秒的不屈；触发后此庇护消失。</afflictiondescription.mcj_stargate>
   <afflictionname.mcj_stargate_grace>不屈</afflictionname.mcj_stargate_grace>
@@ -56,17 +57,17 @@
   <talentname.mcj_astrodyne>星力</talentname.mcj_astrodyne>
 
   <!-- ===== 第二栏 · 奥秘卡：天赋描述 ===== -->
-  <talentdescription.mcj_balance>全部船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖40‖end‖%。</talentdescription.mcj_balance>
-  <talentdescription.mcj_spear>全部船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_spear>
-  <talentdescription.mcj_arrow>全部船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖35‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_arrow>
-  <talentdescription.mcj_bole>全部船员获得 ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖眩晕抗性‖end‖，并持续恢复 ‖color:gui.orange‖身体损伤、失血与流血‖end‖。</talentdescription.mcj_bole>
-  <talentdescription.mcj_spire>全部船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_spire>
-  <talentdescription.mcj_ewer>全部船员在效果期间 ‖color:gui.orange‖无需氧气‖end‖。</talentdescription.mcj_ewer>
-  <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：本轮的 3 张全部打出后，星力回应你——\n步行与游泳速度提升 ‖color:gui.green‖25‖end‖%，近战攻击速度提升 ‖color:gui.green‖25‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%，持续 20 秒。</talentdescription.mcj_astrodyne>
+  <talentdescription.mcj_balance>被施卡的那名船员造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖40‖end‖%。</talentdescription.mcj_balance>
+  <talentdescription.mcj_spear>被施卡的那名船员的 ‖color:gui.orange‖近战攻击速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%，‖color:gui.orange‖远程攻击速度‖end‖ 提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_spear>
+  <talentdescription.mcj_arrow>被施卡的那名船员的 ‖color:gui.orange‖移动速度‖end‖ 提升 ‖color:gui.green‖35‖end‖%，‖color:gui.orange‖游泳速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_arrow>
+  <talentdescription.mcj_bole>被施卡的那名船员获得 ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖眩晕抗性‖end‖，并持续恢复 ‖color:gui.orange‖身体损伤、失血与流血‖end‖。</talentdescription.mcj_bole>
+  <talentdescription.mcj_spire>被施卡的那名船员的 ‖color:gui.orange‖维修速度‖end‖（机械与电器）与 ‖color:gui.orange‖焊接船体‖end‖ 速度提升 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_spire>
+  <talentdescription.mcj_ewer>被施卡的那名船员在效果期间 ‖color:gui.orange‖无需氧气‖end‖。</talentdescription.mcj_ewer>
+  <talentdescription.mcj_astrodyne>你打出的奥秘卡会被记录：本轮的 3 张全部打出后，星力回应你——\n步行速度提升 ‖color:gui.green‖15‖end‖%，游泳速度提升 ‖color:gui.green‖30‖end‖%，远程攻击速度提升 ‖color:gui.green‖15‖end‖%，持续 20 秒。</talentdescription.mcj_astrodyne>
 
   <!-- ===== 奥秘卡（抽卡制）：第 1、2 档 ===== -->
   <talentname.mcj_arcanum_six>六天座</talentname.mcj_arcanum_six>
-  <talentdescription.mcj_arcanum_six>你开始抽卡：获得一本「星极抽卡」。\n按住右键使用它，就会抽出这一极的 3 张奥秘卡；60 秒后它会变成另一极的书，如此循环。\n弄丢了的话，可以花 1 个塑料在制造台重做一本。\n⚠️ 这些牌只认占星术士——别的人拿了会被灼伤。</talentdescription.mcj_arcanum_six>
+  <talentdescription.mcj_arcanum_six>你开始抽卡：获得一本「星极抽卡」。\n按住右键使用它，就会抽出这一极的 3 张奥秘卡；60 秒后它会变成另一极的书，如此循环。\n把卡拖到手上或随身栏，再打开【健康界面】把它拖到某名船员的肢体上——只有那一个人会获得这张卡的效果，卡随即消失。\n弄丢了的话，可以花 1 个塑料在制造台重做一本。\n⚠️ 这些牌只认占星术士——别的人拿了会被灼伤。</talentdescription.mcj_arcanum_six>
   <talentname.mcj_arcanum_redraw>重抽</talentname.mcj_arcanum_redraw>
   <talentdescription.mcj_arcanum_redraw>拆解物品时，有 ‖color:gui.green‖20‖end‖% 的概率产出翻倍。\n（基因材料与电路元件除外。）</talentdescription.mcj_arcanum_redraw>
   <talentname.mcj_arcanum_draw>抽卡</talentname.mcj_arcanum_draw>
@@ -115,9 +116,9 @@
 
   <!-- ===== 第三栏 · 焚灼（第 2 档新天赋） ===== -->
   <talentname.mcj_combust>焚灼</talentname.mcj_combust>
-  <talentdescription.mcj_combust>你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。\n你受到的 ‖color:gui.orange‖焚灼‖end‖ 伤害降低 ‖color:gui.green‖50‖end‖%。</talentdescription.mcj_combust>
+  <talentdescription.mcj_combust>你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。\n你受到的 ‖color:gui.orange‖焚灼‖end‖ 伤害降低 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_combust>
   <afflictionname.mcj_combust_ward>焚灼</afflictionname.mcj_combust_ward>
-  <afflictiondescription.mcj_combust_ward>你受到的焚灼伤害降低 ‖color:gui.green‖50‖end‖%。</afflictiondescription.mcj_combust_ward>
+  <afflictiondescription.mcj_combust_ward>你受到的焚灼伤害降低 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_combust_ward>
   <entityname.mcj_malefic>凶星</entityname.mcj_malefic>
 
   <!-- ===== 第三栏 · 地星 ===== -->
@@ -134,10 +135,12 @@
 
   <!-- ===== 第三栏 · 命运之轮 ===== -->
   <talentname.mcj_wheeloffortune>命运之轮</talentname.mcj_wheeloffortune>
-  <talentdescription.mcj_wheeloffortune>接近你的队友（‖color:gui.green‖600‖end‖ 范围内）持续获得：全部 ‖color:gui.orange‖技能 +10‖end‖、‖color:gui.orange‖技能获取速度 +20%‖end‖。
-代价：若你自己的 ‖color:gui.orange‖武器技能不高于 50‖end‖，则你的武器技能额外 -10。</talentdescription.mcj_wheeloffortune>
-  <afflictionname.mcj_primary_sect>中间学派</afflictionname.mcj_primary_sect>
-  <afflictiondescription.mcj_primary_sect>你的全部技能 +10，技能获取速度 +20%。</afflictiondescription.mcj_primary_sect>
+  <talentdescription.mcj_wheeloffortune>蹲下并保持 ‖color:gui.green‖5‖end‖ 秒后，命运之轮在你脚下展开：
+你和 ‖color:gui.green‖600‖end‖ 范围内的队友受到的伤害降低 ‖color:gui.green‖10‖end‖%。\n起身后队友还保留约 5 秒 —— 你得重新蹲下蓄力。</talentdescription.mcj_wheeloffortune>
+  <afflictionname.mcj_sect_bastion>黑夜相·坚守</afflictionname.mcj_sect_bastion>
+  <afflictiondescription.mcj_sect_bastion>黑夜相笼罩着你：生命上限提升 ‖color:gui.green‖10‖end‖%，移动速度提升 ‖color:gui.green‖5‖end‖%。</afflictiondescription.mcj_sect_bastion>
+  <afflictionname.mcj_sect_shield>黑夜相·护盾</afflictionname.mcj_sect_shield>
+  <afflictiondescription.mcj_sect_shield>星辰在你身上交汇：生命上限提升 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_sect_shield>
   <entityname.mcj_wheeloffortune>命运之轮</entityname.mcj_wheeloffortune>
   <entitydescription.mcj_wheeloffortune>以星轨铸成的一副轮盘。掷出后在地上碎开，把一小段好运留给周围的人。
 20 秒之内，被它笼罩的角色所受的伤害减半，伤势与出血也会自行消退。
@@ -145,16 +148,16 @@
   <afflictionname.mcj_wheeloffortune>命运之轮</afflictionname.mcj_wheeloffortune>
   <afflictiondescription.mcj_wheeloffortune>你会获得 20 秒的 ‖color:gui.green‖65‖end‖% 全伤害抗性，且伤势与出血正在缓缓消退。</afflictiondescription.mcj_wheeloffortune>
 
-  <!-- ===== 第三栏 · 占卜 ===== -->
-  <talentname.mcj_celestialriver>星河漫天</talentname.mcj_celestialriver>
-  <talentdescription.mcj_celestialriver>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
+  <!-- ===== 第三栏 · 占卜（终档） ===== -->
+  <talentname.mcj_divination>占卜</talentname.mcj_divination>
+  <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
 你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
 医疗 40 / 60 / 80 / 100 各再提升一档，从 ‖color:gui.green‖+10‖end‖% 最高到 ‖color:gui.green‖+30‖end‖%。
-你每 ‖color:gui.orange‖击杀一名敌人‖end‖，这个加成再积累 ‖color:gui.green‖1‖end‖%，最多到 ‖color:gui.green‖+20‖end‖%
-（天赋面板上可以看到当前攒了多少层，死亡不会清零）。
-身边 ‖color:gui.green‖1000‖end‖ 范围内的队友也会受益（‖color:gui.green‖+10‖end‖% 伤害）。</talentdescription.mcj_celestialriver>
-  <afflictionname.mcj_celestialriver>星河漫天</afflictionname.mcj_celestialriver>
-  <afflictiondescription.mcj_celestialriver>星河倾泻在你身上：你造成的伤害提升 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_celestialriver>
+你每发出一次 ‖color:gui.orange‖远程攻击‖end‖，‖color:gui.green‖1000‖end‖ 范围内的队友获得 ‖color:gui.green‖+15‖end‖% 伤害，持续 20 秒，随后冷却 120 秒。</talentdescription.mcj_divination>
+  <afflictionname.mcj_divination_buff>占卜</afflictionname.mcj_divination_buff>
+  <afflictiondescription.mcj_divination_buff>星辰为你排出了吉位：你造成的伤害提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_divination_buff>
+  <afflictionname.mcj_divination_cd>占卜·冷却</afflictionname.mcj_divination_cd>
+  <afflictiondescription.mcj_divination_cd>占卜正在冷却：暂时无法再为队友排出吉位。</afflictiondescription.mcj_divination_cd>
 
   <!-- ===== 初级树 ===== -->
   <talentname.mcj_primary_starchart>星图</talentname.mcj_primary_starchart>
@@ -162,41 +165,42 @@
   <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_divination>占卜</talentname.mcj_primary_divination>
+  <talentname.mcj_primary_divination>待设计 II</talentname.mcj_primary_divination>
+  <!-- 占位天赋（2026-09-16）：位置已留，效果待设计 -->
+  <talentname.mcj_primary_placeholder>待设计</talentname.mcj_primary_placeholder>
+  <talentdescription.mcj_primary_placeholder>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_placeholder>
 
-  <!-- ===== 初级树：由原版天赋改写而来的三个 ===== -->
+  <!-- ===== 初级树：由原版天赋改写而来的三个（其中一个已移入占星魔法第 4 档） ===== -->
   <talentname.mcj_primary_sect>中间学派</talentname.mcj_primary_sect>
-  <talentname.mcj_primary_celestialopposition>天星交错</talentname.mcj_primary_celestialopposition>
+  <talentname.mcj_primary_celestialopposition>待设计 III</talentname.mcj_primary_celestialopposition>
   <talentname.mcj_primary_ascend>生辰</talentname.mcj_primary_ascend>
 
-  <!-- ===== 初级树：2026-09-15 重做后的描述与状态名 ===== -->
-  <talentdescription.mcj_primary_sect>接近你的队友（‖color:gui.green‖600‖end‖ 范围内）持续获得：全部 ‖color:gui.orange‖技能 +10‖end‖、‖color:gui.orange‖技能获取速度 +20%‖end‖。\n代价：若你自己的 ‖color:gui.orange‖武器技能不高于 50‖end‖，则你的武器技能额外 -10。</talentdescription.mcj_primary_sect>
+  <!-- ===== 初级树：2026-09-16 重做后的描述与状态名 ===== -->
+  <talentdescription.mcj_primary_sect>「中间学派」让白昼相与黑夜相同时生效：
+· ‖color:gui.orange‖吉星相位‖end‖：你对队友施药时，该队友额外获得 ‖color:gui.green‖20‖end‖% 生命上限，持续到巡回结束。
+· ‖color:gui.orange‖阳星合相‖end‖：‖color:gui.green‖600‖end‖ 范围内的船员获得 ‖color:gui.green‖10‖end‖% 生命上限与 ‖color:gui.green‖5‖end‖% 移动速度的常驻光环。
+两者可以与彼此叠加。</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_wheeloffortune_ward>命运之轮</afflictionname.mcj_wheeloffortune_ward>
   <afflictiondescription.mcj_wheeloffortune_ward>命运之轮笼罩着你：你受到的伤害降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_wheeloffortune_ward>
 
-  <talentdescription.mcj_primary_intersection>你对队友施药或治疗时，该队友获得 ‖color:gui.green‖8‖end‖ 秒的 ‖color:gui.orange‖护盾‖end‖：生命上限提升 ‖color:gui.green‖30‖end‖%。</talentdescription.mcj_primary_intersection>
-  <afflictionname.mcj_primary_intersection>天星交错</afflictionname.mcj_primary_intersection>
-  <afflictiondescription.mcj_primary_intersection>星辰在你身上交汇：生命上限提升 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_primary_intersection>
+  <talentdescription.mcj_primary_celestialopposition>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_celestialopposition>
 
-  <talentdescription.mcj_primary_ascend>当有人失去知觉时，全队获得 ‖color:gui.green‖75‖end‖% 的 ‖color:gui.orange‖出血、失血、缺氧、烧伤、辐射病与深层组织损伤抗性‖end‖。\n倒下的人撑得更久，你才有时间把他带回来。</talentdescription.mcj_primary_ascend>
-  <afflictionname.mcj_primary_extend>生辰</afflictionname.mcj_primary_extend>
-  <afflictiondescription.mcj_primary_extend>死亡的倒计时被拖慢了：你对出血、失血、缺氧、烧伤、辐射病与深层组织损伤的抗性大幅提升。</afflictiondescription.mcj_primary_extend>
+  <talentdescription.mcj_primary_ascend>有人失去知觉时，你的 ‖color:gui.orange‖心肺复苏‖end‖ 效力提升 ‖color:gui.green‖100‖end‖%。
+把人从昏迷里拉回来的速度翻倍。</talentdescription.mcj_primary_ascend>
+  <afflictionname.mcj_ascend>生辰</afflictionname.mcj_ascend>
+  <afflictiondescription.mcj_ascend>有人倒下了：施救者的双手快了一倍。</afflictiondescription.mcj_ascend>
 
-  <talentdescription.mcj_primary_gravity>你和 ‖color:gui.green‖600‖end‖ 范围内的队友获得 ‖color:gui.green‖50‖end‖% 的 ‖color:gui.orange‖眩晕抗性‖end‖ —— 更不容易被撞倒、被打得跄跄。</talentdescription.mcj_primary_gravity>
+  <talentdescription.mcj_primary_gravity>你获得 ‖color:gui.green‖30‖end‖% 的 ‖color:gui.orange‖眩晕抗性‖end‖ —— 更不容易被撞倒、被打得踉跄。</talentdescription.mcj_primary_gravity>
   <afflictionname.mcj_primary_gravity>重力</afflictionname.mcj_primary_gravity>
-  <afflictiondescription.mcj_primary_gravity>重力把你稳稳压在地上：眩晕抗性 ‖color:gui.green‖50‖end‖%。</afflictiondescription.mcj_primary_gravity>
+  <afflictiondescription.mcj_primary_gravity>重力把你稳稳压在地上：眩晕抗性 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_primary_gravity>
 
-  <talentdescription.mcj_primary_astral>你的 ‖color:gui.orange‖技能获取速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。\n每治疗一名队友累积 ‖color:gui.green‖1‖end‖ 层「星极」，每层再提升 ‖color:gui.green‖5‖end‖%，最多 ‖color:gui.green‖20‖end‖ 层（合计 ‖color:gui.green‖150‖end‖%）。\n天赋面板上可以查看当前层数。</talentdescription.mcj_primary_astral>
+  <talentdescription.mcj_primary_astral>你的 ‖color:gui.orange‖技能获取速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。\n每治疗一名队友累积 ‖color:gui.green‖1‖end‖ 层「星极」，每层再提升 ‖color:gui.green‖5‖end‖%，最多 ‖color:gui.green‖10‖end‖ 层（合计 ‖color:gui.green‖100‖end‖%）。\n天赋面板上可以查看当前层数。</talentdescription.mcj_primary_astral>
 
-  <!-- ===== 初级树：2026-09-15 换 ID 的两个（本轮 / 即刻咏唱） ===== -->
+  <!-- ===== 初级树：2026-09-16 换 ID 的两个（本轮 / 康复） ===== -->
   <talentname.mcj_primary_epicycle>本轮</talentname.mcj_primary_epicycle>
   <talentdescription.mcj_primary_epicycle>拖拽角色时，你的移动不受限制。</talentdescription.mcj_primary_epicycle>
-  <talentname.mcj_primary_swiftcast>即刻咏唱</talentname.mcj_primary_swiftcast>
-  <talentdescription.mcj_primary_swiftcast>不必咏唱，伸手就能施救：你给队友做的 ‖color:gui.orange‖心肺复苏‖end‖ 效果提升 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_primary_swiftcast>
-  <afflictionname.mcj_primary_swiftcast>即刻咏唱</afflictionname.mcj_primary_swiftcast>
-  <afflictiondescription.mcj_primary_swiftcast>施术者的心肺复苏更加利落，你被救起得快了一点。</afflictiondescription.mcj_primary_swiftcast>
-  <afflictionname.mcj_lightspeed_grant>光速</afflictionname.mcj_lightspeed_grant>
-  <afflictiondescription.mcj_lightspeed_grant>借着他人的光速，你拖拽角色时也不会减速。</afflictiondescription.mcj_lightspeed_grant>
+  <talentname.mcj_primary_esuna>康复</talentname.mcj_primary_esuna>
+  <talentdescription.mcj_primary_esuna>你用 ‖color:gui.orange‖止血剂‖end‖ 为队友施药时，会一并清除目标身上的 ‖color:gui.orange‖流血、烧伤与失血‖end‖。\n止血剂原本只治流血 —— 这一项把它变成一本正经的急救手段。</talentdescription.mcj_primary_esuna>
 
   <!-- ===== 奥秘卡：抽卡道具 ===== -->
   <entityname.mcj_draw_star>星极抽卡</entityname.mcj_draw_star>
@@ -218,7 +222,7 @@
   <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。按住右键打出，使全队的氧气消耗降低。</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
-  <talentdescription.mcj_primary_divination>你借星象看穿了敌人的弱点：你造成的 ‖color:gui.orange‖伤害‖end‖ 提升 ‖color:gui.green‖10‖end‖%。</talentdescription.mcj_primary_divination>
+  <talentdescription.mcj_primary_divination>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>你的命理与他人交织，伤势正在缓缓消退。</afflictiondescription.mcj_synastry>
 

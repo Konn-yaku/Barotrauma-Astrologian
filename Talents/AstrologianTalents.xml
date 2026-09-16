@@ -58,10 +58,14 @@
 
   <!-- ============================================================
        第 2 层 · 先天禀赋（二选一）
-       
-       【保守版】目标生命值低于 30% 时，你的治疗效果 ×2.2（+120%）；
+
+       【保守版】目标生命值低于 30% 时，你的治疗效果 ×1.5（+50%）；
        其余情况无加成。
-       
+
+       2026-09-16：从 ×2.2 下调到 ×1.5。
+         ×2.2（+120%）是一个天赋里最重的一档加成，与它的位置不对等；
+         ×1.5 才是与「原版人一个档位」相称的量级。
+
        为什么只做两档：这里用的是原版 nobodyimportantdies / healthinsurance
        验证过的"条件 + FallbackAbilities"结构，最稳。
        想要 5 档阶梯的话，需要先在游戏里实测"多个同类型
@@ -83,7 +87,7 @@
         </AbilityConditionCharacter>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyValue multiplyvalue="2.2" />
+        <CharacterAbilityModifyValue multiplyvalue="1.5" />
       </Abilities>
     </AbilityGroupEffect>
   </Talent>
@@ -91,40 +95,29 @@
   <!-- ============================================================
        第 2 层 · 光速（二选一）
 
-       = 原版「应急反应的换皮」+ 一条常驻的拖拽强化。
-       ① 拖拽角色不减速 —— MoveNormallyWhileDragging flag，常驻。
-          全游戏没有"拖拽速度"类 stattype（只有这一个二进制 flag），所以它没有
-          可调的档位，只有"减不减速"两种状态。原版两个用例：
-          firemanscarry（医生初级树直接给）与「应急反应」给助手的那条 affliction。
-          ※ 【2026-09-15 已改版：光速现在给【队友】挂 flag，自己那一份由初级树「本轮」负责 —— 以下两句作废】原本初级树里有 firemanscarry —— 对同时点了它的人这条是重复的，
-            不会叠加出额外收益，但光速自己就送，不依赖初级树。
-       ② 有人昏迷时 +40% 移速 —— 原版应急反应（emergencyresponse）的数值。
+       2026-09-16 定稿：只剩「有人昏迷时自己 +40% 移速」。
+       数值 = 原版「应急反应」emergencyresponse 对自己的那一半。
 
-       ※ 这里刻意【不给】心肺复苏加成：原版「冥土追魂」(dontdieonme, CPRBoost 1)
-         已经在我们的初级树第 2 组里（5 选 5，人人可点）。两边都给的话，
-         万一 CPRBoost 是累加的，双修就是 3 倍心肺复苏 —— 没必要重复。
+       参考：原版 emergencyresponse 在医生【medic 专精第 2 档】，且是两半——
+         a) 有人昏迷时自己 +40% 移速（我们保留的这一半）
+         b) 给全体【助手】挂拖拽不减速 flag
+       我们只取 a、放进【初级树】，所以强度上是安全的（比原版在更便宜的层位、
+       但数值没有更高，而且丢掉了 b）。
+
+       ❌ 已删除：原本的「给全图队友挂拖拽不减速」——与初级树「本轮」完全重复。
+       ❌ 刻意不给心肺复苏加成：原版「冥土追魂」(dontdieonme, CPRBoost 1) 作为
+          「生辰」的一部分已经在初级树里（有人昏迷时触发）。两边都给会重复。
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
 
-    <!-- ① 队友拖拽角色不减速（2026-09-15 改版）
-         原本是给自己常驻一个 MoveNormallyWhileDragging flag；
-         现在改成每秒给【全图】队友刷新一个 1 秒的 affliction（内含同一个 flag）。
-         原版医生「应急反应」emergencyresponse 就是这么给助手挂的
-         （它写 jobs="assistant" 只对助手生效；我们不写 jobs = 全队）。
-         ⚠️ 因此光速自己【不再】享有拖拽不减速 —— 那一份由初级树的「本轮」提供。 -->
-    <AbilityGroupInterval interval="1.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_lightspeed_grant" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
+    <!-- ❌ 2026-09-16：①「队友拖拽不减速」已删除
+         它与初级树第 2 行的「本轮」（mcj_primary_epicycle，给自己
+         MoveNormallyWhileDragging flag）功能完全重复。
+         删掉之后光速回到「原版应急反应对自己那一半」，
+         而那一半正好也是最有用的：有人倒下时你自己跑得快。
+         ⚠️ mcj_lightspeed_grant 这条 affliction 从此无人引用（定义保留待清理）。 -->
 
     <!-- 有人昏迷时：+40% 移动速度 -->
     <AbilityGroupInterval interval="0.5">
@@ -140,24 +133,27 @@
   <!-- ============================================================
        第 3 层 · 阳星合相（mcj_aspectedhelios）
 
-       2026-09 改版（第三次）：定为「濒死急救」。
-       600 范围内、生命值低于 20% 的队友会被自动清除流血 / 烧伤 / 失血；
-       高于 20% 时完全不生效，伤口原样保留、照常扣血。
-       定位：防止有人流血流死而来不及抢救，不是常驻治疗光环。
+       2026-09-16 改版（第四次）：定为「濒危自动愈合」。
+       600 范围内、生命值低于 40% 的船员每秒自动恢复 1.5 点伤势；
+       高于 40% 时完全不生效。它只治身体损伤 —— 流血、失血、烧伤一概不管。
 
-       范围 600 = 原版医生「奇迹工作者」miracleworker 的 maxdistance
-       （原版免死光环的写法：CharacterAbilityApplyStatusEffectsToAllies maxdistance="600"）。
-       限制：只有施术者本人在潜艇内时才生效。
+       定位：它把 40% 变成一条会自动爬回去的底线。
+       是安全网，不是急救 —— 需要队友真正出手的时候还是得出手。
+
+       范围 600 = 原版医生「奇迹工作者」miracleworker 的 maxdistance。
+       ⚠️ 2026-09-16：去掉了原本的 AbilityConditionInHull ——
+          即你现在【在潜艇外】也生效（范围仍限 600）。
        mcj_helios 带 duration="2"，每秒刷新 → 离开范围约 2 秒后自动失效。
+
+       ※ 与「吉星相位」的对称关系（FF14 原型）：
+           吉星相位 = Aspected Benefic（单体治疗）→ 你施药的那个人获得持续回复
+           阳星合相 = Aspected Helios （范围治疗）→ 范围内濒危者自动愈合
        ============================================================ -->
   <Talent identifier="mcj_aspectedhelios">
     <Icon texture="%ModDir%/Textures/Talents/AspectedHelios.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_aspectedhelios" />
 
     <AbilityGroupInterval interval="1.0">
-      <Conditions>
-        <AbilityConditionInHull />
-      </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
           <StatusEffects>
@@ -226,16 +222,20 @@
        第二栏 · 奥秘卡（mcj_path_arcanum）
        ============================================================
 
-       【6 张卡的统一结构】
-         AbilityGroupInterval 每 5 秒重跑一次，
-         把自己的卡施给全图的友方（maxdistance 写到 200000 = 无距离限制，
-         和本文件里「星天开门」用的是同一个写法）。
-         buff 本身没有 duration，配合 resetbetweenrounds="true"
-         → 整局常驻、任务结束自动清除。
+       【卡怎么生效：卡自己上，天赋不参与】  ← 2026-09-16 改版
+         v0.13 之前：卡打出后只给使用者一个 2 秒信号弹 mcj_sig_*，
+         由「六天座」里的 6 个 AbilityGroupInterval 轮询 → 广播给全队。
+         现在改成【单体】：卡自己把 buff 交给“被拖到的那个船员”，
+         写法是物品侧的
+           useinhealthinterface="true"
+           + type="OnUse" target="UseTarget"
+           + <Conditional entitytype="eq Character" />
+         ⇒ 天赋看不到“你把卡拖给了谁”，所以 6 个广播组【必须删掉】，
+           六天座现在只负责：发一本抽卡书 + 解锁补救配方 + 卡牌文案。
 
-       【为什么是"卡给全队"而不是"给随机一个人"】
-         这是第二栏的设计前提：卡是常驻的团队增益，
-         不做抽卡、不做随机目标，避免"需要战斗时抽到潜水卡"。
+       ⚠️ 遗物：mcj_sig_* 六个信号弹的定义还留在 Afflictions 里没删
+          （Text 里的 afflictiondescription.mcj_sig_* 同理），
+          将来若要做“群体版卡”可以复用，现在没有任何地方引用它们。
 
        【数值定稿】见 Afflictions/AstrologianAfflictions.xml 的注释。
        ============================================================ -->
@@ -303,120 +303,19 @@
          两个都必须用 ApplyStatusEffects + target="Character"（给自己），
          因为 CharacterAbilityGiveAffliction 的目标是【事件目标】不是自己。 -->
     <!-- ============================================================
-         卡牌广播组：把 6 张卡的增益扩散给全队
+         ❌ v0.13（2026-09-16）：卡牌广播组已删除
          ============================================================
-         链路：卡打出（物品）→ 只给使用者上一个 2 秒的「信号弹」affliction
-               → 这里每 0.5 秒轮询一次，看到信号就广播真 buff，然后把信号清掉。
-
-         【为什么必须挂在天赋里，不能靠卡自己】
-           物品拿不到 CharacterAbilityApplyStatusEffectsToAllies。
-           而卡自己写 target="NearbyCharacters" 既没有队伍过滤（会顺手给敌人上 buff）、
-           又有距离限制，做不到"全队、无视距离"。
-
-         【为什么用信号弹，而不是直接检测 buff 本身】
-           如果直接检测 mcj_balance，buff 还在的 15 秒里会被每 0.5 秒重新广播一次，
-           等于把 15 秒续成永久。信号弹是"即用即清"的，天生不会反复触发。
-
-         【maxdistance="200000" + allowself="true"】
-           与第 4 档「星力」完全同一写法（星力已实测：全船都能吃到增益）。
-           allowself 让施术者自己也吃到 → "只给自己"和"给全队"是同一份数值，
-           不会出现两套数字互相漂移。
+         这里原本有 6 个 AbilityGroupInterval，链路是：
+           卡打出（物品）→ 给使用者一个 2 秒信号弹 mcj_sig_*
+           → 每 0.5 秒轮询 → CharacterAbilityApplyStatusEffectsToAllies
+             （maxdistance="200000" + allowself="true"）
+           → 全队（含自己、无视距离）获得 15 秒 buff。
+         卡改成【单体、只能靠健康界面拖拽施放】之后，这条路走不通：
+           天赋看不见“你把卡拖给了谁”，找不到那个目标；
+           而卡自己已经能直接对 UseTarget 生效（见物品文件的公共注释）。
+         所以六个组整段删除，六天座只剩“发书 + 解锁配方”。
+         数值那一份没变，仍然只有 Afflictions 里的 mcj_balance 等 6 条。
          ============================================================ -->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_balance" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_balance" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_balance" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_spear" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spear" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_spear" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_arrow" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_arrow" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_arrow" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_bole" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_bole" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_bole" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_spire" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_spire" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_spire" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="mcj_sig_ewer" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_ewer" amount="1" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityReduceAffliction afflictionId="mcj_sig_ewer" amount="999" />
-      </Abilities>
-    </AbilityGroupInterval>
 
     <!-- 解锁配方：书丢了可以自己花 1 个塑料重做一本，把循环拉回来。
          这是"没有某物品"表达不出来的替代方案（见上方长注释）。
@@ -749,11 +648,23 @@
     <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_wheeloffortune" />
 
-    <!-- 2026-09-15：效果与初级树「中间学派」对调后搬到这里。
-         你和 600 范围内的队友受到的伤害 −10%，常驻；离开范围约 3 秒后失效。
+    <!-- 2026-09-16 定稿：改成「蹲下蓄力 5 秒才展开」。
+         你和 600 范围内的队友受到的伤害 −10%；起身后队友还保留约 5 秒
+         （mcj_wheeloffortune_ward 的 duration 已改成 5 秒）。
          这是本模组【唯一一条通用减伤】，而且与 FF14 名实相符 ——
-         Collective Unconscious 就是「站在你身边的队友少挨打」。 -->
-    <AbilityGroupInterval interval="1.0">
+         Collective Unconscious 就是「站在你身边的队友少挨打」。
+
+         【为什么加蓄力】原版是一条只要站在范围内就自动生效的常驻光环；
+           改成需要主动蹲下蓄力，把它从「白送的被动」变成「要付出姿态的主动」。
+         【怎么实现蓄力】用 AbilityGroupInterval 的 effectdelay 属性 ——
+           条件的持续满足必须超过这个秒数，效果才会生效；
+           条件一断就重新计时。原版先例：助手「无害化」nonthreatening
+           （effectdelay="2" + AbilityConditionRagdolled）。
+         【锚点】原版安全官「突击队」commando 也是用 AbilityConditionCrouched。 -->
+    <AbilityGroupInterval interval="1.0" effectdelay="5">
+      <Conditions>
+        <AbilityConditionCrouched />
+      </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
           <StatusEffects>
@@ -791,15 +702,15 @@
        ⚠️ 若发现阶梯没生效（永远只 +10% 或直接 +30%），
           就把门槛改成固定一档，或者改用 4 个独立天赋分开给。
        ============================================================ -->
-  <!-- trackedstat / trackedmax = 天赋面板上的进度条（原版 junctionjunkie 的写法）。
-       计数器 mcj_celestialriver_kills 每击杀 +1，满 20；trackedmax 写 21 是为了让进度条
-       在「已满」时不会顶到头的显示问题（与巫女模组同样的取法）。 -->
-  <!-- 2026-09-15：原名「占卜」（mcj_divination），现在让给初级树的新名字，
-       自己改成「星河漫天」—— FF14 7.0 占星术士的 PvP 极限技 Celestial River，
-       在 PvP 里的效果就是给队友的高额增伤，与本天赋的定位完全对应。 -->
-  <Talent identifier="mcj_celestialriver" trackedstat="mcj_celestialriver_kills" trackedmax="21">
-    <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_celestialriver" />
+  <!-- 2026-09-16 定稿：原名「星河漫天」，现在改名【占卜】。
+       FF14 的 Divination（占卜）正是「提升全队伤害」，与本天赋的主效果完全对应。
+       旧名「星河漫天」（Celestial River）的解读作废。
+       ⚠️ 旧版还有一条「击杀累积 20 层 +20%」的计数器，
+          连同 trackedstat / trackedmax 与两条 GivePermanentStat 一起删除了 ——
+          一个终档不该再挂一个需要长期攒层的数值。 -->
+  <Talent identifier="mcj_divination">
+    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_divination" />
 
     <!-- ① 医疗技能 +45 -->
     <AbilityGroupEffect abilityeffecttype="None">
@@ -859,60 +770,55 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- ③ 附近队友的小幅增伤（allowself=false：自己拿上面那份大的） -->
-    <AbilityGroupInterval interval="3.0">
+    <!-- ③ 出手即爆发（2026-09-16 重做）
+         你发出【远程攻击】时，1000 内的队友获得 +15% 伤害、持续 20 秒，
+         随后进入 120 秒冷却。
+
+         【为什么只认远程】天球仪就是远程武器；这样挥拳、拿抳手敲、用绷带
+           都不会白白吃掉一次冷却。原版先例：安全官「突击队」commando
+           就是 AbilityConditionAttackData weapontype="handheldranged"。
+
+         【冷却怎么做的】照抄 LocalMods\玲儿 已验证的 WY_CD 写法：
+           门 = AbilityConditionHasAffliction ... invert="true"（身上没冷却标记才触发）
+           锁 = 触发时给自己挂 mcj_divination_cd（duration="120"）
+         冷却期间 OnAttack 每次判定都不满足条件 ⇒ 不会再触发。
+
+         【数值】+15% / 20 秒 / 120 秒 ⇒ 覆盖率 16.7%、平均等效 +2.5%。
+           旧版是「每 3 秒被动刷 +10%、永久」，平均 +10% ——
+           这次是明显削弱，但峰值更高，而且把「常驻光环」变成了
+           「开火才点亮的爆发窗口」。
+
+         【自身那一份】由 ② 的阶梯组提供，所以这里 allowself="false"。 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="Ranged" />
+        <AbilityConditionHasAffliction afflictionidentifier="mcj_divination_cd" invert="true" />
+      </Conditions>
       <Abilities>
+        <!-- 给 1000 内的队友挂爆发 buff -->
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="1000" allowself="false">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_celestialriver" amount="1.0" />
+              <Affliction identifier="mcj_divination_buff" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <!-- ④ 击杀累积（2026-09-15 新增）：每击杀一名敌人 +1 层，每层 +1% 伤害，封顶 +20%。
-
-         这是纯 XML 的「层数系统」，写法照巫女模组（工坊 3668933349）的「灵力」计数器：
-            · 计数器  = 一条【不带 stattype】的 permanent stat，每事件 value="1"
-            · 派生效果 = 同一个 statidentifier 再写一条【带 stattype】的 GivePermanentStat，
-                        其中 value = 每层给多少、maxvalue = 封顶
-                        → 引擎自己算「层数 × value」，不用手写 20 组阶梯
-                        （巫女验算：20 层 × 0.005 = 0.1 = maxvalue）
-
-         封顶用了两道保险：
-           ① AbilityConditionHasPermanentStat ... invert="true" → 满 20 层后不再计数
-           ② maxvalue="0.2"                                     → 即使计数溢出也不会超
-
-         其他要点：
-            · OnKillCharacter + AbilityConditionCharacter targettypes="Enemy"
-              = 只算敌对目标（照原版安全官 warstories，TalentsSecurity.xml:210）
-            · removeondeath="false" = 死亡不清零（否则一死就白攒）
-            · 这条是【永久】累积、不随巡回重置（与巫女灵力一致）；
-              若想改成「每巡回清零」，加一组：
-              <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
-                <Abilities><CharacterAbilityResetPermanentStat statidentifier="mcj_celestialriver_kills" /></Abilities>
-              </AbilityGroupEffect> -->
-    <AbilityGroupEffect abilityeffecttype="OnKillCharacter">
-      <Conditions>
-        <AbilityConditionCharacter targettypes="Enemy" />
-        <AbilityConditionHasPermanentStat statidentifier="mcj_celestialriver_kills" min="20" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_celestialriver_kills" value="1" removeondeath="false" />
+        <!-- 给自己挂冷却 -->
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_divination_cd" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 计数器派生出伤害：20 层 × 0.01 = +20%
-         （放在 abilityeffecttype="None" 组里 = 点出天赋时就注册一次，
-           之后层数变化，引擎会自动重算这条永久 stat） -->
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_celestialriver_kills"
-                                           stattype="AttackMultiplier" value="0.01" maxvalue="0.2" />
-      </Abilities>
-    </AbilityGroupEffect>
+    <!-- ⚠️ 待实测：在 OnAttack 组里直接调 ApplyStatusEffectsToAllies，
+         本模组没有先例（现有用法都在 AbilityGroupInterval 里）。
+         失败时的后备：改成「信号弹 + 轮询」两层版（mcj_arcanum_minor 的写法）——
+         OnAttack 组只给自己挂 2 秒信号弹 + 冷却，
+         另用一个 interval="0.5" 组轮询信号弹再广播给队友。 -->
   </Talent>
 
   <!-- ============================================================
@@ -941,7 +847,35 @@
           是原版通用医疗兵效果，现已作废。
        ✅ 2026-09-15 去原版化完成：这一档原先 1:1 拷贝原版医生天赋的 6 个，
           已全部换成原创效果，名字与效果也对得上了。
+
+       【2026-09-16 结构改版】只动位置，效果未改：
+         中间学派 mcj_primary_sect               → 占星魔法第 4 档
+         天星交错 mcj_primary_celestialopposition → 占星魔法第 2 档
+         光速     mcj_lightspeed                 ← 从占星魔法第 2 档搬进来
+       腾出的第 4 位由占位天赋 mcj_primary_placeholder 先占着。
        ============================================================ -->
+
+  <!-- ============================================================
+       占位天赋：初级树第 1 行第 4 位（待设计）
+       ============================================================
+       天星交错搬到「占星魔法」第 2 档后，这个位置空了出来。
+       在效果设计完成之前用这个空天赋占位，保证：
+         · 初级树第 1 行仍然是 5 个选项（maxchosentalents="5" 不变）
+         · 玩家点进去能看到“待设计”，而不是一个看起来有效果、实际啥也没有的陷阱
+
+       ⚠️ 千万不要给它加“空的能力组”（例如 multiplyvalue="1"）——
+          游戏会报 added value is 0 and multiplier is 1, the ability will do nothing。
+          原版的空天赋（助手线的 apprenticeship：只有 Icon + Description）
+          就是【什么 AbilityGroup 都不写】。
+
+       ⚠️ 图标暂时借用 Textures/Talents/Ephemeris.png ——
+          这是一张目前全模组都没引用的素材，如果它是给别的天赋留的，
+          换一张同名文件即可（图标只是显示用）。
+       ============================================================ -->
+  <Talent identifier="mcj_primary_placeholder">
+    <Icon texture="%ModDir%/Textures/Talents/Ephemeris.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_placeholder" />
+  </Talent>
 
   <!-- 星图 ← 原版 healthinsurance（机制原样，只换名字与永久标记 ID）
        2026-09-15 追加第三条效果：队友击杀敌人时，自己也获得一点升级经验。 -->
@@ -1047,13 +981,16 @@
        新设计 = 纯 XML 的「层数系统」（与第三栏「占卜」同一套写法，源自巫女模组的灵力）：
          · 基础：技能获取速度 +50%
            （原版工程师「书呆子」egghead 是 +100%，TalentsEngineer.xml:272）
-         · 每治疗一名队友 +1 层，每层再 +5%，20 层封顶 → 最高再 +100%
-         · 合计 50% → 150%
+         · 每治疗一名队友 +1 层，每层再 +5%，10 层封顶 → 最高再 +50%
+         · 合计 50% → 100%
          · trackedstat 让天赋面板直接显示层数进度条
+
+       2026-09-16：上限由 20 层（合计 +150%）下调到 10 层（合计 +100%）——
+         原版同项锚点「书呆子」egghead 就是 +100%，超过它就没道理了。
 
        「星极」（Astral）是 FF14 占星术士的核心概念，不是技能名，可以自由使用。
        ⚠️ 原效果「解锁自动注射器耳机配方」已撤下。 -->
-  <Talent identifier="mcj_primary_astral" trackedstat="mcj_primary_astral_stacks" trackedmax="21">
+  <Talent identifier="mcj_primary_astral" trackedstat="mcj_primary_astral_stacks" trackedmax="11">
     <Icon texture="%ModDir%/Textures/Talents/Astral.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_astral" />
 
@@ -1064,22 +1001,22 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 计数：每治疗一名队友 +1 层，满 20 层不再增加 -->
+    <!-- 计数：每治疗一名队友 +1 层，满 10 层不再增加 -->
     <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
       <Conditions>
         <AbilityConditionCharacter targettype="Ally,NotSelf" />
-        <AbilityConditionHasPermanentStat statidentifier="mcj_primary_astral_stacks" min="20" invert="true" />
+        <AbilityConditionHasPermanentStat statidentifier="mcj_primary_astral_stacks" min="10" invert="true" />
       </Conditions>
       <Abilities>
         <CharacterAbilityGivePermanentStat statidentifier="mcj_primary_astral_stacks" value="1" removeondeath="false" />
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 层数派生效果：20 层 × 0.05 = +100%（叠在基础 50% 之上 → 150%） -->
+    <!-- 层数派生效果：10 层 × 0.05 = +50%（叠在基础 50% 之上 → 100%） -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGivePermanentStat statidentifier="mcj_primary_astral_stacks"
-                                           stattype="SkillGainSpeed" value="0.05" maxvalue="1.0" />
+                                           stattype="SkillGainSpeed" value="0.05" maxvalue="0.5" />
       </Abilities>
     </AbilityGroupEffect>
   </Talent>
@@ -1091,13 +1028,13 @@
        潜渊症里「被撞倒 / 踉跄」就是 stun（stun 的强度 = 眩晕秒数，
        原版破片手雷是 stun 7 = 7 秒）。所以这里给的就是眩晕抗性。
 
-       数值 0.5 的来源：原版 stun 抗性上限就是 0.5
-         （Afflictions.xml:3080 resistancefor="stun" minresistance="0" maxresistance="0.5"）
-
-       ⚠️ 与奥秘卡「世界树之干」的 50% 眩晕抗性会叠加（那条只在打出后 15 秒内生效）。
+       ⚠️ 2026-09-16 改动：从「600 内全队 50%」改成【只给自己 30%】。
+          理由：抗性类数值原版都设了 min/max 上限（stun 上限就是 0.5），
+          天赋再往上加会撞上限；而 50% 硬直减半对一个初级树天赋太重。
+          30% 的锚点 = 原版船长「有备无患」battleready。
 
        💡 抗性记法提醒：这里走的是 affliction 的 resistancefor，
-          数值 = 抗性本身（0.5 = 减半）；与天赋侧 CharacterAbilityGiveResistance
+          数值 = 抗性本身（0.3 = 减 30%）；与天赋侧 CharacterAbilityGiveResistance
           的 multiplier（承伤倍率，0.9 = 只承受 90%）记法相反，别混。 -->
   <Talent identifier="mcj_primary_starsounding">
     <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" origin="0,0" />
@@ -1106,15 +1043,18 @@
       <Replace tag="[itemname]" value="entityname.pressurestabilizer" color="gui.orange" />
     </Description>
 
+    <!-- 2026-09-16：只给自己。原本是 CharacterAbilityApplyStatusEffectsToAllies
+         （600 内、含自己）。改成 ApplyStatusEffects（不带 ToAllies）=
+         只作用于天赋持有者。 -->
     <AbilityGroupInterval interval="1.0">
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
               <Affliction identifier="mcj_primary_gravity" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 
@@ -1157,28 +1097,56 @@
     </AbilityGroupEffect>
   </Talent>
 
-  <!-- 即刻咏唱 ← 原版 stayinalive（2026-09-15：换成自己的 ID，数值不变）
-       FF14 的 Swiftcast（即刻咏唱）：省去咏唱、立刻施法。
-       在潜渊症里就是「不必准备，伸手就能施救」—— 它本来就是配合复活使用的易用技能。
-       做法照原版「求生意志」：每 0.9 秒给队友刷新一个 1 秒的 affliction（CPRBoost 0.2）；
-       affliction 我们也自己复制了一份（mcj_primary_swiftcast），
-       以后想调数值不会再碰原版医生。
-       图标：icon 866（Swiftcast，通用职能技能）。 -->
-  <Talent identifier="mcj_primary_swiftcast">
-    <Icon texture="%ModDir%/Textures/Talents/Swiftcast.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_swiftcast" />
+  <!-- 康复 ← 原版 medicalexpertise 的「绷带强化」那一半（2026-09-16 重做）
+       原名「即刻咏唱」（Swiftcast）。改名理由：生辰拿走心肺复苏之后，
+       这个位置需要另一套主题；而 FF14 治疗职能的「康复」（Esuna）正是
+       「清除身上的负面状态」——潜渊症里最接近的等价物就是「把伤口本身清掉」。
 
-    <AbilityGroupInterval interval="0.9">
+       效果 = 照抄原版医生 medic 第 1 档 medicalexpertise 的绷带那一半，数值原样
+       （Content/Talents/Doctor/TalentsDoctor.xml，原版自带注释写着
+         「improve bandage effectiveness」）：
+         · OnApplyTreatment + 条件 antibleeding1（绷带）
+         · 在该肢体上持续 6 秒，每秒额外清除 bleeding 1.5 + burn 1.5
+
+       【为什么不抄另一半】medicalexpertise 还给 MedicalSkillBonus 30。
+        那一半不要 —— 本天赋在【初级树】（10 个全能点），不能按专精档的规格给。
+
+       【数值换算】antibleeding1 = 绷带（Content/Items/Medical/medical.xml）：
+         绷带自身底子是 bleeding 1.5/s + burn 0.75/s、持续 20 秒（≈ 30/15）；
+         本天赋是【叠加】在它上面的 ⇒ 一次绷带合计约 39 流血 / 24 烧伤。
+
+       【为什么只认绷带】原版条件就是 antibleeding1，不含
+         antibleeding2（塑封剂）/ antibleeding3（抗生素胶）。照抄 = 数值与行为一致。
+         三种止血药的 SuitableTreatment：绷带 bleeding 30 / burn 15；
+         塑封剂 bleeding 40 / burn 50；抗生素胶 bleeding 60 / burn 15。
+         没有任何一种药能治 damage（抗生素胶对 damage 甚至是 −3）——
+         所以「自动清伤势」不会架空任何药物，而「自动清流血」会。
+
+       ⚠️ target="Limb" 与 tags="medical" 都是原版原文，别自作主张枚举成
+          Character / statuseffecttags —— 数值对标原版的前提是写法也一模一样。
+       ⚠️ 图标：FF14 通用职能技能 Esuna。
+          ⚠️ 待办：Textures/Talents/Esuna.png 还没放进去，需要去找素材；
+             素材到位之前，临时把下面这行指回 Swiftcast.png 即可。 -->
+  <Talent identifier="mcj_primary_esuna">
+    <Icon texture="%ModDir%/Textures/Talents/Esuna.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_esuna" />
+
+    <!-- 照抄原版 Content/Talents/Doctor/TalentsDoctor.xml 的 medicalexpertise -->
+    <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
+      <Conditions>
+        <AbilityConditionItem identifiers="antibleeding1" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies allowself="false">
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_primary_swiftcast" amount="1.0" />
+            <StatusEffect tags="medical" type="OnAbility" target="Limb" duration="6.0">
+              <ReduceAffliction type="bleeding" amount="1.5" />
+              <ReduceAffliction type="burn" amount="1.5" />
             </StatusEffect>
           </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
@@ -1194,112 +1162,117 @@
           改原版 ID 会连带改掉原版医生，并和「天赋增强」(TE) 打架。
        ============================================================ -->
 
-  <!-- 命运之轮 ← 原版 exampleofhealth（于 2026-09-15 重做）
-       FF14 的 Collective Unconscious 就是「站在你身边的队友少挨打」，
-       所以本档改成名实相符的减伤光环：
-         你和 600 范围内的队友受到的伤害 −10%，常驻；离开范围约 3 秒后失效。
+  <!-- ============================================================
+       占星魔法 第 4 档 · 中间学派（mcj_primary_sect）
+       2026-09-16 定稿：两相同存（对应 FF14 的 Neutral Sect）
 
-       ⚠️ 这是本模组【唯一一条通用减伤】。数值定 0.10 的理由：
-          · 原版通用减伤的真实分布都很克制 ——
-            基因 damageresistance 10%~25%、Vigor ≤50%、
-            机械师「泥鳄摔跤手」10%、安全官「缩头乌龟」20%（仅水中）
-          · 记法提醒：resistancefor 的数值 = 抗性本身（0.10 = 减 10%），
-            不要跟天赋侧 CharacterAbilityGiveResistance 的 multiplier 搞混
-            （那边 0.9 才是「只承受 90%」= 减 10%）。
+       Neutral Sect 不是新加技能，而是【给两个「相」技能各补上另一相】。
+       我们这条线的两个「相」：
+         吉星相位（单体）/ 阳星合相（范围）—— 它们只带「白昼相」（回复）。
+       本天赋给它们各补一份「黑夜相」= 生命上限。
 
-       原效果「最大生命 +20%」已撤下 —— 它与占星魔法第 1 层同源，会重叠。 -->
+       ① 加强吉星相位：施药时，队友额外获得 +20% 生命上限、持续到巡回结束。
+          （这一份原本属于第 2 档「天星交错」，2026-09-16 整体搬来这里，
+            连 affliction 都搬了：mcj_primary_intersection → mcj_sect_shield）
+
+       ② 加强阳星合相：【600 内】的队友获得 +10% 生命上限 +5% 移速的常驻光环。
+          数值与原版医生 xenologist 树的「基因改造」genetampering 完全相同；
+          写法也照抄它（ApplyStatusEffectsToAllies 不写 maxdistance 的另一种用法）。
+          ⚠️ 唯一的削弱：原版 genetampering 是【无距离限制】的，我们限了 600。
+          ⚠️ 不写 AbilityConditionInHull（潜艇外同样生效，但仍受 600 距离限制）。
+
+       【强度核算（2026-09-16 用户定稿）】
+         被治疗过的船员（且在你 600 内）= 20% + 10% = +30%
+         600 内的其他船员 = +10% +5% 移速
+         600 外 = 0
+         对照：原版【单个医生】= 队友 +20%（治疗）/ +10%（光环）；
+               原版【两个医生配合】= 单个角色 +40%
+         ⇒ 我们 +30% 落在两者之间，且【每一项都不超过原版对应项】
+           （+20% ≤ vitaminsupplements；+10%/+5% = genetampering 原值）。
+
+       ⚠️ 「占星魔法第 1 档与第 2 档同源」那个老问题再次出现在这里，
+          但是【有意为之】的：第 1 档吉星相位现在只管回复，
+          生命上限的全部来源就是本天赋 + 它搬运的天星交错效果。
+       ============================================================ -->
   <Talent identifier="mcj_primary_sect">
     <Icon texture="%ModDir%/Textures/Talents/NeutralSect.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_sect" />
 
-    <!-- 2026-09-15：效果与第三栏「命运之轮」对调后搬到这里。
-         名字取自 FF14 的 Neutral Sect（中间学派）—— 「中立、兼收并蓄」，
-         所以效果是让身边的人一同学得更快（全技能 +10 / 技能获取速度 +20%）。
-         代价：若自己的武器技能不高于 50，则额外 -10（这一条只对自己生效，
-         所以不能放进 ApplyStatusEffectsToAllies 里）。 -->
-    <AbilityGroupInterval interval="1.0">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_primary_sect" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <!-- 代价：武器技能不超过 50 时再 -10 -->
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Conditions>
-        <AbilityConditionHasSkill skillidentifier="weapons" minvalue="51" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="WeaponsSkillBonus" value="-10" />
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
-
-  <!-- 天星交错 ← 原版 laresistance（于 2026-09-15 重做）
-       FF14 的 Celestial Intersection = 给一名队友套一层吸收护盾。
-       潜渊症没有护盾系统，最接近的等价物就是【临时最大生命】。
-
-       所以改成：你对队友施药/治疗时，该队友获得 8 秒「护盾」= 最大生命 +30%。
-       （现在是整局常驻 +20%，改后是每次施药刷新的 8 秒短盾 —— 要持续照顾队友，
-         与原版 vitaminsupplements「一次施药管一整局」是完全不同的玩法。）
-
-       ⚠️ 与占星魔法第 1 层的同源问题已解决：第 1 层已改名「吉星相位」并换成
-          持续缓愈，不再是 MaximumHealthMultiplier。 -->
-  <Talent identifier="mcj_primary_celestialopposition">
-    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_intersection" />
-
+    <!-- ① 加强吉星相位：把「黑夜相」加到每一次施药上 -->
     <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
       <Conditions>
         <AbilityConditionCharacter targettype="Ally,NotSelf" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityGiveAffliction affliction="mcj_primary_intersection" strength="600" setvalue="true" />
+        <CharacterAbilityGiveAffliction affliction="mcj_sect_shield" strength="600" setvalue="true" />
       </Abilities>
     </AbilityGroupEffect>
+
+    <!-- ② 加强阳星合相：600 内的黑夜相光环 -->
+    <AbilityGroupInterval interval="0.9">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="true">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_sect_bastion" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 
-  <!-- 生辰 ← 原版 dontdieonme（于 2026-09-15 重做）
+  <!-- 占位天赋（占星魔法第 2 档）—— 2026-09-16 起待设计
+       原名「天星交错」。它的效果（施药给队友 +20% 生命上限、持续到巡回结束）
+       已经【整体移交给第 4 档「中间学派」】（那边就是「给吉星相位补上黑夜相」，
+       连 affliction 都搬过去了：mcj_primary_intersection → mcj_sect_shield）。
+
+       ⚠️ 千万不要给它加「空的能力组」（如 multiplyvalue="1"）——
+          会报 added value is 0 and multiplier is 1, the ability will do nothing。
+          原版空天赋写法见助手线 apprenticeship：什么 AbilityGroup 都不写。
+       ⚠️ 图标：CelestialOpposition.png 已被第 1 档「吉星相位」占用，
+          这里改用 CelestialRiver.png（占卜换用 Divination.png 后它空出来了）。 -->
+  <Talent identifier="mcj_primary_celestialopposition">
+    <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_celestialopposition" />
+  </Talent>
+
+  <!-- 生辰 ← 原版 dontdieonme / thewaitinglist 的历史（2026-09-16 第二次重做）
        FF14 的 Ascend 是复活，潜渊症 XML 做不到（引擎没有复活死者的 API）。
-       最接近的精神等价物 = 「把死亡倒计时拖慢」：
-         有人昏迷时，全队获得 出血 / 失血 / 缺氧 / 烧伤 / 辐射病 / 深层组织损伤
-         抗性 +75% → 死亡倒计时被拖慢约 4 倍，给抢救争取时间。
+       最接近的等价物就是【心肺复苏】—— 把人从昏迷里救回来。
 
-       机制照原版助理「等待名单」thewaitinglist（TalentsAssistant.xml:326）——
-       它就是靠 ModifyResistance 把濒死时的出血/失血/缺氧抗性拉到 −75%。
-       差别：那条只作用于自己，我们广播给全队。
+       2026-09-16 定稿：有人昏迷时，你自己的心肺复苏效力 +100%。
+         · 数值 = 原版医生「冥土追魂」dontdieonme（CPRBoost 1）的原值
+         · 但原版是【无条件常驻】，我们加了「有人昏迷」这个条件 ⇒ 严格弱于原版
+         · 结构照原版「应急反应」emergencyresponse_selfbuff：
+           interval 0.9 + duration 1 + strengthchange="-1"
+         · ⚠️ 只给自己 —— 用 CharacterAbilityApplyStatusEffects，
+              而不是 CharacterAbilityApplyStatusEffectsToAllies
 
-       ⚠️ 6 项都用【具名 affliction】而不是 damage 大类 ——
-          写成 damage 就变成全伤害减伤了，那就不是「拖延死亡」而是通用减伤了。
-          「深层组织损伤」的 identifier 是 explosiondamage（不是 internaldamage），
-          它的 type 是 damage，所以必须写 id 才能只命中这一种。
-       ⚠️ resistancefor 既能匹配 AfflictionType 也能匹配具体 affliction id
-          （铁证：Afflictions.xml:750 用 resistancefor="huskinfection"，
-           而 huskinfection 的 type 是 alieninfection）。
-
-       原效果「心肺复苏效力翻倍」已撤下（那是原版 dontdieonme 的完整拷贝，
-       且初级树里「求生意志」已经给了 CPR 加成）。 -->
+       ❌ 已废弃：旧版「有人昏迷时全图全队获得 6 项抗性 +75%」——
+          覆盖面（全图 × 全队 × 6 项）比它的原型（助手 thewaitinglist，
+          只对自己、只 3 项）放大了两个维度，与初级树的位置不相称，
+          也与「复活」这个名字对不上。
+       ❌ 旧版「心肺复苏」曾被撤下，理由是「与即刻咏唱重复」——
+          那个理由不成立：即刻咏唱是 allowself="false"（只给队友），
+          与「只给自己」完全不重叠。 ⇒ 现在把 CPR 还给生辰，
+          而原本的即刻咏唱改成完全不同的「康复」（绷带强化）。 -->
   <Talent identifier="mcj_primary_ascend">
     <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_ascend" />
 
-    <AbilityGroupInterval interval="1.0">
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
         <AbilityConditionCrewMemberUnconscious />
       </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_primary_extend" amount="1.0" />
+              <Affliction identifier="mcj_ascend" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>

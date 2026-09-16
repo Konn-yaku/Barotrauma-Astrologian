@@ -773,10 +773,43 @@
        6 张奥秘卡
        贴图直接复用 Textures/Talents/ 下已有的 FF14 卡面（128x128）。
 
-       【怎么打出去】
-       按住右键 = OnSecondaryUse（原版技能书 skillbookeuropanmedicine
-       就是这条：Content/Items/Jobgear/Medic/medic_talent_items.xml）。
-       卡拖到手上才能用；打出后自己消失。
+       【怎么用：只能用治疗界面（健康界面）拖到人身上】
+       卡【不再】有"右键给自己上 buff"这条路。唯一的用法是：
+         ① 把卡从抽卡书里拖到手上（或随身物品栏）
+         ② 打开健康界面，把卡拖到目标船员的某个肢体格上
+         ③ 卡的效果只落在那一【名】人身上，随后卡自己消失
+
+       写法依据（原版 + 同机位模组均已验证）：
+         · Item 上的 useinhealthinterface="true"    = 允许在健康界面里施放
+         · type="OnUse" target="UseTarget"          = 被拖到的那个角色
+         · <Conditional entitytype="eq Character" /> = 没拖到人就整条跳过
+           （原版注射器用同一条守卫包住"命中音效"，见
+            Content/Items/Medical/buffs.xml 的 meth）
+         · <RemoveItem />                            = 消耗掉卡本身
+           ⚠️ 这里【不能】用 <Remove />：它删的是"target 列表里的实体"，
+              列表里一且带角色，万一它把被施卡的队友删了就完了
+              （你之前已经记过：原版 263 处 <Remove /> 全是 target="This"，
+               从没人把角色混进去）。<RemoveItem /> 删的是"挂着这条特效的物品"，
+              与 target 无关 —— 原版技能书 skillbookeuropanmedicine 就是
+              <RemoveItem /> + target="This,Character"。
+         原版另有一句作者注释直接点明这条路：
+           Content/Items/Medical/buffs.xml 的 ethanol
+             <!-- When Ethanol is used in Health GUI -->
+         同机位模组「玲儿」的两个纯 buff 物品也是同一写法
+         （Items/Medicals/Medicals.xml 的「生命修正液」WY_smxzy：
+          Holdable + useinhealthinterface + OnUse target="UseTarget"，
+          效果就是给自己以外的角色挂一层自定义 affliction）。
+
+       ⚠️ characterusable="false"
+         必须加：否则按 E 也会触发 OnUse（星力计数会被空放白刷，
+         甚至白烧掉一张卡）。原版三个饮料都是
+         useinhealthinterface="true" + characterusable="false"
+         （ethanol / energydrink / proteinbar）—— 证明 false 只挡 E 键，
+         不影响健康界面施放。
+
+       ⚠️ tags 里补了 medical
+         原版所有 useinhealthinterface 物品的 Tags 都带 medical，
+         加上最保险；顺手也让医生的医疗物品价格天赋能识别它。
 
        【卡有时限】
        Always + delay=60 → 出生 60 秒后自己消失。
@@ -785,14 +818,27 @@
        ============================================================ -->
 
   <Item name="" identifier="mcj_card_balance" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Balance.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_balance" strength="1" />
+    <!-- characterusable="false"：按 E 不触发 OnUse ⇒ 只剩【健康界面拖拽】一条路 -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ① 只给【被拖到的那个船员】上卡。
+           条件按 target 的第一个实体解析 ⇒ 没拖到人时 entitytype 守卫失败，整条跳过。
+           ⚠️ 消耗卡用 <RemoveItem /> 而不是 <Remove />（原因见本文件顶部公共注释）。 -->
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_balance" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <!-- ② 星力计数 +1，记在使用者自己头上。
+           ⚠️ 这条没有守卫：条件只能按 target 的第一个实体解析，写成 Character
+              就只会拿到使用者自己，判不出"刚才有没有真的拖到人"。
+              所以 characterusable="false" 就很重要 —— 没有它的话，按 E 空放
+              会白送一层星力（卡还不会被消耗）。 -->
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -800,24 +846,28 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="mcj_card_arrow" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Arrow.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_arrow" strength="1" />
+    <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_arrow" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -825,24 +875,28 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="mcj_card_spire" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Spire.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_spire" strength="1" />
+    <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_spire" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -850,24 +904,28 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="mcj_card_spear" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Spear.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_spear" strength="1" />
+    <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_spear" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -875,24 +933,28 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="mcj_card_bole" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Bole.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_bole" strength="1" />
+    <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_bole" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -900,24 +962,28 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="mcj_card_ewer" category="Misc"
-        tags="smallitem,mcjarcanumcard" maxstacksize="1" scale="0.5" impactsoundtag="impact_soft">
+        tags="smallitem,mcjarcanumcard,medical" maxstacksize="1" scale="0.5"
+        useinhealthinterface="true" impactsoundtag="impact_soft">
     <InventoryIcon texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/Textures/Talents/Ewer.png" sourcerect="0,0,128,128" depth="0.6" origin="0.5,0.5" />
     <Body width="28" height="36" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
-      <!-- 打出：本职 buff + 星力计数 +1 -->
-      <StatusEffect type="OnSecondaryUse" target="Character" disabledeltatime="true">
-        <Affliction identifier="mcj_sig_ewer" strength="1" />
+    <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
+    <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Conditional entitytype="eq Character" />
+        <Affliction identifier="mcj_ewer" amount="1" />
+        <RemoveItem />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
       </StatusEffect>
       <!-- 职业锁：非占星术士拿着会持续烧伤 -->
@@ -925,11 +991,10 @@
         <Conditional jobidentifier="! mcj_astrologian" />
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This">
+      <StatusEffect type="OnUse" target="This">
         <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>

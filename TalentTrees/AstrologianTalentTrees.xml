@@ -30,19 +30,29 @@
 
   <TalentTree jobidentifier="mcj_astrologian">
 
-    <!-- ================= 初级：通用医疗兵基本功 + 5 个占星专属 =================
-         其中 6 个沿用原版医生的天赋（它们本来就是通用能力）；
-         另外 5 个是我们自己写的 mcj_primary_*，替换掉原版医生那 5 个
-         「字面写着医生」的天赋（医疗保险 / 专门强化助手 / 献血者 等）。
+    <!-- ================= 初级：通用医疗兵基本功 + 占星专属 =================
+         2026-09-16 结构改版 + 效果定稿：
+           第 1 行：星图 / 星位合图 / 光速 / 待设计（占位）/ 康复
+           第 2 行：本轮 / 星极 / 重力 / 生辰 / 待设计 II（占位）
+         【本轮效果全部重写过，不再有任何一项是原版医生的拷贝】——
+           光速：删掉了「队友拖拽不减速」（与「本轮」重复），只剩“有人昏迷时自己 +40% 移速”
+           康复：由「即刻咏唱」改名而来，效果改成原版 medicalexpertise 的绷带强化
+           生辰：由「全队 6 项抗性 +75%」改成“有人昏迷时自己 CPR +100%”
+           重力：由“600 内全队 50% 眩晕抗性”改成“只给自己 30%”
+           星极：层数上限由 20 层（+150%）降到 10 层（+100%）
+           先天禀赋：×2.2 → ×1.5
+
+         ⚠️ 初级树第 2 行第 5 位原本叫「占卜」，那个名字已让给第三栏的终档
+            （FF14 的 Divination 就是全队增伤），这一位现在也是占位天赋。
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
 
       <TalentOptions requiredtalents="1" maxchosentalents="5">
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
-        <TalentOption identifier="mcj_primary_sect" />
-        <TalentOption identifier="mcj_primary_celestialopposition" />
-        <TalentOption identifier="mcj_primary_swiftcast" />
+        <TalentOption identifier="mcj_lightspeed" />
+        <TalentOption identifier="mcj_primary_placeholder" />
+        <TalentOption identifier="mcj_primary_esuna" />
       </TalentOptions>
 
       <TalentOptions requiredtalents="1" maxchosentalents="5">
@@ -61,10 +71,10 @@
            循环往复；书丢了或玩家死了，天赋会在 2 秒内补一本。
          第 2 档二选一：「重抽」（拆解产出概率翻倍）
                        「抽卡」（摸怪尸体拿基因材料 + 商店开卖基因材料）
-         第 3 档：小奥秘卡（王冠之领主 / 王冠之贵妇）—— 待实装
-         第 4 档「星力」：一轮 3 张卡全部打出后，给全队群体增益
+         第 3 档：小奥秘卡（王冠之领主 / 王冠之贵妇）—— 已实装
+         第 4 档「星力」：一轮 3 张卡全部打出后，给自己一份限时增益（只给自己）
 
-         6 张卡的效果不再由天赋发放，而是【卡牌物品打出后】施加给全队。
+         6 张卡的效果不再由天赋发放，而是【卡牌物品被拖到某人身上时】施加给那一个人。
          天赋实现见 Talents/AstrologianTalents.xml
          状态实现见 Afflictions/AstrologianAfflictions.xml -->
     <SubTree identifier="mcj_path_arcanum" type="specialization"
@@ -96,22 +106,42 @@
     <!-- ================= 专精 B：占星魔法（第一栏 · 治疗）=================
          「占星魔法」—— 占星术士最本职的一面，也是整个模组的第一支柱。
          4 层结构，第 2 层二选一，其余无选择 —— 与原版医生的「医生」子树同构。
+
+         2026-09-16 定稿：
+           第 1 档 吉星相位：施药给队友 10 秒持续缓愈（白昼相 · 单体）
+           第 2 档二选一：先天禀赋（低血治疗 ×1.5）
+                          / 待设计 III（占位；原「天星交错」）
+           第 3 档 阳星合相：600 内低血船员自动愈合（白昼相 · 范围）
+           第 4 档 中间学派：两相同存（Neutral Sect）
+                 · 给吉星相位补一份【单体黑夜相】= 施药时 +20% 生命上限、持续到巡回结束
+                 · 给阳星合相补一份【群体黑夜相】= 600 内 +10% 生命上限 +5% 移速 光环
+                 （后者的数值与原版医生 genetampering 完全相同，只多了 600 距离限制）
+
+         ⇒ 白昼相（回复）由 1/3 档提供，黑夜相（生命上限）由 4 档给两个相各补一份。
+         ⚠️ 原「天星交错」的效果已整体移交给中间学派，天赋位改为占位。
          天赋实现见 Talents/AstrologianTalents.xml
          状态实现见 Afflictions/AstrologianAfflictions.xml -->
     <SubTree identifier="mcj_path_healing" type="specialization"
              requires="mcj_astrologian_primary">
+      <!-- 第 1 档：吉星相位 -->
       <TalentOptions>
         <TalentOption identifier="mcj_celestialopposition" />
       </TalentOptions>
+
+      <!-- 第 2 档：二选一 —— 先天禀赋 / 天星交错 -->
       <TalentOptions requiredtalents="1" maxchosentalents="2">
         <TalentOption identifier="mcj_essentialdignity" />
-        <TalentOption identifier="mcj_lightspeed" />
+        <TalentOption identifier="mcj_primary_celestialopposition" />
       </TalentOptions>
+
+      <!-- 第 3 档：阳星合相 -->
       <TalentOptions>
         <TalentOption identifier="mcj_aspectedhelios" />
       </TalentOptions>
+
+      <!-- 第 4 档：中间学派（效果待重新设计） -->
       <TalentOptions>
-        <TalentOption identifier="mcj_stargate" />
+        <TalentOption identifier="mcj_primary_sect" />
       </TalentOptions>
     </SubTree>
 
@@ -126,17 +156,21 @@
 
          第 2 档（两个都能选）：
            「焚灼」—— 燃烧伤害 +25%、对压载植物群 +50%
-                      （照搬原版工程师「火焰狂人」）
-           「命运之轮」—— 600 范围内队友：技能 +10、技能获取速度 +20%；
-                         自己武器技能 ≤50 时 -10（照搬原版助手「摸鱼船员」）
+                      （照搬原版工程师「火焰狂人」 pyromaniac）
+           「命运之轮」—— 你跪下来蓄力 5 秒后展开：600 范围内（含自己）
+                          受到的伤害 −10%；起身后队友还保留约 5 秒。
+                          用 AbilityGroupInterval 的 effectdelay 实现蓄力
+                          （原版先例：助手「无害化」nonthreatening）。
 
          第 3 档「地星」—— 不做输出，做「预先布置」：
          放下一颗星，10 秒后待机，舱室一进水就自动修补船体并消失。
          （2026-09-15 从原第 2 档挪到第 3 档）
 
-         第 4 档「占卜」—— 终档：医疗技能 +45，自身伤害随医疗技能阶梯提升，
-         并给附近队友一份小幅增伤。
-         后续档位待设计。 -->
+         第 4 档「占卜」—— 终档（2026-09-16 由「星河漫天」改名而来）：
+         医疗技能 +45，自身伤害随医疗技能阶梯提升（最高 +30%）；
+         你发出【远程攻击】时，1000 内的队友获得 +15% 伤害 / 20 秒，
+         冷却 120 秒（冷却图标对玩家可见）。
+         旧版的「击杀累积 20 层」已删除。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
       <!-- 第 1 档 -->
@@ -159,7 +193,7 @@
 
       <!-- 第 4 档 -->
       <TalentOptions>
-        <TalentOption identifier="mcj_celestialriver" />
+        <TalentOption identifier="mcj_divination" />
       </TalentOptions>
     </SubTree>
 

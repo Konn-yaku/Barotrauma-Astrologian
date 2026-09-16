@@ -28,16 +28,18 @@
           0.9 = 只承受 90% = 减 10%）记法相反，两边不要互抄数字。
        ============================================================ -->
 
-  <!-- 命运之轮（第三栏）：伤害 −10% 光环（duration 3 + 天赋每秒刷新）
+  <!-- 命运之轮（第三栏）：伤害 −10% 光环（duration 5 + 天赋每秒刷新）
        2026-09-15：本效果原本在初级树，与第三栏的技能光环对调后搬到这里。
-       名字与 FF14 名实相符 —— Collective Unconscious 就是「站在你身边的队友少挨打」。 -->
+       名字与 FF14 名实相符 —— Collective Unconscious 就是「站在你身边的队友少挨打」。
+       2026-09-16：duration 由 3 秒改为 5 秒 —— 天赋改成了「蹲下满 5 秒才展开」，
+                   所以队友需要靠这个时长在施术者起身后多保一段。 -->
   <Affliction identifier="mcj_wheeloffortune_ward"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              duration="3"
+              duration="5"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <!-- 本模组唯一一条通用减伤。0.10 参照原版基因 damageresistance（10%~25%）的最低档。 -->
@@ -48,67 +50,42 @@
     <Icon texture="%ModDir%/Textures/Talents/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- 天星交错：8 秒「护盾」= 最大生命 +30%
-       潜渊症没有护盾系统，用临时最大生命当等价物。
-       重复施药会刷新时长（与阳星合相同一个 2 秒 buff 每秒刷新的验证前提）。 -->
-  <Affliction identifier="mcj_primary_intersection"
+  <!-- 中间学派 · 黑夜相（单体）—— 生命上限 +20%，持续到巡回结束
+       2026-09-16：这份效果原本属于第 2 档「天星交错」，identifier 原为 mcj_primary_intersection。
+       天星交错改为占位天赋后，效果整体移交给第 4 档「中间学派」。
+
+       数值与写法照原版医生「维生素补充剂」vitaminsupplements → bedsidemanner
+       （Content/Talents/Doctor/AfflictionsDoctor.xml）：
+         · 不写 duration + strengthchange="0" + resetbetweenrounds="true"
+           ⇒ 一次施药管一整局，巡回结束时自动清除
+         · 天赋侧用 strength="600" + setvalue="true" 把强度拉满 -->
+  <Affliction identifier="mcj_sect_shield"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              duration="8"
+              resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" strengthchange="0">
-      <StatValue stattype="MaximumHealthMultiplier" value="0.3" />
+      <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
     </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/NeutralSect.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- 生辰：拖延死亡 —— 6 项抗性 +75%（只在有人昏迷时由天赋发放） -->
-  <Affliction identifier="mcj_primary_extend"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="3"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 6 项全部是【具名】目标，不写 damage 大类 —— 写了就变成通用减伤了。
-         explosiondamage = 中文的「深层组织损伤」。
-         radiationsickness 没有 type 属性，只能按 identifier 命中。 -->
-    <Effect minstrength="0" maxstrength="1" strengthchange="0"
-            resistancefor="bleeding,bloodloss,oxygenlow,burn,radiationsickness,explosiondamage"
-            minresistance="0.75"
-            maxresistance="0.75" />
-    <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
+  <!-- 生辰 · 急救模式（2026-09-16 定稿）—— 有人昏迷时给自己的心肺复苏加成
 
-  <!-- 重力：眩晕抗性 50%（0.5 = 原版 stun 抗性上限） -->
-  <Affliction identifier="mcj_primary_gravity"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="3"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" strengthchange="0"
-            resistancefor="stun"
-            minresistance="0.5"
-            maxresistance="0.5" />
-    <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
+       旧版是「全图全队 6 项抗性 +75%」，铺得太开、与名字也对不上，已废弃。
+       现在改成与「复活」名实相符的方向：心肺复苏。
 
-  <!-- ===== 初级树 · 即刻咏唱：给队友的心肺复苏 +20%（2026-09-15） =====
-       原本直接引用原版医生的 affliction `stayinalive`，现在自己复制一份，
-       免得改数值时连带改掉原版医生（以及和天赋增强 TE 打架）。
-       属性逐行照拄原版 Content/Talents/Doctor/AfflictionsDoctor.xml：
-         duration="1" + 天赋每 0.9 秒刷新；四个 threshold 都是 1000（不在伤口栏显示）。 -->
-  <Affliction identifier="mcj_primary_swiftcast"
+       数值锚点：原版医生「冥土追魂」dontdieonme = CPRBoost 1（+100%），
+                 只给自己、无条件常驻。我们加了「有人昏迷」这个条件
+                 ⇒ 严格弱于原版。
+       写法照原版医生「应急反应」emergencyresponse_selfbuff：
+         duration="1"（天赋每 0.9 秒刷新）+ strengthchange="-1"
+         + 四个 threshold 全 1000（不在 buff 栏显示） -->
+  <Affliction identifier="mcj_ascend"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
@@ -121,10 +98,35 @@
               showinhealthscannerthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-      <StatValue stattype="CPRBoost" value="0.2" />
+      <StatValue stattype="CPRBoost" value="1.0" />
     </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/Swiftcast.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
+
+  <!-- 重力：眩晕抗性 30%（2026-09-16 从 0.5 下调）
+       原版 stun 抗性上限就是 0.5（Afflictions.xml），而 0.5 是「硬直减半」，
+       对一个只作用于自己的初级树天赋来说太重了。
+       锚点：原版船长「有备无患」battleready 就是 30%。 -->
+  <Affliction identifier="mcj_primary_gravity"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="3"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="stun"
+            minresistance="0.3"
+            maxresistance="0.3" />
+    <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ❌ v0.13（2026-09-16）：「即刻咏唱」的 affliction 已随天赋重做删除
+       它原本是给队友挂 1 秒的 CPRBoost 0.2（原版 stayinalive 的换皮）。
+       该天赋已改名为「康复」并改成【绷带强化】—— 直接施加 StatusEffect，
+       不经过 affliction，所以这一条没有任何引用者，已整段移除。 -->
 
   <!-- ===== 占星魔法 · 光速：队友拖拽角色不减速（2026-09-15） =====
        由 mcj_lightspeed 每秒给全图队友刷新。
@@ -179,20 +181,26 @@
   </Affliction>
 
   <!-- ============================================================
-       阳星合相 —— 濒死时自动清除流血与失血
+       阳星合相 —— 濒危时的自动愈合
        来源天赋：mcj_aspectedhelios
 
-       2026-09 改版（第三次）：定为「濒死急救」。
-         · 只有角色【生命值低于 20%】时才会清除 —— 平时伤口原样保留、照常扣血，
-           高于 20% 时这个效果完全不生效（不会变成常驻治疗光环）。
-         · 低于阈值时每 0.1 秒清：bleeding 10 / burn 5 / bloodloss 10
-           （每秒 100 / 50 / 100 点，一两秒内就能清干净，足够把人从死亡线上拉回来）。
+       2026-09-16 改版（第四次）：从「止血」改成「疗伤」。
+         · 只有角色【生命值低于 40%】时才会生效 —— 高于 40% 完全不作用。
+         · 生效时每 0.1 秒清除 0.15 点 type="damage" ⇒ 【每秒 1.5 点伤势】。
+           1.5 是刻意选的：原版绷带（Content/Items/Medical/medical.xml 的
+           antibleeding1）底子就是 bleeding 1.5/秒 ⇒ 本天赋 =「自动绷带」。
 
-       ⚠️ 为什么必须连 bloodloss 一起清：
-          流血(bleeding)被清掉后，【已经流失的血】bloodloss 仍在持续扣血
-          （强度 0~100 → 每秒 0~2 点），只清 bleeding 是救不回人的。
-       ⚠️ 刻意不碰 type="damage"（内伤/撕裂/枪伤）—— 那些是正常受伤，需要队友手动救治。
-          若内伤本身在扣血，本技能只能延命、不能完全替代医疗。
+       【实际观感】它把 40% 生命值变成一条会自动爬回去的底线 ——
+         掉到 40% 以下就每秒回 1.5 点，爬回 40% 自动停。
+         按生命上限 100 估算：1% → 40% 约 26 秒；20% → 40% 约 13 秒。
+         是「安全网」，不是「急救」—— 它救不回正在被持续输出的人。
+
+       ⚠️ 它【只】清 type="damage"（枪伤 / 咬伤 / 钝击 / 撕裂 / 深层组织损伤）。
+          流血、失血、烧伤一概无效 —— 刻意如此。
+          有人流血掉到 40% 以下时，它只会在回伤势的同时任由流血继续扣，
+          所以【流血致死它救不了】—— 那一块交给「康复」（绷带强化）去管。
+          「自动清流血」被明确否决：流血必须留给药物，否则会架空整个医疗循环。
+       ⚠️ 旧版清 bleeding/burn/bloodloss 的三条已全部删除。
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -205,10 +213,8 @@
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
-        <Conditional healthpercentage="lt 20" />
-        <ReduceAffliction type="bleeding" amount="10" />
-        <ReduceAffliction type="burn" amount="5" />
-        <ReduceAffliction identifier="bloodloss" amount="10" />
+        <Conditional healthpercentage="lt 40" />
+        <ReduceAffliction type="damage" amount="0.15" />
       </StatusEffect>
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
@@ -313,11 +319,15 @@
               resetbetweenrounds="true"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <!-- 2026-09-16 定档：0.5 → 0.2。
+         锚点：原版工程师「接地」grounded 就是 burn 抗性 20%
+         （CharacterAbilityGiveResistance resistanceid="burn" multiplier="0.8"）。
+         之前给 0.5 是「免疫一半火焰」，对一个兼职输出的天赋来说太重了。 -->
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
             resistancefor="burn"
-            minresistance="0.5"
-            maxresistance="0.5" />
+            minresistance="0.2"
+            maxresistance="0.2" />
     <Icon texture="%ModDir%/Textures/Talents/Combust.png" sourcerect="0,0,80,80" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -610,31 +620,26 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 第三栏 · 命运之轮的团队光环（5 秒，每秒被刷新） =====
-       由天赋 mcj_wheeloffortune 施加给 600 范围内的队友（不含自己）。
-       数值照搬原版助手「摸鱼船员」的 pickinguptheslack
-       （Content/Talents/Assistant/AfflictionsAssistant.xml:27），
-       但把它的「修理速度 +25%」换成了「技能获取速度 +20%」——
-       修理速度已经由「建筑神之塔」那张卡占了，不重复。
-
-       duration="5" + 天赋每秒刷新 = 离开范围约 5 秒后自动失效。 -->
-  <Affliction identifier="mcj_primary_sect"
+  <!-- ===== 中间学派 · 黑夜相（群体光环）—— 生命上限 +10% + 移速 +5% =====
+       2026-09-16 新增。写法照搬原版医生 xenologist 树的「基因改造」genetampering：
+         AbilityGroupInterval interval="0.9"
+         → ApplyStatusEffectsToAllies allowself="true"
+         → 每 0.9 秒刷一个 1 秒的 affliction
+       数值与原版 genetampering 【完全相同】（+10% 上限 +5% 移速）。
+       ⚠️ 唯一的削弱：天赋侧限了 maxdistance="600"，而原版那个是无距离限制的。
+       ⚠️ 不保留 AbilityConditionInHull（潜艇外同样生效，但仍有 600 距离限制）。 -->
+  <Affliction identifier="mcj_sect_bastion"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              duration="5"
+              duration="1"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09-15：本效果原属第三栏「命运之轮」，与初级树对调后搬到「中间学派」。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="ElectricalSkillBonus" value="10" />
-      <StatValue stattype="HelmSkillBonus" value="10" />
-      <StatValue stattype="MechanicalSkillBonus" value="10" />
-      <StatValue stattype="MedicalSkillBonus" value="10" />
-      <StatValue stattype="WeaponsSkillBonus" value="10" />
-      <StatValue stattype="SkillGainSpeed" value="0.2" />
+      <StatValue stattype="MaximumHealthMultiplier" value="0.10" />
+      <StatValue stattype="MovementSpeed" value="0.05" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Talents/NeutralSect.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
@@ -681,24 +686,48 @@
     <Icon texture="%ModDir%/Textures/Afflictions/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 第三栏 · 星河漫天：队友的小幅增伤 =====
-       由天赋 mcj_celestialriver 每 3 秒刷新一次，duration=4
-       → 离开 1000 范围大约 4 秒后自动失效（与阳星合相同一个手法）。
-       占卜者本人不靠这个 buff，他拿的是天赋里更大的那份。 -->
-  <Affliction identifier="mcj_celestialriver"
+  <!-- ===== 第三栏 · 占卜：你出手时倾泻给队友的增伤（20 秒） =====
+       由天赋 mcj_divination 在自己发出【远程攻击】时施加给 1000 内的队友。
+       2026-09-16：原名「星河漫天」，改名「占卜」（FF14 的 Divination = 全队增伤）。
+       数值：+15%，持续 20 秒，冷却 120 秒 ⇒ 覆盖率 16.7%、平均等效 +2.5%。
+       （旧版是「每 3 秒被动刷 +10%、永久」，平均 +10% —— 这次是明显削弱，
+         但峰值更高，而且把“常驻光环”变成了“开火才点亮的爆发窗口”。）
+       占卜者本人不靠这份，他拿的是天赋 ② 里更大的阶梯增伤。 -->
+  <Affliction identifier="mcj_divination_buff"
               type="talentbuff"
               isbuff="true"
               hideiconafterdelay="true"
               limbspecific="false"
               maxstrength="1"
-              duration="4"
+              duration="20"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 对标 TE「暴力军阀 warlord」0.1→0.5。队友只拿“小份”，所以取 10%。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.10" />
+      <StatValue stattype="AttackMultiplier" value="0.15" />
     </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
+  <!-- ===== 占卜的冷却（120 秒）——【玩家可见】 =====
+       2026-09-16 新增。照搬 LocalMods\玲儿 的 WY_CD 冷却模板：
+         门 = 天赋侧 <AbilityConditionHasAffliction ... invert="true" />
+         锁 = 触发时给自己挂这一条 duration="120" 的标记
+       ⚠️ 与玲儿 WY_CD 的隐形的做法【相反】：这里刻意【不写】
+          hideiconafterdelay / showiconthreshold，让图标留在 buff 栏上，
+          玩家能直接看到“占卜在冷却中”。灰色 iconcolors 也是刻意的 ——
+          一眼就能看出是“不可用”而不是增益。
+       ⚠️ 触发瞬间就挂上（不用 delay）⇒ 实际周期 = 120 秒，
+          buff 的前 20 秒包含在冷却里，覆盖率 20/120 = 16.7%。 -->
+  <Affliction identifier="mcj_divination_cd"
+              type="talentbuff"
+              isbuff="true"
+              limbspecific="false"
+              maxstrength="1"
+              treatmentthreshold="1000"
+              duration="120"
+              iconcolors="60,60,60,255;100,100,100,255;130,130,130,255;160,160,160,255">
+    <Effect minstrength="0" maxstrength="1" />
+    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 初级树 · 命理交织：治疗队友时自己也缓愈 =====
@@ -755,9 +784,8 @@
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.25" />
-      <StatValue stattype="SwimmingSpeed" value="0.25" />
-      <StatValue stattype="MeleeAttackSpeed" value="0.25" />
+      <StatValue stattype="WalkingSpeed" value="0.15" />
+      <StatValue stattype="SwimmingSpeed" value="0.30" />
       <StatValue stattype="RangedAttackSpeed" value="0.15" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Talents/Astrodyne.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
