@@ -16,7 +16,7 @@
   <talentname.mcj_celestialopposition>Aspected Benefic</talentname.mcj_celestialopposition>
   <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
-  <talentname.mcj_aspectedhelios>Aspected Helios</talentname.mcj_aspectedhelios>
+  <talentname.mcj_aspectedhelios>Helios Conjunction</talentname.mcj_aspectedhelios>
   <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
@@ -29,7 +29,7 @@
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_benefic>Aspected Benefic</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>The Benefic's light rests on you: your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_benefic>
-  <afflictionname.mcj_helios>Aspected Helios</afflictionname.mcj_helios>
+  <afflictionname.mcj_helios>Helios Conjunction</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>Your injuries are being soothed by starlight (‖color:gui.green‖1.5‖end‖ per second).</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>When you are close to death, this charge is consumed to grant you 15 seconds of Unyielding.</afflictiondescription.mcj_stargate>
@@ -164,7 +164,7 @@ Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within 
   <!-- ===== Reworked 2026-09-16 ===== -->
   <talentdescription.mcj_primary_sect>Neutral Sect keeps both phases active at once:
 · ‖color:gui.orange‖Aspected Benefic‖end‖: when you apply treatment to an ally, they gain an additional ‖color:gui.green‖20‖end‖% maximum health until the end of the round.
-· ‖color:gui.orange‖Aspected Helios‖end‖: crew within ‖color:gui.green‖600‖end‖ units gain a permanent aura of ‖color:gui.green‖10‖end‖% maximum health and ‖color:gui.green‖5‖end‖% movement speed.
+· ‖color:gui.orange‖Helios Conjunction‖end‖: crew within ‖color:gui.green‖600‖end‖ units gain a permanent aura of ‖color:gui.green‖10‖end‖% maximum health and ‖color:gui.green‖5‖end‖% movement speed.
 The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_wheeloffortune_ward>Collective Unconscious</afflictionname.mcj_wheeloffortune_ward>
   <afflictiondescription.mcj_wheeloffortune_ward>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_wheeloffortune_ward>

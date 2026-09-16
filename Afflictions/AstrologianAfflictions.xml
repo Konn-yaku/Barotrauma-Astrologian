@@ -177,7 +177,7 @@
         <ReduceAffliction type="bleeding" amount="0.02" />
       </StatusEffect>
     </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/AspectedBenefic.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================
@@ -217,7 +217,7 @@
         <ReduceAffliction type="damage" amount="0.15" />
       </StatusEffect>
     </Effect>
-    <Icon texture="%ModDir%/Textures/Afflictions/Helios.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Afflictions/HeliosConjunction.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ============================================================

@@ -29,15 +29,27 @@
          · abilityeffecttype="OnApplyTreatment" —— 只在【对盟友施药/治疗】时触发
          · AbilityConditionCharacter targettype="Ally,NotSelf" —— 目标必须是盟友、且不是自己
          · CharacterAbilityGiveAffliction strength="600" setvalue="true"
-           —— 给该队友挂上 mcj_benefic（生命上限 +20%），持续到巡回结束。
+           —— 给该队友挂上 mcj_benefic（**10 秒持续缓愈**）。
+       ⚠️ 2026-09-16 更正：这里旧注释写的是「mcj_benefic（生命上限 +20%），
+          持续到巡回结束」—— 那是 2026-09-15 之前的旧效果，已经作废。
+          mcj_benefic 现在是：每 0.1 秒 伤害 −0.05 / 出血 −0.02，持续 10 秒。
+          「生命上限」那条线已经搬到第 4 档「中间学派」（mcj_sect_shield）。
        原版给的 strength 是 600，而 affliction 的 maxstrength 会把它封顶，
        所以实际效果就是「把强度拉满」。用 setvalue 而不是 amount，
        是为了避免「强度已经满了 → 再加也不刷新时长」那个坑。
        ⚠️ CharacterAbilityGiveAffliction 的目标是【事件目标】（不是自己）——
           这里的事件目标就是被施药的队友，正合需求。
+
+       ⚠️ 2026-09-16 图标修正（这是本模组治疗占比最高的两个技能之一，不能错）：
+          原来用的 CelestialOpposition.png 里装的其实是
+          **3556 = Celestial Intersection（天星交错）** 的图 —— 挂错技能了。
+          ⇒ 已换成正确的 Aspected Benefic 图标（Action 3595 / icon 3127），
+            另存为 Textures/Talents/AspectedBenefic.png。
+          ⇒ 旧的 CelestialOpposition.png 已改名为 CelestialIntersection.png 备用。
+          ⇒ affliction mcj_benefic 的图标同步换掉（原来也是那个错文件）。
        ============================================================ -->
   <Talent identifier="mcj_celestialopposition">
-    <Icon texture="%ModDir%/Textures/Talents/CelestialOpposition.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/AspectedBenefic.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_benefic" />
     <Description tag="talentdescription.unlockrecipe">
       <Replace tag="[itemname]" value="entityname.autoinjectorheadset" color="gui.orange" />
@@ -146,11 +158,21 @@
        mcj_helios 带 duration="2"，每秒刷新 → 离开范围约 2 秒后自动失效。
 
        ※ 与「吉星相位」的对称关系（FF14 原型）：
-           吉星相位 = Aspected Benefic（单体治疗）→ 你施药的那个人获得持续回复
-           阳星合相 = Aspected Helios （范围治疗）→ 范围内濒危者自动愈合
+           吉星相位 = Aspected Benefic（Action 3595 / icon 3127 / 34 级）（单体治疗）
+                       → 你施药的那个人获得持续回复
+           阳星合相 = Helios Conjunction（Action 37030 / icon 3567 / 96 级）（范围治疗）
+                       → 范围内濒危者自动愈合
+         ⇒ 两者是同一招的两个等级版本（96 级是 34 级的升级版），图标完全不同。
+
+       ⚠️ 2026-09-16 命名/图标修正（方案 B：保留中文名「阳星合相」）：
+          中文名本来就是对的（阳星合相 = Helios Conjunction），错的是另外两处：
+            · 英文名写成了 "Aspected Helios"（那是 40 级的「阳星相位」）
+            · 图标文件名叫 AspectedHelios.png（内容其实是对的金色 3567）
+          ⇒ 英文名已改为 Helios Conjunction；图标文件改名为 HeliosConjunction.png
+          ⇒ affliction mcj_helios 的图标同步改名（Textures/Afflictions/）
        ============================================================ -->
   <Talent identifier="mcj_aspectedhelios">
-    <Icon texture="%ModDir%/Textures/Talents/AspectedHelios.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/HeliosConjunction.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_aspectedhelios" />
 
     <AbilityGroupInterval interval="1.0">
@@ -1236,8 +1258,10 @@
        ⚠️ 千万不要给它加「空的能力组」（如 multiplyvalue="1"）——
           会报 added value is 0 and multiplier is 1, the ability will do nothing。
           原版空天赋写法见助手线 apprenticeship：什么 AbilityGroup 都不写。
-       ⚠️ 图标：CelestialOpposition.png 已被第 1 档「吉星相位」占用，
-          这里改用 CelestialRiver.png（占卜换用 Divination.png 后它空出来了）。 -->
+       ⚠️ 图标：AspectedBenefic.png 已被第 1 档「吉星相位」占用，
+          这里改用 CelestialRiver.png（占卜换用 Divination.png 后它空出来了）。
+          （⚠️ 2026-09-16 修正：旧文件 CelestialOpposition.png 里装的其实是
+            3556 天星交错的图，已改名为 CelestialIntersection.png 备用。） -->
   <Talent identifier="mcj_primary_celestialopposition">
     <Icon texture="%ModDir%/Textures/Talents/CelestialRiver.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_celestialopposition" />
