@@ -32,7 +32,7 @@
 
     <!-- ================= 初级：通用医疗兵基本功 + 占星专属 =================
          2026-09-16 结构改版 + 效果定稿：
-           第 1 行：星图 / 星位合图 / 光速 / 大宇宙 / 康复
+           第 1 行：星图 / 星位合图 / 光速 / 袖内抽卡 / 康复
            第 2 行：本轮 / 星极 / 重力 / 生辰 / 吉星
          【本轮效果全部重写过，不再有任何一项是原版医生的拷贝】——
            光速：删掉了「队友拖拽不减速」（与「本轮」重复），只剩“有人昏迷时自己 +40% 移速”
@@ -48,7 +48,7 @@
             （ID 由 mcj_primary_divination 改为 mcj_exaltation），
             腾出的位子 2026-09-16 定稿为「吉星」mcj_primary_benefic（医疗技能 +30）。
          2 个占位天赋（第 1 行第 4 位 / 第 2 行第 5 位）已于同日全部定稿：
-            第 1 行第 4 位 = 「大宇宙」mcj_primary_macrocosmos（每完成任务得 1 袋血袋）
+            第 1 行第 4 位 = 「袖内抽卡」mcj_primary_sleevedraw（每完成任务得 1 袋血袋）
          ⇒ 本模组不再有任何占位天赋。
          详情与理由写在 Talents/AstrologianTalents.xml 里。 -->
     <SubTree identifier="mcj_astrologian_primary" nameidentifier="talenttree.primary" type="primary">
@@ -57,7 +57,7 @@
         <TalentOption identifier="mcj_primary_starchart" />
         <TalentOption identifier="mcj_primary_synastry" />
         <TalentOption identifier="mcj_lightspeed" />
-        <TalentOption identifier="mcj_primary_macrocosmos" />
+        <TalentOption identifier="mcj_primary_sleevedraw" />
         <TalentOption identifier="mcj_primary_esuna" />
       </TalentOptions>
 

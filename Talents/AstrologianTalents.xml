@@ -882,20 +882,26 @@
          中间学派 mcj_primary_sect               → 占星魔法第 4 档
          天星交错 mcj_primary_celestialopposition → 占星魔法第 2 档
          光速     mcj_lightspeed                 ← 从占星魔法第 2 档搬进来
-       腾出的第 4 位先由占位天赋占着，2026-09-16 已定稿为「大宇宙」mcj_primary_macrocosmos。
+       腾出的第 4 位先由占位天赋占着，2026-09-16 已定稿为「袖内抽卡」mcj_primary_sleevedraw。
        ============================================================ -->
 
   <!-- ============================================================
-       初级树 第 1 行 第 4 位 · 大宇宙（mcj_primary_macrocosmos）
+       初级树 第 1 行 第 4 位 · 袖内抽卡（mcj_primary_sleevedraw）
        ============================================================
        2026-09-16 定稿并落地（用户确认）。原本是「待设计」占位天赋。
 
-       【FF14 原型】Macrocosmos（大宇宙）
-         Action 25874 / icon 3562 / 90 级，占星术士 6.0 的招牌技能。
-         效果是「记录目标在此期间受到的伤害，倒计时结束时按 50% 一次性转成治疗」
-         —— 语义就是【先储存，之后一次性兑现】。
-         ⚠️ 我们只借用它的名字与这个「储备 → 兑现」的意象；
-            天赋的实际效果是「每完成任务得 1 袋血袋」，机制逐字照抄原版（见下）。
+       【FF14 原型】Sleeve Draw（袖内抽卡）
+         Action 7448 / icon 3107 / 70 级，占星术士 4.0 的技能。
+         效果是「从牌组再抽一张牌收进袖子，30 秒内可以额外打出」
+         —— 语义就是【手里先存着一份备用】。
+         ⚠️ 该技能已在 7.0 被删除。
+         ⚠️ 中文名是「袖内抽卡」（不是「袖里藏卡」）。
+
+       ⚠️ 图标来源（重要）：游戏现行数据里的 icon 3107 **自带一道红斜杠**
+          （在天赋面板上看着像“已禁用”），已改用 Gamerescape 上 2017-06-23
+          （4.0 上线时）上传的干净原图：
+            https://ffxiv.gamerescape.com/w/images/1/15/Sleeve_Draw_Icon.png （80x80）
+          逐像素比对：它与现行 3107 **不是同一张图**（平均差 59.5）⇒ 是干净的旧版。
 
        【效果】每完成一次任务，你获得 1 袋血袋（antibloodloss2）。
        【写法】逐字照抄原版医生【初级树】天赋 blooddonor
@@ -909,14 +915,15 @@
          ⇒ 这个天赋的价值就是「口袋里永远多一份输血的余量」。
 
        ⚠️ 与「康复」的分工：康复管【止血】（清流血/烧伤），
-          大宇宙管【补血】（补给血袋）—— 两者不重叠。
-       ⚠️ 图标：Textures/Talents/Macrocosmos.png（Macrocosmos 原图 3562）。
-       （⚠️ 2026-09-16：这一位原本定名「袖里藏卡」Sleeve Draw / icon 3107，
-         但那张官方图自带一道红斜杠（看着像“已禁用”），已改成「大宇宙」。）
+          袖内抽卡管【补血】（补给血袋）—— 两者不重叠。
+       ⚠️ 图标：Textures/Talents/SleeveDraw.png（Sleeve Draw 的 4.0 干净原图）。
+       （⚠️ 2026-09-16 命名史：曾短暂定名「大宇宙」Macrocosmos —— 当时只找到
+         带红斜杠的 3107，后来在 Gamerescape 找到 4.0 时期的干净原图，
+         于是改回它真正的名字「袖内抽卡」。）
        ============================================================ -->
-  <Talent identifier="mcj_primary_macrocosmos">
-    <Icon texture="%ModDir%/Textures/Talents/Macrocosmos.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_macrocosmos" />
+  <Talent identifier="mcj_primary_sleevedraw">
+    <Icon texture="%ModDir%/Textures/Talents/SleeveDraw.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Description tag="talentdescription.mcj_primary_sleevedraw" />
 
     <!-- 逐字照抄原版医生初级树 blooddonor -->
     <AbilityGroupEffect abilityeffecttype="OnAnyMissionCompleted">

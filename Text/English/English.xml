@@ -152,8 +152,8 @@ Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within 
   <talentname.mcj_primary_astral>Astral</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>Gravity</talentname.mcj_primary_starsounding>
   <talentname.mcj_exaltation>Exaltation</talentname.mcj_exaltation>
-  <talentname.mcj_primary_macrocosmos>Macrocosmos</talentname.mcj_primary_macrocosmos>
-  <talentdescription.mcj_primary_macrocosmos>Each time you complete a mission, you gain ‖color:gui.green‖1‖end‖ blood pack.\nBlood loss can only be replaced by transfusion — this keeps a spare on you at all times.</talentdescription.mcj_primary_macrocosmos>
+  <talentname.mcj_primary_sleevedraw>Sleeve Draw</talentname.mcj_primary_sleevedraw>
+  <talentdescription.mcj_primary_sleevedraw>Each time you complete a mission, you gain ‖color:gui.green‖1‖end‖ blood pack.\nBlood loss can only be replaced by transfusion — this keeps a spare on you at all times.</talentdescription.mcj_primary_sleevedraw>
   <talentname.mcj_primary_benefic>Benefic</talentname.mcj_primary_benefic>
   <talentdescription.mcj_primary_benefic>Your ‖color:gui.orange‖medical skill‖end‖ is increased by ‖color:gui.green‖30‖end‖.</talentdescription.mcj_primary_benefic>
 

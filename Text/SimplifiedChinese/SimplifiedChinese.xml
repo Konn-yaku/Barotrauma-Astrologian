@@ -166,8 +166,8 @@
   <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
   <talentname.mcj_exaltation>擢升</talentname.mcj_exaltation>
-  <talentname.mcj_primary_macrocosmos>大宇宙</talentname.mcj_primary_macrocosmos>
-  <talentdescription.mcj_primary_macrocosmos>每完成一次任务，你获得 ‖color:gui.green‖1‖end‖ 袋血袋。\n失血只能靠输血补回来 —— 这一项让你口袋里永远多一份余量。</talentdescription.mcj_primary_macrocosmos>
+  <talentname.mcj_primary_sleevedraw>袖内抽卡</talentname.mcj_primary_sleevedraw>
+  <talentdescription.mcj_primary_sleevedraw>每完成一次任务，你获得 ‖color:gui.green‖1‖end‖ 袋血袋。\n失血只能靠输血补回来 —— 这一项让你口袋里永远多一份余量。</talentdescription.mcj_primary_sleevedraw>
   <talentname.mcj_primary_benefic>吉星</talentname.mcj_primary_benefic>
   <talentdescription.mcj_primary_benefic>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖30‖end‖。</talentdescription.mcj_primary_benefic>
 
