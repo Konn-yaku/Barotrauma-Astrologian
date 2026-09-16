@@ -64,7 +64,7 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 解锁配方：原先由「摧升」送，重做后挪到这里（2026-09-15） -->
+    <!-- 解锁配方：原先由「擢升」送，重做后挪到这里（2026-09-15） -->
     <AddedRecipe itemidentifier="autoinjectorheadset" />
   </Talent>
 
@@ -1080,26 +1080,70 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!-- 解锁配方：原先由「摧升」送，重做后挪到这里（2026-09-15） -->
+    <!-- 解锁配方：原先由「擢升」送，重做后挪到这里（2026-09-15） -->
     <AddedRecipe itemidentifier="pressurestabilizer" />
   </Talent>
 
-  <!-- 凶星 ← 原版 blooddonor（新效果）
-       Malefic 是占星术士的核心伤害法术，效果也就对应增伤。
-       基础树里的小幅增伤，对标 TE「暴力军阀 warlord」的起点 0.1。 -->
-  <!-- ★注意：【本轮」← 原版 firemanscarry，见本文件中段
-       2026-09-15：凶星 → 「占卜」（不再叫 Malefic）。
-       FF14 的「占卜」Divination 正是「提升全队伤害」，与本效果名实相符。
-       图标换成占卜（icon 3553），原来那张 Malefic 图标不再使用。 -->
+  <!-- ============================================================
+       第 2 行 · 擢升（mcj_primary_divination）
+       2026-09-16 定稿并落地。原名占位「待设计 II」，
+       本名取自 FF14 治疗职能共通技能 **擢升 Exaltation**
+       （Action 25873 / icon 3561 / 86 级）。
+
+       【FF14 原型】「令自身或一名队员受到的伤害减轻 10%，持续 8 秒，
+         结束后恢复目标的体力（恢复力 500）」—— range 30、recast 600 秒。
+         ⚠️ FF14 的擢升【没有血量条件】—— 它是「预判性」技能：
+            你主动给一个即将挨打的人罩上。潜渊症没有施法键，
+            所以「什么条件下生效」必须由我们自己设计。
+
+       【效果】受到的伤害 **−10%**（= FF14 原值）。
+       【条件】**没有船员阵亡时**（AbilityConditionNoCrewDied）。
+         ⇒ 队伍完整时星象护佑你；一旦有人牺牲，这层庇泽随之消失。
+
+       【原版对照（2026-09-16 读原文核对）】
+         · 机械师 `foolhardy`（brawler 专精 3 档）= 活力 ≤50% → damage −20%
+         · 船长  `lonewolf`（gunslinger 专精 2 档）= 2000 内无队友 → damage,stun −20% + 近战 +20%
+         · 机械师 `mudraptorwrestler`（brawler 专精 2 档）= **无条件** → damage −10%（+ 对泥鳄近战 +50%）
+         · 船长  `camaraderie`（**初级树**）= 同一条件 AbilityConditionNoCrewDied
+                 → 给**全队（含自己）** 挂 camaraderie（5% 减伤）+ 全队 +10% XP
+         ⇒ 我们的条件与 `camaraderie` **完全相同**，位置同为**初级树**；
+           差别是它「全队 5%」、我们「只给自己 10%」—— **用覆盖面换数值**，量级相当。
+         ⇒ 数值等于 `mudraptorwrestler` 的 −10%，但它是**无条件**的，
+           我们多了一道条件 ⇒ 更弱。
+         ⇒ 而 foolhardy / lonewolf / mudraptorwrestler **全在专精树**，
+           我们放在初级树 ⇒ 位置偏强，这是刻意用「有条件的 10%」去抵消的。
+
+       【叠加】＋「命运之轮」（蹲满 5 秒）−10% ⇒ 最多 **−20%**，
+         等于原版安全官 `easyturtle`（在水中 20%），**没有越界**。
+
+       ⚠️ 单位陷阱（两种记法相反，别互抄）：
+         · affliction 的 `resistancefor` = **抗性本身**（0.1 = 减 10%）
+         · `CharacterAbilityGiveResistance` 的 `multiplier` = **承伤倍率**（0.9 = 减 10%）
+       ⚠️ 旧的占位版本里残留了一组「OnAttack → damage +10%」——
+          已删除。它曾经让一个写着“待设计”的占位天赋白送 10% 伤害。
+       ============================================================ -->
   <Talent identifier="mcj_primary_divination">
-    <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_divination" />
 
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
+    <!-- 写法照抄原版船长 camaraderie（Content/Talents/Captain/TalentsCaptain.xml）：
+         interval + 条件 → 挂 buff。
+         区别：camaraderie 用 ApplyStatusEffectsToAllies（全队），
+               我们去掉 ToAllies ⇒ 只作用于天赋持有者。 -->
+    <AbilityGroupInterval interval="0.9">
+      <Conditions>
+        <AbilityConditionNoCrewDied />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_exaltation" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupInterval>
   </Talent>
 
   <!-- 本轮 ← 原版 firemanscarry（2026-09-15：换成自己的 ID，效果不变）

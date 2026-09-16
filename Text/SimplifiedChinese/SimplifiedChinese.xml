@@ -165,7 +165,7 @@
   <talentname.mcj_primary_synastry>星位合图</talentname.mcj_primary_synastry>
   <talentname.mcj_primary_astral>星极</talentname.mcj_primary_astral>
   <talentname.mcj_primary_starsounding>重力</talentname.mcj_primary_starsounding>
-  <talentname.mcj_primary_divination>待设计 II</talentname.mcj_primary_divination>
+  <talentname.mcj_primary_divination>擢升</talentname.mcj_primary_divination>
   <!-- 占位天赋（2026-09-16）：位置已留，效果待设计 -->
   <talentname.mcj_primary_placeholder>待设计</talentname.mcj_primary_placeholder>
   <talentdescription.mcj_primary_placeholder>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_placeholder>
@@ -193,6 +193,8 @@
   <talentdescription.mcj_primary_gravity>你获得 ‖color:gui.green‖30‖end‖% 的 ‖color:gui.orange‖眩晕抗性‖end‖ —— 更不容易被撞倒、被打得踉跄。</talentdescription.mcj_primary_gravity>
   <afflictionname.mcj_primary_gravity>重力</afflictionname.mcj_primary_gravity>
   <afflictiondescription.mcj_primary_gravity>重力把你稳稳压在地上：眩晕抗性 ‖color:gui.green‖30‖end‖%。</afflictiondescription.mcj_primary_gravity>
+  <afflictionname.mcj_exaltation>擢升</afflictionname.mcj_exaltation>
+  <afflictiondescription.mcj_exaltation>星象护佑着完整的队伍：你受到的伤害降低 ‖color:gui.green‖10‖end‖%。</afflictiondescription.mcj_exaltation>
 
   <talentdescription.mcj_primary_astral>你的 ‖color:gui.orange‖技能获取速度‖end‖ 提升 ‖color:gui.green‖50‖end‖%。\n每治疗一名队友累积 ‖color:gui.green‖1‖end‖ 层「星极」，每层再提升 ‖color:gui.green‖5‖end‖%，最多 ‖color:gui.green‖10‖end‖ 层（合计 ‖color:gui.green‖100‖end‖%）。\n天赋面板上可以查看当前层数。</talentdescription.mcj_primary_astral>
 
@@ -222,7 +224,7 @@
   <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>
   <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。按住右键打出，使全队的氧气消耗降低。</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
-  <talentdescription.mcj_primary_divination>这个位置的天赋还在设计中，暂时不会提供任何效果。</talentdescription.mcj_primary_divination>
+  <talentdescription.mcj_primary_divination>队伍里没有船员阵亡时，你受到的 ‖color:gui.orange‖伤害降低 10%‖end‖。\n一旦有人牺牲，这层星象的庇泽便随之消散。</talentdescription.mcj_primary_divination>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
   <afflictiondescription.mcj_synastry>你的命理与他人交织，伤势正在缓缓消退。</afflictiondescription.mcj_synastry>
 

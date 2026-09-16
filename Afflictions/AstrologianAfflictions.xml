@@ -123,6 +123,38 @@
     <Icon texture="%ModDir%/Textures/Talents/StarSounding.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
+  <!-- 擢升 · 队伍完整时的护佑（2026-09-16 新增）
+       来源天赋：mcj_primary_divination（初级树第 2 行第 5 位）
+
+       形状完全克隆原版机械师「蛮牛」foolhardy 的 affliction
+       （Content/Talents/Mechanic/AfflictionsMechanic.xml）：
+         maxstrength="1" / duration="1" / hideiconafterdelay="true"
+         / treatmentthreshold="1000"（不进伤口栏）
+       天赋侧每 0.9 秒刷新一次 ⇒ 条件一旦不满足，最多 1 秒后自动消失。
+
+       ⚠️ 数值记法：resistancefor 的 min/max = **抗性本身**，
+          0.1 = 减 10%。（而 CharacterAbilityGiveResistance 的
+          multiplier 是承伤倍率，那边要写 0.9。两套反着写。）
+       ⚠️ 数值来源：FF14 擢升 Exaltation 原值就是 10%。
+          原版锚点：机械师 mudraptorwrestler（**无条件** −10%）、
+                   船长 camaraderie（同条件、全队 5%）。
+       ============================================================ -->
+  <Affliction identifier="mcj_exaltation"
+              type="talentbuff"
+              isbuff="true"
+              hideiconafterdelay="true"
+              limbspecific="false"
+              maxstrength="1"
+              duration="1"
+              treatmentthreshold="1000"
+              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="1" strengthchange="0"
+            resistancefor="damage"
+            minresistance="0.1"
+            maxresistance="0.1" />
+    <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
+  </Affliction>
+
   <!-- ❌ v0.13（2026-09-16）：「即刻咏唱」的 affliction 已随天赋重做删除
        它原本是给队友挂 1 秒的 CPRBoost 0.2（原版 stayinalive 的换皮）。
        该天赋已改名为「康复」并改成【绷带强化】—— 直接施加 StatusEffect，
