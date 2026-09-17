@@ -371,18 +371,21 @@
   </Affliction>
 
   <!-- ============================================================
-       第二栏 · 奥秘卡 —— 打出后给全队 15 秒的限时增益
-       来源：六天座（Talents/AstrologianTalents.xml）里的卡片广播组
+       第二栏 · 奥秘卡 —— 拖到某名船员身上，只给他一个人 15 秒的限时增益
+       （2026-09-17 定稿：卡是【单体】的，天赋不参与分发）
 
-       【链路】卡打出（物品）→ 只给使用者上一个 2 秒的「信号弹」affliction
-               → 天赋每 0.5 秒轮询，看到信号就广播真正的 buff 给全队，再清掉信号。
+       【链路】把卡从健康界面拖到某名船员的肢体格
+               （物品侧 useinhealthinterface + type="OnUse" target="UseTarget"
+                 + <Conditional entitytype="eq Character" /> 守卫）→ 卡自己消耗
+               → 直接给那名船员挂上真正的 buff。
+       ⚠️ v0.13 那套「卡打出 → 2 秒信号弹 → 天赋广播全队」的链路已废弃，
+          6 条 mcj_sig_* 信号弹连同它们的 12 条文本键已于 2026-09-17 删除。
 
-       【数值基准】每张卡只持续 15 秒（覆盖率 25%），属于"短时爆发"而不是常驻，
-       所以统一按「原版对应锚点 × 1.5~1.6」定档，比原版常驻天赋给得更足。
-       2026-09 定档：攻速 0.50 / 0.30（原版天花板 0.30 / 0.20）。
+       【数值基准】每张卡只持续 15 秒、一次只作用于一个人 ⇒ 按「原版对应锚点」
+       定档（2026-09-17 重新定过一次，每条的注释里都写了依据）。
 
        【三类效果】
-         · 数值型：StatValue（伤害 / 攻速 / 机动 / 工程）
+         · 数值型：StatValue（伤害 / 机动 / 工程）
          · 抗性型：resistancefor + minresistance/maxresistance ——
            只折减【新获得】的量，且原版只有 damage / stun / oxygenlow 三种先例。
          · 治疗型：Effect 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>，
@@ -390,14 +393,10 @@
        世界树之干（抗眩晕 + 持续愈合）与河流神之瓶（无需氧气）用第 2+3 类实现，
        刻意不做 damage 抗性 —— 本模组不提供伤害减免。
 
-       【显示】6 张卡是【可见】的 —— 用图标本身告诉玩家"哪几张卡正在生效"。
-       隐藏三件套（showiconthreshold / showicontoothersthreshold /
-       showinhealthscannerthreshold）在 6 个 _sig_* 信号弹上全部设成 "1000"
-       （原版 melodicrespite_charging 的写法），保证 buff 栏里只看得到真正的卡片。
+       【显示】6 张卡自己是【可见】的 —— buff 栏里看到哪张卡在谁身上生效。
        ============================================================ -->
 
-  <!-- ===== 太阳神之衡：全队增伤（15 秒） =====
-       真正的增益由「六天座」广播组施加（含自己、无视距离）。 -->
+  <!-- ===== 太阳神之衡：近战伤害 +25%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_balance"
               type="talentbuff"
               isbuff="true"
@@ -407,36 +406,22 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09 定档：0.40。
-         原版 AttackMultiplier 天花板是 0.25（TE 的暴力军阀 warlord 是 0.1/层、
-         五层封顶 0.5）。本卡只持续 15 秒（覆盖率 25%），按「原版锚点 × 1.6」取 0.40。 -->
+    <!-- 2026-09-17 定稿：0.25，且由「全域 AttackMultiplier」改成「近战专用」。
+         依据 = 原版安全官「肌肉发达」swole：
+           <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="0.25"/>
+         （TalentsSecurity.xml；同一 stat 落成 affliction 的写法原版另有
+           AfflictionsCaptain.xml / AfflictionsMechanic.xml / AfflictionsSecurity.xml 先例）
+         引擎侧：MeleeWeapon.cs 里 damageMultiplier = 1 + GetStatValue(MeleeAttackMultiplier)，
+         再乘上武器品质 ⇒ **精确 +25%，且限定近战武器**。
+         这一改与「战争神之枪」正好凑成原版那两个天赋的分工：一近战、一远程。
+         （旧值 0.40 是全域 AttackMultiplier，会连炮塔 / 徒手一起加，已废。） -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="AttackMultiplier" value="0.40" />
+      <StatValue stattype="MeleeAttackMultiplier" value="0.25" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 「太阳神之衡」的信号弹 ──
-       卡打出时只给【使用者自己】上这一条 2 秒的隐形标记，
-       真正的团队增益由「六天座」广播组施加（Talents/AstrologianTalents.xml）。
-       这样 6 张卡只需要维护一份数值，不会出现"自己一份、队友一份"的数值漂移。 -->
-  <Affliction identifier="mcj_sig_balance"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 战争神之枪：全队攻击速度（15 秒） ===== -->
+  <!-- ===== 战争神之枪：远程伤害 +30%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_spear"
               type="talentbuff"
               isbuff="true"
@@ -446,35 +431,26 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09 定档：近战 0.50 / 远程 0.30。
-         原版天花板就是 MeleeAttackSpeed 0.30、RangedAttackSpeed 0.20
-         （舰长 battleready 和医生 combatstimulant 用的正是这两个值）。
-         本卡只持续 15 秒（覆盖率 25%），所以给到原版天花板的约 1.6 倍。 -->
+    <!-- 2026-09-17 定稿：0.30，且**不再给攻速**（六张卡都不给攻速），改为远程伤害。
+         作用面 = 手持远程武器（枪 / 鱼叉 / 榴弹发射器），与 warlord 的
+         weapentype="handheldranged" 完全一致：
+           · RangedWeapon.cs: damageMultiplier = (1 + 品质(FirepowerMultiplier) + stat) * WeaponDamageModifier
+           · **不含炮塔** —— 炮塔走 Turret.Launch()，自己写 Attack.DamageMultiplier，
+             角色身上唯一被炮塔读取的 stat 是 TurretAttackSpeed
+           · 不含近战 / 天生攻击（那两套是 MeleeAttackMultiplier / Natural*AttackMultiplier）
+         【为什么是 0.30 而不是 0.25】远程那条是「1 + 品质 + 加成」的【加法】，
+         而太阳神的近战那条是「(1+加成) × (1+品质)」的【乘法】⇒ 品质 +20% 的武器上
+         1.5/1.2 = 正好 +25%，与太阳神对齐；普通武器（品质 0）则是 +30%，刻意略强。
+         ⚠️ 待实测：buff 栏显示的标签名（stattypenames.rangedattackmultiplier 未离线核实）。
+         ⚠️ 退路：万无一失的兜底是 AttackMultiplier，但它是【全区域】（Character.cs），
+            会和太阳神在近战上重叠 ⇒ 只在上面那条实测失败时才用。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="MeleeAttackSpeed" value="0.50" />
-      <StatValue stattype="RangedAttackSpeed" value="0.30" />
+      <StatValue stattype="RangedAttackMultiplier" value="0.30" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 「战争神之枪」的信号弹 ── -->
-  <Affliction identifier="mcj_sig_spear"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 放浪神之箭：全队移动速度与游泳速度（15 秒） ===== -->
+  <!-- ===== 放浪神之箭：步行 +25% / 游泳 +50%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_arrow"
               type="talentbuff"
               isbuff="true"
@@ -484,31 +460,17 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09 定档：移速 0.35 / 泳速 0.50。
-         WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat，
-         原版区间是 0.10~0.25 与 0.10~0.50 —— 泳速直接取到原版天花板，
-         因为水下地图里泳速的权重远高于移速。 -->
+    <!-- 2026-09-17 定稿：步行 0.25 / 游泳 0.50。
+         WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
+         步行 0.35 → **0.25**：原版 WalkingSpeed 出现过的值只有 0.05~0.20，
+         而基因上限也是 0.25 ⇒ 0.35 超出所有先例，压回上限。
+         游泳 0.50 保持（原版 SwimmingSpeed 的区间是 0.10~0.50，正好取顶）。
+         ⚠️ 旧注释里「泳速降到 0.30（依据原版 haste 满档）」那条依据**没有核实**，
+            所以本轮不动 0.50；核实后再决定。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.35" />
+      <StatValue stattype="WalkingSpeed" value="0.25" />
       <StatValue stattype="SwimmingSpeed" value="0.50" />
     </Effect>
-    <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ── 「放浪神之箭」的信号弹 ── -->
-  <Affliction identifier="mcj_sig_arrow"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -555,24 +517,7 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 「世界树之干」的信号弹 ── -->
-  <Affliction identifier="mcj_sig_bole"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 建筑神之塔：全队修理速度与修船壳速度（15 秒） ===== -->
+  <!-- ===== 建筑神之塔：修理速度与修船壳速度 +50%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_spire"
               type="talentbuff"
               isbuff="true"
@@ -593,29 +538,14 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ── 「建筑神之塔」的信号弹 ── -->
-  <Affliction identifier="mcj_sig_spire"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
-    <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 河流神之瓶：全队无需氧气（15 秒） =====
+  <!-- ===== 河流神之瓶：15 秒内无需氧气、不受水压（单体） =====
        照原版医生「压力稳定」pressurestabilized（Content/Talents/Doctor/AfflictionsDoctor.xml:44）改写。
        官方对该效果的描述是：
          "The subject is immune to pressure and has no need for oxygen at this time."
-       ——「不需要氧气」这句话对应的实现，就是
-          resistancefor="oxygenlow" 直接拉到 1.0（minresistance=maxresistance="1"）。
+       ⇒ 那句话对应【两件】实现，我们原先只做了一件：
+         · 「no need for oxygen」= resistancefor="oxygenlow" 拉到 1.0
+         · 「immune to pressure」= <AbilityFlag flagtype="ImmuneToPressure" />
+       ⚠️ 2026-09-17 补上漏掉的 ImmuneToPressure —— 只抗缺氧挡不住水压伤害。
 
        · 抗性 1.0 = 缺氧【完全不累积】 ⇒ 不用氧气瓶、无氧环境里也能正常活动。
        · 抗性只折减「新获得」的量，所以原版还额外挂了一条持续清除
@@ -635,27 +565,12 @@
             resistancefor="oxygenlow"
             minresistance="1"
             maxresistance="1">
+      <!-- 原版压力稳定的另一半（"immune to pressure"），2026-09-17 补 -->
+      <AbilityFlag flagtype="ImmuneToPressure" />
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
         <ReduceAffliction identifier="oxygenlow" strength="0.5" />
       </StatusEffect>
     </Effect>
-    <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ── 「河流神之瓶」的信号弹 ── -->
-  <Affliction identifier="mcj_sig_ewer"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              showiconthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              limbspecific="false"
-              maxstrength="1"
-              duration="2"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -794,24 +709,27 @@
        第二栏 · 星力（第 4 档）—— 一轮 3 张卡全部打出后，给自己的奖励 buff
        由天赋 mcj_astrodyne 施加（注意：是【只给自己】，不是全队）。
 
-       2026-09-15 定档：持续 20 秒
-         步行 / 游泳速度 +25%
-         近战攻速 +25% / 远程攻速 +15%
+       2026-09-16 定档（现行值，见下面的 StatValue）：持续 20 秒
+         步行 0.15 / 游泳 0.30 / 远程攻速 0.15（已删掉近战攻速那一条）
 
        【为什么用 WalkingSpeed + SwimmingSpeed 而不写 MovementSpeed】
          官方名分别是「移动速度 / 步行速度 / 游泳速度」。原版两个速度基因
          用的是 WalkingSpeed（0.10~0.25）和 SwimmingSpeed（0.10~0.50），
          而 MovementSpeed 是否覆盖游泳没有依据 ⇒ 直接分写两个，无歧义。
        【数值依据】取原版单项的经典档位：
-         移速 0.25 = 步行速度基因上限；近战 0.25 ≈ 原版天花板 0.3；
-         远程 0.15 ≈ 原版天花板 0.2。
-       ⚠️ 刻意不给 AttackMultiplier —— 增伤交给太阳神之衡那张卡，
-          一个乘算属性不要在两个地方同时出现。
+         步行 0.15 ≈ 原版常见档（0.05~0.20）；游泳 0.30 ≈ 原版中档（区间 0.10~0.50）；
+         远程攻速 0.15 ≈ 原版天花板 0.20 的 3/4。
+       ⚠️ 刻意不给增伤 —— 增伤交给「太阳神之衡」（近战 0.25）与
+          「战争神之枪」（远程 0.30）那两张卡，一条乘算属性不要在两个地方同时出现。
 
-       叠加说明（有意为之）：星力与卡片是两套独立 buff、数值相加。
-         抽星极套 → 移速 0.35(放浪神之箭) + 0.25 = 0.60
-         抽灵极套 → 近战 0.50(战争神之枪) + 0.25 = 0.75 / 远程 0.45
-         所以不管抽到哪一套，星力都能补上缺的那一半 —— 这就是 20 秒爆发窗口。
+       叠加说明（有意为之）：星力与卡片是两套独立 buff，同类数值相加。
+         星极套（太阳神之衡 / 放浪神之箭 / 建筑神之塔）
+           → 放浪神之箭的步行 0.25 + 星力 0.15 = 0.40；游泳 0.50 + 0.30 = 0.80
+           → 星力的远程攻速 0.15 在这一套里没有同类卡，单独生效
+         灵极套（战争神之枪 / 世界树之干 / 河流神之瓶）
+           → 星力的远程攻速 0.15 与战争神之枪的远程伤害 0.30：一条管射速、一条管伤害，互不重叠
+         ⚠️ 速度类没有「上限」的原版实据 —— 原版只对【基因】设了步行 0.25 的上限，
+            跨系统（卡 + 星力）相加会不会被截断，需实测。
        ============================================================ -->
   <Affliction identifier="mcj_astrodyne"
               type="talentbuff"

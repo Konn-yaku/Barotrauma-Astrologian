@@ -263,9 +263,8 @@
          ⇒ 天赋看不到“你把卡拖给了谁”，所以 6 个广播组【必须删掉】，
            六天座现在只负责：发一本抽卡书 + 解锁补救配方 + 卡牌文案。
 
-       ⚠️ 遗物：mcj_sig_* 六个信号弹的定义还留在 Afflictions 里没删
-          （Text 里的 afflictiondescription.mcj_sig_* 同理），
-          将来若要做“群体版卡”可以复用，现在没有任何地方引用它们。
+       ✅ 2026-09-17：mcj_sig_* 六个信号弹的定义、以及 Text 里对应的
+          12 条文本键（中英文）已经全部删除，全仓库再无 mcj_sig_ 引用。
 
        【数值定稿】见 Afflictions/AstrologianAfflictions.xml 的注释。
        ============================================================ -->
@@ -345,6 +344,8 @@
            而卡自己已经能直接对 UseTarget 生效（见物品文件的公共注释）。
          所以六个组整段删除，六天座只剩“发书 + 解锁配方”。
          数值那一份没变，仍然只有 Afflictions 里的 mcj_balance 等 6 条。
+         ✅ 2026-09-17：连 mcj_sig_* 那 6 条信号弹定义、和 Text 里对应的
+            12 条文本键也一并删干净了。
          ============================================================ -->
 
     <!-- 解锁配方：书丢了可以自己花 1 个塑料重做一本，把循环拉回来。
@@ -526,14 +527,15 @@
     </AbilityGroupInterval>
   </Talent>
 
-  <!-- （被动卡天赋已全部移除：6 张卡的效果改由卡牌物品打出后施加） -->
+  <!-- （被动卡天赋已全部移除：6 张卡的效果改由卡牌物品自己施加 —— 拖给谁就作用在谁身上） -->
 
 
   <!-- （世界树之干 / 建筑神之塔 / 河流神之瓶 —— 被动卡天赋已移除） -->
 
 
-  <!-- （旧的「星力」天赋已重做：改为"一轮 3 张卡全部打出后给全队群体 buff"，
-       定义见本文件前面的 mcj_astrodyne） -->
+  <!-- （旧的「星力」天赋已重做：改为"一轮 3 张卡全部打出后，【只给自己】20 秒增益"，
+       定义见本文件前面的 mcj_astrodyne。卡改成单体拖拽后，星力也依然是单体 ——
+       它的 6 项数值里没有任何一项是刷给队友的） -->
 
 
   <!-- ============================================================
@@ -821,7 +823,11 @@
          【自身那一份】由 ② 的阶梯组提供，所以这里 allowself="false"。 -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
-        <AbilityConditionAttackData weapontype="Ranged" />
+        <!-- 2026-09-17 收紧：原为 weapontype="Ranged"，比上面那句注释松 ——
+             Ranged 连【投掷物】和【炮塔炮弹】都算（手持远程与炮塔在武器类型里是分开两项），
+             会让「扔个手雷 / 开一炮」也触发天球仪的爆发窗口。
+             改成 HandheldRanged 后与注释、与原版 commando 完全一致。 -->
+        <AbilityConditionAttackData weapontype="HandheldRanged" />
         <AbilityConditionHasAffliction afflictionidentifier="mcj_divination_cd" invert="true" />
       </Conditions>
       <Abilities>
