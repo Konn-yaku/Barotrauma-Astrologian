@@ -197,15 +197,15 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <entityname.mcj_card_balance>The Balance</entityname.mcj_card_balance>
   <entitydescription.mcj_card_balance>A scale with life on one end and death on the other. Drag it onto a crew member in the health interface to raise the melee damage they deal by ‖color:gui.green‖25‖end‖% for 15 seconds.</entitydescription.mcj_card_balance>
   <entityname.mcj_card_arrow>The Arrow</entityname.mcj_card_arrow>
-  <entitydescription.mcj_card_arrow>An arrow that never lands. Drag it onto a crew member in the health interface to raise their walking speed by ‖color:gui.green‖25‖end‖% and their swimming speed by ‖color:gui.green‖50‖end‖% for 15 seconds.</entitydescription.mcj_card_arrow>
+  <entitydescription.mcj_card_arrow>An arrow that never lands. Drag it onto a crew member in the health interface to raise the healing they receive by ‖color:gui.green‖25‖end‖% for 15 seconds.</entitydescription.mcj_card_arrow>
   <entityname.mcj_card_spire>The Spire</entityname.mcj_card_spire>
   <entitydescription.mcj_card_spire>A tower that reaches upward. Drag it onto a crew member in the health interface to raise their repair speed and hull repair rate by ‖color:gui.green‖50‖end‖% for 15 seconds.</entitydescription.mcj_card_spire>
   <entityname.mcj_card_spear>The Spear</entityname.mcj_card_spear>
   <entitydescription.mcj_card_spear>A spear thrown never to be retrieved. Drag it onto a crew member in the health interface to raise the damage they deal with handheld ranged weapons by ‖color:gui.green‖30‖end‖% for 15 seconds.</entitydescription.mcj_card_spear>
   <entityname.mcj_card_bole>The Bole</entityname.mcj_card_bole>
-  <entitydescription.mcj_card_bole>The trunk that holds the world up. Drag it onto a crew member in the health interface to halve the stun they take and to keep healing their injuries, blood loss and bleeding, for 15 seconds.</entitydescription.mcj_card_bole>
+  <entitydescription.mcj_card_bole>The trunk that holds the world up. Drag it onto a crew member in the health interface to reduce the damage they take by ‖color:gui.green‖15‖end‖% for 15 seconds.</entitydescription.mcj_card_bole>
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>
-  <entitydescription.mcj_card_ewer>A pitcher of endless water. Drag it onto a crew member in the health interface so that they need no oxygen and take no pressure damage, for 15 seconds.</entitydescription.mcj_card_ewer>
+  <entitydescription.mcj_card_ewer>A pitcher of endless water. Drag it onto a crew member in the health interface so that they need no oxygen and keep healing from their injuries, for 15 seconds.</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>When you treat an ally, your fates briefly intertwine: you slowly recover as well.</talentdescription.mcj_synastry>
   <talentdescription.mcj_exaltation>While a crewmate is within ‖color:gui.green‖600‖end‖ units, you take ‖color:gui.green‖15‖end‖% less ‖color:gui.orange‖damage‖end‖.\nThe stars only shine for those who walk together — the protection fades when you are alone.</talentdescription.mcj_exaltation>
   <afflictionname.mcj_synastry>Synastry</afflictionname.mcj_synastry>

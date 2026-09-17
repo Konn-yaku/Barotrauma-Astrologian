@@ -42,7 +42,10 @@
               duration="5"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 本模组唯一一条通用减伤。0.10 参照原版基因 damageresistance（10%~25%）的最低档。 -->
+    <!-- 0.10 参照原版基因 damageresistance（10%~25%）的最低档。
+         ⚠️ 2026-09-17：本条【不再】是唯一一条通用减伤 —— 擢升（15%）与
+            「世界树之干」（卡，15%）也在给 damage 抗性，三条同时生效 = 40%，
+            正好是本模组的硬预算上限（详见 mcj_bole 的注释）。 -->
     <Effect minstrength="0" maxstrength="1" strengthchange="0"
             resistancefor="damage"
             minresistance="0.10"
@@ -385,13 +388,15 @@
        定档（2026-09-17 重新定过一次，每条的注释里都写了依据）。
 
        【三类效果】
-         · 数值型：StatValue（伤害 / 机动 / 工程）
+         · 数值型：StatValue（伤害 / 医疗效果 / 工程 / 机动）
          · 抗性型：resistancefor + minresistance/maxresistance ——
-           只折减【新获得】的量，且原版只有 damage / stun / oxygenlow 三种先例。
+           折减【新获得】的量（也会一并折减该状态的自然增减、以及流血→失血的转化），
+           但清不掉已经累积的量。原版只有 damage / stun / oxygenlow 三种相吸力。
          · 治疗型：Effect 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>，
            走的是原版 combatstimulant / pressurestabilized 的范式。
-       世界树之干（抗眩晕 + 持续愈合）与河流神之瓶（无需氧气）用第 2+3 类实现，
-       刻意不做 damage 抗性 —— 本模组不提供伤害减免。
+       世界树之干（damage 抗性 15%）用第 2 类实现，河流神之瓶（无需氧气 + 持续愈合）用第 2+3 类。
+       ✅ 2026-09-17 新规：本模组【允许】伤害抗性，但有**40% 预算上限** ——
+          「同一伤害类型、能同时存在于同一角色身上」的抗性之和 ≤ 40%，详见 mcj_bole 的注释。
 
        【显示】6 张卡自己是【可见】的 —— buff 栏里看到哪张卡在谁身上生效。
        ============================================================ -->
@@ -450,7 +455,7 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 放浪神之箭：步行 +25% / 游泳 +50%（15 秒 · 单体） ===== -->
+  <!-- ===== 放浪神之箭：受到的治疗效果 +25%（15 秒 · 单体） =====
   <Affliction identifier="mcj_arrow"
               type="talentbuff"
               isbuff="true"
@@ -460,34 +465,56 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09-17 定稿：步行 0.25 / 游泳 0.50。
-         WalkingSpeed / SwimmingSpeed 就是原版两个速度基因用的 stat。
-         步行 0.35 → **0.25**：原版 WalkingSpeed 出现过的值只有 0.05~0.20，
-         而基因上限也是 0.25 ⇒ 0.35 超出所有先例，压回上限。
-         游泳 0.50 保持（原版 SwimmingSpeed 的区间是 0.10~0.50，正好取顶）。
-         ⚠️ 旧注释里「泳速降到 0.30（依据原版 haste 满档）」那条依据**没有核实**，
-            所以本轮不动 0.50；核实后再决定。 -->
+    <!-- 2026-09-17 定稿（第二轮）：**受到的治疗效果 +25%**。
+         原型 = FF14 的 The Arrow（放浪神之箭）。
+         ⚠️ 旧值「步行 0.25 / 游泳 0.50」（原版两个速度基因的上限）已整体删除
+            —— 移速现在只剩「星力」那一个来源。
+
+         【为什么用 MedicalItemEffectivenessMultiplier】
+           引擎里「用药效果提高」有【三个不同的 stat】，作用点完全不同
+           （见 StatusEffect.GetAfflictionMultiplier）：
+             · MedicalItemEffectivenessMultiplier —— **受术者**侧：医疗品施加到
+               【被治疗者】身上的效果放大。**不管是谁给他上药都算**。
+             · MedicalItemApplyingMultiplier —— **施术者**侧：他给别人用药的效果。
+             · BuffItemApplyingMultiplier —— 同施术者侧，但只对 isbuff 的状态生效。
+           ⇒ 卡是拖给「被照顾的那个人」的，所以要的就是**受术者**那一条 ✓
+           · 前提：医疗品必须带 medical tag（绷带 / 塑封剂 / 抗生素胶 / 吗啡 / 血袋都有）
+           · 自己给自己用药时，两个 multiplier 会【相乘】⇒ 拖给自己同样有效
+
+         【数值依据】原版同族 stat 的档位：selfcare +0.2（医生初级树）、
+           drsubmarine +0.25、macrodosing / supersoldiers +0.25。
+           我们是一张 15 秒、单体的卡 ⇒ 取 **+0.25 = 原版最高档**，未超出任何原版实例。
+         ⚠️ 实测项：绷带的治疗量是否真的变大（buff 栏会显示该 stat 的标签名，
+            但治疗量的变化要看血量/伤口栏）。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="WalkingSpeed" value="0.25" />
-      <StatValue stattype="SwimmingSpeed" value="0.50" />
+      <StatValue stattype="MedicalItemEffectivenessMultiplier" value="0.25" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Arrow.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 世界树之干：全队抗眩晕 + 持续愈合（15 秒） =====
-       照原版医生「战斗兴奋剂」combatstimulant（Content/Talents/Doctor/AfflictionsDoctor.xml:5）改写。
-       官方对该效果的描述是「让使用者快速从身体损伤与失血中恢复」，
-       它的实现正好就是「抗眩晕 + 每 0.1 秒持续治疗」这两件东西。
+  <!-- ===== 世界树之干：受到的伤害 −15%（15 秒 · 单体） =====
+       2026-09-17 第二轮重做：**改成纯减伤卡**。
+       原型 = FF14 的 The Bole（世界树之干）—— 它本来就是「受到的伤害降低」，
+       以前那套「抗眩晕 + 持续愈合」其实与 Bole 没有关系（愈合已搬去河流神之瓶）。
 
-       · resistancefor="stun" 0.5 = 新受到的眩晕量折减一半。
-         stun 的强度【就是眩晕秒数】（王冠卡的爆炸写的是 stun 7 = 7 秒硬直），
-         所以这是「硬直时间减半」，不是免疫，也不影响已经中的那一段。
-         原版用例：舰长 battleready 0.3、医生 combatstimulant 0.45 / 0.5。
-       · 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>：每 0.1 秒
-         回 0.15 点损伤 / 失血 / 流血 = 1.5 点每秒，15 秒合计约 22 点。
-         原版 combatstimulant 满档是 2 点每秒（单体），我们覆盖全队所以略低。
+       ❌ 【已删除的两件旧效果】
+         ① resistancefor="stun" 0.5：与初级树「重力」的 30% 叠加会到 80%，
+            而原版 stun 抗性从没超过 0.5 ⇒ 撞帽浪费，已删。
+         ② 内嵌清除 damage / bloodloss / bleeding（各 1.5/秒）：
+            那是全游戏最重的越线 —— 既清流血又清失血，会让药物失去意义，已删。
 
-       ⚠️ 刻意不碰 resistancefor="damage" —— 本模组不做伤害减免。
+       【数值依据：40% 预算】
+       本模组现在的规则是「同一伤害类型、能同时存在于同一角色身上」的抗性之和 ≤ 40%。
+       damage 类的另外两个来源：
+         · 命运之轮 mcj_wheeloffortune_ward = 10%（蹲满 5 秒 → 600 内含自己 5 秒）
+         · 擢升 mcj_exaltation = 15%（600 内有队友，只给自己）
+       ⇒ 本卡 15% 让最坏的同时叠加正好 = 10 + 15 + 15 = **40%**，用满但不越界。
+       原版参考：基因「活力」strengthen 满档 = damage 抗性 0.5
+         （Content/Afflictions.xml:2603），中低档 10~25%。
+       ⚠️ 引擎侧（CharacterHealth.GetResistance）：affliction 来源的抗性是【相加】的，
+          而天赋侧 CharacterAbilityGiveResistance 的承伤倍率是【相乘】的。
+          我们这三条全是 affliction ⇒ 就是简单相加 ✓
+       ⚠️ 实测项：三条同时开时的实际减伤是否等于 40%（相加 vs 相乘的最终确认）。
        ⚠️ 「物品/能力给角色施加一个自带内嵌效果的 affliction」这条路是有原版先例的：
           战斗兴奋剂注射器就是用 <Affliction identifier="combatstimulant" amount="15.0"/>
           发出它的（Content/Items/Jobgear/Medic/medic_talent_items.xml:83），
@@ -505,15 +532,9 @@
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="1"
             strengthchange="0"
-            resistancefor="stun"
-            minresistance="0.5"
-            maxresistance="0.5">
-      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
-        <ReduceAffliction type="damage" strength="0.15" />
-        <ReduceAffliction identifier="bloodloss" strength="0.15" />
-        <ReduceAffliction identifier="bleeding" strength="0.15" />
-      </StatusEffect>
-    </Effect>
+            resistancefor="damage"
+            minresistance="0.15"
+            maxresistance="0.15" />
     <Icon texture="%ModDir%/Textures/Afflictions/Bole.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
@@ -538,19 +559,28 @@
     <Icon texture="%ModDir%/Textures/Afflictions/Spire.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 河流神之瓶：15 秒内无需氧气、不受水压（单体） =====
-       照原版医生「压力稳定」pressurestabilized（Content/Talents/Doctor/AfflictionsDoctor.xml:44）改写。
-       官方对该效果的描述是：
-         "The subject is immune to pressure and has no need for oxygen at this time."
-       ⇒ 那句话对应【两件】实现，我们原先只做了一件：
-         · 「no need for oxygen」= resistancefor="oxygenlow" 拉到 1.0
-         · 「immune to pressure」= <AbilityFlag flagtype="ImmuneToPressure" />
-       ⚠️ 2026-09-17 补上漏掉的 ImmuneToPressure —— 只抗缺氧挡不住水压伤害。
+  <!-- ===== 河流神之瓶：无需氧气 + 持续治愈伤势（15 秒 · 单体） =====
+       2026-09-17 第二轮重做：**接过了世界树之干原来的「持续治疗」**。
+       原型 = FF14 的 The Ewer（河流神之瓶）——它本来就是「回复」卡，
+       加上「水」的意象（无需氧气），两件事合在一张卡上正好。
+
+       ⚠️ 2026-09-17 撤销：原先补上的 <AbilityFlag flagtype="ImmuneToPressure" />
+          已删除（用户定）。原版 pressurestabilized 确实有那一半，但我们只保留
+          「无需氧气」—— 免疫水压不再给。
+          ⇒ 对比原版 pressurestabilized：它给 900 秒，我们只给 15 秒。
 
        · 抗性 1.0 = 缺氧【完全不累积】 ⇒ 不用氧气瓶、无氧环境里也能正常活动。
        · 抗性只折减「新获得」的量，所以原版还额外挂了一条持续清除
          （每 tick 减 0.5 缺氧）。我们照抄这条双保险，
-         把「刚断氧那一刻」残留的那点缺氧一起清掉。 -->
+         把「刚断氧那一刻」残留的那点缺氧一起清掉。
+       · 新增的持续治疗：每 0.1 秒清 0.15 点 type="damage" ⇒ **1.5/秒 × 15 秒 = 22.5 点**。
+         只清 damage ⇒ 完全不碰流血与失血 ✓（流血/失血仍然只有药物能解）
+         【数值依据】原版「治伤势」的药不是绷带，是吗啡 / 芬太尼：
+           · 吗啡 antidama1 = damage 2.0/秒 × 20 秒 = **40**（代价：缺氧 + 成瘾）
+           · 芬太尼 antidama2 = 15/秒 × 5 秒 = **75**（代价更重）
+           · 战斗兴奋剂 combatstimulant 满档 = 2.0/秒（限时 15~100 秒）
+           · 基因「治疗」healdamage 满档 = **0.75/秒（永久）**
+         ⇒ 我们 1.5/秒 × 15 秒 = 22.5 点 = **一支吗啡的 56%，且没有任何副作用**。 -->
   <Affliction identifier="mcj_ewer"
               type="talentbuff"
               isbuff="true"
@@ -565,10 +595,9 @@
             resistancefor="oxygenlow"
             minresistance="1"
             maxresistance="1">
-      <!-- 原版压力稳定的另一半（"immune to pressure"），2026-09-17 补 -->
-      <AbilityFlag flagtype="ImmuneToPressure" />
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
         <ReduceAffliction identifier="oxygenlow" strength="0.5" />
+        <ReduceAffliction type="damage" strength="0.15" />
       </StatusEffect>
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Ewer.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
@@ -599,6 +628,12 @@
   </Affliction>
 
   <!-- ===== 第三栏 · 命运之轮（旧版）：高额减伤 + 持续治疗 =====
+       ⛔⛔ 2026-09-17 警示：本条有 **65% 的 damage 抗性**，而本模组现在有
+            「同一伤害类型、可同时生效的抗性之和 ≤ 40%」的硬预算
+            （现状：擢升 15% + 命运之轮 10% + 世界树之干 15% = 刚好 40%）。
+            本条没有任何天赋引用 ⇒ 【不计入预算】，但它是一颗地雷：
+            将来若要复用，必须先把 min/maxresistance 从 0.65 降到 **≤0.15**，
+            否则一引用就爆表，而且会把内嵌的自动清流血一起带回来。
        ⚠️ 2026-09-15：这个投掷装置的获取途径已被撤下，
           目前没有任何天赋会施加本 affliction。保留定义以备以后复用；
           「命运之轮」这个名字现已由第 2 档天赋使用（它的是 mcj_primary_sect）。
@@ -723,13 +758,12 @@
           「战争神之枪」（远程 0.30）那两张卡，一条乘算属性不要在两个地方同时出现。
 
        叠加说明（有意为之）：星力与卡片是两套独立 buff，同类数值相加。
-         星极套（太阳神之衡 / 放浪神之箭 / 建筑神之塔）
-           → 放浪神之箭的步行 0.25 + 星力 0.15 = 0.40；游泳 0.50 + 0.30 = 0.80
-           → 星力的远程攻速 0.15 在这一套里没有同类卡，单独生效
-         灵极套（战争神之枪 / 世界树之干 / 河流神之瓶）
-           → 星力的远程攻速 0.15 与战争神之枪的远程伤害 0.30：一条管射速、一条管伤害，互不重叠
-         ⚠️ 速度类没有「上限」的原版实据 —— 原版只对【基因】设了步行 0.25 的上限，
-            跨系统（卡 + 星力）相加会不会被截断，需实测。
+       ⚠️ 2026-09-17：放浪神之箭改成「受到的治疗效果 +25%」之后，
+          **星力成了全模组唯一的移速来源** —— 不再与任何卡相加，
+          所以步行 0.15 / 游泳 0.30 就是纯值，没有撞上限的风险。
+       现在卡片里没有任何一条与星力的数值重叠：
+         · 星力的远程攻速 0.15 管「射速」，战争神之枪的远程伤害 0.30 管「伤害」
+         · 星力的移速与六张卡全都不重叠
        ============================================================ -->
   <Affliction identifier="mcj_astrodyne"
               type="talentbuff"

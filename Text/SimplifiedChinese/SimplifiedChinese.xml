@@ -210,17 +210,17 @@
 
   <!-- ===== 奥秘卡：6 张卡 ===== -->
   <entityname.mcj_card_balance>太阳神之衡</entityname.mcj_card_balance>
-  <entitydescription.mcj_card_balance>天称两端，一端是生，一端是死。在健康界面里把它拖到某名船员身上，使其造成的近战伤害提升‖color:gui.green‖25‖end‖%，持续 15 秒。</entitydescription.mcj_card_balance>
+  <entitydescription.mcj_card_balance>天秤两端，一端是生，一端是死。在健康界面里把它拖到某名船员身上，使其造成的近战伤害提升‖color:gui.green‖25‖end‖%，持续 15 秒。</entitydescription.mcj_card_balance>
   <entityname.mcj_card_arrow>放浪神之箭</entityname.mcj_card_arrow>
-  <entitydescription.mcj_card_arrow>一支永远在飞的箭。在健康界面里把它拖到某名船员身上，使其步行速度提升‖color:gui.green‖25‖end‖%、游泳速度提升‖color:gui.green‖50‖end‖%，持续 15 秒。</entitydescription.mcj_card_arrow>
+  <entitydescription.mcj_card_arrow>一支永远在飞的箭。在健康界面里把它拖到某名船员身上，使其受到的治疗效果提升‖color:gui.green‖25‖end‖%，持续 15 秒。</entitydescription.mcj_card_arrow>
   <entityname.mcj_card_spire>建筑神之塔</entityname.mcj_card_spire>
   <entitydescription.mcj_card_spire>通向高处的塔。在健康界面里把它拖到某名船员身上，使其修理速度与修船壳速度提升‖color:gui.green‖50‖end‖%，持续 15 秒。</entitydescription.mcj_card_spire>
   <entityname.mcj_card_spear>战争神之枪</entityname.mcj_card_spear>
   <entitydescription.mcj_card_spear>掷出便不再收回的枪。在健康界面里把它拖到某名船员身上，使其手持远程武器造成的伤害提升‖color:gui.green‖30‖end‖%，持续 15 秒。</entitydescription.mcj_card_spear>
   <entityname.mcj_card_bole>世界树之干</entityname.mcj_card_bole>
-  <entitydescription.mcj_card_bole>支撑起整个世界的那根树干。在健康界面里把它拖到某名船员身上，使其受到的眩晕时间减半，并不断治愈其外伤、失血与流血，持续 15 秒。</entitydescription.mcj_card_bole>
+  <entitydescription.mcj_card_bole>支撑起整个世界的那根树干。在健康界面里把它拖到某名船员身上，使其受到的伤害降低‖color:gui.green‖15‖end‖%，持续 15 秒。</entitydescription.mcj_card_bole>
   <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>
-  <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。在健康界面里把它拖到某名船员身上，使其无需呼吸、也不受水压伤害，持续 15 秒。</entitydescription.mcj_card_ewer>
+  <entitydescription.mcj_card_ewer>盛着无尽之水的瓶。在健康界面里把它拖到某名船员身上，使其无需氧气，并持续治愈其伤势，持续 15 秒。</entitydescription.mcj_card_ewer>
   <talentdescription.mcj_synastry>你为队友施加治疗时，星位相连：自己也缓缓恢复。</talentdescription.mcj_synastry>
   <talentdescription.mcj_exaltation>你身边（‖color:gui.green‖600‖end‖ 范围内）有队友时，你受到的 ‖color:gui.orange‖伤害降低 15%‖end‖。\n落单时这层守护会消失 —— 星象只为同行者闪耀。</talentdescription.mcj_exaltation>
   <afflictionname.mcj_synastry>星位合图</afflictionname.mcj_synastry>
