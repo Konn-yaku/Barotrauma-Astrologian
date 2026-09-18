@@ -123,14 +123,16 @@
 
   <!-- ===== 第三栏 · 地星 ===== -->
   <talentname.mcj_earthlystar>地星</talentname.mcj_earthlystar>
-  <talentdescription.mcj_earthlystar>获得一颗「地星」，并解锁它的制造配方。
+  <talentdescription.mcj_earthlystar>获得一颗「地星」，并解锁它的制造配方与充能配方。
 把它放到地上，它会花 ‖color:gui.green‖10‖end‖ 秒积蓄星光。
 在此之后，只要它所在的舱室开始 ‖color:gui.orange‖进水‖end‖，便会立刻绽放：
-释放一次范围 ‖color:gui.green‖250‖end‖ 的船体修复，随后消散。
-一颗地星只能生效一次，用完需要在制造台重新制作。</talentdescription.mcj_earthlystar>
+释放一次范围 ‖color:gui.green‖250‖end‖ 的船体修复，并把积蓄的星光一次耗尽。
+耗尽的星不会消失 —— 它只是熄灭了，带回去用 ‖color:gui.orange‖摄魂矿束‖end‖ 就能重新点亮。
+（首造 30 秒 / 医疗 60；充能 15 秒 / 医疗 50。）</talentdescription.mcj_earthlystar>
   <entityname.mcj_earthlystar>地星</entityname.mcj_earthlystar>
   <entitydescription.mcj_earthlystar>一颗尚未点亮的星。把它留在地上，星光会慢慢汇聚。
-蓄力完成后，只要它被水淹没，就会在绽放中修补周围的船体，随即消散。
+蓄力完成后，只要它被水淹没，就会在绽放中修补周围的船体，并把星光一次烧尽。
+熄灭的星不会消失 —— 带回去用‖color:gui.orange‖摄魂矿束‖end‖可以重新点亮。
 它无法预知伤害，只能提前布下 —— 所以放下的时机就是它的全部。</entitydescription.mcj_earthlystar>
 
   <!-- ===== 第三栏 · 命运之轮 ===== -->
@@ -210,13 +212,13 @@
 
   <!-- ===== 奥秘卡：6 张卡 ===== -->
   <entityname.mcj_card_balance>太阳神之衡</entityname.mcj_card_balance>
-  <entitydescription.mcj_card_balance>天秤两端，一端是生，一端是死。在健康界面里把它拖到某名船员身上，使其造成的近战伤害提升‖color:gui.green‖25‖end‖%，持续 15 秒。</entitydescription.mcj_card_balance>
+  <entitydescription.mcj_card_balance>天秤两端，一端是生，一端是死。在健康界面里把它拖到某名船员身上，使其近战攻击速度提升‖color:gui.green‖30‖end‖%、远程攻击速度提升‖color:gui.green‖10‖end‖%，持续 15 秒。</entitydescription.mcj_card_balance>
   <entityname.mcj_card_arrow>放浪神之箭</entityname.mcj_card_arrow>
   <entitydescription.mcj_card_arrow>一支永远在飞的箭。在健康界面里把它拖到某名船员身上，使其受到的治疗效果提升‖color:gui.green‖25‖end‖%，持续 15 秒。</entitydescription.mcj_card_arrow>
   <entityname.mcj_card_spire>建筑神之塔</entityname.mcj_card_spire>
   <entitydescription.mcj_card_spire>通向高处的塔。在健康界面里把它拖到某名船员身上，使其修理速度与修船壳速度提升‖color:gui.green‖50‖end‖%，持续 15 秒。</entitydescription.mcj_card_spire>
   <entityname.mcj_card_spear>战争神之枪</entityname.mcj_card_spear>
-  <entitydescription.mcj_card_spear>掷出便不再收回的枪。在健康界面里把它拖到某名船员身上，使其手持远程武器造成的伤害提升‖color:gui.green‖30‖end‖%，持续 15 秒。</entitydescription.mcj_card_spear>
+  <entitydescription.mcj_card_spear>掷出便不再收回的枪。在健康界面里把它拖到某名船员身上，使其近战攻击速度提升‖color:gui.green‖15‖end‖%、远程攻击速度提升‖color:gui.green‖20‖end‖%，持续 15 秒。</entitydescription.mcj_card_spear>
   <entityname.mcj_card_bole>世界树之干</entityname.mcj_card_bole>
   <entitydescription.mcj_card_bole>支撑起整个世界的那根树干。在健康界面里把它拖到某名船员身上，使其受到的伤害降低‖color:gui.green‖15‖end‖%，持续 15 秒。</entitydescription.mcj_card_bole>
   <entityname.mcj_card_ewer>河流神之瓶</entityname.mcj_card_ewer>

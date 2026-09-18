@@ -391,7 +391,7 @@
          · 数值型：StatValue（伤害 / 医疗效果 / 工程 / 机动）
          · 抗性型：resistancefor + minresistance/maxresistance ——
            折减【新获得】的量（也会一并折减该状态的自然增减、以及流血→失血的转化），
-           但清不掉已经累积的量。原版只有 damage / stun / oxygenlow 三种相吸力。
+           但清不掉已经累积的量。原版只有 damage / stun / oxygenlow 三种先例。
          · 治疗型：Effect 内嵌 <StatusEffect target="Character"> + <ReduceAffliction>，
            走的是原版 combatstimulant / pressurestabilized 的范式。
        世界树之干（damage 抗性 15%）用第 2 类实现，河流神之瓶（无需氧气 + 持续愈合）用第 2+3 类。
@@ -401,7 +401,7 @@
        【显示】6 张卡自己是【可见】的 —— buff 栏里看到哪张卡在谁身上生效。
        ============================================================ -->
 
-  <!-- ===== 太阳神之衡：近战伤害 +25%（15 秒 · 单体） ===== -->
+  <!-- ===== 太阳神之衡：近战攻速 +30% / 远程攻速 +10%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_balance"
               type="talentbuff"
               isbuff="true"
@@ -411,22 +411,36 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09-17 定稿：0.25，且由「全域 AttackMultiplier」改成「近战专用」。
-         依据 = 原版安全官「肌肉发达」swole：
-           <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="0.25"/>
-         （TalentsSecurity.xml；同一 stat 落成 affliction 的写法原版另有
-           AfflictionsCaptain.xml / AfflictionsMechanic.xml / AfflictionsSecurity.xml 先例）
-         引擎侧：MeleeWeapon.cs 里 damageMultiplier = 1 + GetStatValue(MeleeAttackMultiplier)，
-         再乘上武器品质 ⇒ **精确 +25%，且限定近战武器**。
-         这一改与「战争神之枪」正好凑成原版那两个天赋的分工：一近战、一远程。
-         （旧值 0.40 是全域 AttackMultiplier，会连炮塔 / 徒手一起加，已废。） -->
+    <!-- 2026-09-18 定稿（第三轮）：改成【攻速】—— 近战 0.30 / 远程 0.10。
+         ⚠️ 旧值 MeleeAttackMultiplier 0.25（近战增伤）已整体删除，
+            本卡不再提供任何伤害倍率。
+
+         【两个 stat 的引擎侧事实（已核实）】
+           · MeleeAttackSpeed：官方注释 "Increases how fast the character can swing melee weapons"
+             → MeleeWeapon.cs：reloadTimer /= 1f + character.GetStatValue(MeleeAttackSpeed)
+           · RangedAttackSpeed：官方注释 "Decreases the reload time of ranged weapons held by the character"
+             → RangedWeapon.cs：ReloadTimer = baseReloadTime / (1 + character.GetStatValue(RangedAttackSpeed))
+         ⇒ 三个直接结论：
+           ① 都是【除法】⇒ 数字看着比收益大：+30% 攻速 = 间隔缩短到 1/1.30 = **−23%**，+10% = −9%
+           ② 都【只认角色手持的武器】（近战走 MeleeWeapon、远程走角色手持的 RangedWeapon）
+              ⇒ **炮塔不受影响**（炮塔读的是 TurretAttackSpeed），不需要额外收紧
+           ③ 两处代码**都没有 clamp** ⇒ 与「星力」的远程攻速 0.15 叠加会照实变成 0.25
+
+         【数值】近战 0.30 / 远程 0.10（用户 2026-09-18 定）。
+           上界规则：近战攻速的数字可以比远程更大 —— 因为两者收益不对称
+             （远程武器是主战手段、装填间隔直接决定输出频率；而近战受挥击动画限制，
+               堆高之后有一部分会被动画时长吃掉）。
+           ⚠️ 旧注释里「原版天花板 = 近战 0.30（battleready）/ 远程 0.20（combatstimulant）」
+              中的后半句是【错的】：combatstimulant 只有 stun 抗性 + 持续清除，没有任何攻速。
+              所以「30 / 20」不是原版数据，而是我们自己定的设计上界。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="MeleeAttackMultiplier" value="0.25" />
+      <StatValue stattype="MeleeAttackSpeed" value="0.30" />
+      <StatValue stattype="RangedAttackSpeed" value="0.10" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Balance.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 战争神之枪：远程伤害 +30%（15 秒 · 单体） ===== -->
+  <!-- ===== 战争神之枪：近战攻速 +15% / 远程攻速 +20%（15 秒 · 单体） ===== -->
   <Affliction identifier="mcj_spear"
               type="talentbuff"
               isbuff="true"
@@ -436,21 +450,23 @@
               duration="15"
               treatmentthreshold="1000"
               iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 2026-09-17 定稿：0.30，且**不再给攻速**（六张卡都不给攻速），改为远程伤害。
-         作用面 = 手持远程武器（枪 / 鱼叉 / 榴弹发射器），与 warlord 的
-         weapentype="handheldranged" 完全一致：
-           · RangedWeapon.cs: damageMultiplier = (1 + 品质(FirepowerMultiplier) + stat) * WeaponDamageModifier
-           · **不含炮塔** —— 炮塔走 Turret.Launch()，自己写 Attack.DamageMultiplier，
-             角色身上唯一被炮塔读取的 stat 是 TurretAttackSpeed
-           · 不含近战 / 天生攻击（那两套是 MeleeAttackMultiplier / Natural*AttackMultiplier）
-         【为什么是 0.30 而不是 0.25】远程那条是「1 + 品质 + 加成」的【加法】，
-         而太阳神的近战那条是「(1+加成) × (1+品质)」的【乘法】⇒ 品质 +20% 的武器上
-         1.5/1.2 = 正好 +25%，与太阳神对齐；普通武器（品质 0）则是 +30%，刻意略强。
-         ⚠️ 待实测：buff 栏显示的标签名（stattypenames.rangedattackmultiplier 未离线核实）。
-         ⚠️ 退路：万无一失的兜底是 AttackMultiplier，但它是【全区域】（Character.cs），
-            会和太阳神在近战上重叠 ⇒ 只在上面那条实测失败时才用。 -->
+    <!-- 2026-09-18 定稿（第三轮）：改成【攻速】—— 近战 0.15 / 远程 0.20。
+         ⚠️ 旧值 RangedAttackMultiplier 0.30（手持远程增伤）已整体删除，
+            本卡不再提供任何伤害倍率。
+
+         【两个 stat 的引擎侧事实】与「太阳神之衡」完全一致：
+           都是【除法】÷ (1 + stat)、都【只认角色手持武器】（炮塔豁免）、
+           两处代码都没有 clamp ⇒ 详见那张卡的注释。
+
+         【数值】近战 0.15 / 远程 0.20（用户 2026-09-18 定）。
+           本卡是远程向：远程取上界 0.20、近战给较小的 0.15，
+           与太阳神之衡（30/10）互为镜像；副项的分配遵循
+           「收益高的一侧给更少」。
+         ⚠️ 与「星力」叠加后远程攻速 = 0.20 + 0.15 = **0.35** ⇒ 装填间隔 −26%。
+            代码里没有 clamp，不会被削，但这是全模组最高的单项数值，实测留意手感。 -->
     <Effect minstrength="0" maxstrength="1">
-      <StatValue stattype="RangedAttackMultiplier" value="0.30" />
+      <StatValue stattype="MeleeAttackSpeed" value="0.15" />
+      <StatValue stattype="RangedAttackSpeed" value="0.20" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/Spear.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>

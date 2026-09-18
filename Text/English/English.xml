@@ -102,14 +102,16 @@
 
   <!-- ===== Earthly Star ===== -->
   <talentname.mcj_earthlystar>Earthly Star</talentname.mcj_earthlystar>
-  <talentdescription.mcj_earthlystar>Gain an Earthly Star, and unlock its fabrication recipe.
+  <talentdescription.mcj_earthlystar>Gain an Earthly Star, and unlock its fabrication and recharging recipes.
 Place it on the ground and it spends ‖color:gui.green‖10‖end‖ seconds gathering starlight.
 After that, the moment the room it sits in starts ‖color:gui.orange‖flooding‖end‖, it blooms:
-a single burst that repairs the hull within ‖color:gui.green‖250‖end‖ units, then it fades away.
-Each Earthly Star works only once — you must fabricate a new one.</talentdescription.mcj_earthlystar>
+a single burst that repairs the hull within ‖color:gui.green‖250‖end‖ units, and burns all the light it gathered.
+The spent star does not vanish — it has only gone dark. Carry it back and relight it with a ‖color:gui.orange‖Dementonite Cluster‖end‖.
+(First build: 30 s / Medical 60. Recharge: 15 s / Medical 50.)</talentdescription.mcj_earthlystar>
   <entityname.mcj_earthlystar>Earthly Star</entityname.mcj_earthlystar>
   <entitydescription.mcj_earthlystar>A star not yet lit. Leave it on the ground and starlight slowly gathers.
-Once charged, it needs only to be submerged: it blooms, mends the hull around it, and fades.
+Once charged, it needs only to be submerged: it blooms, mends the hull around it, and burns out its gathered light.
+A star that has bloomed is not gone — it has only gone dark. Relight it with a Dementonite Cluster.
 It cannot foresee harm — it can only be placed in advance. The timing is everything.</entitydescription.mcj_earthlystar>
 
   <!-- ===== Combust (new tier 2 talent) ===== -->
@@ -195,13 +197,13 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
 
   <!-- ===== Arcanum: the six cards ===== -->
   <entityname.mcj_card_balance>The Balance</entityname.mcj_card_balance>
-  <entitydescription.mcj_card_balance>A scale with life on one end and death on the other. Drag it onto a crew member in the health interface to raise the melee damage they deal by ‖color:gui.green‖25‖end‖% for 15 seconds.</entitydescription.mcj_card_balance>
+  <entitydescription.mcj_card_balance>A scale with life on one end and death on the other. Drag it onto a crew member in the health interface to raise their melee attack speed by ‖color:gui.green‖30‖end‖% and their ranged attack speed by ‖color:gui.green‖10‖end‖% for 15 seconds.</entitydescription.mcj_card_balance>
   <entityname.mcj_card_arrow>The Arrow</entityname.mcj_card_arrow>
   <entitydescription.mcj_card_arrow>An arrow that never lands. Drag it onto a crew member in the health interface to raise the healing they receive by ‖color:gui.green‖25‖end‖% for 15 seconds.</entitydescription.mcj_card_arrow>
   <entityname.mcj_card_spire>The Spire</entityname.mcj_card_spire>
   <entitydescription.mcj_card_spire>A tower that reaches upward. Drag it onto a crew member in the health interface to raise their repair speed and hull repair rate by ‖color:gui.green‖50‖end‖% for 15 seconds.</entitydescription.mcj_card_spire>
   <entityname.mcj_card_spear>The Spear</entityname.mcj_card_spear>
-  <entitydescription.mcj_card_spear>A spear thrown never to be retrieved. Drag it onto a crew member in the health interface to raise the damage they deal with handheld ranged weapons by ‖color:gui.green‖30‖end‖% for 15 seconds.</entitydescription.mcj_card_spear>
+  <entitydescription.mcj_card_spear>A spear thrown never to be retrieved. Drag it onto a crew member in the health interface to raise their melee attack speed by ‖color:gui.green‖15‖end‖% and their ranged attack speed by ‖color:gui.green‖20‖end‖% for 15 seconds.</entitydescription.mcj_card_spear>
   <entityname.mcj_card_bole>The Bole</entityname.mcj_card_bole>
   <entitydescription.mcj_card_bole>The trunk that holds the world up. Drag it onto a crew member in the health interface to reduce the damage they take by ‖color:gui.green‖15‖end‖% for 15 seconds.</entitydescription.mcj_card_bole>
   <entityname.mcj_card_ewer>The Ewer</entityname.mcj_card_ewer>

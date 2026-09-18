@@ -210,29 +210,63 @@
        【数值对照】
          焊枪（玩家手持，持续）      structurefixamount="2.0"   range 150
          固化泡沫手榴弹（原版大招）  一次性 structuredamage="-200" range 1000（封整艘船）
-         地星（本模组）              一次性 structuredamage="-200" range 250（封一个舱室，一次修满）
+         地星（本模组）              可充能 structuredamage="-200" range 250（封一个舱室，一次修满）
 
-       【强度控制】地星是一次性的，用一次就没了，所以不存在反复刷的问题。
-       要再造一颗得在制造台花 30 秒 + 1 精炼钍 + 2 塑胶。
+       【强度控制：2026-09-18 改成「可充能」】
+       === 耐久 = 星光（电量） ===
+       · 绽放后不再 <Remove /> 自己，而是把自身耐久一次耗尽（Condition="-100" setvalue="true"，
+         写法照原版绷带的「一次用光」）。
+       · 耐久 0 ⇒ 物品进入【损坏】状态 ⇒ 引擎默认不会执行它身上的 StatusEffect
+         （除非显式写 AllowWhenBroken="true"）⇒ 这颗星**自动失效**，
+         不需要额外写任何判断。
+       · ⚠️ 地星【没有】Repairable 组件 —— 这是故意留的：一旦有它，
+         焊枪/螺丝刀就能把耐久修回来 = 免费充能。
+       · 玩家看到的是一条「满 / 空」的耐久条（health="100"），一眼能看出这颗星能不能用。
+
+       === 两条配方（都在制造台，都要点出「地星」天赋）===
+         首次制造：固化泡沫手榴弹 fixfoamgrenade + 水传感器 waterdetector + 摄魂矿束 dementonite
+                   → 30 秒 / 医疗 60（2026-09-18 由 30 提到 60：故意拉高制造门槛）
+         充    能：用过的地星 + 摄魂矿束 dementonite
+                   → 15 秒 / 医疗 50
+       ⇒ 净消耗：两条路径都是「每次绽放花掉 1 颗 dementonite」—— 拆解会返还另外两件材料，
+         但【不返还】dementonite ⇒ 不存在无限循环，而充能比拆了重造更省事。
+       ⇒ dementonite（摄魂矿束 / Dementonite Cluster）是原版外星球体的稀有材料 ✓
        ============================================================ -->
+  <!-- health="100" = 最大耐久；这一条耐久就是它的「星光」，绽放时一次耗尽。 -->
   <Item name="" identifier="mcj_earthlystar" category="Equipment"
+        health="100"
         tags="smallitem,earthlystar"
         cargocontaineridentifier="metalcrate" allowasextracargo="true" scale="0.5"
         impactsoundtag="impact_metal_light">
 
     <Price baseprice="200" sold="false" />
 
+    <!-- 拆解：返还两件非稀有材料，【不返还】摄魂矿束 ⇒ 每次绽放净消耗 1 颗摄魂矿束。 -->
     <Deconstruct time="15">
-      <Item identifier="fulgurium" />
-      <Item identifier="plastic" />
+      <Item identifier="fixfoamgrenade" />
+      <Item identifier="waterdetector" />
     </Deconstruct>
 
-    <!-- requiresrecipe="true" = 必须点出「地星」天赋才会出现在制造台里。
-         对照原版：固化泡沫手榴弹也是 requiresrecipe + 天赋里 AddedRecipe。 -->
+    <!-- ① 首次制造。requiresrecipe="true" = 必须点出「地星」天赋才会出现在制造台里
+         （对照原版：固化泡沫手榴弹也是 requiresrecipe + 天赋里 AddedRecipe）。
+         技能门槛 2026-09-18 由 medical 30 提到 60 —— 用户定：故意让地星难造，
+         以此限制它的部署频率。时间 30 秒不变。 -->
     <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="true">
-      <RequiredSkill identifier="medical" level="30" />
-      <RequiredItem identifier="fulgurium" />
-      <RequiredItem identifier="plastic" amount="2" />
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="fixfoamgrenade" />
+      <RequiredItem identifier="waterdetector" />
+      <RequiredItem identifier="dementonite" />
+    </Fabricate>
+
+    <!-- ② 充能：用过的地星 + 摄魂矿束 → 一颗满耐久的地星。
+         同一个物品挂两条 Fabricate 是允许的，而且两条的配方都属于本物品，
+         所以天赋侧那一条 AddedRecipe 会一并解锁它们。
+         ⚠️ 故意不写 UseCondition / MinCondition ⇒ 制造台不检查耐久 ⇒
+            耐久 0 的旧星能被当成材料吃掉（这是本设计的核心）。 -->
+    <Fabricate suitablefabricators="fabricator" requiredtime="15" requiresrecipe="true">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="mcj_earthlystar" />
+      <RequiredItem identifier="dementonite" />
     </Fabricate>
 
     <InventoryIcon texture="%ModDir%/Textures/EarthlyStar.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
@@ -244,7 +278,11 @@
 
       <!-- 【核心】放下 10 秒后开始待机，之后每秒检查一次是否被淹。
            delay + interval 可以共存（对照原版 explosives.xml:351 的闪光弹）。 -->
-      <StatusEffect type="OnNotContained" target="This" delay="10.0" interval="1.0">
+      <!-- ⚠️ Condition="-100.0" setvalue="true" = 绽放时把本物品的耐久【设为 -100】
+           （会被夹到 0）⇒ 物品进入损坏状态。写法照原版绷带的「一次用光」，
+           因为耐久夹在 [0, max] 区间里，所以每秒重复触发也不会溢出。 -->
+      <StatusEffect type="OnNotContained" target="This" delay="10.0" interval="1.0"
+                    Condition="-100.0" setvalue="true">
         <Conditional InWater="true" />
 
         <!-- 绽放特效（粒子名沿用天球仪里已验证可用的那几个） -->
@@ -262,8 +300,10 @@
                    smoke="false" flames="false" flash="false" sparks="false"
                    shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
 
-        <!-- 一次性：用完自己消失（写法照原版 guardianrepairtool） -->
-        <Remove />
+        <!-- ✅ 2026-09-18：不再 <Remove /> 自己（旧写法照原版 guardianrepairtool）。
+             结局交给上面那句 Condition="-100" —— 耐久归零 ⇒ 物品损坏 ⇒
+             引擎默认不再执行这条 StatusEffect ⇒ 这颗星自动失效，
+             但仍留在原地，可以捡回去用摄魂矿束充能。 -->
       </StatusEffect>
 
     </Throwable>
