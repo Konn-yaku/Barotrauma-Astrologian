@@ -82,12 +82,14 @@
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-22" aimpos="55,0"
               handle1="-18,-14" holdangle="0" msg="ItemMsgPickUpSelect" />
 
-    <!-- 射速（2026-09-21 定）：对标原版「快速裂变加速器」nucleargun
-         （Content/Items/Jobgear/Engineer/engineer_talent_items.xml）：原版 = reload 0.5 + 蓄力 0.75。
-         本条 = reload 0.8 + 蓄力 0.75 —— 【蓄力时长与原版相同】。
-         ⚠️ 旧注释「reload 0.8 = 0.5 的一半攻速；无蓄力」已作废：0.8 相对 0.5 是 62.5% 射速，
-            而原版那 0.75 秒蓄力当时没写，两件事必须一起看。 -->
-    <RangedWeapon reload="0.8" maxchargetime="0.75" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
+    <!-- 射速（2026-09-22 定）：每发间隔 = reload + 蓄力，两者在引擎里是【串行】的：
+           RangedWeapon.Update —— ReloadTimer 归零后才开始累积 currentChargeTime；
+           RangedWeapon.Use    —— currentChargeTime < MaxChargeTime 时直接 return false。
+         本条 = reload 1.5 + 蓄力 1 = 每 2.5 秒一发。
+         对标原版「快速裂变加速器」nucleargun（Content/Items/Jobgear/Engineer/engineer_talent_items.xml）：
+           原版 = reload 0.5 + 蓄力 0.75 = 每 1.25 秒一发。
+         ⚠️ 旧注释「reload 0.8 = 0.5 的一半攻速」把蓄力漏算了，已作废。 -->
+    <RangedWeapon reload="1.5" maxchargetime="1" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
                   combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
                   ChargeSoundWindupPitchSlide="0.5,1.5" suitableprojectiles="mcj_malefic">
 
@@ -137,7 +139,8 @@
        凶星（隐藏物品，玩家看不到也拿不到）
        取自 FF14 占星术士的伤害法术「凶星」（Malefic）。
        每次开火由天球仪现场生成，发射后立刻自我删除。
-       伤害 = 快速裂变加速器的一半；并把辐射换成了「焚灼」的烧伤。
+       数值自成一档（不照快速裂变加速器减半，见下方 Attack 注释）；
+       并把原版的辐射病换成了「焚灼」的烧伤。
        ============================================================ -->
   <Item name="" identifier="mcj_malefic" category="Weapon"
         scale="0.5" hideinmenus="true" sonarsize="2">
@@ -154,12 +157,14 @@
       <ParticleEmitter particle="tracernucleargun" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="1,0.75" />
       <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" />
 
-      <!-- 原版快速裂变加速器：structuredamage 35 / itemdamage 35 / explosiondamage 50
-           / radiation 25 / stun 0.5 / severlimbs 0.5。这里全部减半，辐射换成烧伤。 -->
-      <Attack structuredamage="17" targetforce="5" itemdamage="17"
-              severlimbsprobability="0.25" penetration="0.5">
-        <Affliction identifier="explosiondamage" strength="25" />
-        <Affliction identifier="burn" strength="12" />
+      <!-- 数值（2026-09-22 定）：structure 20 / item 20 / 对角色 damage 20（explosiondamage）
+           + 15（burn 焚烧）/ 断肢 0.25 / 穿甲 0.1。
+           对照原版快速裂变加速器 nucleargunbolt：struct 35 / item 35 / explosiondamage 50
+           / radiation 25 / 断肢 0.5 / 穿甲 0.5 —— 原版的辐射病在这里换成了焚烧。 -->
+      <Attack structuredamage="20" targetforce="5" itemdamage="20"
+              severlimbsprobability="0.25" penetration="0.1">
+        <Affliction identifier="explosiondamage" strength="20" />
+        <Affliction identifier="burn" strength="15" />
       </Attack>
 
       <!-- 命中特效：同样照拷贝快速裂变加速器 -->
@@ -173,12 +178,13 @@
                          velocitymin="0" velocitymax="50" />
       </StatusEffect>
 
-      <!-- 命中点的小范围灼烧 -->
+      <!-- 命中点：闪光 + 轻微推挤，【没有伤害】
+           原来自带 8 点小范围灼烧，会叠在 Attack 的 burn 之上、把总伤拉得过高，已删除。
+           所以这个 Explosion 的 structuredamage / itemdamage 是 0，也不带任何 Affliction。 -->
       <StatusEffect type="OnImpact" target="UseTarget" disabledeltatime="true">
         <Explosion range="60.0" structuredamage="0" itemdamage="0" force="2.0"
                    flames="false" smoke="false" sparks="false" underwaterbubble="false"
                    flashcolor="180,200,255,255" penetration="1">
-          <Affliction identifier="burn" strength="8" />
         </Explosion>
       </StatusEffect>
 
