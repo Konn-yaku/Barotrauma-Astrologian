@@ -225,9 +225,11 @@
        === 耐久 = 星光（电量） ===
        · 绽放后不再 <Remove /> 自己，而是把自身耐久一次耗尽（Condition="-100" setvalue="true"，
          写法照原版绷带的「一次用光」）。
-       · 耐久 0 ⇒ 物品进入【损坏】状态 ⇒ 引擎默认不会执行它身上的 StatusEffect
-         （除非显式写 AllowWhenBroken="true"）⇒ 这颗星**自动失效**，
-         不需要额外写任何判断。
+       · 耐久 0 ⇒ 物品进入【损坏】状态 = 这颗星已耗尽（玩家看到空耐久条）。
+         ⚠️ 2026-09-21 修正：原先以为「损坏 ⇒ 引擎不再执行它身上的 StatusEffect」，
+            实测**不成立** —— 损坏物品照样跑 OnNotContained / interval 特效，
+            于是这颗星会在原地每秒重复绽放。现在由绽放特效里的
+            <Conditional Condition="gt 0" /> 显式收口（详见那里的注释）。
        · ⚠️ 地星【没有】Repairable 组件 —— 这是故意留的：一旦有它，
          焊枪/螺丝刀就能把耐久修回来 = 免费充能。
        · 玩家看到的是一条「满 / 空」的耐久条（health="100"），一眼能看出这颗星能不能用。
@@ -288,11 +290,18 @@
       <!-- 【核心】放下 10 秒后开始待机，之后每秒检查一次是否被淹。
            delay + interval 可以共存（对照原版 explosives.xml:351 的闪光弹）。 -->
       <!-- ⚠️ Condition="-100.0" setvalue="true" = 绽放时把本物品的耐久【设为 -100】
-           （会被夹到 0）⇒ 物品进入损坏状态。写法照原版绷带的「一次用光」，
-           因为耐久夹在 [0, max] 区间里，所以每秒重复触发也不会溢出。 -->
+           （会被夹到 0）⇒ 物品进入损坏状态。写法照原版绷带的「一次用光」。 -->
+      <!-- ✅ 2026-09-21 修：必须显式判耐久，否则每秒重复绽放。
+           ⚠️ 「耐久 0 ⇒ 损坏 ⇒ 引擎不再执行这条 StatusEffect」这个假设**不成立**
+              —— 损坏的物品照样会跑 OnNotContained / interval 特效
+              （实测现象：这颗星在原地每秒炸一次）。
+           所以加上 <Conditional Condition="gt 0" />：耐久用光后本特效整条跳过。
+           条件写法的原版先例：Content/Items/Medical/buffs.xml 的 beerbottle1
+           —— 同样是 target="This" + <Conditional Condition="..."> 读物品自身的耐久。 -->
       <StatusEffect type="OnNotContained" target="This" delay="10.0" interval="1.0"
                     Condition="-100.0" setvalue="true">
         <Conditional InWater="true" />
+        <Conditional Condition="gt 0" />
 
         <!-- 绽放特效（粒子名沿用天球仪里已验证可用的那几个） -->
         <Sound file="Content/Items/Alien/AlienTurret1.ogg" range="1500" />
@@ -309,10 +318,11 @@
                    smoke="false" flames="false" flash="false" sparks="false"
                    shockwave="false" underwaterbubble="false" camerashake="0" playtinnitus="false" />
 
-        <!-- ✅ 2026-09-18：不再 <Remove /> 自己（旧写法照原版 guardianrepairtool）。
-             结局交给上面那句 Condition="-100" —— 耐久归零 ⇒ 物品损坏 ⇒
-             引擎默认不再执行这条 StatusEffect ⇒ 这颗星自动失效，
-             但仍留在原地，可以捡回去用摄魂矿束充能。 -->
+        <!-- ✅ 2026-09-18：不再 <Remove /> 自己（旧写法照原版 guardianrepairtool）——
+             这颗星用完仍留在原地，可以捡回去用摄魂矿束充能。
+             ⚠️ 2026-09-21 修：上面那句 Condition="-100" 只负责把耐久打空；
+                「损坏后引擎会停跑这条特效」的假设不成立（见本特效开头的注释），
+                真正收口的是 <Conditional Condition="gt 0" />。 -->
       </StatusEffect>
 
     </Throwable>
