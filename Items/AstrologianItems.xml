@@ -837,7 +837,7 @@
               <RemoveItem /> + target="This,Character"。
          原版另有一句作者注释直接点明这条路：
            Content/Items/Medical/buffs.xml 的 ethanol
-             <!-- When Ethanol is used in Health GUI -->
+             （原文：When Ethanol is used in Health GUI）
          同机位模组「玲儿」的两个纯 buff 物品也是同一写法
          （Items/Medicals/Medicals.xml 的「生命修正液」WY_smxzy：
           Holdable + useinhealthinterface + OnUse target="UseTarget"，
