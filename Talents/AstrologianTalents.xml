@@ -30,10 +30,8 @@
          · AbilityConditionCharacter targettype="Ally,NotSelf" —— 目标必须是盟友、且不是自己
          · CharacterAbilityGiveAffliction strength="600" setvalue="true"
            —— 给该队友挂上 mcj_benefic（**10 秒持续缓愈**）。
-       ⚠️ 2026-09-16 更正：这里旧注释写的是「mcj_benefic（生命上限 +20%），
-          持续到巡回结束」—— 那是 2026-09-15 之前的旧效果，已经作废。
-          mcj_benefic 现在是：每 0.1 秒 伤害 −0.05 / 出血 −0.02，持续 10 秒。
-          「生命上限」那条线已经搬到第 4 档「中间学派」（mcj_sect_shield）。
+       ⚠️ mcj_benefic = 每 0.1 秒 伤害 −0.05 / 出血 −0.02，持续 10 秒。
+          「生命上限」那条线在第 4 档「中间学派」（mcj_sect_shield）。
        原版给的 strength 是 600，而 affliction 的 maxstrength 会把它封顶，
        所以实际效果就是「把强度拉满」。用 setvalue 而不是 amount，
        是为了避免「强度已经满了 → 再加也不刷新时长」那个坑。
@@ -124,20 +122,12 @@
        我们只取 a、放进【初级树】，所以强度上是安全的（比原版在更便宜的层位、
        但数值没有更高，而且丢掉了 b）。
 
-       ❌ 已删除：原本的「给全图队友挂拖拽不减速」——与初级树「本轮」完全重复。
        ❌ 刻意不给心肺复苏加成：原版「冥土追魂」(dontdieonme, CPRBoost 1) 作为
           「生辰」的一部分已经在初级树里（有人昏迷时触发）。两边都给会重复。
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_lightspeed" />
-
-    <!-- ❌ 2026-09-16：①「队友拖拽不减速」已删除
-         它与初级树第 2 行的「本轮」（mcj_primary_epicycle，给自己
-         MoveNormallyWhileDragging flag）功能完全重复。
-         删掉之后光速回到「原版应急反应对自己那一半」，
-         而那一半正好也是最有用的：有人倒下时你自己跑得快。
-         ⚠️ mcj_lightspeed_grant 这条 affliction 从此无人引用（定义保留待清理）。 -->
 
     <!-- 有人昏迷时：+40% 移动速度 -->
     <AbilityGroupInterval interval="0.5">
@@ -195,58 +185,6 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-  </Talent>
-
-  <!-- ============================================================
-       第 4 层 · 星天开门（大招）
-       
-       进入任务时，给全船每人发一张护身符（无距离限制，原版 stayinalive
-       就是不写 maxdistance 的全图生效写法）。
-       
-       护身符的"消耗"逻辑写在 Afflictions 里的 mcj_stargate 自身，
-       所以每个人各自独立触发、只消耗自己的那一张。
-
-       2026-09-15 改版：效果换成【安全官最终技「不屈」implacable 同款的短时间免死】。
-       谁的活力跌破 1%，谁的符就烧掉，换来 15 秒的「不屈」（不会昏迷 + 伤害 +25%）。
-       阈值与原版 implacable 完全一致（都是 1% 活力）。
-       
-       「每任务一次」用 permanent stat 标记 + 任务结束重置实现，
-       结构照抄原版 healthinsurance。
-       ============================================================ -->
-  <Talent identifier="mcj_stargate">
-    <Icon texture="%ModDir%/Textures/Talents/Stargate.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_stargate" />
-
-    <!-- 进入任务时发放护身符：本任务还没发过就发 -->
-    <!-- 进入任务时发放护身符：本任务还没发过就发。
-         maxdistance 显式写一个大数值 —— 虽然原版 stayinalive 不写也能全图生效，
-         但为了排除"不写 = 距离 0 = 谁都拿不到"这种可能性，这里写死。 -->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="mcj_stargate_given" min="1" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="200000" allowself="true">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_stargate" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_stargate_given" value="1" setvalue="true" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <!-- 【修改】重置标记：改用 OnRoundEnd 而不是 OnAnyMissionCompleted。
-         原因：OnAnyMissionCompleted 需要"任务被完成"才触发。
-         如果你死了、或者中途退出，标记就永远不会被清除，
-         导致之后的每一个任务都不再发放护身符。
-         OnRoundEnd 只要这一局结束就会触发，更可靠。 -->
-    <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
-      <Abilities>
-        <CharacterAbilityResetPermanentStat statidentifier="mcj_stargate_given" />
-      </Abilities>
-    </AbilityGroupEffect>
   </Talent>
 
   <!-- ============================================================
@@ -528,12 +466,6 @@
     </AbilityGroupInterval>
   </Talent>
 
-  <!-- （被动卡天赋已全部移除：6 张卡的效果改由卡牌物品自己施加 —— 拖给谁就作用在谁身上） -->
-
-
-  <!-- （世界树之干 / 建筑神之塔 / 河流神之瓶 —— 被动卡天赋已移除） -->
-
-
   <!-- （旧的「星力」天赋已重做：改为"一轮 3 张卡全部打出后，【只给自己】20 秒增益"，
        定义见本文件前面的 mcj_astrodyne。卡改成单体拖拽后，星力也依然是单体 ——
        它的 6 项数值里没有任何一项是刷给队友的） -->
@@ -739,7 +671,6 @@
        ============================================================ -->
   <!-- 2026-09-16 定稿：原名「星河漫天」，现在改名【占卜】。
        FF14 的 Divination（占卜）正是「提升全队伤害」，与本天赋的主效果完全对应。
-       旧名「星河漫天」（Celestial River）的解读作废。
        ⚠️ 旧版还有一条「击杀累积 20 层 +20%」的计数器，
           连同 trackedstat / trackedmax 与两条 GivePermanentStat 一起删除了 ——
           一个终档不该再挂一个需要长期攒层的数值。 -->
@@ -870,26 +801,14 @@
             nobodyimportantdies  专门强化助手 -> mcj_primary_synastry      星位合图
             medicalcompanion     医疗伴侣     -> mcj_primary_astral        星极（已重做）
             nopressure           无压         -> mcj_primary_starsounding  重力
-            blooddonor           献血者       -> mcj_primary_divination       凶星
-       ② 由原版天赋改写而来的 3 个（效果已于 2026-09-15 全部重做，只换名字与图标，见本文件末尾）
-            exampleofhealth      健康典范     -> mcj_primary_sect        命运之轮
-            laresistance         抵抗军       -> mcj_primary_celestialopposition   天星交错
-            dontdieonme          冥土追魂     -> mcj_primary_ascend                生辰
-       ③ 直接沿用原版的 2 个：求生意志→即刻咏唱 `mcj_primary_swiftcast` / 消防搬运→本轮 `mcj_primary_epicycle`
-
-       【已删】原版 selfcare（自我保健）—— 按要求移除，不再出现在初级树里。
-
        ⚠️ 必须用新 ID。直接改写原版 ID 会连带改掉原版医生，
           而且会和「天赋增强」(TE) 打架 —— TE 正在覆盖同一批原版天赋。
 
-       ⚠️ 名字与效果的过渡状态：命运之轮 / 天星交错 / 生辰 现在挂的
-          是原版通用医疗兵效果，现已作废。
        ✅ 2026-09-15 去原版化完成：这一档原先 1:1 拷贝原版医生天赋的 6 个，
           已全部换成原创效果，名字与效果也对得上了。
 
        【2026-09-16 结构改版】只动位置，效果未改：
          中间学派 mcj_primary_sect               → 占星魔法第 4 档
-         天星交错 mcj_primary_celestialopposition → 占星魔法第 2 档
          光速     mcj_lightspeed                 ← 从占星魔法第 2 档搬进来
        腾出的第 4 位先由占位天赋占着，2026-09-16 已定稿为「袖内抽卡」mcj_primary_sleevedraw。
        ============================================================ -->
@@ -897,7 +816,7 @@
   <!-- ============================================================
        初级树 第 1 行 第 4 位 · 袖内抽卡（mcj_primary_sleevedraw）
        ============================================================
-       2026-09-16 定稿并落地（用户确认）。原本是「待设计」占位天赋。
+       2026-09-16 定稿并落地（用户确认）。
 
        【FF14 原型】Sleeve Draw（袖内抽卡）
          Action 7448 / icon 3107 / 70 级，占星术士 4.0 的技能。
@@ -1039,9 +958,6 @@
   </Talent>
 
   <!-- 星极 ← 原版 medicalcompanion（于 2026-09-15 重做）
-       原名「擢升」（FF14 Exaltation = 给一名队友减伤），
-       但效果是「解锁自动注射器耳机配方」，名实不符；
-       而且减伤那一边已经交给「命运之轮」了。
 
        新设计 = 纯 XML 的「层数系统」（与第三栏「占卜」同一套写法，源自巫女模组的灵力）：
          · 基础：技能获取速度 +50%
@@ -1053,8 +969,7 @@
        2026-09-16：上限由 20 层（合计 +150%）下调到 10 层（合计 +100%）——
          原版同项锚点「书呆子」egghead 就是 +100%，超过它就没道理了。
 
-       「星极」（Astral）是 FF14 占星术士的核心概念，不是技能名，可以自由使用。
-       ⚠️ 原效果「解锁自动注射器耳机配方」已撤下。 -->
+       「星极」（Astral）是 FF14 占星术士的核心概念，不是技能名，可以自由使用。 -->
   <Talent identifier="mcj_primary_astral" trackedstat="mcj_primary_astral_stacks" trackedmax="11">
     <Icon texture="%ModDir%/Textures/Talents/Astral.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_primary_astral" />
@@ -1175,8 +1090,6 @@
        ⚠️ 单位陷阱（两种记法相反，别互抄）：
          · affliction 的 `resistancefor` = **抗性本身**（0.15 = 减 15%）
          · `CharacterAbilityGiveResistance` 的 `multiplier` = **承伤倍率**（0.85 = 减 15%）
-       ⚠️ 旧的占位版本里残留了一组「OnAttack → damage +10%」——
-          已删除。它曾经让一个写着“待设计”的占位天赋白送 10% 伤害。
        ============================================================ -->
   <Talent identifier="mcj_exaltation">
     <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" origin="0,0" />
@@ -1362,8 +1275,7 @@
   <!-- ============================================================
        初级树 第 2 行 第 5 位 · 吉星（mcj_primary_benefic）
        ============================================================
-       2026-09-16 定稿并落地（用户确认）。这一位的历史：
-         原「占卜」→ 占位「待设计 II」→「擢升」→（擢升搬去占星魔法第 2 档）→ 现在的「吉星」。
+       2026-09-16 定稿并落地（用户确认）。
 
        【FF14 原型】Benefic（吉星）
          Action 3594 / icon 3126。占星术士最基础的【单体治疗术】；

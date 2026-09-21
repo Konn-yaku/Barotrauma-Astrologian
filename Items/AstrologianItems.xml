@@ -39,7 +39,6 @@
   想把美术换掉：直接覆盖同名 PNG，尺寸保持不变即可，XML 不用改。
     Astrolabe.png      天球仪    64x64
     EarthlyStar.png    地星      64x64
-    WheelOfFortune.png 命运之轮  64x64
     Malefic.png        凶星      64x64
   （物品带 scale="0.5"，所以 64px 贴图在游戏里显示为 32px。）
 
@@ -329,115 +328,6 @@
   </Item>
 
   <!-- ============================================================
-       命运之轮 mcj_wheeloffortune
-       可投掷的范围减伤 + 治疗装置。由第三栏第 3 档天赋发放。
-
-       【流程】掷出 → 落地碎裂 → 周围 400 内的所有人获得 20 秒
-              50% 全伤害抗性 + 持续治疗（详见 Afflictions）
-
-       ── 落地碎裂怎么写 ──
-       照原版手雷的通用写法：OnImpact 把自己打碎，OnBroken 再做事：
-           <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
-       （写法来自原版液态氧石 alienitems.xml:335）
-
-       ── 怎么把 buff 给到附近的人 ──
-       原版实测写法（工程师的辐射发射器 engineer_talent_items.xml:754）：
-           <StatusEffect type="Always" target="NearbyCharacters" range="125" interval="1">
-             <Affliction identifier="radiationsickness" strength="1" />
-           </StatusEffect>
-       所以我们用 OnBroken + NearbyCharacters + <Affliction> 即可。
-
-       ── 为什么不筛选敌我 / 物种 ──
-       NearbyCharacters 没有任何“队伍”过滤属性（字段全集里只有 target / targets /
-       targetidentifiers / targettags 等，没有 team）。原版也只能用 targets 按物种过滤。
-       本模组按设计意图【不筛选】，所以不加 targets —— 范围内所有角色都吃到 buff，
-       包括海怪与敌方人类。
-       ⚠️ 注意：这意味着海怪也会被减伤 + 治疗。这目前是刻意如此（“命运从不挑人”）。
-          想改回“只对人类”的话，加回 targets="human" 即可。
-
-       【数值对照】
-         原版 resistancefor="damage" 上限 0.5（Afflictions.xml:2612），基因材料 0.6
-         本模组「天星交错」 0.15 / 「世界树之干」 0.2（都是永久生效）
-         命运之轮 0.5，但只 20 秒、且靠消耗品触发 ============================================================ -->
-  <Item name="" identifier="mcj_wheeloffortune" category="Equipment"
-        tags="smallitem,wheeloffortune"
-        cargocontaineridentifier="metalcrate" allowasextracargo="true" scale="0.5"
-        impactsoundtag="impact_metal_light">
-
-    <Price baseprice="200" sold="false" />
-
-    <Deconstruct time="15">
-      <Item identifier="fulgurium" />
-      <Item identifier="plastic" />
-    </Deconstruct>
-
-    <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="true">
-      <RequiredSkill identifier="medical" level="30" />
-      <RequiredItem identifier="fulgurium" />
-      <RequiredItem identifier="plastic" amount="2" />
-    </Fabricate>
-
-    <InventoryIcon texture="%ModDir%/Textures/WheelOfFortune.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/Textures/WheelOfFortune.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
-    <Body width="40" height="40" density="30" friction="1.0" angulardamping="20.0" />
-
-    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5"
-               aimpos="35,-10" msg="ItemMsgPickUpSelect">
-
-      <!-- ① 落地即碎（保险）
-           ⚠️ 2026-09-15 实测：左键投出后不碎，OnImpact 在本物品上不触发
-           → 不能依赖它，真正的引爆看下面的②③ -->
-      <StatusEffect type="OnImpact" target="This" Condition="0.0" setvalue="true" />
-
-      <!-- ② 直接按“使用”就碎（原版液氧晶体就是这么写的） -->
-      <StatusEffect type="OnUse" target="This" Condition="0" setvalue="true" />
-
-      <!-- 给范围内所有人上 buff（不筛选敌我 / 物种） -->
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="400" disabledeltatime="true">
-        <Affliction identifier="mcj_wheeloffortune" strength="1" />
-      </StatusEffect>
-
-      <!-- 碎裂特效 -->
-      <StatusEffect type="OnBroken" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
-        <ParticleEmitter particle="FlareBubbles" anglemin="0" anglemax="360"
-                         velocitymin="0" velocitymax="150" particleamount="30"
-                         scalemin="2.0" scalemax="3.0" />
-        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360"
-                         velocitymin="0" velocitymax="0" particleamount="28"
-                         scalemin="6.0" scalemax="6.0" colormultiplier="255,230,160,255" />
-      </StatusEffect>
-
-      <!-- 碎后不留残骸 -->
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-
-      <!-- ③ 拔销：瞄准时自动激活。
-           照抄原版破片手榴弹（fraggrenade），原注释：
-             forcefully pull the pin if player hasnt done so -->
-      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Use />
-      </StatusEffect>
-
-    </Throwable>
-
-    <!-- 激活即引爆：【延时 0 秒】——它只是个触发器，不留任何延迟
-         IsActive 由上面那次 <Use /> 置为 true，
-         OnActive 每个 tick 扣 1000 点耐久 → 一个 tick 内归零 → 触发上面的 OnBroken。
-         想改回“拔销后几秒再炸”，把 -1000 换成 -24（原版手榴弹就是 -24）。 -->
-    <ItemComponent IsActive="false" CharacterUsable="true">
-      <StatusEffect type="OnUse" targettype="This" IsActive="true" condition="-1">
-        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
-        <Sound file="Content/Items/Weapons/pinpull.ogg" range="720" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" targettype="This" Condition="-1000">
-        <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="4" scalemin="3.0" scalemax="3.0" colormultiplier="255,230,160,255" />
-      </StatusEffect>
-    </ItemComponent>
-  </Item>
-  <!-- ============================================================
        奥秘卡系统（第二栏 mcj_path_arcanum）
        —— 2 个抽卡道具 + 6 张卡 ——
 
@@ -488,11 +378,6 @@
        SameInventory = 生成到“这本书所在的物品栏”（原版实例 creatureloot.xml:337）。
        ⚠️ 若实测发现书会掉在脚边，把 spawnposition 改成 "This"（就地生成）即可。
 
-       ✅ 2026-09-17：这段预想已作废。卡的链路定型为【单体拖拽】——
-          物品侧 useinhealthinterface + OnUse target="UseTarget"
-          + <Conditional entitytype="eq Character" /> 守卫 → 卡自己消耗，
-          直接给被拖到的那个船员挂 buff。
-          天赋侧不再广播，6 条 mcj_sig_* 信号弹已删除。
        ============================================================ -->
 
   <!-- ===== 抽卡道具 ①：星极抽卡 ===== -->
@@ -524,14 +409,6 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
-      <!-- ❌ v0.12.12：整套「巡回/站点刷新牌堆」功能已移除（下面说明作废，保留仅为记录）。
-           标记带 resetbetweenrounds="true"，巡回结束时会被清空，
-           于是「它不见了（强度 0）」= 新的一轮刚开始 ⇒ 整副牌重置。
-           ⚠️ 只在【出生】和【右键】时补，【不做定时刷新】：
-             定时刷新会在巡回刚清空时立刻把标记补回来，1 秒一次的判定永远抓不到窗口。
-             出生补一次就够 —— 每本新书（包括重置时生成的那本）都会立刻把标记补上。
-           ⚠️ 右键补那一条必须排在 ① 抽卡【前面】（同一事件内按 XML 顺序执行），
-             否则新一轮刚开始那几秒抽出来的卡会被误判成「上一轮的残留」。 -->
       <!-- ① 抽卡：只有在「角色身上没有 mcj_deck_used 闩」时才有效 -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
@@ -548,11 +425,7 @@
 
            ⚠️⚠️ 必须排在 ② 的 <Use />【前面】：
               <Use /> 之后 ItemComponent 变成 active，这条 IsActive="false" 的守卫
-              就永远失败了 —— 不但发不出卡，重复右键也拦不住。
-           怎么在物品这边判天赋（反向标记）：
-              <Conditional 某affliction名="..." /> 在该 affliction 不存在时
-              会被整条跳过 = 判定通过，所以这里刻意用「没解锁」标记来反着控制。
-              详见 Talents/AstrologianTalents.xml 里小奥秘卡的长注释。 -->
+              就永远失败了 —— 不但发不出卡，重复右键也拦不住。 -->
       <!-- ⚠️⚠️ target 必须写成 "This,Character"，不能只写 "Character"！
            只写 "Character" 时，同一行里的 <Conditional ... targetitemcomponent="ItemComponent" />
            就没有物品可解析 → 守卫失败 → 信号永远发不出去
@@ -562,16 +435,8 @@
            —— Condition 作用在物品上、Affliction 作用在持有者身上，两者同时生效。 -->
       <!-- ①b 小奥秘卡：点了第 3 档天赋才会额外发一张「王冠之领主」，直接进书本的第 4 格。
            ⚠️ 必须排在 ② 的 <Use />【前面】：<Use /> 之后 ItemComponent 变成 active，
-              这条 IsActive="false" 的守卫就永远失败了 —— 卡发不出，重复右键也拦不住。
-
-           （v0.12.5 的反向标记 mcj_minor_flag 已废弃：那是按「affliction 不存在时
-             整条条件被跳过」的假设写的，实测并不成立 —— 它就是查不到所以恒成立。）
-
-           ⚠️ v0.12.5 的旧结论（已作废，真正原因见下面 ✅）：
-              （这一段已作废，保留只为记录踩过的坑。）
-              结论：<Conditional 某affliction名="..."> 会拿 target 里的第一个实体解析，
-              角色身上的标记写在物品特效里是查不到的 —— 判定必须放在对的目标上。 -->
-      <!-- ✅ v0.12.7 最终写法（以上注释全部作废，保留只为记录踩过的坑）：
+              这条 IsActive="false" 的守卫就永远失败了 —— 卡发不出，重复右键也拦不住。 -->
+      <!-- 写法（v0.12.7 起）：
            门禁必须在【天赋侧】做：书只给持有人发一个 2 秒信号 mcj_drew_star，
            第 3 档天赋轮询到就发一张「王冠之领主」到持有人背包，然后把信号清掉。
            所以没点天赋的人根本拿不到卡。
@@ -627,11 +492,8 @@
         <Use />
       </StatusEffect>
 
-      <!-- v0.12.18：下面这条已不再必要（倒计时改为 Always+角色闩 驱动，不依赖 IsActive），
-           保留无害，作为万一还有别处看 IsActive 的兼容处理。原注释如下——
-           巡回切换后把倒计时接回去：
-           进入新巡回（关卡重建）时 ItemComponent 的 IsActive 会被重置成 false，
-           而倒计时用的是 OnActive（只在 active 时跑）⇒ 耐久会停住不动（就 是卡在 80% 那种）。
+      <!-- 巡回切换后把 IsActive 接回去：进入新巡回（关卡重建）时 ItemComponent 的
+           IsActive 会被重置成 false ⇒ 只看 IsActive 的逻辑会停住；
            只要角色身上还有「已抽过」闩（说明这本正在倒计时中），每秒把 IsActive 补回来。
            ⚠️ 只用选择器条件读角色，不要混 targetitemcomponent（混了会失效，见抽卡处的注释）。 -->
       <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" IsActive="true">
@@ -663,14 +525,6 @@
            原版范本：Content/Items/Pets/PetEggs.xml 的 peanutegg，
                      它的 <Holdable> 里就是
                         <StatusEffect type="OnBroken" target="This"> … <Remove /> </StatusEffect> -->
-      <!-- ===== 进入新巡回 → 换一本【全新、没抽过】的星极抽卡 =====
-           已抽过卡（IsActive=true、倒计时在跑）的星极书也要换掉，
-           否则在站点抽的卡会一路带进巡回。
-           ✔ IsActive="true" 这一条同时是【防刷保险】：
-              重置生成的新书是未使用态，IsActive 条件不成立 ⇒ 永远不可能连锁触发。
-           ✔ mcj_roundflag 用 TargetContainer / TargetGrandparent 读【持有人】身上的标记
-              （原版 divinggear.xml 就是从氧气瓶这样去查角色 IsDead / NeedsAir 的）
-           ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This；配 Character 无效）。 -->
       <!-- ✅ v0.12.10 最终写法（上面的 IsActive 防刷方案已作废，原因如下）：
            <SpawnItem> 生成的新物件会【继承源物件的状态】（本文件里那条「中继生成的新书
            继承了上一本的 0 耐久」就是同一个现象）—— 新书把旧的 IsActive=true 一起继承了，
@@ -683,7 +537,6 @@
            ⚠️ <Remove /> 必须配 target="This"（原版 263 处全是 This）。 -->
     </Holdable>
 
-    <!-- 4 个槽：3 张普通卡 + 1 张小奥秘卡 -->
     <!-- 3 个卡槽（v0.12.7 起）：3 张普通卡。小奥秘卡不占槽位，由天赋发到背包 -->
     <ItemContainer capacity="3" maxstacksize="1">
       <Containable items="mcj_card_balance,mcj_card_arrow,mcj_card_spire" />
@@ -695,17 +548,11 @@
            否则新书一出生就是破损态，会立刻再触发一次 OnBroken，
            两台书就会互相刷 —— 表现为「不断地发抽卡道具」。 -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
-      <!-- ❌ v0.12.13 已删除这里的「OnSpawn 复位 IsActive」：
-           当初担心 <SpawnItem> 会把旧的 IsActive=true 继承过来（那是推测，并不成立 ——
-           跑通 60 秒接力后就一直没人抱怨过「灵极书抽不了卡」）。
-           而 OnSpawn 在【进入新巡回/关卡重建】时也会重新触发，
-           结果书被当成「没抽过」⇒ 在站点抽完、进巡回又能再抽一次。 -->
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <!-- v0.12.19：这里的「每秒 -1 耐久」倒计时已删除。
-           2026-09-21：接力改成「OnSecondaryUse + delay=60」（从抽卡起算，见 Holdable 里的注释）。
-           耐久不参与任何逻辑（只作为物品状态显示）。 -->
+      <!-- 耐久不参与任何逻辑（只作为物品状态显示）；接力由
+           「OnSecondaryUse + delay=60」驱动（从抽卡起算，见 Holdable 里的注释）。 -->
     </ItemComponent>
 
   </Item>
@@ -723,9 +570,6 @@
     <Holdable slots="Any,RightHand,LeftHand" aimable="false" aimpos="40,-20" handle1="5,0"
               msg="ItemMsgPickUpSelect">
 
-      <!-- 轮次标记不在这里补：灵极书自己补的话，巡回刚清空就会被它自己补上，
-           0.5 秒一次的判定永远抓不到「缺失窗口」。补标记的活儿交给星极书。
-           （这里只在【右键】时补一下：那说明玩家正在用它，属于本轮中段，安全。） -->
       <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="lte 0.1" />
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
@@ -735,8 +579,6 @@
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="200,170,255,255" />
       </StatusEffect>
 
-      <!-- ①b 小奥秘卡（v0.12.6：书只负责把卡放进自己容器，天赋判定见王冠卡的自删块）
-           ⚠️⚠️ 必须排在下面 <Use /> 的【前面】。 -->
       <!-- ①b 小奥秘卡：点了第 3 档才会额外发一张「王冠之贵妇」。
            ⚠️⚠️ 必须在 <Use /> 之前（target 用 "This"，条件按物品解析，不在这里判天赋）
                （v0.12.6 起 target 改回 "This"：条件会拿物品解析，判定已挪到卡自身） -->
@@ -763,13 +605,8 @@
       </StatusEffect>
 
       <!-- ===== 新一轮开始 → 变回星极抽卡 =====
-           mcj_roundflag 由【这本书自己】每 5 秒补一次，且带 resetbetweenrounds="true"，
-           所以「它不存在了（强度 0）」就是「新的一轮刚开始」。
-           ⚠️ v0.12.6 修正：条件必须写在 target="Character" 的特效里 ——
-              条件的解析对象是 target 里的第一个实体；写成 "This,Character" 会拿【物品】
-              去查 mcj_roundflag → 查不到 → 强度按 0 算 → lte 0.1 恒成立
-              → 每 2 秒就把灵极书换回星极书（看起来像「重置很灵」，其实是牌堆一直在被打回）。
-           下面是 v0.12.5 的旧思路，已作废，保留只为记录踩过的坑。
+           ⚠️ 条件的解析对象是 target 里的第一个实体：写成 "This,Character" 会拿【物品】去查，
+              查不到 → 强度按 0 算 → 条件恒成立（v0.12.6 踩过）。
            ⚠️ 不要在这里直接写 <Remove />：<Remove /> 出现在 target="Character" 上
               原版零先例（263 处全是 target="This"），万一它是删角色就毁了。
               用 Condition 打成破损是最安全的写法（原版 petegg / 巫女的降神符札都这么干）。
@@ -777,23 +614,6 @@
            只让【灵极】书做这个转换（星极书不动）⇒ 一轮开始时手上一定是星极书，
            而且不会像「重新发一本」那样越攒越多。
            旧书被删除时，它容器里还没打出去的卡会跟着一起消失 ✓ -->
-      <!-- ✅ v0.12.8 正确写法（上面那几段注释都是旧思路，已作废）：
-           不能在这条特效里「直接生成星极书 + 删自己」——<RemoveItem /> 在
-           target="Character" 下无效（原版 32 处 RemoveItem 全是 target="This" /
-           This,Character / 不写 target，没有只写 Character 的），结果灵极书删不掉、
-           每 0.5 秒刷一本星极书 —— 就是「进入新巡回后刷出大量星极抽卡」那个 bug。
-           现在改成：把书自己的耐久打到 0（Condition/setvalue 必须配 target="This"），
-           走它【已有的 OnBroken】—— 那里面正好是「生成星极抽卡 + <Remove /> 自己」。
-           条件用 TargetContainer / TargetGrandparent 选择器指到【持有人】：
-             原版 divinggear.xml 就是从「氧气瓶」这样去查角色的 IsDead / NeedsAir 的。
-           ✔ 安全属性：就算条件判定不如预期，最坏也只是「耐久被设成 0 → 换成星极书」，
-              不会像上一版那样无限生成。 -->
-      <!-- ✅ v0.12.9（上面的 ✅ v0.12.8 与更早的注释都已作废）：
-           与星极书统一 —— 直接「生一本星极抽卡到同一容器 + <Remove /> 自己」。
-           不再用「打耐久走 OnBroken」（那是 60 秒接力用的同一个触发器，混在一起很危险）。
-           灵极书不要求 IsActive：只要巡回结束时有它在手上，就一律换回星极书
-           （它生出来的是一本未使用的星极书，而那本带有 IsActive="true" 的防刷条件，
-             所以不会来回倒）。条件用 TargetContainer / TargetGrandparent 读持有人身上的标记。 -->
       <!-- ✅ v0.12.10：和星极书一样，用角色身上的 mcj_reset_done 做「每轮只一次」的闩
            （为什么不能用物品自身状态：<SpawnItem> 会继承源物件状态，详见星极抽卡处）。 -->
       <!-- 新一轮开始：把「星力」的计数清零 -->
@@ -806,7 +626,7 @@
         <Use />
       </StatusEffect>
 
-      <!-- 巡回切换后把 IsActive 接回去（v0.12.18 起已不必要，保留无害；同星极抽卡） -->
+      <!-- 巡回切换后把 IsActive 接回去（保留无害；同星极抽卡） -->
       <StatusEffect type="Always" target="This" interval="1.0" checkconditionalalways="true" IsActive="true">
         <Conditional TargetContainer="true" TargetGrandparent="true" mcj_deck_used="gte 0.5" />
       </StatusEffect>
@@ -828,11 +648,10 @@
     <ItemComponent IsActive="false" CharacterUsable="true">
       <!-- 出生锁满耐久（同星极抽卡，防中继继承 0 耐久） -->
       <StatusEffect type="OnSpawn" target="This" Condition="60" setvalue="true" />
-      <!-- ❌ v0.12.13 已删除 IsActive 复位（原因见星极抽卡处的注释） -->
       <StatusEffect type="OnUse" targettype="This" IsActive="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
       </StatusEffect>
-      <!-- v0.12.19：耐久倒计时已删除；2026-09-21 接力改成「OnSecondaryUse + delay=60」（同星极抽卡） -->
+      <!-- 接力：「OnSecondaryUse + delay=60」（同星极抽卡） -->
     </ItemComponent>
   </Item>
 
@@ -1139,20 +958,6 @@
          使用方式与原版完全一致：右键拔销 → 引信烧完（Condition -24/秒 ≈ 4 秒）→ 爆炸。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
 
-      <!-- ❌ v0.12.7 已移除下面那段「卡自删」逻辑：实测 target="Character" 下的
-           <RemoveItem /> 不生效，没点天赋照样能拿到卡。现在门禁改回天赋侧。
-           以下保留只为记录踩过的坑。
-           卡在「生成瞬间」检查持有者身上的 mcj_arcanum_unlocked 标记：
-             没点天赋 → 标记不存在 → 强度按 0 算 → 0 <= 0.5 成立 → 立刻删掉自己 ✓
-             点了天赋 → 标记在（强度 1）→ 条件不成立 → 卡保留 ✓
-
-           ⚠️ target 必须是 "Character"：条件要拿【角色】解析。
-              写成 "This" / "This,Character" 会拿物品解析 → 找不到标记 → 强度 0
-              → 条件恒成立 → 连点了天赋的卡也会被删掉。
-           ⚠️ 用 <RemoveItem /> 而不是 <Remove />：
-              RemoveItem 删的是「这颗手榴弹本体」，不会触发 OnBroken，
-              所以误删时也不会在手雷堆里殉爆。（原版 32 处 RemoveItem 都这么用）
-           ⚠️ 两条都留着：OnSpawn 管生成那一刻，Always 兜底（万一 OnSpawn 不触发）。 -->
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="10000" selectionmode="All" />
         <sound file="Content/Items/Weapons/ExplosionDebris1.ogg" range="10000" />
@@ -1215,8 +1020,6 @@
          只改了三处：identifier/贴图、tags 追加 mcjarcanumcard、末尾加职业锁 + 60 秒自毁。
          使用方式与原版一致：右键拔销 → 引信烧完 → 爆炸修船。 -->
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3.5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-
-      <!-- ❌ v0.12.7 已移除这段「卡自删」逻辑（原因见 mcj_card_lord 处的注释） -->
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/StunGrenade.ogg" range="2000" />
         <Explosion range="200" force="0.5" smoke="false" flames="false" underwaterbubble="false" sparks="false" />

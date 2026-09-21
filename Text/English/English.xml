@@ -17,24 +17,18 @@
   <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>Helios Conjunction</talentname.mcj_aspectedhelios>
-  <talentname.mcj_stargate>Celestial Stasis</talentname.mcj_stargate>
 
   <!-- ===== Healing line: talent descriptions ===== -->
   <talentdescription.mcj_aspectedbenefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_aspectedbenefic>
   <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖1.5‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
   <talentdescription.mcj_aspectedhelios>Crew within ‖color:gui.green‖600‖end‖ units of you continuously recover from their ‖color:gui.orange‖injuries‖end‖ (‖color:gui.green‖0.5‖end‖ per second) while their health is below ‖color:gui.green‖40‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
-  <talentdescription.mcj_stargate>When the mission begins, every crew member gains a charge of Celestial Stasis.\nWhen a crew member's ‖color:gui.orange‖health drops below 1%‖end‖, the charge is automatically consumed:\nthey gain 15 seconds of ‖color:gui.orange‖Unyielding‖end‖ — they cannot fall unconscious and deal ‖color:gui.green‖25‖end‖% more damage.\nEach crew member can trigger this once per mission.</talentdescription.mcj_stargate>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_benefic>Aspected Benefic</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>The Benefic's light rests on you: your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>Helios Conjunction</afflictionname.mcj_helios>
   <afflictiondescription.mcj_helios>Your injuries are being soothed by starlight (‖color:gui.green‖0.5‖end‖ per second).</afflictiondescription.mcj_helios>
-  <afflictionname.mcj_stargate>Celestial Stasis</afflictionname.mcj_stargate>
-  <afflictiondescription.mcj_stargate>When you are close to death, this charge is consumed to grant you 15 seconds of Unyielding.</afflictiondescription.mcj_stargate>
-  <afflictionname.mcj_stargate_grace>Unyielding</afflictionname.mcj_stargate_grace>
-  <afflictiondescription.mcj_stargate_grace>You cannot fall unconscious and you deal ‖color:gui.green‖25‖end‖% more damage.</afflictiondescription.mcj_stargate_grace>
 
   <!-- ===== Arcanum line: talent names ===== -->
   <talentname.mcj_astrodyne>Astrodyne</talentname.mcj_astrodyne>
@@ -105,12 +99,6 @@ Crew keep it for about 5 more seconds after you stand up — you must crouch aga
   <afflictiondescription.mcj_sect_bastion>The umbral phase settles over you: maximum health +‖color:gui.green‖10‖end‖%, movement speed +‖color:gui.green‖5‖end‖%.</afflictiondescription.mcj_sect_bastion>
   <afflictionname.mcj_sect_shield>Umbral · Shield</afflictionname.mcj_sect_shield>
   <afflictiondescription.mcj_sect_shield>The stars cross over you: maximum health +‖color:gui.green‖20‖end‖%.</afflictiondescription.mcj_sect_shield>
-  <entityname.mcj_wheeloffortune>Wheel of Fortune</entityname.mcj_wheeloffortune>
-  <entitydescription.mcj_wheeloffortune>A wheel cast from the tracks of stars. Thrown, it shatters on the ground and leaves a brief stretch of good fortune behind.
-For 20 seconds, those it covers take half damage while their wounds and bleeding ebb away.
-It does not tell friend from foe — fortune never picks.</entitydescription.mcj_wheeloffortune>
-  <afflictionname.mcj_wheeloffortune>Wheel of Fortune</afflictionname.mcj_wheeloffortune>
-  <afflictiondescription.mcj_wheeloffortune>You gain ‖color:gui.green‖65‖end‖% damage resistance for 20 seconds, and your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_wheeloffortune>
 
   <!-- ===== Divination (final tier) ===== -->
   <talentname.mcj_divination>Divination</talentname.mcj_divination>

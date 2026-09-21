@@ -79,7 +79,6 @@
 
   <!-- 生辰 · 急救模式（2026-09-16 定稿）—— 有人昏迷时给自己的心肺复苏加成
 
-       旧版是「全图全队 6 项抗性 +75%」，铺得太开、与名字也对不上，已废弃。
        现在改成与「复活」名实相符的方向：心肺复苏。
 
        数值锚点：原版医生「冥土追魂」dontdieonme = CPRBoost 1（+100%），
@@ -165,34 +164,6 @@
     <Icon texture="%ModDir%/Textures/Talents/Exaltation.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ❌ v0.13（2026-09-16）：「即刻咏唱」的 affliction 已随天赋重做删除
-       它原本是给队友挂 1 秒的 CPRBoost 0.2（原版 stayinalive 的换皮）。
-       该天赋已改名为「康复」并改成【绷带强化】—— 直接施加 StatusEffect，
-       不经过 affliction，所以这一条没有任何引用者，已整段移除。 -->
-
-  <!-- ===== 占星魔法 · 光速：队友拖拽角色不减速（2026-09-15） =====
-       由 mcj_lightspeed 每秒给全图队友刷新。
-       ⚠️ AbilityFlag 会随 affliction 到期失效 —— 原版医生「应急反应」
-          emergencyresponse 就是用 0.9 秒刷新的短 affliction 给助手挂这个 flag 的
-          （它只对 jobs="assistant" 生效，我们不写 jobs = 全队）。 -->
-  <Affliction identifier="mcj_lightspeed_grant"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="1"
-              showiconthreshold="1000"
-              treatmentthreshold="1000"
-              showicontoothersthreshold="1000"
-              showinhealthscannerthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <AbilityFlag flagtype="MoveNormallyWhileDragging" />
-    </Effect>
-    <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
   <!-- ============================================================
        吉星相位（占星魔法第 1 层）—— 施药给队友 10 秒持续缓愈
        来源天赋：mcj_aspectedbenefic（2026-09-16 由 mcj_celestialopposition 改名，与「吉星相位」对齐）
@@ -244,7 +215,6 @@
           有人流血掉到 40% 以下时，它只会在回伤势的同时任由流血继续扣，
           所以【流血致死它救不了】—— 那一块交给「康复」（绷带强化）去管。
           「自动清流血」被明确否决：流血必须留给药物，否则会架空整个医疗循环。
-       ⚠️ 旧版清 bleeding/burn/bloodloss 的三条已全部删除。
        ============================================================ -->
   <Affliction identifier="mcj_helios"
               type="talentbuff"
@@ -262,87 +232,6 @@
       </StatusEffect>
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/HeliosConjunction.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ============================================================
-       星天开门 —— 护身符（每人一份，濒死时自动消耗）
-       来源天赋：mcj_stargate
-
-       2026-09-15 改版：效果换成【安全官最终技「不屈」implacable 同款的短时间免死】。
-       原版实现（Content/Talents/Security/TalentsSecurity.xml:522）：
-         AbilityGroupInterval maxtriggercount="1"            ← 每任务只触发一次
-         AbilityConditionAboveVitality invert="true"          ← 活力跌破阈值
-         → 给自己挂 implacable 15 秒（AlwaysStayConscious + AttackMultiplier 0.25）
-       我们把它从「天赋侧自检」改成「护身符自检」，
-       以便保持原来「全船每人各自一张」的结构。
-
-       【新的流程】
-         身上带符 → 活力低于 1% 时：先给自己挂 15 秒的 mcj_stargate_grace，
-                     再把自己的符烧掉。
-         每个人各自独立判断、只消耗触发那个人的那一张。
-
-       【为什么不再用 isunconscious 触发】
-         以前是「倒地后满血」，现在是「倒地前免死」——
-         必须在昏迷发生【之前】介入，所以改成纯阈值判定。
-         阈值与原版完全一致：都是 1% 活力。
-         ⚠️ 单位陷阱：原版天赋写的是 vitalitypercentage="0.01"（小数，= 1%），
-            而这里用的是 healthpercentage="lt 1"（百分数，= 1%）——
-            两套单位不同，别把 0.01 直接搬过来。
-
-       minstrength="0.1"：符被烧掉后强度归 0，其 Effect 全部失效。
-       这是刻意设计的安全阀 —— 单纯用 -9999 删除自身有一定风险。
-
-       resetbetweenrounds="true"：任务结束自动清符，下个任务重发。
-       ⚠️ 护身符本身不再带 CanNotDieToAfflictions —— 免死改由 grace 那边的
-          AlwaysStayConscious 承担（原版 implacable 同款），符只是个开关。
-       ============================================================ -->
-  <Affliction identifier="mcj_stargate"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              resetbetweenrounds="true"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <!-- 强度 > 0.1：护身符待触发 -->
-    <Effect minstrength="0.1" maxstrength="1">
-      <StatusEffect target="Character" interval="0.05" disabledeltatime="true">
-        <!-- 生命值低于 1%：与原版 implacable 的阈值一致，最后一刻触发 -->
-        <Conditional healthpercentage="lt 1" />
-        <!-- ① 先给自己 15 秒免死（写在前面，同一 tick 内就生效） -->
-        <Affliction identifier="mcj_stargate_grace" amount="1" />
-        <!-- ② 再烧掉护身符（强度 1 → 0） -->
-        <Affliction identifier="mcj_stargate" amount="-1" />
-      </StatusEffect>
-    </Effect>
-    <!-- 强度 = 0：护身符已被烧掉，什么都不做 -->
-    <Effect minstrength="0" maxstrength="0.1" />
-    <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 星天开门的免死状态：不屈（15 秒） =====
-       数值与结构完全照搬原版安全官最终技 implacable
-       （Content/Talents/Security/AfflictionsSecurity.xml:70）：
-         AlwaysStayConscious   = 15 秒内不会昏迷 —— 这就是「短时间免死」的本体
-         AttackMultiplier 0.25 = 临死反扑，伤害 +25%
-       原版 implacable 写的是 maxstrength="15" + duration="15"；
-       我们只需要固定强度，所以 maxstrength="1"、Effect 区间 0~1。
-       ⚠️ 它与本模组的「占卜」（AttackMultiplier 0.15）会相加，这是有意为之。 -->
-  <Affliction identifier="mcj_stargate_grace"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="15"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-    <Effect minstrength="0" maxstrength="1">
-      <AbilityFlag flagtype="AlwaysStayConscious" />
-      <StatValue stattype="AttackMultiplier" value="0.25" />
-    </Effect>
-    <Icon texture="%ModDir%/Textures/Afflictions/Stargate.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 焚灼的火焰抗性（第 2 档天赋给的常驻 buff） =====
@@ -383,8 +272,6 @@
                （物品侧 useinhealthinterface + type="OnUse" target="UseTarget"
                  + <Conditional entitytype="eq Character" /> 守卫）→ 卡自己消耗
                → 直接给那名船员挂上真正的 buff。
-       ⚠️ v0.13 那套「卡打出 → 2 秒信号弹 → 天赋广播全队」的链路已废弃，
-          6 条 mcj_sig_* 信号弹连同它们的 12 条文本键已于 2026-09-17 删除。
 
        【数值基准】每张卡只持续 15 秒、一次只作用于一个人 ⇒ 按「原版对应锚点」
        定档（2026-09-17 重新定过一次，每条的注释里都写了依据）。
@@ -515,12 +402,6 @@
        原型 = FF14 的 The Bole（世界树之干）—— 它本来就是「受到的伤害降低」，
        以前那套「抗眩晕 + 持续愈合」其实与 Bole 没有关系（愈合已搬去河流神之瓶）。
 
-       ❌ 【已删除的两件旧效果】
-         ① resistancefor="stun" 0.5：与初级树「重力」的 30% 叠加会到 80%，
-            而原版 stun 抗性从没超过 0.5 ⇒ 撞帽浪费，已删。
-         ② 内嵌清除 damage / bloodloss / bleeding（各 1.5/秒）：
-            那是全游戏最重的越线 —— 既清流血又清失血，会让药物失去意义，已删。
-
        【数值依据：40% 预算】
        本模组现在的规则是「同一伤害类型、能同时存在于同一角色身上」的抗性之和 ≤ 40%。
        damage 类的另外两个来源：
@@ -582,9 +463,6 @@
        原型 = FF14 的 The Ewer（河流神之瓶）——它本来就是「回复」卡，
        加上「水」的意象（无需氧气），两件事合在一张卡上正好。
 
-       ⚠️ 2026-09-17 撤销：原先补上的 <AbilityFlag flagtype="ImmuneToPressure" />
-          已删除（用户定）。原版 pressurestabilized 确实有那一半，但我们只保留
-          「无需氧气」—— 免疫水压不再给。
           ⇒ 对比原版 pressurestabilized：它给 900 秒，我们只给 15 秒。
 
        · 抗性 1.0 = 缺氧【完全不累积】 ⇒ 不用氧气瓶、无氧环境里也能正常活动。
@@ -643,54 +521,6 @@
       <StatValue stattype="MovementSpeed" value="0.05" />
     </Effect>
     <Icon texture="%ModDir%/Textures/Talents/NeutralSect.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
-  </Affliction>
-
-  <!-- ===== 第三栏 · 命运之轮（旧版）：高额减伤 + 持续治疗 =====
-       ⛔⛔ 2026-09-17 警示：本条有 **65% 的 damage 抗性**，而本模组现在有
-            「同一伤害类型、可同时生效的抗性之和 ≤ 40%」的硬预算
-            （现状：擢升 15% + 命运之轮 10% + 世界树之干 15% = 刚好 40%）。
-            本条没有任何天赋引用 ⇒ 【不计入预算】，但它是一颗地雷：
-            将来若要复用，必须先把 min/maxresistance 从 0.65 降到 **≤0.15**，
-            否则一引用就爆表，而且会把内嵌的自动清流血一起带回来。
-       ⚠️ 2026-09-15：这个投掷装置的获取途径已被撤下，
-          目前没有任何天赋会施加本 affliction。保留定义以备以后复用；
-          「命运之轮」这个名字现已由第 2 档天赋使用（它的是 mcj_primary_sect）。
-       以下是原本的说明：由投掷物 mcj_wheeloffortune 落地时施加，持续 20 秒。
-       它是一个「限时」buff，所以没有 resetbetweenrounds，改用 duration 自动消退。 -->
-  <Affliction identifier="mcj_wheeloffortune"
-              type="talentbuff"
-              isbuff="true"
-              hideiconafterdelay="true"
-              limbspecific="false"
-              maxstrength="1"
-              duration="20"
-              treatmentthreshold="1000"
-              iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-
-    <!-- 一、减伤：固定 65%。
-         对标 TE `Repairandreinforcement` 维修加固的中高档（resistance 0.25→0.65）。
-         （原版 `resistancefor="damage"` 的上限是 0.5，本模组在这里刻意高于原版，
-           因为玩家要求整体强度对标 TE；代价是只持续 20 秒且靠消耗品触发。） -->
-    <Effect minstrength="0" maxstrength="1"
-            strengthchange="0"
-            resistancefor="damage"
-            minresistance="0.65"
-            maxresistance="0.65" />
-
-    <!-- 二、治疗：持续 20 秒。
-         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.5 / 秒）是 7.5 倍，
-         也与 TE `Repairandreinforcement` 的 3 / 秒 同一量级。
-         理论总量 = 约 75 点伤害 + 25 点出血，但那需要你活满 20 秒；
-         潜渊症战斗节奏很短，实战里能回上二三十点已经很好了。
-         觉得总量太高就把 amount 减半（速率减半，总量约 37 点）。 -->
-    <Effect minstrength="0" maxstrength="1">
-      <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
-        <ReduceAffliction type="damage" amount="0.375" />
-        <ReduceAffliction type="bleeding" amount="0.125" />
-      </StatusEffect>
-    </Effect>
-
-    <Icon texture="%ModDir%/Textures/Afflictions/WheelOfFortune.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
   <!-- ===== 第三栏 · 占卜：你出手时倾泻给队友的增伤（20 秒） =====
@@ -823,9 +653,7 @@
 
        为什么不用物品侧判定：<Conditional 某affliction名="..."> 会拿【物品】解析，
        写在物品特效里就永远查不到角色身上的标记 → 强度按 0 算 → 条件恒成立。
-       v0.12.5（反向标记）与 v0.12.6（卡自删）两次都输在这一条上。
-       ⚠️ v0.12.7 已删除本标记 —— 恢复到「信号弹 + 天赋侧发卡」方案。
-          （下面这一行是 v0.12.5 的旧结论，作废：条件不会被跳过，只是按强度 0 参与比较。） -->
+       v0.12.5（反向标记）与 v0.12.6（卡自删）两次都输在这一条上。 -->
   <Affliction identifier="mcj_drew_star"
               type="talentbuff"
               isbuff="true"
@@ -879,29 +707,6 @@
     <Effect minstrength="0" maxstrength="1" />
     <Icon texture="%ModDir%/Textures/Talents/AstralDraw.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
-  <!-- ❌ v0.12.12：以下两个标记随「巡回/站点刷新牌堆」功能一起移除（说明作废） ──
-       由【抽卡书自己】每 5 秒给持有人补一次（不再由六天座维护 —— 原因见天赋文件：
-       六天座在巡回一开始就会把标记补上，那样「缺失窗口」会短到抓不住）。
-       它【没有 duration】，所以整轮都不会消失；
-       唯一会消失的时刻是巡回结束 —— resetbetweenrounds="true" 会把它清空。
-       于是「它不见了（强度 0）」= 「新的一轮刚开始」：
-         · 灵极抽卡 → 自己换回星极抽卡（旧容器里的卡跟着一起消失）
-       判定必须写在 target="Character" 的特效里：条件会拿 target 的第一个实体解析，
-       写成 "This,Character" 会拿物品去查 → 查不到 → 按 0 算 → 恒成立（v0.12.5 的 bug）。
-       之所以不做"每张卡自己删自己"：那需要 <Remove /> 出现在 target="Character" 上，
-       而原版 263 处 <Remove /> 全部是 target="This"，没有先例，不敢赌。
-       ⚠️ 标记 B 必须"一直存在"，否则卡和书会误判成到了新一轮。
-          ⇒ 施加间隔（5 秒）略长于判定间隔（0.5 秒），既保证窗口能抓到，又不会误判。 -->
-
-  <!-- ❌ v0.12.12：以下两个标记随「巡回/站点刷新牌堆」功能一起移除（说明作废） ──
-       抽卡书在「巡回标记缺失」的一瞬给自己挂上，然后【按时长自然过期】重新上闸。
-       ⚠️ 千万不要给它加 resetbetweenrounds="true"：
-          在站点里，按轮次清理的 affliction 会被【反复】清空（mcj_roundflag 就是这样 ——
-          所以「缺标记」在站点一直成立）。闩如果也按轮次清理，就会每 tick 被抹掉，
-          重置效果每 1 秒触发一次，表现为「在站点里同一本书反复刷新」。
-       duration=300：重置后 5 分钟自动重新上闸；中途过期也没事 ——
-          因为「巡回标记」还在，重置条件根本不会成立。 -->
-
   <Affliction identifier="mcj_played"
               type="talentbuff"
               isbuff="true"

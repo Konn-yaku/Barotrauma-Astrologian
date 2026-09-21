@@ -147,7 +147,7 @@
         <TalentOption identifier="mcj_aspectedhelios" />
       </TalentOptions>
 
-      <!-- 第 4 档：中间学派（效果待重新设计） -->
+      <!-- 第 4 档：中间学派 -->
       <TalentOptions>
         <TalentOption identifier="mcj_primary_sect" />
       </TalentOptions>
@@ -177,8 +177,7 @@
          第 4 档「占卜」—— 终档（2026-09-16 由「星河漫天」改名而来）：
          医疗技能 +45，自身伤害随医疗技能阶梯提升（最高 +30%）；
          你发出【远程攻击】时，1000 内的队友获得 +15% 伤害 / 20 秒，
-         冷却 120 秒（冷却图标对玩家可见）。
-         旧版的「击杀累积 20 层」已删除。 -->
+         冷却 120 秒（冷却图标对玩家可见）。 -->
     <SubTree identifier="mcj_path_astrolabe" type="specialization"
              requires="mcj_astrologian_primary">
       <!-- 第 1 档 -->

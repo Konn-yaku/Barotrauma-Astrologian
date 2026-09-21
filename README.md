@@ -185,7 +185,7 @@ Astrologian/
 ├─ Items/AstrologianItems.xml            专属装备与卡牌（天球仪 / 凶星 / 地星 / 抽卡书 / 8 张卡）
 ├─ Textures/                              图片素材（本地提供，不在仓库中）
 │  ├─ JobIcon.png / JobIconSmall.png     职业图标（128×128 / 28×28）
-│  ├─ Astrolabe / EarthlyStar / WheelOfFortune / Malefic.png   物品贴图（64×64）
+│  ├─ Astrolabe / EarthlyStar / Malefic.png   物品贴图（64×64）
 │  ├─ Afflictions/                       增益图标（128×128）
 │  └─ Talents/                           天赋图标（128×128）
 └─ Text/
