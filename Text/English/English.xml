@@ -37,21 +37,9 @@
   <afflictiondescription.mcj_stargate_grace>You cannot fall unconscious and you deal ‖color:gui.green‖25‖end‖% more damage.</afflictiondescription.mcj_stargate_grace>
 
   <!-- ===== Arcanum line: talent names ===== -->
-  <talentname.mcj_balance>The Balance</talentname.mcj_balance>
-  <talentname.mcj_spear>The Spear</talentname.mcj_spear>
-  <talentname.mcj_arrow>The Arrow</talentname.mcj_arrow>
-  <talentname.mcj_bole>The Bole</talentname.mcj_bole>
-  <talentname.mcj_spire>The Spire</talentname.mcj_spire>
-  <talentname.mcj_ewer>The Ewer</talentname.mcj_ewer>
   <talentname.mcj_astrodyne>Astrodyne</talentname.mcj_astrodyne>
 
   <!-- ===== Arcanum line: talent descriptions ===== -->
-  <talentdescription.mcj_balance>The chosen crew member deals ‖color:gui.green‖40‖end‖% more ‖color:gui.orange‖damage‖end‖.</talentdescription.mcj_balance>
-  <talentdescription.mcj_spear>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖melee attack speed‖end‖ and ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖ranged attack speed‖end‖.</talentdescription.mcj_spear>
-  <talentdescription.mcj_arrow>The chosen crew member gains ‖color:gui.green‖35‖end‖% ‖color:gui.orange‖movement speed‖end‖ and ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖swimming speed‖end‖.</talentdescription.mcj_arrow>
-  <talentdescription.mcj_bole>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</talentdescription.mcj_bole>
-  <talentdescription.mcj_spire>The chosen crew member gains ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖repair speed‖end‖ (mechanical and electrical) and ‖color:gui.orange‖hull welding‖end‖ speed.</talentdescription.mcj_spire>
-  <talentdescription.mcj_ewer>The chosen crew member has ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</talentdescription.mcj_ewer>
   <talentdescription.mcj_astrodyne>Every Arcanum card you play is counted: once all three of a round are played, Astrodyne answers you —\ngaining ‖color:gui.green‖15‖end‖% walking speed, ‖color:gui.green‖30‖end‖% swimming speed and ‖color:gui.green‖15‖end‖% ranged attack speed for 20 seconds.</talentdescription.mcj_astrodyne>
 
   <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
@@ -64,34 +52,22 @@
 
   <!-- ===== Arcanum line: hidden buffs ===== -->
   <afflictionname.mcj_balance>The Balance</afflictionname.mcj_balance>
-  <afflictiondescription.mcj_balance>You deal ‖color:gui.green‖40‖end‖% more damage.</afflictiondescription.mcj_balance>
-  <afflictionname.mcj_balance_boost>The Balance (Astrodyne)</afflictionname.mcj_balance_boost>
-  <afflictiondescription.mcj_balance_boost>Astrodyne: you deal a further ‖color:gui.green‖10‖end‖% more damage.</afflictiondescription.mcj_balance_boost>
+  <afflictiondescription.mcj_balance>You gain ‖color:gui.green‖30‖end‖% ‖color:gui.orange‖melee attack speed‖end‖ and ‖color:gui.green‖10‖end‖% ‖color:gui.orange‖ranged attack speed‖end‖.</afflictiondescription.mcj_balance>
 
   <afflictionname.mcj_spear>The Spear</afflictionname.mcj_spear>
-  <afflictiondescription.mcj_spear>You gain ‖color:gui.green‖50‖end‖% melee attack speed and ‖color:gui.green‖30‖end‖% ranged attack speed.</afflictiondescription.mcj_spear>
-  <afflictionname.mcj_spear_boost>The Spear (Astrodyne)</afflictionname.mcj_spear_boost>
-  <afflictiondescription.mcj_spear_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% melee and ‖color:gui.green‖5‖end‖% ranged attack speed.</afflictiondescription.mcj_spear_boost>
+  <afflictiondescription.mcj_spear>You gain ‖color:gui.green‖15‖end‖% melee attack speed and ‖color:gui.green‖20‖end‖% ranged attack speed.</afflictiondescription.mcj_spear>
 
   <afflictionname.mcj_arrow>The Arrow</afflictionname.mcj_arrow>
-  <afflictiondescription.mcj_arrow>You gain ‖color:gui.green‖35‖end‖% movement speed and ‖color:gui.green‖50‖end‖% swimming speed.</afflictiondescription.mcj_arrow>
-  <afflictionname.mcj_arrow_boost>The Arrow (Astrodyne)</afflictionname.mcj_arrow_boost>
-  <afflictiondescription.mcj_arrow_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% movement and ‖color:gui.green‖10‖end‖% swimming speed.</afflictiondescription.mcj_arrow_boost>
+  <afflictiondescription.mcj_arrow>The healing you receive is increased by ‖color:gui.green‖25‖end‖%.</afflictiondescription.mcj_arrow>
 
   <afflictionname.mcj_bole>The Bole</afflictionname.mcj_bole>
-  <afflictiondescription.mcj_bole>You gain ‖color:gui.green‖50‖end‖% ‖color:gui.orange‖stun resistance‖end‖ and steadily recover from ‖color:gui.orange‖injuries, bloodloss and bleeding‖end‖.</afflictiondescription.mcj_bole>
-  <afflictionname.mcj_bole_boost>The Bole (Astrodyne)</afflictionname.mcj_bole_boost>
-  <afflictiondescription.mcj_bole_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% damage resistance.</afflictiondescription.mcj_bole_boost>
+  <afflictiondescription.mcj_bole>You take ‖color:gui.green‖15‖end‖% less damage.</afflictiondescription.mcj_bole>
 
   <afflictionname.mcj_spire>The Spire</afflictionname.mcj_spire>
   <afflictiondescription.mcj_spire>You gain ‖color:gui.green‖50‖end‖% repair speed (mechanical and electrical) and hull welding speed.</afflictiondescription.mcj_spire>
-  <afflictionname.mcj_spire_boost>The Spire (Astrodyne)</afflictionname.mcj_spire_boost>
-  <afflictiondescription.mcj_spire_boost>Astrodyne: a further ‖color:gui.green‖10‖end‖% repair and hull welding speed.</afflictiondescription.mcj_spire_boost>
 
   <afflictionname.mcj_ewer>The Ewer</afflictionname.mcj_ewer>
-  <afflictiondescription.mcj_ewer>You have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration.</afflictiondescription.mcj_ewer>
-  <afflictionname.mcj_ewer_boost>The Ewer (Astrodyne)</afflictionname.mcj_ewer_boost>
-  <afflictiondescription.mcj_ewer_boost>Astrodyne: you consume a further ‖color:gui.green‖10‖end‖% less oxygen.</afflictiondescription.mcj_ewer_boost>
+  <afflictiondescription.mcj_ewer>You have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration, and your injuries are being soothed by starlight (‖color:gui.green‖1.5‖end‖ per second).</afflictiondescription.mcj_ewer>
 
   <!-- ===== Astrolabe line ===== -->
   <talentname.mcj_astrolabe>Astrolabe</talentname.mcj_astrolabe>
