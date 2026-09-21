@@ -90,7 +90,7 @@
             而原版那 0.75 秒蓄力当时没写，两件事必须一起看。 -->
     <RangedWeapon reload="0.8" maxchargetime="0.75" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
                   combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
-                  suitableprojectiles="mcj_malefic">
+                  ChargeSoundWindupPitchSlide="0.5,1.5" suitableprojectiles="mcj_malefic">
 
       <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
@@ -104,6 +104,11 @@
       <ParticleEmitter particle="GlowDot" scalemin="4.0" scalemax="4.0" particleamount="20"
                        anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                        colormultiplier="180,200,255,255" />
+
+      <!-- 蓄力（2026-09-21 加）：时长（上面的 maxchargetime）、音效、粒子三样都照原版 nucleargun 抄 -->
+      <ParticleEmitterCharge particle="chargenucleargun" particlespersecond="60" scalemultiplier="0.75,0.75"
+                             scalemin="1.0" scalemax="1.0" anglemax="360" />
+      <ChargeSound file="Content/Items/JobGear/Engineer/WEAPONS_rapidFissileAcceleratorStartLoop.ogg" range="1000" />
 
       <!-- 每次都现场生成一发凶星。
            （第一次不用等这行 —— 下面的 ItemContainer 会在物品创建时预装一发） -->
