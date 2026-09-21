@@ -519,7 +519,6 @@
         <SpawnItem identifier="mcj_card_balance" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_arrow"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_spire"   count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="180,255,210,255" />
       </StatusEffect>
@@ -707,7 +706,6 @@
         <SpawnItem identifier="mcj_card_spear" count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_bole"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
         <SpawnItem identifier="mcj_card_ewer"  count="1" spawnposition="ThisInventory" SpawnIfNotInInventory="true" />
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
                          particleamount="24" scalemin="5.0" scalemax="5.0" colormultiplier="200,170,255,255" />
       </StatusEffect>
@@ -828,13 +826,21 @@
          · <Conditional entitytype="eq Character" /> = 没拖到人就整条跳过
            （原版注射器用同一条守卫包住"命中音效"，见
             Content/Items/Medical/buffs.xml 的 meth）
-         · <RemoveItem />                            = 消耗掉卡本身
-           ⚠️ 这里【不能】用 <Remove />：它删的是"target 列表里的实体"，
-              列表里一且带角色，万一它把被施卡的队友删了就完了
-              （你之前已经记过：原版 263 处 <Remove /> 全是 target="This"，
-               从没人把角色混进去）。<RemoveItem /> 删的是"挂着这条特效的物品"，
-              与 target 无关 —— 原版技能书 skillbookeuropanmedicine 就是
-              <RemoveItem /> + target="This,Character"。
+         · 消耗掉卡本身（2026-09-21 修正）：
+             <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
+             <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，
+              而这张卡的 target 是船员（UseTarget）⇒ 列表里根本没有物品
+              ⇒ 静默失效，卡永远不消失（2026-09-21 那个 bug 的成因；
+              本项目 v0.12.7 在王冠卡上也踩过同一个坑）。
+           原版范本 = Content/Items/Medical/medical.xml：
+             绷带 antibleeding1 / 吗啡 antidama1 / 芬太尼 antidama2：
+               OnUse（或 OnSuccess/OnFailure）target="This" + Condition="-100.0" setvalue="true"
+               （原版在那儿留的注释原文：Remove the item when fully used）
+               <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
+             生理盐水 antibloodloss1 / 血袋 antibloodloss2：与我们结构完全一致
+               （Holdable + characterusable="false" + 健康界面 OnUse），套路一模一样。
+             （抗生素胶 antibleeding3 用 Condition="-12.5"、不打 setvalue = 分次消耗的变体。）
          原版另有一句作者注释直接点明这条路：
            Content/Items/Medical/buffs.xml 的 ethanol
              （原文：When Ethanol is used in Health GUI）
@@ -868,13 +874,16 @@
     <Body width="28" height="36" density="20" />
     <!-- characterusable="false"：按 E 不触发 OnUse ⇒ 只剩【健康界面拖拽】一条路 -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <!-- ① 只给【被拖到的那个船员】上卡。
-           条件按 target 的第一个实体解析 ⇒ 没拖到人时 entitytype 守卫失败，整条跳过。
-           ⚠️ 消耗卡用 <RemoveItem /> 而不是 <Remove />（原因见本文件顶部公共注释）。 -->
+           条件按 target 的第一个实体解析 ⇒ 没拖到人时 entitytype 守卫失败，整条跳过。 -->
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_balance" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <!-- ② 星力计数 +1，记在使用者自己头上。
            ⚠️ 这条没有守卫：条件只能按 target 的第一个实体解析，写成 Character
@@ -890,9 +899,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
@@ -905,10 +915,14 @@
     <Body width="28" height="36" density="20" />
     <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_arrow" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
@@ -919,9 +933,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
@@ -934,10 +949,14 @@
     <Body width="28" height="36" density="20" />
     <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_spire" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
@@ -948,9 +967,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="255,230,160,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
@@ -963,10 +983,14 @@
     <Body width="28" height="36" density="20" />
     <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_spear" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
@@ -977,9 +1001,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
@@ -992,10 +1017,14 @@
     <Body width="28" height="36" density="20" />
     <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_bole" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
@@ -1006,9 +1035,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
@@ -1021,10 +1051,14 @@
     <Body width="28" height="36" density="20" />
     <!-- 健康界面拖拽专用（写法说明见本文件 6 张卡的公共注释） -->
     <Holdable slots="Any,RightHand,LeftHand" characterusable="false" aimable="false" aimpos="40,-20" handle1="5,0" msg="ItemMsgPickUpSelect">
+      <!-- ★ 消耗卡本身：照原版生理盐水 antibloodloss1 / 绷带 antibleeding1 的写法
+           （Content/Items/Medical/medical.xml）—— 使用瞬间把耐久打到 0 ⇒ 破损 ⇒ OnBroken 里移除。
+           ⚠️ 不要用 <RemoveItem />：它删的是【target 列表里的物品】，而这里的 target
+              是船员（UseTarget）⇒ 列表里没有物品 ⇒ 静默失效（卡不消失）。 -->
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
         <Conditional entitytype="eq Character" />
         <Affliction identifier="mcj_ewer" amount="1" />
-        <RemoveItem />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
         <Affliction identifier="mcj_played" strength="1" />
@@ -1035,9 +1069,10 @@
         <Affliction identifier="burn" strength="20" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-        <Sound file="Content/Items/Alien/AlienTurret2.ogg" range="1500" />
         <ParticleEmitter particle="GlowDot" anglemin="0" anglemax="360" velocitymin="0" velocitymax="0" particleamount="16" scalemin="4.0" scalemax="4.0" colormultiplier="190,160,255,255" />
       </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This"><Remove /></StatusEffect>
       <StatusEffect type="Always" target="This" delay="60"><Remove /></StatusEffect>
     </Holdable>
   </Item>
