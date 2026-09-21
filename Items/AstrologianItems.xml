@@ -83,8 +83,12 @@
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-22" aimpos="55,0"
               handle1="-18,-14" holdangle="0" msg="ItemMsgPickUpSelect" />
 
-    <!-- reload 0.8 = 快速裂变加速器（0.5）的一半攻速；无蓄力时间，扣扳机即射 -->
-    <RangedWeapon reload="0.8" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
+    <!-- 射速（2026-09-21 定）：对标原版「快速裂变加速器」nucleargun
+         （Content/Items/Jobgear/Engineer/engineer_talent_items.xml）：原版 = reload 0.5 + 蓄力 0.75。
+         本条 = reload 0.8 + 蓄力 0.75 —— 【蓄力时长与原版相同】。
+         ⚠️ 旧注释「reload 0.8 = 0.5 的一半攻速；无蓄力」已作废：0.8 相对 0.5 是 62.5% 射速，
+            而原版那 0.75 秒蓄力当时没写，两件事必须一起看。 -->
+    <RangedWeapon reload="0.8" maxchargetime="0.75" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
                   combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
                   suitableprojectiles="mcj_malefic">
 
