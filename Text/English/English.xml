@@ -14,21 +14,19 @@
 
   <!-- ===== Healing line: talent names ===== -->
   <talentname.mcj_aspectedbenefic>Aspected Benefic</talentname.mcj_aspectedbenefic>
-  <talentname.mcj_essentialdignity>Essential Dignity</talentname.mcj_essentialdignity>
   <talentname.mcj_lightspeed>Lightspeed</talentname.mcj_lightspeed>
   <talentname.mcj_aspectedhelios>Helios Conjunction</talentname.mcj_aspectedhelios>
 
   <!-- ===== Healing line: talent descriptions ===== -->
-  <talentdescription.mcj_aspectedbenefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.</talentdescription.mcj_aspectedbenefic>
-  <talentdescription.mcj_essentialdignity>When the target is below ‖color:gui.green‖30‖end‖% health, your healing applied to them is ‖color:gui.green‖1.5‖end‖ times more effective.</talentdescription.mcj_essentialdignity>
-  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed.</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>Crew within ‖color:gui.green‖600‖end‖ units of you continuously recover from their ‖color:gui.orange‖injuries‖end‖ (‖color:gui.green‖0.5‖end‖ per second) while their health is below ‖color:gui.green‖40‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
+  <talentdescription.mcj_aspectedbenefic>When you apply treatment to an ally, the stars align — they gain ‖color:gui.green‖10‖end‖ seconds of regeneration: their wounds and bleeding slowly ebb away.\nWhile the target is below ‖color:gui.green‖30‖end‖% health, the healing you apply to them is ‖color:gui.green‖1.5‖end‖ times more effective.</talentdescription.mcj_aspectedbenefic>
+  <talentdescription.mcj_lightspeed>When someone aboard the submarine is unconscious, you gain ‖color:gui.green‖40‖end‖% movement speed, and your ‖color:gui.orange‖CPR‖end‖ is ‖color:gui.green‖100‖end‖% more effective (you bring people back from unconsciousness twice as fast).</talentdescription.mcj_lightspeed>
+  <talentdescription.mcj_aspectedhelios>Crew within ‖color:gui.green‖600‖end‖ units of you continuously recover from their ‖color:gui.orange‖injuries‖end‖ (‖color:gui.green‖0.2‖end‖ per second) while their health is below ‖color:gui.green‖40‖end‖%.\nIt does nothing above that threshold — it only pulls you back from the brink.</talentdescription.mcj_aspectedhelios>
 
   <!-- ===== Healing line: hidden buffs ===== -->
   <afflictionname.mcj_benefic>Aspected Benefic</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>The Benefic's light rests on you: your wounds and bleeding are slowly ebbing away.</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>Helios Conjunction</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>Your injuries are being soothed by starlight (‖color:gui.green‖0.5‖end‖ per second).</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>Your injuries are being soothed by starlight (‖color:gui.green‖0.2‖end‖ per second).</afflictiondescription.mcj_helios>
 
   <!-- ===== Arcanum line: talent names ===== -->
   <talentname.mcj_astrodyne>Astrodyne</talentname.mcj_astrodyne>
@@ -39,10 +37,8 @@
   <!-- ===== Arcanum (card draw): tiers 1-2 ===== -->
   <talentname.mcj_arcanum_six>The Six</talentname.mcj_arcanum_six>
   <talentdescription.mcj_arcanum_six>You begin to draw: you receive an ‖color:gui.orange‖Astral Draw‖end‖.\nHold it and press use to draw that pole's three cards; sixty seconds later it becomes the other pole's deck, and the cycle continues.\nTo play one, take the card out of the deck and drag it onto a crew member's limb in the health interface — only that one character receives its effect, and the card is spent.\nIf you lose it, you can fabricate a replacement from ‖color:gui.green‖1 plastic‖end‖.\nWARNING: these cards answer only to an astrologian — anyone else who takes them is burned.</talentdescription.mcj_arcanum_six>
-  <talentname.mcj_arcanum_redraw>Redraw</talentname.mcj_arcanum_redraw>
-  <talentdescription.mcj_arcanum_redraw>When you deconstruct an item, there is a ‖color:gui.green‖20‖end‖% chance the output is doubled.\n(Genetic materials and circuit components excluded.)</talentdescription.mcj_arcanum_redraw>
   <talentname.mcj_arcanum_draw>Draw</talentname.mcj_arcanum_draw>
-  <talentdescription.mcj_arcanum_draw>When you loot a large creature, there is a ‖color:gui.green‖20‖end‖% chance to find ‖color:gui.orange‖unresearched genetic material‖end‖.\nShops on research stations and cities will also begin selling genetic materials.</talentdescription.mcj_arcanum_draw>
+  <talentdescription.mcj_arcanum_draw>When you loot a large creature, there is a ‖color:gui.green‖20‖end‖% chance to find ‖color:gui.orange‖unresearched genetic material‖end‖.\nShops on research stations and cities will also begin selling genetic materials.\nDeconstructing an item has a ‖color:gui.green‖20‖end‖% chance to double the output (genetic materials and circuit components excluded).</talentdescription.mcj_arcanum_draw>
 
   <!-- ===== Arcanum line: hidden buffs ===== -->
   <afflictionname.mcj_balance>The Balance</afflictionname.mcj_balance>
@@ -65,7 +61,7 @@
 
   <!-- ===== Astrolabe line ===== -->
   <talentname.mcj_astrolabe>Astrolabe</talentname.mcj_astrolabe>
-  <talentdescription.mcj_astrolabe>Gain an Astrolabe — a small hand-held ranged weapon.\nIt fires a ‖color:gui.orange‖beam of starlight‖end‖ that hits instantly and applies ‖color:gui.orange‖Combust‖end‖.\nRequires no ammunition. It occupies both hands, so you must take it out of your inventory to use it.</talentdescription.mcj_astrolabe>
+  <talentdescription.mcj_astrolabe>Gain an Astrolabe — a small hand-held ranged weapon.\nIt fires a ‖color:gui.orange‖beam of starlight‖end‖ that hits instantly and applies ‖color:gui.orange‖Combust‖end‖.\nRequires no ammunition. It occupies both hands, so you must take it out of your inventory to use it.\nYou deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖20‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_astrolabe>
   <entityname.mcj_astrolabe>Astrolabe</entityname.mcj_astrolabe>
   <entitydescription.mcj_astrolabe>An astrologer's star-reading instrument, small enough to fit in a pocket.\nRaise it and starlight bends into a beam. Its power never runs out — no ammunition of any kind is needed.\nAstrologians are versed in Combust, so whatever it strikes keeps burning.</entitydescription.mcj_astrolabe>
   <entityname.mcj_malefic>Malefic</entityname.mcj_malefic>
@@ -84,9 +80,6 @@ Once charged, it needs only to be submerged: it blooms, mends the hull around it
 A star that has bloomed is not gone — it has only gone dark. Relight it with a Dementonite Cluster.
 It cannot foresee harm — it can only be placed in advance. The timing is everything.</entitydescription.mcj_earthlystar>
 
-  <!-- ===== Combust (new tier 2 talent) ===== -->
-  <talentname.mcj_combust>Combust</talentname.mcj_combust>
-  <talentdescription.mcj_combust>You deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖20‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_combust>
   <afflictionname.mcj_combust_ward>Combust</afflictionname.mcj_combust_ward>
   <afflictiondescription.mcj_combust_ward>You take ‖color:gui.green‖20‖end‖% less Combust damage.</afflictiondescription.mcj_combust_ward>
 
@@ -120,12 +113,9 @@ Every time you make a ‖color:gui.orange‖ranged attack‖end‖, crew within 
   <talentname.mcj_exaltation>Exaltation</talentname.mcj_exaltation>
   <talentname.mcj_primary_sleevedraw>Sleeve Draw</talentname.mcj_primary_sleevedraw>
   <talentdescription.mcj_primary_sleevedraw>Each time you complete a mission, you gain ‖color:gui.green‖1‖end‖ blood pack.\nBlood loss can only be replaced by transfusion — this keeps a spare on you at all times.</talentdescription.mcj_primary_sleevedraw>
-  <talentname.mcj_primary_benefic>Benefic</talentname.mcj_primary_benefic>
-  <talentdescription.mcj_primary_benefic>Your ‖color:gui.orange‖medical skill‖end‖ is increased by ‖color:gui.green‖30‖end‖.</talentdescription.mcj_primary_benefic>
 
   <!-- ===== Neutral Sect (tier 4 of the Astrology line; one entry point is still a placeholder) ===== -->
   <talentname.mcj_primary_sect>Neutral Sect</talentname.mcj_primary_sect>
-  <talentname.mcj_primary_ascend>Ascend</talentname.mcj_primary_ascend>
 
   <!-- ===== Reworked 2026-09-16 ===== -->
   <talentdescription.mcj_primary_sect>Neutral Sect keeps both phases active at once:
@@ -135,7 +125,6 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_wheeloffortune_ward>Collective Unconscious</afflictionname.mcj_wheeloffortune_ward>
   <afflictiondescription.mcj_wheeloffortune_ward>The Wheel surrounds you: you take ‖color:gui.green‖10‖end‖% less damage.</afflictiondescription.mcj_wheeloffortune_ward>
 
-  <talentdescription.mcj_primary_ascend>Whenever someone is unconscious, the ‖color:gui.orange‖CPR‖end‖ you perform is ‖color:gui.green‖100‖end‖% more effective.\nYou bring people back from unconsciousness twice as fast.</talentdescription.mcj_primary_ascend>
   <afflictionname.mcj_ascend>Ascend</afflictionname.mcj_ascend>
   <afflictiondescription.mcj_ascend>Someone has fallen: the rescuer's hands work twice as fast.</afflictiondescription.mcj_ascend>
 
@@ -145,7 +134,7 @@ The two stack with each other.</talentdescription.mcj_primary_sect>
   <afflictionname.mcj_exaltation>Exaltation</afflictionname.mcj_exaltation>
   <afflictiondescription.mcj_exaltation>The stars walk beside you: you take ‖color:gui.green‖15‖end‖% less damage.</afflictiondescription.mcj_exaltation>
 
-  <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖10‖end‖ stacks (‖color:gui.green‖100‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
+  <talentdescription.mcj_primary_astral>Your ‖color:gui.orange‖skill gain speed‖end‖ is increased by ‖color:gui.green‖50‖end‖%, and your ‖color:gui.orange‖medical skill‖end‖ by ‖color:gui.green‖30‖end‖.\nEach ally you treat adds ‖color:gui.green‖1‖end‖ stack of Astral; each stack adds a further ‖color:gui.green‖5‖end‖%, up to ‖color:gui.green‖10‖end‖ stacks (‖color:gui.green‖100‖end‖% in total).\nThe talent panel shows your current stacks.</talentdescription.mcj_primary_astral>
 
   <!-- ===== Primary tree: re-ID'd 2026-09-16 (Epicycle / Esuna) ===== -->
   <talentname.mcj_primary_epicycle>Epicycle</talentname.mcj_primary_epicycle>

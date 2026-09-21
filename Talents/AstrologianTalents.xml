@@ -7,7 +7,16 @@
   而是"让药更有效 / 减少用药 / 自动处理状态"。
   
   设计基线：原版医生「医生」专精线（4 层，第 2/3 层二选一）。
-  所有天赋目前都对应到 mcj_path_healing 这一条子树。
+  本文件现在包含初级树 + 三条专精线的全部天赋定义。
+
+  【2026-09-22 合并：25 → 20】目的是让「总天赋点 = 可点满全部天赋」。
+  合并的都是「同一个触发条件 / 同一个主题」的两条，效果一项没丢：
+    ① 光速 mcj_lightspeed          ← 吸收 生辰 mcj_primary_ascend（同为「有人昏迷」触发）
+    ② 星极 mcj_primary_astral      ← 吸收 吉星 mcj_primary_benefic（同为技能成长）
+    ③ 吉星相位 mcj_aspectedbenefic ← 吸收 先天禀赋 mcj_essentialdignity（同为治疗质量）
+    ④ 抽卡 mcj_arcanum_draw        ← 吸收 重抽 mcj_arcanum_redraw（同为搞材料）
+    ⑤ 天球仪 mcj_astrolabe         ← 吸收 焚灼 mcj_combust（武器 + 它自己的燃烧强化）
+  被删掉的 5 个 ID 在游戏里不再存在 ⇒ 旧存档请到天赋界面里重选一次天赋。
 -->
 <Talents>
 
@@ -80,35 +89,13 @@
        【保守版】目标生命值低于 30% 时，你的治疗效果 ×1.5（+50%）；
        其余情况无加成。
 
-       2026-09-16：从 ×2.2 下调到 ×1.5。
-         ×2.2（+120%）是一个天赋里最重的一档加成，与它的位置不对等；
-         ×1.5 才是与「原版人一个档位」相称的量级。
-
-       为什么只做两档：这里用的是原版 nobodyimportantdies / healthinsurance
-       验证过的"条件 + FallbackAbilities"结构，最稳。
-       想要 5 档阶梯的话，需要先在游戏里实测"多个同类型
-       AbilityGroupEffect 是否会叠加"，确认后再扩展。
-       ============================================================ -->
-  <Talent identifier="mcj_essentialdignity">
-    <Icon texture="%ModDir%/Textures/Talents/EssentialDignity.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_essentialdignity" />
-
-    <!-- 【修复】这里原本还有一个 FallbackAbilities（multiplyvalue="1.0"）
-         用来表示"不满足条件时不给加成"。但游戏会报错：
-           "added value is 0 and multiplier is 1, the ability will do nothing"
-         因为 multiplier=1 且 addedvalue=0（默认）确实是空操作。
-         直接删掉即可——不满足条件时什么也不发生，正是我们想要的行为。 -->
-    <AbilityGroupEffect abilityeffecttype="OnReduceAffliction">
-      <Conditions>
-        <AbilityConditionCharacter targetabilitytarget="true">
-          <Conditional healthpercentage="lt 30" />
-        </AbilityConditionCharacter>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyValue multiplyvalue="1.5" />
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
+       ❌ 已废弃（2026-09-22）：本条已整体并入第 1 档「吉星相位」——
+          两个天赋本来就都是「治疗质量」类，并在一起不损失任何效果。
+          当时的取值依据：×2.2（+120%）与「原版人一个档位」不对等；
+          ×1.5 才相称。 ⚠️ 不要补 FallbackAbilities（multiplyvalue="1.0"），
+          游戏会报 “added value is 0 and multiplier is 1, the ability will do nothing”。
+          为什么只做两档：用的是原版 nobodyimportantdies / healthinsurance 验证过的
+          “条件 + 单一组”结构，最稳；要做 5 档阶梯需要先实测同类型组会不会叠加。 -->
 
   <!-- ============================================================
        第 2 层 · 光速（二选一）
@@ -122,8 +109,13 @@
        我们只取 a、放进【初级树】，所以强度上是安全的（比原版在更便宜的层位、
        但数值没有更高，而且丢掉了 b）。
 
-       ❌ 刻意不给心肺复苏加成：原版「冥土追魂」(dontdieonme, CPRBoost 1) 作为
-          「生辰」的一部分已经在初级树里（有人昏迷时触发）。两边都给会重复。
+       ❌ 刻意不给心肺复苏加成的旧理由已作废（2026-09-22 合并）——
+          「生辰」mcj_primary_ascend 已整体并入本条，两条并列的 ability 各管一半。
+          两者用的是【同一个条件 AbilityConditionCrewMemberUnconscious】、
+          同一种 AbilityGroupInterval 结构 ⇒ 合并零风险。
+          原「生辰」的数值 = 原版医生「冥土追魂」dontdieonme（CPRBoost 1）的原值，
+          也只在「有人昏迷」时生效 ⇒ 仍然严格弱于原版的【无条件常驻】。
+          ⚠️ 合并后本位置于初级树【第 2 行】（它原本占的第 1 行的位子已撤掉）。
        ============================================================ -->
   <Talent identifier="mcj_lightspeed">
     <Icon texture="%ModDir%/Textures/Talents/Lightspeed.png" sourcerect="0,0,128,128" origin="0,0" />
@@ -138,6 +130,24 @@
         <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.4" />
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- 有人昏迷时：心肺复苏效力 +100%（原「生辰」mcj_primary_ascend 并入）
+         ⚠️ 只给自己 —— 用 CharacterAbilityApplyStatusEffects，
+            而不是 CharacterAbilityApplyStatusEffectsToAllies -->
+    <AbilityGroupInterval interval="0.9">
+      <Conditions>
+        <AbilityConditionCrewMemberUnconscious />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="mcj_ascend" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 
   <!-- ============================================================
@@ -145,6 +155,7 @@
 
        2026-09-16 改版（第四次）：定为「濒危自动愈合」。
        2026-09-21 削弱：1.5/秒 → 0.5/秒。
+       2026-09-22 再削弱：0.5/秒 → 0.2/秒（只调数值，效果与结构暂不动）。
        600 范围内、生命值低于 40% 的船员每秒自动恢复 0.5 点伤势；
        高于 40% 时完全不生效。它只治身体损伤 —— 流血、失血、烧伤一概不管。
 
@@ -293,28 +304,12 @@
     <AddedRecipe itemidentifier="mcj_draw_star" />
   </Talent>
 
-  <!-- ============================================================
-       第 2 档 · 重抽 —— 拆解产出概率翻倍
-       照原版机修工「残留废料」residualwaste：
-         OnItemDeconstructedMaterial + ServerRandom 20% + ModifyValue ×2
-       排除清单也照抄（防刷：基因材料、FPGA 电路、灯管组件）
-       ============================================================ -->
-  <Talent identifier="mcj_arcanum_redraw">
-    <Icon texture="%ModDir%/Textures/Talents/Redraw.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_arcanum_redraw" />
-    <AbilityGroupEffect abilityeffecttype="OnItemDeconstructedMaterial">
-      <Conditions>
-        <AbilityConditionServerRandom randomChance="0.2" />
-        <AbilityConditionItem tags="geneticmaterial,unidentifiedgeneticmaterial,circuitboxcomponent,lightcomponent,disallowduplicatedeconstructoutput" invert="true" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyValue multiplyvalue="2" />
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
+  <!-- 【2026-09-22 合并】原「重抽」mcj_arcanum_redraw 已整体并入第 2 档
+       「抽卡」mcj_arcanum_draw（两个都是「搞材料」，并在一起不损失任何效果）。 -->
 
   <!-- ============================================================
        第 2 档 · 抽卡 —— 摸怪尸体拿基因材料 + 商店开卖基因材料
+                          + 拆解产出翻倍（2026-09-22 并入原「重抽」）
        = 原版医生的 geneharvester + blackmarketgenes，
          但【删掉】了"基因材料出售价格 +50%"那两条 StoreSellMultiplier。
 
@@ -358,6 +353,19 @@
       </Conditions>
       <Abilities>
         <CharacterAbilityMarkAsLooted identifier="mcj_arcanum_loot" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 拆解产出 ×2（原「重抽」mcj_arcanum_redraw 于 2026-09-22 并入）
+         照原版机修工「残留废料」residualwaste：
+           OnItemDeconstructedMaterial + ServerRandom 20% + ModifyValue ×2
+         排除清单也照抄（防刷：基因材料、FPGA 电路、灯管组件） -->
+    <AbilityGroupEffect abilityeffecttype="OnItemDeconstructedMaterial">
+      <Conditions>
+        <AbilityConditionServerRandom randomChance="0.2" />
+        <AbilityConditionItem tags="geneticmaterial,unidentifiedgeneticmaterial,circuitboxcomponent,lightcomponent,disallowduplicatedeconstructoutput" invert="true" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyValue multiplyvalue="2" />
       </Abilities>
     </AbilityGroupEffect>
     <AddedStoreItem itemtag="blackmarketgenes" />
@@ -495,51 +503,39 @@
         <CharacterAbilityGivePermanentStat statidentifier="mcj_astrolabe_given" value="1" setvalue="true" />
       </Abilities>
     </AbilityGroupInterval>
-  </Talent>
 
-  <!-- ============================================================
-       第三栏 · 焚灼（mcj_path_astrolabe）第 2 档（与命运之轮同层）
+    <!-- ================= 以下三条原属「焚灼」mcj_combust =================
+         2026-09-22 合并：焚灼整体并入天球仪（武器 + 它自己的燃烧强化，同一主题），
+         第 2 档只留「命运之轮」。三条数值全部照搬原版工程师「火焰狂人」
+         pyromaniac（Content/Talents/Engineer/TalentsEngineer.xml:93），
+         只抄前两条 + 我们自加的减伤；原版第 ③ 件（解锁喷火器配方）没抄 ——
+         那是工程师的职业身份，占星术士没有理由解锁它的配方。
 
-       效果照搬原版工程师「火焰狂人」pyromaniac
-       （Content/Talents/Engineer/TalentsEngineer.xml:93）。
-       原版是三件事拼起来的，我们抄前两件：
-         ① 自己施加的「燃烧」强度 +25%
-            OnAddDamageAffliction + CharacterAbilityModifyAffliction
-            afflictionidentifiers="burn" addedmultiplier="0.25"
-         ② 对球藻（ballast flora）伤害 +50%
-            CharacterAbilityGiveStat stattype="BallastFloraDamageMultiplier" value="0.5"
-         ③ ✗ 解锁喷火器配方 —— 没抄。那是工程师的职业身份，
-            占星术士没有理由解锁它的配方
-
-       ⚠️ 图标素材：Textures/Talents/Combust.png（80x80，取自 FF14 的 Combust 系技能图标）
-       ============================================================ -->
-  <Talent identifier="mcj_combust">
-    <Icon texture="%ModDir%/Textures/Talents/Combust.png" sourcerect="0,0,80,80" origin="0,0" />
-    <Description tag="talentdescription.mcj_combust" />
-
-    <!-- ① 自己造成的燃烧伤害 +25% -->
+         ① 自己施加的「燃烧」强度 +25% -->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Abilities>
         <CharacterAbilityModifyAffliction afflictionidentifiers="burn" addedmultiplier="0.25" />
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- ② 对压载植物群伤害 +50% -->
+    <!-- ② 对球藻（ballast flora）伤害 +50% -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="BallastFloraDamageMultiplier" value="0.5" />
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- ③ 自己受到的燃烧伤害降低 50%
+    <!-- ③ 自己受到的燃烧伤害降低 20%
          用【常驻 affliction】承载 —— resistancefor 只能写在 affliction 的 Effect 上，
          天赋没法直接把抗性授给角色。
-         发放方式与天球仪/地星一致：interval + permanent stat 去重
+         发放方式与地星一致：interval + permanent stat 去重
          （permanent stat 默认 removeondeath，所以重生后会重新给）。
          ⚠️ resistancefor="burn" 原版无先例（原版只用过 damage / stun / oxygenlow）。
             依据：burn 确实是一个独立的 AfflictionType（burn / acidburn / burning 都是
             type="burn"），而 resistancefor 就是按类型匹配的。若实测无效，
-            就改成「持续 ReduceAffliction type="burn"」那种写法。 -->
+            就改成「持续 ReduceAffliction type="burn"」那种写法。
+         ⚠️ 图标素材：Textures/Talents/Combust.png（80x80，取自 FF14 的 Combust 系技能图标）
+            —— 焚灼并入后这个图标已不再被任何天赋引用，留档备用。 -->
     <AbilityGroupInterval interval="2.0">
       <Conditions>
         <AbilityConditionHasPermanentStat statidentifier="mcj_combust_warded" min="1" invert="true" />
@@ -590,7 +586,7 @@
   </Talent>
 
   <!-- ============================================================
-       第三栏 · 命运之轮（mcj_path_astrolabe）第 2 档（与焚灼同层）
+       第三栏 · 命运之轮（mcj_path_astrolabe）第 2 档（原与焚灼同层，现为第 2 档唯一）
 
        机制照搬原版助手「摸鱼船员」crewlayabout
        （Content/Talents/Assistant/TalentsAssistant.xml:570）：
@@ -981,6 +977,15 @@
       </Abilities>
     </AbilityGroupEffect>
 
+    <!-- 医疗技能 +30（原「吉星」mcj_primary_benefic 于 2026-09-22 并入）
+         逐字照抄原版医生 medic 第 1 档 medicalexpertise 的第 ① 组。
+         ⚠️ 原版那一条的第 ② 组（绷带强化）早在「康复」里用掉了，两边不重复。 -->
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30" />
+      </Abilities>
+    </AbilityGroupEffect>
+
     <!-- 计数：每治疗一名队友 +1 层，满 10 层不再增加 -->
     <AbilityGroupEffect abilityeffecttype="OnApplyTreatment">
       <Conditions>
@@ -1044,7 +1049,8 @@
 
   <!-- ============================================================
        占星魔法 第 2 档 · 擢升（mcj_exaltation）
-       ⚠️ 本天赋【属于占星魔法第 2 档】（与「先天禀赋」二选一），
+       ⚠️ 本天赋【属于占星魔法第 2 档】
+          （2026-09-22 起本档不再二选一：同档的先天禀赋已并入第 1 档吉星相位），
           只是物理上还留在这个靠近初级树的位置（本文件本来就不严格按树排序）。
           2026-09-16 从初级树第 2 行第 5 位搬到这里（用户决定）。
 
@@ -1065,12 +1071,15 @@
        【条件】**600 范围内有队友时**（AbilityConditionAllyNearby）。
          ⇒ 身边有人，星象才为你闪耀；独自行动时这层守护消失。
 
-       【为什么是 15% 而不是 FF14 原值的 10%】
+       【为什么是 15% 而不是 FF14 原值的 10%】（2026-09-16 的取舍，现作历史记录）
          位子从“初级树第 2 行（点 1 个解锁下一行、可全点 10/10）”搬到
          “占星魔法第 2 档（与先天禀赋**二选一**）” ⇒ 机会成本翻了；
          而先天禀赋（目标 <30% 血时治疗 ×1.5）是“救命级”效果，
          −10% 会打不过它 ⇒ 变成陷阱选项。
          原版「专精 2 档」的减伤先例正好构成上下界（见下）⇒ 取中间值 15%。
+         ⚠️ 2026-09-22：合并后本档【不再二选一】（先天禀赋已并入第 1 档），
+            上段「对抗陷阱选项」的前提已不成立 ⇒ 15% 变成“无条件白拿”；
+            数值暂不改，待定。
 
        【原版对照（2026-09-16 读原文核对）—— 「专精 2 档」的减伤先例】
          · 机械师 `mudraptorwrestler`（brawler 专精 2 档）= **无条件** → damage −10%（+ 对泥鳄近战 +50%）
@@ -1206,7 +1215,7 @@
        （名字取自 FF14 占星术士的正式技能名，图标为该技能的原作图）：
            健康典范 exampleofhealth -> 命运之轮 Collective Unconscious
            抵抗军   laresistance    -> 天星交错 Celestial Intersection
-           冥土追魂 dontdieonme     -> 生辰     Ascend
+           冥土追魂 dontdieonme     -> 生辰     Ascend（2026-09-22 并入「光速」）
 
        ⚠️ 为什么要写成新 ID 而不是直接改原版天赋：
           改原版 ID 会连带改掉原版医生，并和「天赋增强」(TE) 打架。
@@ -1272,84 +1281,13 @@
     </AbilityGroupInterval>
   </Talent>
 
-  <!-- ============================================================
-       初级树 第 2 行 第 5 位 · 吉星（mcj_primary_benefic）
-       ============================================================
-       2026-09-16 定稿并落地（用户确认）。
-
-       【FF14 原型】Benefic（吉星）
-         Action 3594 / icon 3126。占星术士最基础的【单体治疗术】；
-         我们的第 1 档「吉星相位」是它的「相位」版（Aspected Benefic），
-         两者在 FF14 里本来就是一对，名字并列不会冲突。
-         ⚠️ 不要用「吉星 II」：它在中文客户端叫【福星】，是完全不同的另一个技能。
-
-       【效果】你的【医疗技能】提升 30。
-       【写法】逐字照抄原版医生 medic 第 1 档 medicalexpertise 的第 ① 组
-         （Content/Talents/Doctor/TalentsDoctor.xml）：
-           <AbilityGroupEffect abilityeffecttype="None">
-             <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30"/>
-         ⚠️ 该天赋的第 ② 组（绷带强化：施药时每秒额外清 bleeding 1.5 + burn 1.5）
-            我们早在「康复」里就用掉了 ⇒ 本天赋只拿第 ① 组，两边不重复。
-
-       【强度对标】原版给过三个 MedicalSkillBonus 值：
-         30（医生 medicalexpertise · medic 专精 1 档）
-         20（助手 apprenticeship_doctor · apprentice 专精 1 档）
-         10（助手 journeyman · apprentice 专精 2 档）
-       ⚠️ 三个先例【都在专精树】，我们放在初级树 ⇒ 属“位置偏强”。
-          这是有意接受的：本模组初级树是“点 1 个即解锁下一行、10 个全能点”，
-          而医疗技能只影响施药的成功率与治疗质量，不增加任何伤害/减伤数值。
-       ⚠️ 图标：Textures/Talents/Benefic.png（Benefic 原图 3126）。
+  <!-- 【2026-09-22 合并 · 两处一起记录】
+       · 原「吉星」mcj_primary_benefic（本条，初级树第 2 行第 5 位）
+         → 已并入同行的「星极」mcj_primary_astral（医疗技能 +30 那一条）。
+       · 原「生辰」mcj_primary_ascend（原先紧跟在下面）
+         → 已并入第 2 行的「光速」mcj_lightspeed（心肺复苏 +100% 那一条）。
+       合并理由：初级树天赋数 10 → 8，让总点数足够点满全部天赋。
+       选这两对是因为它们分别满足「同一个触发条件 / 同一个主题」，效果一项没丢。
        ============================================================ -->
-  <Talent identifier="mcj_primary_benefic">
-    <Icon texture="%ModDir%/Textures/Talents/Benefic.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_benefic" />
-
-    <!-- 逐字照抄原版医生 medicalexpertise 的第 ① 组 -->
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MedicalSkillBonus" value="30"/>
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
-
-  <!-- 生辰 ← 原版 dontdieonme / thewaitinglist 的历史（2026-09-16 第二次重做）
-       FF14 的 Ascend 是复活，潜渊症 XML 做不到（引擎没有复活死者的 API）。
-       最接近的等价物就是【心肺复苏】—— 把人从昏迷里救回来。
-
-       2026-09-16 定稿：有人昏迷时，你自己的心肺复苏效力 +100%。
-         · 数值 = 原版医生「冥土追魂」dontdieonme（CPRBoost 1）的原值
-         · 但原版是【无条件常驻】，我们加了「有人昏迷」这个条件 ⇒ 严格弱于原版
-         · 结构照原版「应急反应」emergencyresponse_selfbuff：
-           interval 0.9 + duration 1 + strengthchange="-1"
-         · ⚠️ 只给自己 —— 用 CharacterAbilityApplyStatusEffects，
-              而不是 CharacterAbilityApplyStatusEffectsToAllies
-
-       ❌ 已废弃：旧版「有人昏迷时全图全队获得 6 项抗性 +75%」——
-          覆盖面（全图 × 全队 × 6 项）比它的原型（助手 thewaitinglist，
-          只对自己、只 3 项）放大了两个维度，与初级树的位置不相称，
-          也与「复活」这个名字对不上。
-       ❌ 旧版「心肺复苏」曾被撤下，理由是「与即刻咏唱重复」——
-          那个理由不成立：即刻咏唱是 allowself="false"（只给队友），
-          与「只给自己」完全不重叠。 ⇒ 现在把 CPR 还给生辰，
-          而原本的即刻咏唱改成完全不同的「康复」（绷带强化）。 -->
-  <Talent identifier="mcj_primary_ascend">
-    <Icon texture="%ModDir%/Textures/Talents/Ascend.png" sourcerect="0,0,128,128" origin="0,0" />
-    <Description tag="talentdescription.mcj_primary_ascend" />
-
-    <AbilityGroupInterval interval="0.9">
-      <Conditions>
-        <AbilityConditionCrewMemberUnconscious />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="mcj_ascend" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
 
 </Talents>
