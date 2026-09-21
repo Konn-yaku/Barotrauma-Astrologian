@@ -34,7 +34,7 @@
   <talentdescription.mcj_aspectedbenefic>你对队友施药或治疗时，星象交汇 —— 该队友获得 ‖color:gui.green‖10‖end‖ 秒的持续回复：伤势与出血缓缓消退。</talentdescription.mcj_aspectedbenefic>
   <talentdescription.mcj_essentialdignity>当目标的生命值低于 ‖color:gui.green‖30‖end‖% 时，你为其施加的治疗效果提升至 ‖color:gui.green‖1.5‖end‖ 倍。</talentdescription.mcj_essentialdignity>
   <talentdescription.mcj_lightspeed>当潜艇上有人失去知觉时，你获得 ‖color:gui.green‖40‖end‖% 移动速度加成。</talentdescription.mcj_lightspeed>
-  <talentdescription.mcj_aspectedhelios>‖color:gui.green‖600‖end‖ 范围内的船员在 ‖color:gui.orange‖生命值低于 40%‖end‖ 时会持续回复其 ‖color:gui.orange‖伤势‖end‖（每秒 ‖color:gui.green‖1.5‖end‖）。
+  <talentdescription.mcj_aspectedhelios>‖color:gui.green‖600‖end‖ 范围内的船员在 ‖color:gui.orange‖生命值低于 40%‖end‖ 时会持续回复其 ‖color:gui.orange‖伤势‖end‖（每秒 ‖color:gui.green‖0.5‖end‖）。
 高于 40% 时不会生效 —— 它只在濒死时拉你一把。</talentdescription.mcj_aspectedhelios>
   <talentdescription.mcj_stargate>进入任务时，全部船员各获得一张「星天开门」庇护。\n当某名船员的 ‖color:gui.orange‖生命值低于 1%‖end‖ 时，该庇护会自动触发：\n获得 15 秒的 ‖color:gui.orange‖不屈‖end‖ —— 期间不会昏迷，且造成的伤害提升 ‖color:gui.green‖25‖end‖%，随后庇护被消耗。\n每名船员每次任务各自可以触发一次。</talentdescription.mcj_stargate>
 
@@ -42,7 +42,7 @@
   <afflictionname.mcj_benefic>吉星相位</afflictionname.mcj_benefic>
   <afflictiondescription.mcj_benefic>吉星映照着你：伤势与出血正在缓缓消退。</afflictiondescription.mcj_benefic>
   <afflictionname.mcj_helios>阳星合相</afflictionname.mcj_helios>
-  <afflictiondescription.mcj_helios>你的伤势正在被星光抚平（每秒 ‖color:gui.green‖1.5‖end‖）。</afflictiondescription.mcj_helios>
+  <afflictiondescription.mcj_helios>你的伤势正在被星光抚平（每秒 ‖color:gui.green‖0.5‖end‖）。</afflictiondescription.mcj_helios>
   <afflictionname.mcj_stargate>星天开门</afflictionname.mcj_stargate>
   <afflictiondescription.mcj_stargate>你濒死时此庇护会自动触发，为你换来 15 秒的不屈；触发后此庇护消失。</afflictiondescription.mcj_stargate>
   <afflictionname.mcj_stargate_grace>不屈</afflictionname.mcj_stargate_grace>

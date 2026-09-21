@@ -202,7 +202,7 @@
 
        ⚠️ 数值刻意保守：这是【常驻每次施药都触发】的持续回复，
           1 秒共 reduce damage 0.5 / bleeding 0.2；
-          对比阳星合相（只在 <20% 生命时生效）是 0.75/0.2 每秒，量级相当。
+          对比阳星合相（只在 <40% 生命时生效、只清 damage）的 0.5/秒，量级相当。
        ============================================================ -->
   <Affliction identifier="mcj_benefic"
               type="talentbuff"
@@ -227,15 +227,17 @@
        来源天赋：mcj_aspectedhelios
 
        2026-09-16 改版（第四次）：从「止血」改成「疗伤」。
+       2026-09-21 削弱：1.5/秒 → 【0.5/秒】（用户定）。
          · 只有角色【生命值低于 40%】时才会生效 —— 高于 40% 完全不作用。
-         · 生效时每 0.1 秒清除 0.15 点 type="damage" ⇒ 【每秒 1.5 点伤势】。
-           1.5 是刻意选的：原版绷带（Content/Items/Medical/medical.xml 的
-           antibleeding1）底子就是 bleeding 1.5/秒 ⇒ 本天赋 =「自动绷带」。
+         · 生效时每 0.1 秒清除 0.05 点 type="damage" ⇒ 【每秒 0.5 点伤势】。
+           0.5 的量级参照：原版基因「治疗」healdamage 满档 = 0.75/秒（永久），
+           本条只有它的三分之二，而且只在 40% 以下才生效。
 
        【实际观感】它把 40% 生命值变成一条会自动爬回去的底线 ——
-         掉到 40% 以下就每秒回 1.5 点，爬回 40% 自动停。
-         按生命上限 100 估算：1% → 40% 约 26 秒；20% → 40% 约 13 秒。
-         是「安全网」，不是「急救」—— 它救不回正在被持续输出的人。
+         掉到 40% 以下就每秒回 0.5 点，爬回 40% 自动停。
+         按生命上限 100 估算：1% → 40% 约 78 秒；20% → 40% 约 40 秒。
+         是「安全网」，不是「急救」—— 它救不回正在被持续输出的人；
+         现在这个速率基本等于「脱战后慢慢回」，战斗中几乎看不见效果。
 
        ⚠️ 它【只】清 type="damage"（枪伤 / 咬伤 / 钝击 / 撕裂 / 深层组织损伤）。
           流血、失血、烧伤一概无效 —— 刻意如此。
@@ -256,7 +258,7 @@
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="0.1" disabledeltatime="true">
         <Conditional healthpercentage="lt 40" />
-        <ReduceAffliction type="damage" amount="0.15" />
+        <ReduceAffliction type="damage" amount="0.05" />
       </StatusEffect>
     </Effect>
     <Icon texture="%ModDir%/Textures/Afflictions/HeliosConjunction.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
@@ -676,7 +678,7 @@
             maxresistance="0.65" />
 
     <!-- 二、治疗：持续 20 秒。
-         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.75 / 秒）是 5 倍，
+         速率 3.75 / 秒 —— 对照本模组的阳星合相（0.5 / 秒）是 7.5 倍，
          也与 TE `Repairandreinforcement` 的 3 / 秒 同一量级。
          理论总量 = 约 75 点伤害 + 25 点出血，但那需要你活满 20 秒；
          潜渊症战斗节奏很短，实战里能回上二三十点已经很好了。
