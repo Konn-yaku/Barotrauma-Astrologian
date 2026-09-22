@@ -72,18 +72,26 @@
 
   <!-- ===== 第三栏 · 天球仪 ===== -->
   <talentname.mcj_astrolabe>天球仪</talentname.mcj_astrolabe>
-  <talentdescription.mcj_astrolabe>获得一件「天球仪」——一把小型手持远程武器。
-它发射 ‖color:gui.orange‖星光射线‖end‖，命中即结算，并附加 ‖color:gui.orange‖焚灼‖end‖。
-不需要弹药。占用双手，所以要用时得先从物品栏里取出来。
+  <talentdescription.mcj_astrolabe>解锁「钻石六分仪」的升级配方：在加工台用 ‖color:gui.orange‖天球仪×1‖end‖ 即可升级，不需要其他材料。
+你制造的 ‖color:gui.orange‖医疗物品‖end‖ 质量提升 ‖color:gui.green‖1‖end‖ 级。
 你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。\n你受到的 ‖color:gui.orange‖焚灼‖end‖ 伤害降低 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_astrolabe>
   <entityname.mcj_astrolabe>天球仪</entityname.mcj_astrolabe>
   <entitydescription.mcj_astrolabe>占星术士的观星仪器。小到能收进随身物品栏。
 举起它，就能引导星光化为射线；魔力取之不竭，无需任何弹药。
 占星术士具备焚灼之能，被命中的目标会持续燃烧。</entitydescription.mcj_astrolabe>
+  <!-- ===== 天球仪升级链（+1 / +2） ===== -->
+  <entityname.mcj_astrolabe1>钻石六分仪</entityname.mcj_astrolabe1>
+  <entitydescription.mcj_astrolabe1>天球仪的第二种形态：镜环改用钻石切割，星光的聚束更凝练。
+（由「天球仪」在加工台升级而来。）</entitydescription.mcj_astrolabe1>
+  <entityname.mcj_astrolabe2>帕拉佐钻石六分仪</entityname.mcj_astrolabe2>
+  <entitydescription.mcj_astrolabe2>天球仪的最终形态：帕拉佐的工艺把星辉压到了极致。
+（由「钻石六分仪」在加工台升级而来。）</entitydescription.mcj_astrolabe2>
 
   <afflictionname.mcj_combust_ward>焚灼</afflictionname.mcj_combust_ward>
   <afflictiondescription.mcj_combust_ward>你受到的焚灼伤害降低 ‖color:gui.green‖20‖end‖%。</afflictiondescription.mcj_combust_ward>
   <entityname.mcj_malefic>凶星</entityname.mcj_malefic>
+  <entityname.mcj_malefic1>煞星</entityname.mcj_malefic1>
+  <entityname.mcj_malefic2>落陷凶星</entityname.mcj_malefic2>
 
   <!-- ===== 第三栏 · 地星 ===== -->
   <talentname.mcj_earthlystar>地星</talentname.mcj_earthlystar>
@@ -113,7 +121,7 @@
   <talentdescription.mcj_divination>你的 ‖color:gui.orange‖医疗技能‖end‖ 提升 ‖color:gui.green‖45‖end‖。
 你造成的 ‖color:gui.orange‖伤害‖end‖ 获得提升，且 ‖color:gui.orange‖医疗技能越高，提升越大‖end‖：
 医疗 40 / 60 / 80 / 100 各再提升一档，从 ‖color:gui.green‖+10‖end‖% 最高到 ‖color:gui.green‖+30‖end‖%。
-你每发出一次 ‖color:gui.orange‖远程攻击‖end‖，‖color:gui.green‖1000‖end‖ 范围内的队友获得 ‖color:gui.green‖+15‖end‖% 伤害，持续 20 秒，随后冷却 120 秒。</talentdescription.mcj_divination>
+你每发出一次 ‖color:gui.orange‖远程攻击‖end‖，‖color:gui.green‖1000‖end‖ 范围内的队友获得 ‖color:gui.green‖+15‖end‖% 伤害，持续 20 秒，随后冷却 120 秒。\n解锁「帕拉佐钻石六分仪」的升级配方。</talentdescription.mcj_divination>
   <afflictionname.mcj_divination_buff>占卜</afflictionname.mcj_divination_buff>
   <afflictiondescription.mcj_divination_buff>星辰为你排出了吉位：你造成的伤害提升 ‖color:gui.green‖15‖end‖%。</afflictiondescription.mcj_divination_buff>
   <afflictionname.mcj_divination_cd>占卜·冷却</afflictionname.mcj_divination_cd>

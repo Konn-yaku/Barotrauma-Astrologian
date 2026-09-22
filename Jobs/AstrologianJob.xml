@@ -41,8 +41,10 @@
       <Skill identifier="helm"       level="5,10"  pvplevel="50" pricemultiplier="10" />
     </Skills>
 
-    <!-- ===== 初始装备：与医生一致 =====
-         阶段三会在这里换成占星术士的专属装备（天球仪等）。
+    <!-- ===== 初始装备 =====
+         与医生一致，只多一件【天球仪】(+0) —— 2026-09-22 起天球仪不再由天赋发放，
+         而是随职业出生就带着；升级到钻石六分仪 / 帕拉佐钻石六分仪走天赋解锁的配方
+         （见 Items/AstrologianItems.xml）。
          identifierteam2 = PvP 中归属分离派时的替换物品。
     -->
     <ItemSet>
@@ -52,6 +54,8 @@
       <Item identifier="syringegun" GameMode="PvE" />
       <Item identifier="antibleeding1" GameMode="PvE" />
       <Item identifier="antidama1" GameMode="PvE" />
+      <!-- 占星术士的招牌武器：+0 天球仪（不限定 GameMode，PvE/PvP 都给） -->
+      <Item identifier="mcj_astrolabe" />
       <Item identifier="divingknife" equip="false" GameMode="PvP" />
       <Item identifier="revolver" GameMode="PvP" equip="false">
         <Item identifier="revolverround" />
@@ -70,6 +74,8 @@
       <Item identifier="syringegun" GameMode="PvE" />
       <Item identifier="antibleeding1" GameMode="PvE" />
       <Item identifier="antidama1" GameMode="PvE" />
+      <!-- 占星术士的招牌武器：+0 天球仪（不限定 GameMode，PvE/PvP 都给） -->
+      <Item identifier="mcj_astrolabe" />
       <Item identifier="divingknife" equip="false" GameMode="PvP" />
       <Item identifier="revolver" GameMode="PvP" equip="false">
         <Item identifier="revolverround" />

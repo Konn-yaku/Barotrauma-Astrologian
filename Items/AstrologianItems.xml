@@ -2,8 +2,11 @@
 <!--
   占星术士 · 专属装备
 
-  ── 天球仪 mcj_astrolabe ──
-  占星术士的常驻武器，由第三栏（mcj_path_astrolabe）第 1 档天赋发放。
+  ── 天球仪三档（mcj_astrolabe / mcj_astrolabe1 / mcj_astrolabe2）──
+  +0 天球仪：占星术士的【初始装备】（职业 ItemSet 发放），也是默认可制造的兜底。
+  +1 钻石六分仪：点出第三栏第 1 档天赋「天球仪」后解锁升级配方（材料只吃 +0）。
+  +2 帕拉佐钻石六分仪：点出第三栏第 4 档天赋「占卜」后解锁升级配方（材料只吃 +1）。
+  ⇒ 升级免费，但要手动在加工台合成；三档数值、配方与注释见下文。
 
     · smallitem  —— 能像仪式剑那样收进物品栏。
                     正因为能收起来，"取出才生效"才有意义。
@@ -37,9 +40,11 @@
   ── 贴图说明 ──
   所有贴图都在 Textures/ 下，由 %ModDir% 引用（filelist.xml 不需要登记贴图）。
   想把美术换掉：直接覆盖同名 PNG，尺寸保持不变即可，XML 不用改。
-    Astrolabe.png      天球仪    64x64
-    EarthlyStar.png    地星      64x64
-    Malefic.png        凶星      64x64
+    StarGlobe.png                天球仪（+0）              64x64
+    DiamondSextant.png           钻石六分仪（+1）          64x64
+    PalazzoDiamondSextant.png    帕拉佐钻石六分仪（+2）  64x64
+    EarthlyStar.png              地星                      64x64
+    Malefic.png                  凶星 / 煞星 / 落陷凶星  64x64
   （物品带 scale="0.5"，所以 64px 贴图在游戏里显示为 32px。）
 
   ── 地星 mcj_earthlystar ──
@@ -69,8 +74,8 @@
       <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
 
-    <InventoryIcon texture="%ModDir%/Textures/Astrolabe.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/Textures/Astrolabe.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/Textures/StarGlobe.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/StarGlobe.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" density="15" />
 
     <!-- slots 必须包含 Any，否则物品只能待在手上、塞不进物品栏。
@@ -136,11 +141,11 @@
   </Item>
 
   <!-- ============================================================
-       凶星（隐藏物品，玩家看不到也拿不到）
-       取自 FF14 占星术士的伤害法术「凶星」（Malefic）。
+       凶星 mcj_malefic（隐藏物品，玩家看不到也拿不到）
+       取自 FF14 占星术士的伤害法术「凶星」（Malefic），是 +0 天球仪的专属弹丸。
        每次开火由天球仪现场生成，发射后立刻自我删除。
-       数值自成一档（不照快速裂变加速器减半，见下方 Attack 注释）；
-       并把原版的辐射病换成了「焚灼」的烧伤。
+       数值见下方 Attack 注释；并把原版的辐射病换成了「焚灼」的烧伤。
+       三档弹丸（凶星 / 煞星 / 落陷凶星）紧挨在一起定义，便于对照调数值。
        ============================================================ -->
   <Item name="" identifier="mcj_malefic" category="Weapon"
         scale="0.5" hideinmenus="true" sonarsize="2">
@@ -157,14 +162,22 @@
       <ParticleEmitter particle="tracernucleargun" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="1,0.75" />
       <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" />
 
-      <!-- 数值（2026-09-22 定）：structure 20 / item 20 / 对角色 damage 20（explosiondamage）
-           + 15（burn 焚烧）/ 断肢 0.25 / 穿甲 0.1。
+      <!-- 数值（2026-09-22 定档）：structure 15 / item 15 / 对角色 damage 15（explosiondamage）
+           + 10（burn 焚烧）/ 断肢 0.25 / 穿甲 0.1。
+           ⇒ 对藻类爬行者（80 血，致死阈值 0）每枪有效伤害 = 15 + 10 = 25（躯干 ×1.0）
+             ⇒ 4 枪致死（3 枪 75 不死）。
+           burn 取 10（而不是按焚灼配平的 8）：+0 是【出生自带的过渡武器】，
+           用它的时候基本还没点出第 1 档、吃不到焚灼，所以按【无焚灼】口径配平；
+           等真点出第 1 档（焚灼 +25% ⇒ 27.5）时，+1 的配方也已经到手，该换枪了。
+           ⚠️ 焚烧与 vitality 损失是 1:1（引擎里施加时 ×100/MaxVitality、结算时 ×MaxVitality，
+              两处正好抵消），而且焚烧【不会自行衰减】、会按强度叠加
+              ⇒ 「每枪总伤害 = explosiondamage + burn」，两者同样计入枪数。
            对照原版快速裂变加速器 nucleargunbolt：struct 35 / item 35 / explosiondamage 50
            / radiation 25 / 断肢 0.5 / 穿甲 0.5 —— 原版的辐射病在这里换成了焚烧。 -->
-      <Attack structuredamage="20" targetforce="5" itemdamage="20"
+      <Attack structuredamage="15" targetforce="5" itemdamage="15"
               severlimbsprobability="0.25" penetration="0.1">
-        <Affliction identifier="explosiondamage" strength="20" />
-        <Affliction identifier="burn" strength="15" />
+        <Affliction identifier="explosiondamage" strength="15" />
+        <Affliction identifier="burn" strength="10" />
       </Attack>
 
       <!-- 命中特效：同样照拷贝快速裂变加速器 -->
@@ -194,6 +207,265 @@
       </StatusEffect>
 
     </Projectile>
+  </Item>
+
+  <!-- ============================================================
+       三档升级链：钻石六分仪 mcj_astrolabe1 / 帕拉佐钻石六分仪 mcj_astrolabe2
+       ============================================================
+       2026-09-22 定：天球仪不做“天赋给角色加属性”，而是做成【三档物品 + 解锁配方升级】。
+       理由：引擎的 ItemTalentStats（GiveItemStat / GiveItemStatToTags 用的枚举）只含机械类
+       （引擎/泵/反应堆/电池/分解机/制造机/耐久衰减/堆叠），没有任何武器属性
+       ⇒ 纯 XML 无法“给这一把武器加伤害”。做成独立物品反而精确，且强化天然只作用于它自己。
+
+       【升级方式】免费升级 + 手动合成：
+         +1 = 配方只吃 天球仪×1      解锁：第三栏第 1 档天赋「天球仪」
+         +2 = 配方只吃 钻石六分仪×1  解锁：第三栏第 4 档天赋「占卜」
+       解锁用 requiresrecipe="true" + 天赋侧的 <AddedRecipe />（与地星、抽卡书同一套）。
+
+       【三档数值】每枪有效伤害 = explosiondamage + burn（躯干命中；焚烧与 vitality 损失 1:1）
+       每档按【它自己实际会被使用的状态】配平：
+         +0 天球仪（出生自带，此时还没点出第 1 档、吃不到焚灼）
+                       15 + 10 = 25            ⇒ 爬行者 4 枪（爆头 3 / 打腿 5）
+         +1 钻石六分仪（只能靠第 1 档解锁，而焚灼就在同一档上，必定生效）
+                       20 + 12 × 1.25 = 35    ⇒ 爬行者 3 枪（爆头 2 / 打腿 4）
+         +2 帕拉佐钻石六分仪（第 4 档解锁，同样必带焚灼）
+                       30 + 12 × 1.25 = 45    ⇒ 爬行者 2 枪（爆头 2 / 打腿 3）
+       ⚠️ 所以 burn 是【分档配平】的：+0 取 10（无焚灼口径），+1 / +2 取 12（焚灼 +25% 口径）。
+          副作用：点了第 1 档、但还没做出 +1 的那段时间，+0 每枪升到 27.5 ⇒ 也是 3 枪
+          （与 +1 同枪数，只是余量更小）；过渡期很短，而且强化手感更好，故接受。
+       射速三档一致（reload 1.5 + 蓄力 1 = 2.5 秒/发）；穿甲三档都是 0.1；断肢都是 0.25。
+       struct / item（打船体与物品）三档 = 15 / 20 / 25。
+
+       ⚠️ 每把武器有【5 处】弹丸引用，必须与自己的专属弹丸完全一致：
+            ① RangedWeapon 的 suitableprojectiles
+            ② RangedWeapon 内 StatusEffect OnUse 的 SpawnItem identifier
+            ③ RequiredItems 的 items
+            ④ ItemContainer 的 Containable items
+            ⑤ ItemContainer 内 StatusEffect OnSpawn 的 SpawnItem identifier
+          三档各用一种弹丸（凶星 / 煞星 / 落陷凶星）⇒ 每把武器只会认自己那一种。
+
+       ⚠️ 这里刻意不用 <Item variantof=""> 继承：变体与父物品的 XML 合并行为（尤其是嵌套
+          StatusEffect / RequiredItems 的覆盖）未经实测，出错是静默的；
+          完整定义只多几十行，但每一档都能直接看懂、直接改。
+       ============================================================ -->
+
+  <!-- ===== 弹丸 ②：煞星（Malefic IV，+1 专用） ===== -->
+  <Item name="" identifier="mcj_malefic1" category="Weapon"
+        scale="0.5" hideinmenus="true" sonarsize="2">
+
+    <Sprite texture="%ModDir%/Textures/Malefic.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
+    <Body width="10" height="10" density="5" />
+    <Holdable slots="RightHand+LeftHand" aimable="false" />
+
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+
+      <ParticleEmitter particle="tracernucleargun" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="1,0.75" />
+      <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" />
+
+      <!-- 数值：structure 20 / item 20 / 对角色 damage 20（explosiondamage）+ 12（burn）
+           ⇒ 每枪 32（躯干）⇒ 爬行者 3 枪致死（2 枪 64 不死）；
+              计入贖灼 +25% 后 = 35 ⇒ 同样是 3 枪（2 枪 70 不死）。
+           其他参数与凶星一致。 -->
+      <Attack structuredamage="20" targetforce="5" itemdamage="20"
+              severlimbsprobability="0.25" penetration="0.1">
+        <Affliction identifier="explosiondamage" strength="20" />
+        <Affliction identifier="burn" strength="12" />
+      </Attack>
+
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="muzzleflashnucleargun" anglemin="0" anglemax="360" particleamount="10"
+                         velocitymin="0" scalemin="0.5" scalemax="0.8" scalemultiplier="0.75,0.75" />
+        <ParticleEmitter particle="weldspark" particleamount="5" anglemin="0" anglemax="360"
+                         velocitymin="300" velocitymax="350" scalemin="1.5" scalemax="1.9"
+                         drawontop="true" colormultiplier="150,200,255,180" />
+        <ParticleEmitter particle="FlareBubbles" particleamount="3" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="50" />
+      </StatusEffect>
+
+      <StatusEffect type="OnImpact" target="UseTarget" disabledeltatime="true">
+        <Explosion range="60.0" structuredamage="0" itemdamage="0" force="2.0"
+                   flames="false" smoke="false" sparks="false" underwaterbubble="false"
+                   flashcolor="180,200,255,255" penetration="1">
+        </Explosion>
+      </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="This">
+        <Remove />
+      </StatusEffect>
+
+    </Projectile>
+  </Item>
+
+  <!-- ===== 弹丸 ③：落陷凶星（Fall Malefic，+2 专用） ===== -->
+  <Item name="" identifier="mcj_malefic2" category="Weapon"
+        scale="0.5" hideinmenus="true" sonarsize="2">
+
+    <Sprite texture="%ModDir%/Textures/Malefic.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
+    <Body width="10" height="10" density="5" />
+    <Holdable slots="RightHand+LeftHand" aimable="false" />
+
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+
+      <ParticleEmitter particle="tracernucleargun" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="1,0.75" />
+      <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" />
+
+      <!-- 数值：structure 25 / item 25 / 对角色 damage 30（explosiondamage）+ 12（burn）
+           ⇒ 每枪 42（躯干）⇒ 爬行者 2 枪致死（1 枪 42 不死）；
+              计入贖灼 +25% 后 = 45 ⇒ 同样是 2 枪。
+           其他参数与凶星一致。 -->
+      <Attack structuredamage="25" targetforce="5" itemdamage="25"
+              severlimbsprobability="0.25" penetration="0.1">
+        <Affliction identifier="explosiondamage" strength="30" />
+        <Affliction identifier="burn" strength="12" />
+      </Attack>
+
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="muzzleflashnucleargun" anglemin="0" anglemax="360" particleamount="10"
+                         velocitymin="0" scalemin="0.5" scalemax="0.8" scalemultiplier="0.75,0.75" />
+        <ParticleEmitter particle="weldspark" particleamount="5" anglemin="0" anglemax="360"
+                         velocitymin="300" velocitymax="350" scalemin="1.5" scalemax="1.9"
+                         drawontop="true" colormultiplier="150,200,255,180" />
+        <ParticleEmitter particle="FlareBubbles" particleamount="3" anglemin="0" anglemax="360"
+                         velocitymin="0" velocitymax="50" />
+      </StatusEffect>
+
+      <StatusEffect type="OnImpact" target="UseTarget" disabledeltatime="true">
+        <Explosion range="60.0" structuredamage="0" itemdamage="0" force="2.0"
+                   flames="false" smoke="false" sparks="false" underwaterbubble="false"
+                   flashcolor="180,200,255,255" penetration="1">
+        </Explosion>
+      </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="This">
+        <Remove />
+      </StatusEffect>
+
+    </Projectile>
+  </Item>
+
+  <!-- ===== 武器 ②：钻石六分仪（+1） =====
+       与 +0 天球仪的唯一差别：贴图、弹丸（五处引用）、升级配方与拆解、价格。
+       射速 / 散布 / 握持姿势 / 容器容量 / 音效粒子全部与 +0 一致。 -->
+  <Item name="" identifier="mcj_astrolabe1" category="Weapon"
+        tags="smallitem,weapon,gunsmith,mountableweapon"
+        cargocontaineridentifier="metalcrate" scale="0.5"
+        impactsoundtag="impact_metal_light">
+
+    <Price baseprice="260" sold="false" />
+
+    <!-- 拆解：返还上一档。+0 ⇄ +1 ⇄ +2 可以自由来回，无净收益、也不会卡玩家。 -->
+    <Deconstruct time="15">
+      <Item identifier="mcj_astrolabe" />
+    </Deconstruct>
+
+    <!-- 升级配方：只吃上一档。requiresrecipe="true" + 天赋「天球仪」的 <AddedRecipe> 才会
+         出现在制造台（写法照原版固化泡沫手榴弹 fixfoamgrenade / 本模组的地星）。 -->
+    <Fabricate suitablefabricators="fabricator" requiredtime="20" requiresrecipe="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="mcj_astrolabe" />
+    </Fabricate>
+
+    <InventoryIcon texture="%ModDir%/Textures/DiamondSextant.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/DiamondSextant.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
+    <Body radius="20" density="15" />
+
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-22" aimpos="55,0"
+              handle1="-18,-14" holdangle="0" msg="ItemMsgPickUpSelect" />
+
+    <RangedWeapon reload="1.5" maxchargetime="1" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
+                  combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
+                  ChargeSoundWindupPitchSlide="0.5,1.5" suitableprojectiles="mcj_malefic1">
+
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+
+      <Sound file="Content/Items/Alien/AlienTurret1.ogg" type="OnUse" range="1000" selectionmode="Random" />
+      <Sound file="Content/Items/Alien/AlienTurret2.ogg" type="OnUse" range="1000" />
+
+      <ParticleEmitter particle="FlareBubbles" scalemin="1.4" scalemax="1.8" particleamount="14"
+                       anglemin="0" anglemax="360" velocitymin="0" velocitymax="50" />
+      <ParticleEmitter particle="GlowDot" scalemin="4.0" scalemax="4.0" particleamount="20"
+                       anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
+                       colormultiplier="180,200,255,255" />
+
+      <ParticleEmitterCharge particle="chargenucleargun" particlespersecond="60" scalemultiplier="0.75,0.75"
+                             scalemin="1.0" scalemax="1.0" anglemax="360" />
+      <ChargeSound file="Content/Items/JobGear/Engineer/WEAPONS_rapidFissileAcceleratorStartLoop.ogg" range="1000" />
+
+      <StatusEffect type="OnUse" target="This">
+        <SpawnItem identifier="mcj_malefic1" spawnposition="ThisInventory" count="1" />
+      </StatusEffect>
+
+      <RequiredItems items="mcj_malefic1" type="Contained" />
+    </RangedWeapon>
+
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
+      <Containable items="mcj_malefic1" />
+      <StatusEffect type="OnSpawn" target="this">
+        <SpawnItem identifier="mcj_malefic1" spawnposition="ThisInventory" count="1" />
+      </StatusEffect>
+    </ItemContainer>
+
+  </Item>
+
+  <!-- ===== 武器 ③：帕拉佐钻石六分仪（+2） ===== -->
+  <Item name="" identifier="mcj_astrolabe2" category="Weapon"
+        tags="smallitem,weapon,gunsmith,mountableweapon"
+        cargocontaineridentifier="metalcrate" scale="0.5"
+        impactsoundtag="impact_metal_light">
+
+    <Price baseprice="320" sold="false" />
+
+    <Deconstruct time="15">
+      <Item identifier="mcj_astrolabe1" />
+    </Deconstruct>
+
+    <Fabricate suitablefabricators="fabricator" requiredtime="20" requiresrecipe="true">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="mcj_astrolabe1" />
+    </Fabricate>
+
+    <InventoryIcon texture="%ModDir%/Textures/PalazzoDiamondSextant.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Textures/PalazzoDiamondSextant.png" sourcerect="0,0,64,64" depth="0.55" origin="0.5,0.5" />
+    <Body radius="20" density="15" />
+
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="0,-22" aimpos="55,0"
+              handle1="-18,-14" holdangle="0" msg="ItemMsgPickUpSelect" />
+
+    <RangedWeapon reload="1.5" maxchargetime="1" holdtrigger="true" barrelpos="30,0" spread="1" unskilledspread="10"
+                  combatpriority="60" drawhudwhenequipped="true" crosshairscale="0.2"
+                  ChargeSoundWindupPitchSlide="0.5,1.5" suitableprojectiles="mcj_malefic2">
+
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+
+      <Sound file="Content/Items/Alien/AlienTurret1.ogg" type="OnUse" range="1000" selectionmode="Random" />
+      <Sound file="Content/Items/Alien/AlienTurret2.ogg" type="OnUse" range="1000" />
+
+      <ParticleEmitter particle="FlareBubbles" scalemin="1.4" scalemax="1.8" particleamount="14"
+                       anglemin="0" anglemax="360" velocitymin="0" velocitymax="50" />
+      <ParticleEmitter particle="GlowDot" scalemin="4.0" scalemax="4.0" particleamount="20"
+                       anglemin="0" anglemax="360" velocitymin="0" velocitymax="0"
+                       colormultiplier="180,200,255,255" />
+
+      <ParticleEmitterCharge particle="chargenucleargun" particlespersecond="60" scalemultiplier="0.75,0.75"
+                             scalemin="1.0" scalemax="1.0" anglemax="360" />
+      <ChargeSound file="Content/Items/JobGear/Engineer/WEAPONS_rapidFissileAcceleratorStartLoop.ogg" range="1000" />
+
+      <StatusEffect type="OnUse" target="This">
+        <SpawnItem identifier="mcj_malefic2" spawnposition="ThisInventory" count="1" />
+      </StatusEffect>
+
+      <RequiredItems items="mcj_malefic2" type="Contained" />
+    </RangedWeapon>
+
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="true">
+      <Containable items="mcj_malefic2" />
+      <StatusEffect type="OnSpawn" target="this">
+        <SpawnItem identifier="mcj_malefic2" spawnposition="ThisInventory" count="1" />
+      </StatusEffect>
+    </ItemContainer>
+
   </Item>
 
   <!-- ============================================================

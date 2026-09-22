@@ -480,27 +480,45 @@
 
 
   <!-- ============================================================
-       第三栏 · 天球仪（mcj_path_astrolabe）第 1 档
+       第三栏 · 天球仪（mcj_path_astrolabe）第 1 档 —— 2026-09-22 改版
 
-       直接发放一件天球仪，不给任何团队 buff。
-       占用双手，所以是"常驻武器"同时也是它的限制：
-       拿着它就干不了别的，想用就得从物品栏里取出来。
+       不再发放天球仪（+0 改为职业初始装备），改为：
+         ① 解锁「钻石六分仪」（+1 天球仪）的升级配方
+         ② 你制造的医疗物品质量 +1
+       天球仪本身仍占用双手 —— 拿着它就干不了别的，想用就得从物品栏里取出来。
        ============================================================ -->
   <Talent identifier="mcj_astrolabe">
     <Icon texture="%ModDir%/Textures/Talents/Astrolabe.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_astrolabe" />
 
-    <!-- 不能只用 abilityeffecttype="None"：那个时机可能在选天赋的界面里、
-         角色还没出生，PutItem 无处可放就静默丢掉了。
-         改成每秒重试的 interval + permanent stat 去重（结构与星天开门一致）。
-         permanent stat 默认 removeondeath，所以死亡重生后会重新发放。 -->
-    <AbilityGroupInterval interval="2.0">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="mcj_astrolabe_given" min="1" invert="true" />
-      </Conditions>
+    <!-- 2026-09-22 改版：本天赋不再发放天球仪。
+         +0 天球仪改为【职业初始装备】（见 Jobs/AstrologianJob.xml 的两个 ItemSet），
+         所以这里原来的 interval + PutItem + permanent stat 去重 一整段已删除。
+         现在本天赋做两件事：
+           ① 解锁「钻石六分仪」（+1 天球仪）的升级配方
+           ② 你制造的医疗物品质量 +1
+         物品侧的配方与三档数值见 Items/AstrologianItems.xml。 -->
+    <AddedRecipe itemidentifier="mcj_astrolabe1" />
+
+    <!-- ② 制造质量 +1，但只作用于带 medical 标签的物品。
+         statidentifier 填的是【被制造物品身上的 tag】—— 引擎 Enums.cs 对该 stattype 的说明原文：
+           "Can be made to only affect certain item with a given tag types by specifying a tag via
+            CharacterAbilityGivePermanentStat, when no tag is specified the ability affects all items."
+         Fabricator.cs 也是逐 tag 取 GetSavedStatValue(IncreaseFabricationQuality, tag) 累加。
+         写法与原版工程师「武器工匠」weaponartisan（statidentifier="weapon"）、
+         机械师「工具保养」toolmaintenance（setvalue="true"）一致。 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityPutItem itemidentifier="mcj_astrolabe" amount="1" />
-        <CharacterAbilityGivePermanentStat statidentifier="mcj_astrolabe_given" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat stattype="IncreaseFabricationQuality" statidentifier="medical" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 第二条是 60 秒兜底：旧存档里已经点过本天赋的角色、或中途加入的队友，
+         都能在不重选天赋的前提下拿到这个加成。
+         setvalue="true" ⇒ 重复执行只是把该 stat 设为 1，不会叠成 +2。
+         写法逐字照原版机械师「工具保养」toolmaintenance（TalentsMechanic.xml:211-220）。 -->
+    <AbilityGroupInterval interval="60">
+      <Abilities>
+        <CharacterAbilityGivePermanentStat stattype="IncreaseFabricationQuality" statidentifier="medical" value="1" setvalue="true" />
       </Abilities>
     </AbilityGroupInterval>
 
@@ -669,10 +687,16 @@
        FF14 的 Divination（占卜）正是「提升全队伤害」，与本天赋的主效果完全对应。
        ⚠️ 旧版还有一条「击杀累积 20 层 +20%」的计数器，
           连同 trackedstat / trackedmax 与两条 GivePermanentStat 一起删除了 ——
-          一个终档不该再挂一个需要长期攒层的数值。 -->
+          一个终档不该再挂一个需要长期攒层的数值。
+       2026-09-22 追加：解锁「帕拉佐钻石六分仪」（+2 天球仪）的升级配方。 -->
   <Talent identifier="mcj_divination">
     <Icon texture="%ModDir%/Textures/Talents/Divination.png" sourcerect="0,0,128,128" origin="0,0" />
     <Description tag="talentdescription.mcj_divination" />
+
+    <!-- 2026-09-22 追加：解锁「帕拉佐钻石六分仪」（+2 天球仪）的升级配方。
+         配方只吃 钻石六分仪×1 ⇒ 点出本天赋后即可免费升级（仍要在加工台手动合成）。
+         见 Items/AstrologianItems.xml。 -->
+    <AddedRecipe itemidentifier="mcj_astrolabe2" />
 
     <!-- ① 医疗技能 +45 -->
     <AbilityGroupEffect abilityeffecttype="None">
