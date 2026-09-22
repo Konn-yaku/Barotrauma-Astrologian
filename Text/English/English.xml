@@ -59,8 +59,8 @@
   <afflictionname.mcj_ewer>The Ewer</afflictionname.mcj_ewer>
   <afflictiondescription.mcj_ewer>You have ‖color:gui.orange‖no need for oxygen‖end‖ for the duration, and your injuries are being soothed by starlight (‖color:gui.green‖1.5‖end‖ per second).</afflictiondescription.mcj_ewer>
 
-  <!-- ===== Astrolabe line ===== -->
-  <talentname.mcj_astrolabe>Star Globe</talentname.mcj_astrolabe>
+  <!-- ===== Combust line (formerly Astrolabe) ===== -->
+  <talentname.mcj_astrolabe>Combust III</talentname.mcj_astrolabe>
   <talentdescription.mcj_astrolabe>Unlocks the upgrade recipe for the ‖color:gui.orange‖Diamond Sextant‖end‖ — at a fabricator, one ‖color:gui.orange‖Star Globe‖end‖ is all it takes.\nThe quality of the ‖color:gui.orange‖medical items‖end‖ you fabricate is increased by ‖color:gui.green‖1‖end‖.\nYou deal ‖color:gui.green‖25‖end‖% more ‖color:gui.orange‖Combust‖end‖ damage, and ‖color:gui.green‖50‖end‖% more damage to ‖color:gui.orange‖ballast flora‖end‖.\nYou take ‖color:gui.green‖20‖end‖% less ‖color:gui.orange‖Combust‖end‖ damage.</talentdescription.mcj_astrolabe>
   <entityname.mcj_astrolabe>Star Globe</entityname.mcj_astrolabe>
   <entitydescription.mcj_astrolabe>An astrologer's star-reading instrument, small enough to fit in a pocket.\nRaise it and starlight bends into a beam. Its power never runs out — no ammunition of any kind is needed.\nAstrologians are versed in Combust, so whatever it strikes keeps burning.</entitydescription.mcj_astrolabe>

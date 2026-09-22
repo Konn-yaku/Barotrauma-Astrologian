@@ -70,8 +70,8 @@
   <afflictionname.mcj_ewer>河流神之瓶</afflictionname.mcj_ewer>
   <afflictiondescription.mcj_ewer>你在效果期间 ‖color:gui.orange‖无需氧气‖end‖，且伤势正在被星光抚平（每秒 ‖color:gui.green‖1.5‖end‖）。</afflictiondescription.mcj_ewer>
 
-  <!-- ===== 第三栏 · 天球仪 ===== -->
-  <talentname.mcj_astrolabe>天球仪</talentname.mcj_astrolabe>
+  <!-- ===== 第三栏 · 焚灼（原名「天球仪」） ===== -->
+  <talentname.mcj_astrolabe>焚灼</talentname.mcj_astrolabe>
   <talentdescription.mcj_astrolabe>解锁「钻石六分仪」的升级配方：在加工台用 ‖color:gui.orange‖天球仪×1‖end‖ 即可升级，不需要其他材料。
 你制造的 ‖color:gui.orange‖医疗物品‖end‖ 质量提升 ‖color:gui.green‖1‖end‖ 级。
 你造成的 ‖color:gui.orange‖焚灼‖end‖ 伤害提升 ‖color:gui.green‖25‖end‖%，对 ‖color:gui.orange‖压载植物群‖end‖ 的伤害提升 ‖color:gui.green‖50‖end‖%。\n你受到的 ‖color:gui.orange‖焚灼‖end‖ 伤害降低 ‖color:gui.green‖20‖end‖%。</talentdescription.mcj_astrolabe>

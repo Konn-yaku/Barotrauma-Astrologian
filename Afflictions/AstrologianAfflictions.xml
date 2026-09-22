@@ -236,8 +236,9 @@
     <Icon texture="%ModDir%/Textures/Afflictions/HeliosConjunction.png" sourcerect="0,0,128,128" color="255,255,255,255" origin="0,0" />
   </Affliction>
 
-  <!-- ===== 焚灼的火焰抗性（第 2 档天赋给的常驻 buff） =====
-       由天赋 mcj_combust 发放，无 duration + resetbetweenrounds="true"
+  <!-- ===== 焚灼的火焰抗性（第 1 档天赋「焚灼」给的常驻 buff） =====
+       由天赋 mcj_astrolabe（原名「天球仪」，2026-09-22 改名「焚灼」）发放，
+       无 duration + resetbetweenrounds="true"
        ⇒ 持续一整个巡回，巡回结束时自动清除。
 
        ⚠️ resistancefor="burn" 原版无先例 —— 原版只用过 damage / stun / oxygenlow。

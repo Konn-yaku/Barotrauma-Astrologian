@@ -15,7 +15,7 @@
     ② 星极 mcj_primary_astral      ← 吸收 吉星 mcj_primary_benefic（同为技能成长）
     ③ 吉星相位 mcj_aspectedbenefic ← 吸收 先天禀赋 mcj_essentialdignity（同为治疗质量）
     ④ 抽卡 mcj_arcanum_draw        ← 吸收 重抽 mcj_arcanum_redraw（同为搞材料）
-    ⑤ 天球仪 mcj_astrolabe         ← 吸收 焚灼 mcj_combust（武器 + 它自己的燃烧强化）
+    ⑤ 焚灼 mcj_astrolabe           ← 原名「天球仪」；吸收 焚灼 mcj_combust（武器 + 它自己的燃烧强化）
   被删掉的 5 个 ID 在游戏里不再存在 ⇒ 旧存档请到天赋界面里重选一次天赋。
 -->
 <Talents>
@@ -480,15 +480,20 @@
 
 
   <!-- ============================================================
-       第三栏 · 天球仪（mcj_path_astrolabe）第 1 档 —— 2026-09-22 改版
+       第三栏 · 焚灼（mcj_path_astrolabe）第 1 档 —— 2026-09-22 改版 + 改名
 
-       不再发放天球仪（+0 改为职业初始装备），改为：
+       改名：本档原名「天球仪」，但天球仪本身已改为职业初始装备、不再由天赋发放，
+       天赋还叫这个名字会让人误以为是「点了天赋才发武器」⇒ 改名为「焚灼」，
+       英文名 Combust III（与它给的那个状态同名），图标换成 FF14 技能 Combust III 的图标。
+
+       本档现在做三件事：
          ① 解锁「钻石六分仪」（+1 天球仪）的升级配方
          ② 你制造的医疗物品质量 +1
+         ③ 原来的「焚灼」三条强化（燃烧 +25% / 压载植物群 +50% / 自身受燃烧 −20%）
        天球仪本身仍占用双手 —— 拿着它就干不了别的，想用就得从物品栏里取出来。
        ============================================================ -->
   <Talent identifier="mcj_astrolabe">
-    <Icon texture="%ModDir%/Textures/Talents/Astrolabe.png" sourcerect="0,0,128,128" origin="0,0" />
+    <Icon texture="%ModDir%/Textures/Talents/Combust.png" sourcerect="0,0,80,80" origin="0,0" />
     <Description tag="talentdescription.mcj_astrolabe" />
 
     <!-- 2026-09-22 改版：本天赋不再发放天球仪。
@@ -552,8 +557,9 @@
             依据：burn 确实是一个独立的 AfflictionType（burn / acidburn / burning 都是
             type="burn"），而 resistancefor 就是按类型匹配的。若实测无效，
             就改成「持续 ReduceAffliction type="burn"」那种写法。
-         ⚠️ 图标素材：Textures/Talents/Combust.png（80x80，取自 FF14 的 Combust 系技能图标）
-            —— 焚灼并入后这个图标已不再被任何天赋引用，留档备用。 -->
+         ⚠️ 图标素材：Textures/Talents/Combust.png（80x80，取自 FF14 技能 Combust III，
+            图标编号 003554 的 hr1 版）—— 本档改名后它就是这个天赋的图标，
+            同一张图也继续给状态 mcj_combust_ward 用（见 Afflictions）。 -->
     <AbilityGroupInterval interval="2.0">
       <Conditions>
         <AbilityConditionHasPermanentStat statidentifier="mcj_combust_warded" min="1" invert="true" />
